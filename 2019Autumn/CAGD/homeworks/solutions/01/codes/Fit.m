@@ -22,8 +22,8 @@ function Fit(X, Y)
 	n = size(X, 1);
 	m = min(4, n - 1);
 
-	%uniformX = max(0,min(X)-0.01) : 0.01 : min(1,max(X)+0.01);
-	uniformX = min(X) : 0.01 : max(X);
+	uniformX = (max(0,min(X)-0.01) : 0.01 : min(1,max(X)+0.01))';
+	%uniformX = min(X) : 0.01 : max(X);
 
 	% [1. interpolation]
 	% [1.1 Polynomial] IP

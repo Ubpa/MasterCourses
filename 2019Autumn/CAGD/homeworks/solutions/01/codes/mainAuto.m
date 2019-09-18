@@ -3,7 +3,7 @@ clear variables;
 clc;
 
 % config
-n = 100; % the amount of data points
+n = 8; % the amount of data points
 m = 4; % the highest degree of approximation functions
 noiseYScale = 0.1;
 
