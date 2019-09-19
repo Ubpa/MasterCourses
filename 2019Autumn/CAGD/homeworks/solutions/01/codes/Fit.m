@@ -2,16 +2,16 @@ function Fit(X, Y)
     figure_FontSize=24;
     lineWidth = 3;
 
-	figure();
-    scrsz = get(0,'ScreenSize');
-    set(gcf,'OuterPosition',scrsz);
+	%figure();
+    %scrsz = get(0,'ScreenSize');
+    %set(gcf,'OuterPosition',scrsz);
     
-	xlabel('x');
-	ylabel('y');
-	title('Four Fitting Methods');
+	%xlabel('x');
+	%ylabel('y');
+	%title('Four Fitting Methods');
 	grid on;
-    set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
-    set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
+    %set(get(gca,'XLabel'),'FontSize',figure_FontSize,'Vertical','top');
+    %set(get(gca,'YLabel'),'FontSize',figure_FontSize,'Vertical','middle');
     set(findobj('FontSize',10),'FontSize',figure_FontSize);
     
 	hold on;
