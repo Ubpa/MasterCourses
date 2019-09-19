@@ -1,0 +1,177 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业2}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年9月19日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{理论作业}  %目录的前缀页面都会自动排版不需要手动排版
+
+% 正文字号：小四
+\subsection{}
+\textbf{证明：一条空间\Bezier曲线为平面曲线的充要条件是其控制顶点共面。}
+
+\textbf{①充分性}
+
+控制顶点共面，则存在两个不共线的向量$\pmb{u}$，$\pmb{v}$使得
+$$
+\pmb{p}_i = a_i \pmb{u} + b_i \pmb{v}, i = 0,1,\dots,n
+$$
+
+所以\Bezier曲线$\pmb{p}(t)$为
+
+$$
+\pmb{p}(t) = \sum_{i=0}^n B_i^n(t) \pmb{p}_i
+= \left(\sum_{i=0}^n B_i^n(t) a_i\right)\pmb{u} + \left(\sum_{i=0}^n B_i^n(t) b_i\right)\pmb{v}
+$$
+
+故\Bezier曲线$\pmb{p}(t)$共面，即为平面曲线。
+
+\textbf{②必要性}
+
+假设控制顶点不共面，则存在三个不共线的向量$\pmb{u}$，$\pmb{v}$，$\pmb{w}$使得
+
+\begin{equation*}
+\begin{aligned}
+\pmb{p}_i &= a_i \pmb{u} + b_i \pmb{v}, i = 0,1,\dots,n \\
+\pmb{p}(t) &= a\pmb{u} + b \pmb{v}
+\end{aligned}
+\end{equation*}
+
+因为控制顶点不共面，所以$c_i$不全为0。
+
+\subsection{}
+\textbf{证明：一条\Bezier 曲线的弧长不大于其控制多边形的周长。}
+
+记曲线弧长为$I$，控制多边形周长为$J$。
+
+则
+\begin{equation*}
+\begin{aligned}
+I
+&=   \int_0^1 \left\|\pmb{p}'(t)\right\| \mathrm{d}t\\
+&=   \int_0^1 \left\|n\sum_{i=0}^{n-1}B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\right\| \mathrm{d}t\\
+&\le n\int_0^1 \sum_{i=0}^{n-1}\left\|B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\right\| \mathrm{d}t\\
+&=   n\sum_{i=0}^{n-1} \left\|(\pmb{p}_{i+1}-\pmb{p}_i) \right\|\int_0^1 B_i^{n-1}(t) \mathrm{d}t\\
+&=   \sum_{i=0}^{n-1} \left\|(\pmb{p}_{i+1}-\pmb{p}_i)\right\|\\
+&=   J \\
+\end{aligned}
+\end{equation*}
+
+故曲线弧长$I$等于控制多边形周长$J$。
+
+\subsection{}
+\textbf{证明：圆弧不能用\Bezier 曲线精确表示。}
+
+假设\Bezier曲线$\pmb{p}(t)$能表达圆弧，则有
+\begin{equation*}
+\left\|\pmb{p}(t)-\pmb{c}\right\|^2=R^2
+\end{equation*}
+其中$\pmb{c}$是圆心。
+
+由$\pmb{p}(t)=\sum_{i=0}^n B_i^n(t)\pmb{p}_i$可知$\left\|\pmb{p}(t)-\pmb{c}\right\|^2$是多项式函数，不可能恒等于常数$R^2$。只有当$\{\pmb{p}_i\}_{i=0}^n$在同一位置时其为常数，此时$\pmb{p}(t)$为一点，不构成圆弧。
+
+故假设不成立，即平面\Bezier曲线不能表达圆弧。
+
+\subsection{}
+\textbf{试求平面$n$次\Bezier 曲线及其控制顶点首末顶点与原点所围成的区域（如下图灰色区域）的面积（用控制顶点的坐标来表达）。}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{fig-1}\\
+  \label{fig:fig-1}
+\end{figure}
+
+\begin{equation*}
+\begin{aligned}
+A
+&= \int_0^1 \pmb{p}(t) \times \pmb{p}'(t) \mathrm{d}t \\
+&= \int_0^1 
+       \left(\sum_{i=0}^n B_i^n(t) \pmb{p}_i \right) \times
+       \left(n\sum_{i=0}^{n-1}B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\right)
+   \mathrm{d}t \\
+&= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
+   \int_0^1 B_i^n(t) B_j^{n-1}(t) \mathrm{d}t \\
+&= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
+   C_n^i C_{n-1}^j \int_0^1 t^{i+j}(1-t)^{2n-i-j-1} \mathrm{d}t \\
+&= \frac{1}{2}\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
+   \frac{C_n^i C_{n-1}^j}{C_{2n-1}^{i+j}} \\
+&= \frac{1}{C_{2n-1}^n}\sum_{i=0}^n\sum_{j=0}^{n-1}
+   C_{i+j}^i C_{2n-i-j-1}^{n-i} (\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))\\
+\end{aligned}
+\end{equation*}
+
+\section{编程作业}
+
+\textbf{5. 编写程序实现使用\Bezier 曲线来拟合平面点列。}
+
+*****************************************************************\\
+
+
+{\color{blue}  \bf{作业要求}}
+
+1. 学习使用LaTeX来编辑数学文档（未来写研究论文都要使用LaTeX来写），只要根据LaTeX模板修改来写，不必什么都学。并使用TeX/LaTeX来完成本次作业.
+
+1) 请统一使用LaTeX的模板，可从以下链接下载：\\
+http://staff.ustc.edu.cn/\textasciitilde renjiec/tex-sample.zip \\
+2) TeX安装软件(最新版已含中文支持)：\\
+https://miktex.org \\
+3) 有关TeX的学习教程或资料：\\
+https://pan.baidu.com/s/1pLr5q2J
+
+3. {\color{red} Deadline: 2019年9月22日星期日晚}
+
+
+*****************************************************************\\
+
+
+\end{CJK*}
+\end{document}
