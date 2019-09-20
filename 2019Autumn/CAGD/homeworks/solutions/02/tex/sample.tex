@@ -57,8 +57,10 @@
 \section{理论作业}  %目录的前缀页面都会自动排版不需要手动排版
 
 % 正文字号：小四
-\subsection{}
-\textbf{证明：一条空间\Bezier曲线为平面曲线的充要条件是其控制顶点共面。}
+\subsection{题 1}
+{\color{red}证明：一条空间\Bezier曲线为平面曲线的充要条件是其控制顶点共面。}
+
+证：
 
 \textbf{①充分性}
 
@@ -88,9 +90,12 @@ $$
 \end{equation*}
 
 因为控制顶点不共面，所以$c_i$不全为0。
+\newpage
 
-\subsection{}
-\textbf{证明：一条\Bezier 曲线的弧长不大于其控制多边形的周长。}
+\subsection{题 2}
+{\color{red}证明：一条\Bezier 曲线的弧长不大于其控制多边形的周长。}
+
+证：
 
 记曲线弧长为$I$，控制多边形周长为$J$。
 
@@ -108,9 +113,12 @@ I
 \end{equation*}
 
 故曲线弧长$I$等于控制多边形周长$J$。
+\newpage
 
-\subsection{}
-\textbf{证明：圆弧不能用\Bezier 曲线精确表示。}
+\subsection{题 3}
+{\color{red}证明：圆弧不能用\Bezier 曲线精确表示。}
+
+证：
 
 假设\Bezier曲线$\pmb{p}(t)$能表达圆弧，则有
 \begin{equation*}
@@ -121,15 +129,20 @@ I
 由$\pmb{p}(t)=\sum_{i=0}^n B_i^n(t)\pmb{p}_i$可知$\left\|\pmb{p}(t)-\pmb{c}\right\|^2$是多项式函数，不可能恒等于常数$R^2$。只有当$\{\pmb{p}_i\}_{i=0}^n$在同一位置时其为常数，此时$\pmb{p}(t)$为一点，不构成圆弧。
 
 故假设不成立，即平面\Bezier曲线不能表达圆弧。
+\newpage
 
-\subsection{}
-\textbf{试求平面$n$次\Bezier 曲线及其控制顶点首末顶点与原点所围成的区域（如下图灰色区域）的面积（用控制顶点的坐标来表达）。}
+\subsection{题 4}
+{\color{red}试求平面$n$次\Bezier 曲线及其控制顶点首末顶点与原点所围成的区域（如下图\ref{1}灰色区域）的面积（用控制顶点的坐标来表达）。}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{fig-1}\\
-  \label{fig:fig-1}
+  \caption{示例}
+  \label{1}
 \end{figure}
 
+解：
+
+记区域面积为 $A$，则
 \begin{equation*}
 \begin{aligned}
 A
@@ -142,6 +155,8 @@ A
    \int_0^1 B_i^n(t) B_j^{n-1}(t) \mathrm{d}t \\
 &= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
    C_n^i C_{n-1}^j \int_0^1 t^{i+j}(1-t)^{2n-i-j-1} \mathrm{d}t \\
+&= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
+   C_n^i C_{n-1}^j \frac{\Gamma(i+j+1)\Gamma(2n-i-j)}{\Gamma(2n+1)} \\
 &= \frac{1}{2}\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
    \frac{C_n^i C_{n-1}^j}{C_{2n-1}^{i+j}} \\
 &= \frac{1}{C_{2n-1}^n}\sum_{i=0}^n\sum_{j=0}^{n-1}
@@ -150,28 +165,33 @@ A
 \end{equation*}
 
 \section{编程作业}
+\subsection{简述}
+编写程序实现使用 \Bezier 曲线来拟合平面点列。
+\subsection{算法}
+求 \Bezier 曲线使用了 De Casteljau 算法，如下图\ref{2}所示。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{DeCasteljau}\\
+  \caption{De Casteljau算法}
+  \label{2}
+\end{figure}
+\newpage
 
-\textbf{5. 编写程序实现使用\Bezier 曲线来拟合平面点列。}
+\subsection{结果与分析}
+结果示例如下图\ref{3}所示。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{demo}\\
+  \caption{结果示例}
+  \label{3}
+\end{figure}
 
-*****************************************************************\\
-
-
-{\color{blue}  \bf{作业要求}}
-
-1. 学习使用LaTeX来编辑数学文档（未来写研究论文都要使用LaTeX来写），只要根据LaTeX模板修改来写，不必什么都学。并使用TeX/LaTeX来完成本次作业.
-
-1) 请统一使用LaTeX的模板，可从以下链接下载：\\
-http://staff.ustc.edu.cn/\textasciitilde renjiec/tex-sample.zip \\
-2) TeX安装软件(最新版已含中文支持)：\\
-https://miktex.org \\
-3) 有关TeX的学习教程或资料：\\
-https://pan.baidu.com/s/1pLr5q2J
-
-3. {\color{red} Deadline: 2019年9月22日星期日晚}
-
-
-*****************************************************************\\
-
+红色的为 \Bezier 曲线，绿色的是控制顶点，蓝色的是相应的控制多段线。有如下规律：
+\begin{itemize}
+\item \Bezier 曲线的两端点就是首尾控制点。
+\item \Bezier 曲线的两端点处的切向就是首尾控制点所在线段的方向。
+\item \Bezier 曲线在控制点凸包内。
+\end{itemize}
 
 \end{CJK*}
 \end{document}
