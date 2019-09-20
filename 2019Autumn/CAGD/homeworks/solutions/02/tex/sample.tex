@@ -68,28 +68,30 @@
 $$
 \pmb{p}_i = a_i \pmb{u} + b_i \pmb{v}, i = 0,1,\dots,n
 $$
-
 所以\Bezier曲线$\pmb{p}(t)$为
-
 $$
 \pmb{p}(t) = \sum_{i=0}^n B_i^n(t) \pmb{p}_i
 = \left(\sum_{i=0}^n B_i^n(t) a_i\right)\pmb{u} + \left(\sum_{i=0}^n B_i^n(t) b_i\right)\pmb{v}
 $$
-
 故\Bezier曲线$\pmb{p}(t)$共面，即为平面曲线。
 
 \textbf{②必要性}
-
 假设控制顶点不共面，则存在三个不共线的向量$\pmb{u}$，$\pmb{v}$，$\pmb{w}$使得
-
 \begin{equation*}
 \begin{aligned}
-\pmb{p}_i &= a_i \pmb{u} + b_i \pmb{v}, i = 0,1,\dots,n \\
-\pmb{p}(t) &= a\pmb{u} + b \pmb{v}
+\pmb{p}(t) &= a\pmb{u} + b \pmb{v}\\
+\pmb{p}_i &= a_i \pmb{u} + b_i \pmb{v} + c_i \pmb{w}, i = 0,1,\dots,n
 \end{aligned}
 \end{equation*}
-
 因为控制顶点不共面，所以$c_i$不全为0。
+
+由 $\pmb{p}(t)=\sum_{i=0}^n B^n_i(t)\pmb{p}_i$ 可得
+$$
+a\pmb{u} + b \pmb{v} = \left(\sum_{i=0}^n B^n_i(t) a_i\right)\pmb{u} + \left(\sum_{i=0}^n B^n_i(t) b_i\right)\pmb{v} + \left(\sum_{i=0}^n B^n_i(t) c_i\right)\pmb{w}
+$$
+则 $\sum_{i=0}^n B^n_i(t) c_i = 0$。由于 $\left\{B^n_i(t)\right\}_{i=0}^n$ 是一组基函数，所以 $c_i=0,i=0,1,\dots,n$，矛盾，则假设不成立，即控制顶点共面。
+
+综上所述，一条空间\Bezier曲线为平面曲线的充要条件是其控制顶点共面。
 \newpage
 
 \subsection{题 2}
@@ -106,8 +108,8 @@ I
 &=   \int_0^1 \left\|\pmb{p}'(t)\right\| \mathrm{d}t\\
 &=   \int_0^1 \left\|n\sum_{i=0}^{n-1}B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\right\| \mathrm{d}t\\
 &\le n\int_0^1 \sum_{i=0}^{n-1}\left\|B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\right\| \mathrm{d}t\\
-&=   n\sum_{i=0}^{n-1} \left\|(\pmb{p}_{i+1}-\pmb{p}_i) \right\|\int_0^1 B_i^{n-1}(t) \mathrm{d}t\\
-&=   \sum_{i=0}^{n-1} \left\|(\pmb{p}_{i+1}-\pmb{p}_i)\right\|\\
+&=   n\sum_{i=0}^{n-1} \left\|\pmb{p}_{i+1}-\pmb{p}_i\right\|\int_0^1 B_i^{n-1}(t) \mathrm{d}t\\
+&=   \sum_{i=0}^{n-1} \left\|\pmb{p}_{i+1}-\pmb{p}_i\right\|\\
 &=   J \\
 \end{aligned}
 \end{equation*}
@@ -157,9 +159,9 @@ A
    C_n^i C_{n-1}^j \int_0^1 t^{i+j}(1-t)^{2n-i-j-1} \mathrm{d}t \\
 &= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
    C_n^i C_{n-1}^j \frac{\Gamma(i+j+1)\Gamma(2n-i-j)}{\Gamma(2n+1)} \\
-&= \frac{1}{2}\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
-   \frac{C_n^i C_{n-1}^j}{C_{2n-1}^{i+j}} \\
-&= \frac{1}{C_{2n-1}^n}\sum_{i=0}^n\sum_{j=0}^{n-1}
+&= n\sum_{i=0}^n\sum_{j=0}^{n-1}(\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))
+   \frac{C_n^i C_{n-1}^j}{2nC_{2n-1}^{i+j}} \\
+&= \frac{1}{2C_{2n-1}^n}\sum_{i=0}^n\sum_{j=0}^{n-1}
    C_{i+j}^i C_{2n-i-j-1}^{n-i} (\pmb{p}_i\times(\pmb{p}_{j+1}-\pmb{p}_j))\\
 \end{aligned}
 \end{equation*}
