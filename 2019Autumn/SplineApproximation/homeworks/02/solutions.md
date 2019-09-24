@@ -103,9 +103,9 @@ $$
 
 故 $\exist g\notin P_2$，满足 $Lg\neq g$，即 $\exist t_0 \in [a,b]$，满足 $(Lg)(t_0)\neq g(t_0)$，不妨设 $(Lg)(t_0)<g(t_0)$，否则取 $g'=-g$，则 $(Lg')(t_0)<g'(t_0)$。
 
-取 $g_0 = \frac{(Lg')(t_0) + g'(t_0)}{2} > (Lg)(t_0)$ 
+取 $g_0 = \frac{(Lg)(t_0) + g(t_0)}{2} > (Lg)(t_0)$ 
 
-显然 $\exist f\in P_2$，满足 $f(t)=at^2+bt+c$，$a<0$，$-\frac{b}{2a}=t_0$，$f(t_0)=g_0$，且 $g(t)>f(t)$（$a$ 足够大即可）。
+显然 $\exist f\in P_2$，满足 $f(t)=at^2+bt+c$，$a<0$，$-\frac{b}{2a}=t_0$，$f(t_0)=g_0$，且 $g(t)>f(t)$（$a$ 足够小即可）。
 
 令 $h=g-f$，则 $h>0$，故 $Lh\ge0$。
 
@@ -156,9 +156,9 @@ $$
 $$
 \begin{aligned}
 P_n(f,x) = P_n(x^2,x)
-&=   \sum_{i=0}^n \left[C_n^k\frac{k^2}{n^2}\right] x^k (1-x)^{n-k}\\
-&\le \sum_{i=0}^n C_n^k\frac{k^2}{n^2} x^k (1-x)^{n-k}\\
-&=   \sum_{i=0}^n \left(\frac{1}{n}C_{n-1}^{k-1}+\frac{n-1}{n}C_{n-2}^{k-2}\right) x^k (1-x)^{n-k}\\
+&=   \sum_{k=0}^n \left[C_n^k\frac{k^2}{n^2}\right] x^k (1-x)^{n-k}\\
+&\le \sum_{k=0}^n C_n^k\frac{k^2}{n^2} x^k (1-x)^{n-k}\\
+&=   \sum_{k=0}^n \left(\frac{1}{n}C_{n-1}^{k-1}+\frac{n-1}{n}C_{n-2}^{k-2}\right) x^k (1-x)^{n-k}\\
 &=   \frac{x}{n}+(1-\frac{1}{n})x^2\\
 \end{aligned}
 $$
@@ -166,10 +166,10 @@ $$
 $$
 \begin{aligned}
 P_n(f,x) = P_n(x^2,x)
-&=       \sum_{i=0}^n \left[C_n^k\frac{k^2}{n^2}\right] x^k (1-x)^{n-k}\\
-&=   x^2 \sum_{i=0}^n \left[C_{n-2}^{k-2}\frac{(n-1)k}{(k-1)n}\right] x^{k-2} (1-x)^{n-k}\\
-&\ge x^2 \sum_{i=0}^n \left[C_{n-2}^{k-2}\right] x^{k-2} (1-x)^{n-k}\\
-&=   x^2 \sum_{i=0}^n C_{n-2}^{k-2} x^{k-2} (1-x)^{n-k}\\
+&=       \sum_{k=0}^n \left[C_n^k\frac{k^2}{n^2}\right] x^k (1-x)^{n-k}\\
+&=   x^2 \sum_{k=0}^n \left[C_{n-2}^{k-2}\frac{(n-1)k}{(k-1)n}\right] x^{k-2} (1-x)^{n-k}\\
+&\ge x^2 \sum_{k=0}^n \left[C_{n-2}^{k-2}\right] x^{k-2} (1-x)^{n-k}\\
+&=   x^2 \sum_{k=0}^n C_{n-2}^{k-2} x^{k-2} (1-x)^{n-k}\\
 &= x^2
 \end{aligned}
 $$
