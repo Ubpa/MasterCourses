@@ -6,3 +6,5 @@ resources/
 *.zip
 *.asv
 *.mp4
+*.png
+*.gz
