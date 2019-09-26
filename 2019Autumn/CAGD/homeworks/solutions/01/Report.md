@@ -117,7 +117,7 @@ Y = - 4 * (X.*X.*X) + 3 * (X.*X) - 2 * X + 1 + noiseY;
 
 用四种拟合方法后，拟合曲线的图像如下
 
-![auto](assets/auto.png)
+![auto](assets/auto.jpg)
 
 命令行输出为
 
@@ -145,11 +145,11 @@ Error of Approximation Fourier : 7.678746478799e-01
 
 弹出一个图像框，输入多边形，用以获取数据点。点击鼠标左键新增数据点，点击鼠标右键结束输入。
 
-![1568184305921](assets/polyline.png)
+![1568184305921](assets/polyline.jpg)
 
 结束输入后，将会展示四条拟合曲线
 
-![user](assets/user.png)
+![user](assets/user.jpg)
 
 分析同上，不再赘述
 
@@ -178,7 +178,7 @@ end
 
 但是并不能解决拟合误差增大的问题
 
-![ill](assets/ill.png)
+![ill](assets/ill.jpg)
 
 可见插值曲线也不再经过所有数据点了
 
