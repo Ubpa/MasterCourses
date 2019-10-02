@@ -84,3 +84,23 @@
 
 度量空间中的致密闭集为紧集 compact set
 
+# 对偶空间
+
+## 定义
+
+设 V 为定义在数域 F 上的向量空间，定义 V 上的线性函数是从 V 到 F 的映射 $f:V\mapsto F$，且 $\forall x,y \in V, \forall k \in F$，有
+
+- $f(x+y) = f(x)+f(y)$ 
+- $f(kx)=kf(x)$ 
+
+现考虑 V 上所有线性函数的集合 $V^*$，$\forall f,g \in V^*,\forall x\in V,\forall k \in F$，可以在 $V^*$ 定义如下标量乘法和加法
+
+- $f(kx)=kf(x)$ 
+- $(f+g)(x)=f(x)+g(x)$ 
+
+易得 $V^*$ 是域 F 上的向量空间，称为 V 的对偶空间，其中元素称为协向量 covector。
+
+## 对偶范数
+
+$\forall f\in V^*,\|f\|=\sup\{|f(x)|:\|x\|\le 1\}=\sup \left\{\frac{|f(x)|}{\|x\|}:x\neq 0\right\}$ 
+

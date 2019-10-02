@@ -166,3 +166,40 @@ M 常取为 X 的真子空间
 
 > 证明 [TODO]
 
+## 1.3 表征定理
+
+**定理 1.7** M 是 X 的子空间，$\forall x\in X\backslash M,m^*\in M$，则 $m^*\in B_M(x)$ 的充要条件为 $\exist \lambda \in X^*$，满足
+
+- $\|\lambda\|=1$ 
+- $\|x-m^*\|=\lambda(x-m^*)$ 
+- $\lambda\in M^\perp$，其中 $M^\perp\triangleq\{\lambda\in X^*:\lambda(m0=0,\forall m \in M\}$ 
+
+> 示例
+>
+> X 是三维内积空间，M 是 xy 平面，$\lambda(x)=n\cdot x$，其中 $n = (0,0,1)$。 
+>
+> 图 [TODO]
+
+**定理 1.8** M 是 X 的非空闭凸集，$\forall x \in X \backslash M$，则 $m^*\in B_M(x)$ 的充要条件为 $\exist \lambda \in X^*$，满足
+
+- $\|\lambda\|=1$ 
+- $\|x-m^*\|=\lambda(x-m^*)$ 
+- $\lambda m^* = \sup_\limits{m\in M}\lambda m$ 
+
+> 示例
+>
+> X 是三维内积空间，M 是线段 $(0,0,t), t\in[-1,1]$，则 $m^*$ 就是线段上离 x 最近的点，$\lambda(y)= \frac{x-m^*}{\|x-m^*\|}\cdot y$ 
+
+**定理 1.9**（对偶关系）M 是 X 的线性子空间，则
+
+- $d(x,M)=\sup_\limits{\lambda\in M^\perp,\|\lambda\|\le 1}|\lambda x|$ 
+- $d(\lambda,M^\perp)=\sup_\limits{m\in M,\|m\|\le 1}|\lambda m|$ 
+
+> 第一点
+>
+> X 是三维内积空间，M 是 z 轴，$\lambda(x)=(r\cos\theta,r\sin\theta,0)\cdot x,r \in [0,1],\theta\in[0,2\pi)$ 
+>
+> 第二点
+>
+> X 是三维内积空间，M 是 xy 平面，$\lambda=r(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$ 
+
