@@ -5,4 +5,9 @@
 - [作业](homeworks/) 
   - [01 拟合](homeworks/solutions/01/) 
   - [02 Bezier 曲线](homeworks/solutions/02/) 
+- [笔记](notes/) 
+  - 01 Fit
+  - 02 Bezier Curve
+  - [03 Differential Geometry of Curve](notes/03_DifferentialGeometryCurve.md) 
+  - 04 Bezier Spline
 
