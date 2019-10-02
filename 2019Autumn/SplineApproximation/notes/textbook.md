@@ -203,3 +203,19 @@ M 常取为 X 的真子空间
 >
 > X 是三维内积空间，M 是 xy 平面，$\lambda=r(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$ 
 
+## 1.4 距离投影算子
+
+**定义 1.5** M 是 T 集，若 $P_M:X\mapsto M$ 满足 $\forall x\in X, P_Mx\triangleq B_M(x)$，则称 $P_M$ 为 X 到 M 的距离投影（映射）算子
+
+> 当 $\#B_M(x)=1$ 时，$B_M(x)$ 也可表示其中的唯一元素
+
+**定理 1.10** M 是 X 的线性子空间且 M 是 T 集，则 $P_M$ 有如下性质
+
+- $\text{range}P_M = M,P_M|_M = I$ 
+- $P_M$ 是有界算子
+- $P_M$ 是闭算子
+- 若 M 列紧，则 $P_M$ 连续
+- $P_M$ 齐次：$P_M(\alpha x)=\alpha P_M(x)$ 
+- $\forall m \in M,P_M(x+m)=P_M(x)+P_M(m)$ 
+- $P_M$ 一般不是线性算子
+
