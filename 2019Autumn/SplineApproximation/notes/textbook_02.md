@@ -235,3 +235,32 @@ $$
 
 > Haar 系统有很多良好的性质，但例子都是 $I=[a,b]$ 的情况。一般的，当 $I^n\subset \mathbb{R}^n(n\ge 2)$ 的时候，在 $I^n$ 上没有 Haar 系统
 
+### 2.3.3 最佳逼近的交错定理
+
+> 本节中 M 是 n 维 Haar 空间，表征条件变成了简单直观的交错定理
+
+设 $I=[a,b]$，令 $I_{0,0}^n\triangleq\{\tau \in I^n:t_1<t_2<\cdots<t_n\}$ 
+
+**定理 2.8** 
+
+- $\forall \tau \in I_0^{n+1}$，存在唯一的 $\alpha\in\mathbb{R}^{n+1},\alpha_{n+1}=1$，满足 $\lambda\triangleq\sum_{i=1}^{n+1}\alpha_i[t_i]\perp M$ 
+
+- 若
+  $$
+  0\neq \sum_{i=1}^{n+1}\alpha_i[t_i]\perp M\quad(t_1\le t_2\le \cdots\le t_{n+1})
+  $$
+  则必有 $t_1<t_2<\cdots<t_{n+1}$，而且 $\alpha_i\alpha_{i+1}<0(i=1,2,\cdots,n)$
+
+**定理 2.9**（交错定理）$m^*\in \mathcal{B}_M(x)$ 的充要条件是 $\exist \tau \in I_{0,0}^{n+1},\exist \sigma\in\{-1,1\}$，使得 $\sigma(-1)^i(x-m^*)(t_i)=\|x-m^*\|(i=1,2,\cdots,n+1)$。
+
+**推论 2.7**（Tchebycheff 定理）设 $M=\mathcal{P}_n=\text{span}\{t^{i-1}\}_{i=1}^n$，则 $m^* \in \mathcal{B}_M(x)$ 的充要条件是 $\exist \tau \in I_{0,0}^{n+1},\exist \sigma\in\{-1,1\}$，使得
+$$
+\sigma(-1)^i(x-m^*)(t_i)=\|x-m^*\|(i=1,2,\cdots,n+1)
+$$
+
+> Tchebycheff 定理的几何意义相当直观。m 是从 $\mathcal{P}_n$ 对 $x\in C(I)$ 的最佳逼近的充要条件是：误差函数 $(x-m)(t)$ 在 $n+1$ 个不同的点出的值交替等于它的正负范数
+
+**定理 2.10** 若 $\forall x \in X = C(I),\forall m \in M,\exist \tau \in I_{0,0}^{n+1}$，还是得 $e(t_i)e(t_{i+1}) < 0$，其中 $e(t_i)\triangleq(x-m)(t_i)$，则
+$$
+d(x,M)\ge \min_{1\le i \le n+1}|e(t_i)|
+$$
