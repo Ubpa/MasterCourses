@@ -1,0 +1,122 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业3}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年10月03日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{理论作业}  %目录的前缀页面都会自动排版不需要手动排版
+
+% 正文字号：小四
+\subsection{题 1}
+证明：以下曲线为弧长参数曲线
+$$
+\gamma(t)=\left(\frac{(1+t)^{3/2}}{3},\frac{(1-t)^{3/2}}{3},\frac{t}{\sqrt{2}},\right)
+$$
+其中 $-\frac{1}{2}\le t \le \frac{1}{2}$
+
+证：
+
+\newpage
+
+\subsection{题 2}
+计算一下两条参数曲线的曲率 $\kappa(t)$,
+$$
+\begin{aligned}
+c_1(t)&=(t,t^2)\\
+c_2(t)&=(\cos t, t, \sin t)\\
+\end{aligned}
+$$
+
+解：
+
+\newpage
+
+\subsection{题 3}
+证明：以下曲线是平面曲线，
+$$
+c(t)=(\frac{1+t^2}{t},t+1,\frac{1-t}{t})
+$$
+
+证：
+
+\newpage
+
+\subsection{题 4}
+当半径为 $r$ 的“动圆”沿着半径为 $R$ 的“定圆”的外侧无滑动地滚动时，动圆圆周上一定点 $p$ 所描绘的点的轨迹，叫做外摆线。计算外摆线的参数曲线，并画出当 $r=1$，$R=3$ 时的曲线形状
+
+解：
+
+\newpage
+
+\section{编程作业}
+\subsection{简述}
+渐屈线是曲线上密切圆圆心的轨迹。特别的，Frenet 标架为 $\{e_1(t),e_2(t)\}$ 的平面 Frenet 曲线$c:D\mapsto \mathbb{R}^2$ 可由以下参数曲线 $\eta:D\mapsto \mathbb{R}^2$ 表示，
+$$
+\eta(t)=c(t)+\frac{1}{\kappa(t)}e_2(t)
+$$
+
+编写程序画出椭圆的渐趋线及下图中标记点的密切圆。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{p5}
+  \label{1}
+\end{figure}
+
+\subsection{算法}
+
+\newpage
+
+\subsection{结果与分析}
+
+\end{CJK*}
+\end{document}
