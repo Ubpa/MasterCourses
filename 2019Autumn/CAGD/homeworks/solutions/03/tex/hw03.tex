@@ -139,11 +139,11 @@ $$
 当半径为 $r$ 的“动圆”沿着半径为 $R$ 的“定圆”的外侧无滑动地滚动时，动圆圆周上一定点 $\pmb{p}$ 所描绘的点的轨迹，叫做外摆线。计算外摆线的参数曲线，并画出当 $r=1$，$R=3$ 时的曲线形状
 
 解：
-记定圆圆心为 $\pmb{o}_1=(0,0)$，半径为 $R$，动圆圆心为 $\pmb{o}_2(t)$，半径为 $r$。定点 $p(t)$ 与轴线的夹角（逆时针方向）为 $\theta(t)$。初始时 $\pmb{o}_2(0)=(R+r,0),\theta(0)=\theta_0$，滚动速度为 $\nu$，滚动一段时间 $t$ 后，轴线角度为 $\varphi(t)$。如下图所示
+记定圆圆心为 $\pmb{o}_1=(0,0)$，半径为 $R$，动圆圆心为 $\pmb{o}_2(t)$，半径为 $r$。定点 $\pmb{p}(t)$ 与轴线的夹角（逆时针方向）为 $\theta(t)$。初始时 $\pmb{o}_2(0)=(R+r,0),\theta(0)=\theta_0$，滚动速度为 $\nu$，滚动一段时间 $t$ 后，轴线角度为 $\varphi(t)$。如下图所示
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{p4_0}
-  \label{1}
+  \caption{外摆线示意图}
 \end{figure}
 $$
 \begin{aligned}
@@ -160,13 +160,17 @@ $$
 $$
 
 \newpage
-
 令 $r=1,R=3,\theta_0=0$，作出外摆线如下
-
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1.0\textwidth]{p4_1}
-  \label{1}
+  \includegraphics[width=0.55\textwidth]{p4_1}
+  \caption{$\theta_0 = 0$ 时的外摆线}
+\end{figure}
+取 $\theta_0 = \pi$，作出外摆线如下
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.55\textwidth]{p4_2}
+  \caption{$\theta_0 = \pi$ 时的外摆线}
 \end{figure}
 
 \newpage
@@ -177,19 +181,38 @@ $$
 $$
 \eta(t)=c(t)+\frac{1}{\kappa(t)}e_2(t)
 $$
-
-编写程序画出椭圆的渐趋线及下图中标记点的密切圆。
+编写程序画出椭圆的渐屈线及下图中标记点的密切圆。
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.4\textwidth]{p5}
-  \label{2}
+  \includegraphics[width=0.2125\textwidth]{p5_0}
+  \caption{渐屈线示意图}
 \end{figure}
-
-\subsection{算法}
-
+\subsection{推导}
+记长半轴为 $a$，短半轴为 $b$，则
+$$
+\begin{aligned}
+c(t)&=(a\cos t, b\sin t)\\
+\dot{c}(t)&=(-a\sin t, b\cos t)\\
+\ddot{c}(t)&=(-a\cos t,-b\sin t)\\
+e_1(t)&=\frac{\dot{c}(t)}{\|\dot{c}(t)\|}=\frac{(-a\sin t, b\cos t)}{\sqrt{a^2\sin^2 t+b^2 \cos^2 t}}\\
+e_1'(t) &= \frac{\ddot{c}(t)}{\|\dot{c}(t)\|^2}=\frac{(-a\cos t,-b\sin t)}{a^2\sin^2 t+b^2 \cos^2 t}\\
+e_2(t)&=R^{90^\circ}e_1(t)=\frac{(-b\cos t, -a\sin t)}{\sqrt{a^2\sin^2 t+b^2 \cos^2 t}}\\
+\kappa(t)&=e_1'(t)\cdot e_2(t)=\frac{ab}{(a^2\sin^2 t+b^2 \cos^2 t)^{\frac{3}{2}}}\\
+\eta(t)&=\left(\left(a-\frac{a^2\sin^2 t+b^2 \cos^2 t}{a}\right)\cos t,\left(b-\frac{a^2\sin^2 t+b^2 \cos^2 t}{b}\right)\sin t\right)\\
+\end{aligned}
+$$
 \newpage
 
-\subsection{结果与分析}
+\subsection{程序画图}
+
+取 $a=1,b=\frac{\sqrt{3}}{2}$（此时离心率为 $e=0.5$），三个点 $t=\frac{1}{2}\pi, \pi, \frac{7}{8}\pi$，作图如下
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{p5_1}
+  \caption{椭圆的渐屈线、密切圆}
+\end{figure}
+
+其中{\color{magenta}洋红色曲线}是椭圆曲线，{\color{cyan}青色曲线}是渐屈线，椭圆上的{\color{red}红点}、{\color{blue}蓝点}、{\color{green}绿点}是密切点，渐屈线上的{\color{red}红点}、{\color{blue}蓝点}、{\color{green}绿点}是相应密切圆的圆心，{\color{red}红圈}、{\color{blue}蓝圈}、{\color{green}绿圈}是相应的密切圆。
 
 \end{CJK*}
 \end{document}
