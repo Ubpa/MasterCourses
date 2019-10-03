@@ -58,7 +58,9 @@ $$
 
 ## 2.2 正线性算子理论
 
-> 如何找在稠密的子代数中找一个函数来逼近所需函数？
+> $M(I)$ 是 $C(I)$ 的无限维真子空间
+>
+> 如何找在稠密的子代数中找一个函数来一致逼近所需函数？
 >
 > 即寻找一个算子 $L:C(I) \mapsto M(I)$，用 $Lf$ 来逼近 $f$ 
 >
@@ -127,3 +129,109 @@ $$
 $$
 \lim_\limits{n\to\infty} B_nf=f
 $$
+
+## 2.3 广义多项式的一致逼近
+
+> [2.2 正线性算子理论](##2.2 正线性算子理论) 讲的是 M 是无限维子空间的情形
+>
+> 对于有限维子空间的 M，不再能一致逼近了
+>
+> 这时考虑的问题就是最佳逼近
+
+$M\triangleq\text{span}\{m_i(t)\}_{i=1}^n\subset C(I)$ 是 $C(I)$ 的线性子空间，$\dim (M) = n$，其中 $\{m_i(t)\}_{i=1}^n$ 线性无关，称为广义多项式或一般线性形式。M 是存在性集。
+
+$\forall t_i \in I$，用 $[t_i]:C(I)\mapsto \mathbb{R}$ 表示在 $t_i$ 点取值的泛函，即 $\forall f \in C(I), [t_i]f=f(t_i)$，$[t_i]$ 称为点泛函。
+
+> $C(I)$ 是赋范线性空间，其中的向量是函数，数值是实数，所以相应的协向量 / 泛函 functional 就是从函数到实数的映射。
+
+矩阵和行列式的简化记号
+$$
+\begin{align}
+A\begin{pmatrix}
+t_1 & t_2 & \dots & t_n \\
+m_1 & m_2 & \dots & m_n
+\end{pmatrix}
+
+&\triangleq
+
+\left(m_j(t_i)\right)_{i,j=1}^n\\
+
+D\begin{pmatrix}
+t_1 & t_2 & \dots & t_n \\
+m_1 & m_2 & \dots & m_n
+\end{pmatrix}
+
+&\triangleq
+
+\det\left(m_j(t_i)\right)_{i,j=1}^n
+\end{align}
+$$
+
+### 2.3.1 最佳逼近的表征定理
+
+**引理 2.2** $\exist \tau=(t_1,t_2,\dots,t_n)\in I^n,\forall \lambda \in M^*,\exist \alpha\in \mathbb{R}^n$，有
+$$
+\lambda|_M=\sum_{i=1}^n\alpha_i[t_i]|_M,\quad \|\lambda\|_{C(I)}=\sum_{i=1}^n|\alpha_i|
+$$
+
+> $\{[t_i]\}_{i=1}^n$ 是 $M^*$ 的一组基向量
+
+**定理 2.3**（$C(I)$ 中的表征定理）$\forall x \in X\backslash M,m^*\in M$，则 $m^*\in B_M(x)$ 当且仅当 $\exist \tau\in I^{n+1},\alpha\in \mathbb{R}^{n+1}$ 使得 $\lambda=\sum_{i=1}^{n+1}\alpha_i[t_i]$ 满足 $\|\lambda\|=1，\lambda\perp M,\lambda(x-m^*)=\|x-m^*\|$。
+
+> 定理 1.7，只要求后边三点，事实上 $\lambda^*=N^*\backslash\{0\}$，其中 $N\triangleq M\oplus \text{span}\{x\}$，结合引理 2.2即可得 $\lambda=\sum_{i=1}^{n+1}\alpha_i[t_i]$ 。
+
+**推论 2.5** $0\neq x(t)\in C(I)$，则下列命题等价
+
+- $m^* \in \mathcal{B}_M(x)$ 
+- $0_n\triangleq(0,0,\dots,0)\in \text{Co}\left((x-m^*)(t)(m_1(t),m_2(t),\dots,m_n(t)),t\in E\right)$，其中 E 为 $x-m^*$ 的极点集，即 $\forall t \in E,|(x-m^*)(t)|=\|x-m^*\|$。
+- $\exist t_1,t_2,\dots,t_r\in E \ (1\le r\le n+1),\exist \alpha_1,\alpha_2,\dots,\alpha_r \in \mathbb{R}$，使得 $\text{sgn} \alpha_j=\text{sgn}(x-m^*)(t_j)(j=1,2,\dots,r)$，且 $\forall m \in M, \sum_{j=1}^r\alpha_j m(t_j)=0$（即泛函 $\sum_{j=1}^r\alpha_j[t_j] \perp M$）
+
+**推论 2.6**（削皮定理）
+$$
+\inf_{m\in M}\|x-m\|=\max_{\tau \in I^{n+1}}\min_{m\in M}\|x-m\|_\tau
+$$
+其中 $\tau=(t_1,t_2,\dots,t_{n+1})\in I^{n+1}$，$\|x-m\|_\tau\triangleq\max_\limits{i}|(x-m)(t_i)|$。
+
+### 2.3.2 Haar 空间
+
+> 对广义多项式 $\{m_i(t)\}_{i=1}^n$ 附加 Haar 条件，则表征定理有更为简单的形式
+>
+> 本节先来介绍 Harr 空间的定义、充要条件和充分条件
+
+**定义 2.3** 若 $\forall \tau \in I_0^n \triangleq \{\tau\in I^n:t_i\neq t_j,i\neq j\}$，有
+$$
+D\begin{pmatrix}
+t_1 & t_2 & \dots & t_n \\
+m_1 & m_2 & \dots & m_n
+\end{pmatrix}
+\neq 0
+$$
+则称 $\{m_i(t)\}_{i=1}^n$ 满足 Harr 条件，并称其为 Haar 系统，也称为 Tchebycheff 系统或 T 系统。若 M 有一组基构成 T 系统，则称 M 为 Haar 空间或 T 空间
+
+> $\mathcal{P}_n$ （$1,x,\dots,x^{n-1}$）是一个 Haar 空间
+>
+> n - 1 次多项式用 n 个点唯一确定，那对一般 Haar 空间这个性质成立么？
+
+**定义 2.4** 称 $\tau\in I_0^n$ 对 M 是完全的 total for M 指，若 $m \in M$，且 $m(t_i)=0(i=1,2,\dots,n)$，则有 $m=0$。 
+
+**定理 2.6** 下列命题等价
+
+- M 是 Harr 空间
+- $\forall \tau \in I_0^n$，$\tau$ 对 M 是完全的
+- $\forall m \in M,Z_I(m)\le n-1,I=[a,b]$，其中 $Z_I(m)$ 表示 m 在 $I$ 上的零点数
+- $\forall \tau \in I_0^n, M^* = \text{span}\{[t_i]|_M\}_{i=1}^n$ 
+
+> Haar 系统示例
+>
+> - $\{t^{i-1}\}_{i=1}^n$ 是 $(-\infty,+\infty)$ 上的 Haar 系统
+> - $\{1,\cos t, \sin t, \dots, \cos rt, \sin rt\}$ 是 $(0,2\pi)$ 上的 Haar 系统
+> - $\{e^{\lambda_i t}\}_{i=1}^n$ 是 $(-\infty,+\infty)$ 上的 Haar 系统，其中 $\lambda_1<\lambda_2<\dots<\lambda_n$ 
+
+**定理 2.7** 设 $\{\varphi_i\}_{i=1}^n\subset C^{(n-1)}(I),I=[a,b]$，若 $\forall t \in I, r = 1,2,\dots,n$，都有
+$$
+w(\varphi_1,\varphi_2,\dots,\varphi_r)=\det\left(\varphi_j^{(i-1)}\right)_{i,j=1}^r\neq 0
+$$
+则 $\text{span}\{\varphi_i\}_{i=1}^r$ 是 Haar 空间
+
+> Haar 系统有很多良好的性质，但例子都是 $I=[a,b]$ 的情况。一般的，当 $I^n\subset \mathbb{R}^n(n\ge 2)$ 的时候，在 $I^n$ 上没有 Haar 系统
+
