@@ -65,6 +65,15 @@ $$
 其中 $-\frac{1}{2}\le t \le \frac{1}{2}$
 
 证：
+$$
+\begin{aligned}
+\gamma'(t)&=\left(\frac{\sqrt{1+t}}{2},\frac{\sqrt{1-t}}{2},\frac{\sqrt{2}}{2}\right)\\
+\|\gamma'(t)\|
+&= \sqrt{\frac{1+t}{4} + \frac{1-t}{4} + \frac{1}{2}}\\
+&= 1\\
+\end{aligned}
+$$
+故 $\gamma(t)$ 是弧长参数化曲线。
 
 \newpage
 
@@ -78,6 +87,30 @@ c_2(t)&=(\cos t, t, \sin t)\\
 $$
 
 解：
+$$
+\kappa(t)=\frac{\|c'(t)\times c''(t)\|}{\|c'(t)\|^3}
+$$
+
+(1) $c_1(t)=(t,t^2)$
+$$
+\begin{aligned}
+c_1'(t) &= (1, 2t)\\
+c_1''(t) &= (0, 2)\\
+c_1'(t)\times c_1''(t) &= 2\\
+\kappa(t)&=\frac{2}{(4t^2+1)^{\frac{3}{2}}}
+\end{aligned}
+$$
+
+(2) $c_2(t)=(\cos t, t, \sin t)$
+$$
+\begin{aligned}
+c_2'(t) &= (-\sin t, 1, \cos t)\\
+c_2''(t) &= (-\cos t, 0, -\sin t)\\
+c_2'(t)\times c_2''(t) &= (-\sin t, -1, \cos t)\\
+\kappa(t)&=\frac{1}{2}
+\end{aligned}
+$$
+
 
 \newpage
 
@@ -88,13 +121,53 @@ c(t)=(\frac{1+t^2}{t},t+1,\frac{1-t}{t})
 $$
 
 证：
+$$
+\begin{aligned}
+\pmb{n} &= (-1,1,1)\\
+c(t) - c(1) &= \left(\frac{(t-1)^2}{t}, (t-1), \frac{1-t}{t}\right)\\
+\pmb{n} \cdot (c(t)-c(1))
+&= -\frac{(t-1)^2}{t} + (t-1) + \frac{1-t}{t}\\
+&= \frac{-(t-1)^2+t(t-1)+1-t}{t}\\
+&= 0\\
+\end{aligned}
+$$
+即 $\pmb{n} \perp (c(t)-c(1))$，故 $c(t)$ 是平面曲线
 
 \newpage
 
 \subsection{题 4}
-当半径为 $r$ 的“动圆”沿着半径为 $R$ 的“定圆”的外侧无滑动地滚动时，动圆圆周上一定点 $p$ 所描绘的点的轨迹，叫做外摆线。计算外摆线的参数曲线，并画出当 $r=1$，$R=3$ 时的曲线形状
+当半径为 $r$ 的“动圆”沿着半径为 $R$ 的“定圆”的外侧无滑动地滚动时，动圆圆周上一定点 $\pmb{p}$ 所描绘的点的轨迹，叫做外摆线。计算外摆线的参数曲线，并画出当 $r=1$，$R=3$ 时的曲线形状
 
 解：
+记定圆圆心为 $\pmb{o}_1=(0,0)$，半径为 $R$，动圆圆心为 $\pmb{o}_2(t)$，半径为 $r$。定点 $p(t)$ 与轴线的夹角（逆时针方向）为 $\theta(t)$。初始时 $\pmb{o}_2(0)=(R+r,0),\theta(0)=\theta_0$，滚动速度为 $\nu$，滚动一段时间 $t$ 后，轴线角度为 $\varphi(t)$。如下图所示
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p4_0}
+  \label{1}
+\end{figure}
+$$
+\begin{aligned}
+\phi(t) &= \frac{\nu t}{R}\\
+\theta(t) &= \theta_0 + \frac{\nu t}{r}\\
+\pmb{o}_2(t)&=((R+r)\cos \phi(t),(R+r)\sin \phi(t))\\
+\pmb{p}(t)
+&=\pmb{o}_2(t)+(r\cos (\theta(t)+\phi(t)), r \sin (\theta(t)+\phi(t)))\\
+&=\left(
+(R+r)\cos \frac{\nu t}{R} + r\cos \left(\theta_0 + \frac{\nu t}{r}+\frac{\nu t}{R}\right),
+(R+r)\sin \frac{\nu t}{R} + r\sin \left(\theta_0 + \frac{\nu t}{r}+\frac{\nu t}{R}\right)
+\right)
+\end{aligned}
+$$
+
+\newpage
+
+令 $r=1,R=3,\theta_0=0$，作出外摆线如下
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p4_1}
+  \label{1}
+\end{figure}
 
 \newpage
 
@@ -109,7 +182,7 @@ $$
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{p5}
-  \label{1}
+  \label{2}
 \end{figure}
 
 \subsection{算法}
