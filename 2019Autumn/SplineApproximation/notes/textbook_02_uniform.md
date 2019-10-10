@@ -138,7 +138,7 @@ $$
 >
 > 这时考虑的问题就是最佳逼近
 
-$M\triangleq\text{span}\{m_i(t)\}_{i=1}^n\subset C(I)$ 是 $C(I)$ 的线性子空间，$\dim (M) = n$，其中 $\{m_i(t)\}_{i=1}^n$ 线性无关，称为广义多项式或一般线性形式。M 是存在性集。
+本节中 $M\triangleq\text{span}\{m_i(t)\}_{i=1}^n\subset C(I)$ 是 $C(I)$ 的线性子空间，$\dim (M) = n$，其中 $\{m_i(t)\}_{i=1}^n$ 线性无关，称为广义多项式或一般线性形式。M 是存在性集。
 
 $\forall t_i \in I$，用 $[t_i]:C(I)\mapsto \mathbb{R}$ 表示在 $t_i$ 点取值的泛函，即 $\forall f \in C(I), [t_i]f=f(t_i)$，$[t_i]$ 称为点泛函。
 
@@ -206,7 +206,7 @@ m_1 & m_2 & \dots & m_n
 \end{pmatrix}
 \neq 0
 $$
-则称 $\{m_i(t)\}_{i=1}^n$ 满足 Harr 条件，并称其为 Haar 系统，也称为 Tchebycheff 系统或 T 系统。若 M 有一组基构成 T 系统，则称 M 为 Haar 空间或 T 空间
+则称 $\{m_i(t)\}_{i=1}^n$ 满足 Haar 条件，并称其为 Haar 系统，也称为 Tchebycheff 系统或 T 系统。若 M 有一组基构成 T 系统，则称 M 为 Haar 空间或 T 空间
 
 > $\mathcal{P}_n$ （$1,x,\dots,x^{n-1}$）是一个 Haar 空间
 >
@@ -233,7 +233,9 @@ w(\varphi_1,\varphi_2,\dots,\varphi_r)=\det\left(\varphi_j^{(i-1)}\right)_{i,j=1
 $$
 则 $\text{span}\{\varphi_i\}_{i=1}^r$ 是 Haar 空间
 
-> Haar 系统有很多良好的性质，但例子都是 $I=[a,b]$ 的情况。一般的，当 $I^n\subset \mathbb{R}^n(n\ge 2)$ 的时候，在 $I^n$ 上没有 Haar 系统
+> 定理 2.7 与定义 2.3 区别在于 $t$ 的维数
+
+Haar 系统有很多良好的性质，但例子都是 $I=[a,b]$ 的情况。一般的，当 $I^n\subset \mathbb{R}^n(n\ge 2)$ 的时候，在 $I^n$ 上没有 Haar 系统
 
 ### 2.3.3 最佳逼近的交错定理
 
@@ -253,14 +255,36 @@ $$
 
 **定理 2.9**（交错定理）$m^*\in \mathcal{B}_M(x)$ 的充要条件是 $\exist \tau \in I_{0,0}^{n+1},\exist \sigma\in\{-1,1\}$，使得 $\sigma(-1)^i(x-m^*)(t_i)=\|x-m^*\|(i=1,2,\cdots,n+1)$。
 
+> 简化的表征定理
+
 **推论 2.7**（Tchebycheff 定理）设 $M=\mathcal{P}_n=\text{span}\{t^{i-1}\}_{i=1}^n$，则 $m^* \in \mathcal{B}_M(x)$ 的充要条件是 $\exist \tau \in I_{0,0}^{n+1},\exist \sigma\in\{-1,1\}$，使得
 $$
 \sigma(-1)^i(x-m^*)(t_i)=\|x-m^*\|(i=1,2,\cdots,n+1)
 $$
 
+> M 是 n 维 Haar 空间，所以满足交错定理。
+>
 > Tchebycheff 定理的几何意义相当直观。m 是从 $\mathcal{P}_n$ 对 $x\in C(I)$ 的最佳逼近的充要条件是：误差函数 $(x-m)(t)$ 在 $n+1$ 个不同的点出的值交替等于它的正负范数
 
 **定理 2.10** 若 $\forall x \in X = C(I),\forall m \in M,\exist \tau \in I_{0,0}^{n+1}$，还是得 $e(t_i)e(t_{i+1}) < 0$，其中 $e(t_i)\triangleq(x-m)(t_i)$，则
 $$
 d(x,M)\ge \min_{1\le i \le n+1}|e(t_i)|
 $$
+
+### 2.3.4 唯一性问题
+
+**定理 2.11** $M$ 是 T 集 $\Leftrightarrow$ $M$ 是 Haar 空间
+
+**定义 2.5** 设 $X$ 是赋范线性空间，$M\subset X$ 为子空间，称 $m\in \mathcal{B}_M(x)$ 为强唯一的，是指 $\exist r_x>0$，对 $\forall m'\in M$，有 $\|x-m'\|\ge\|x-m\|+r_x\|m'-m\|$。
+
+强唯一性包含唯一性
+
+**定理 2.12**（Haar 空间的强唯一性）$M$ 是 $C(I)$ 的 $n$ 维 Haar 子空间，则 $\forall x \in C(I),\forall m \in \mathcal{B}_M(x)$，$m$ 是强唯一的。
+
+**推论 2.8** $M$ 是 $n$ 维 Haar 子空间，则 $\exist\alpha >0$，使得
+$$
+\|P_Mx-P_My\| \le \alpha\|x-y\|
+$$
+
+### 2.3.5 最佳逼近函数的计算
+
