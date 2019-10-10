@@ -146,7 +146,7 @@ $$
 
 \end{align}
 $$
-其中 $M=\left( \begin{array} { c c c } { b _ { 1 } \left( x _ { 1 } \right) } & { \cdots } & { b _ { n } \left( x _ { 1 } \right) } \\ { \vdots } & { \ddots } & { \vdots } \\ { b _ { 1 } \left( x _ { m } \right) } & { \cdots } & { b _ { n } \left( x _ { m } \right) } \end{array} \right)$。
+其中 $M=\left( \begin{array} { c c c } { b _ { 1 } \left( x _ { 1 } \right) } & { \cdots } & { b _ { n } \left( x _ { 1 } \right) } \\ { \vdots } & { \ddots } & { \vdots } \\ { b _ { 1 } \left( x _ { m } \right) } & { \cdots } & { b _ { n } \left( x _ { m } \right) } \end{array} \right)$ 
 
 这是一个关于 $\lambda$ 的二次多项式
 $$
@@ -160,3 +160,4 @@ $$
 $$
 \lambda=(M^\top M)^{-1}M^\top y
 $$
+
