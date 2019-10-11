@@ -10,7 +10,7 @@
 
 > 示例
 >
-> ![1570714620048](assets/1570714620048.png)
+> ![1570714620048](assets/1570714620048.jpg)
 
 参数表示 $c(t)=(x(t),y(t))$ 
 
@@ -37,11 +37,11 @@
 
 > 示例
 >
-> ![1570716274452](assets/1570716274452.png)
+> ![1570716274452](assets/1570716274452.jpg)
 
 伪代码为
 
-![1570716331031](assets/1570716331031.png)
+![1570716331031](assets/1570716331031.jpg)
 
 ### 2.2.2 性质
 
@@ -58,5 +58,69 @@
 - 对称性：$x(t)=[\pmb{b}_0,\dots,\pmb{b}_n]$ 与 $\pmb{x}'(t)=[\pmb{b}_n,\dots,\pmb{b}_0]$ 
 - 线性精度：Bezier 曲线是线段 $\Leftrightarrow$ $\pmb{b_0},\dots,\pmb{b_n}$ 共线
 
+## 2.3 解析式
 
+$$
+\begin{align}
+\pmb{x}(t)&=\sum_{i=0}^n B_i^n(t)\pmb{b}_i\\
+&=\sum_{i=0}^n C_n^ix^i(1-x)^{n-i}\pmb{b}_i\\
+\end{align}
+$$
+
+其中 Bernstein 基是 $B_i^n(t)$ 
+
+> 示例
+>
+> ![1570781724407](assets/1570781724407.jpg)
+
+### 2.3.1 Bernstein 基的性质
+
+- 递归计算：$B_i^n(t)=(1-t)B_i^{n-1}(t)+tB_i^{n-1}(1-t),B_0^0=1$  
+- 对称性：$B_i^n(t)=B_{n-i}^n(1-t)$ 
+- 非负
+  - $B_i^n(t)\ge 0,t\in[0,1]$ 
+  - $B^n_i(t)>0,0<t<1$ 
+  - $B_0^n(0)=1,B_1^n(0)=\dots=B_n^n(0)=0$ 
+  - $B_0^n(0)=\dots=B_{n-1}^n(0)=0,B_0^n(0)=1$ 
+- 导数：$\frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)=n[B_{i-1}^{n-1}(t)-B_i^{n-1}(t)]$ 
+
+### 2.3.2 Bezier 曲线的性质
+
+$$
+\pmb{x}(t)=\sum_{i=0}^n B_i^n(t)\pmb{p}_i\\
+$$
+
+- 导数
+  $$
+  \pmb{x}'(t)=n\sum_{i=0}^{n-1} B_i^{n-1}(t)(\pmb{p}_{i+1}-\pmb{p}_i)\\
+  
+  \pmb{x}'(0)=n(\pmb{p}_1-\pmb{p}_0)\\
+\pmb{x}'(1)=n(\pmb{p}_n-\pmb{p}_{n-1})\\
+  
+  \pmb{x}^{(r)}(t)=\prod_{i=0}^{r-1}(n-i)\sum_{i=0}^{n-r} B_i^{n-r}(t)\Delta^r\pmb{p}_i\\
+  $$
+  > 一阶差分 $\Delta \pmb{p}_i = \pmb{p}_{i+1}-\pmb{p}_i$ 
+  >
+  > 高阶差分 $\Delta^r \pmb{p}_i=\Delta(\Delta^{r-1}   \pmb{p}_i)=\Delta^{r-1} \pmb{p}_{i+1}-\Delta^{r-1} \pmb{p}_i$ 
+  >
+  > 如二阶差分 $\Delta^2 \pmb{p}_i=\Delta\pmb{p}_{i+1}-  \Delta\pmb{p}_i=\pmb{p}_{i+1}-2\pmb{p}_{i+1}+\pmb{p}_i$ 
+  >
+  > 貌似可以展开为 $\Delta^r\pmb{p}_i=\sum_{k=0}^{r}  (-1)^kC_r^k\pmb{p}_{i+r-k}$ 
+  
+- 端点：$\pmb{x}(0)=\pmb{p}_0,\pmb{x}(1)=\pmb{p}_n$ 
+
+### 2.3.3 升阶
+
+给定 $\pmb{p}_0,\dots,\pmb{p}_n$ 可得 $\pmb{x}(t)$，想生成 $n+2$ 个点来得到曲线 $\bar{\pmb{x}}(t)$，满足 $\bar{\pmb{x}}(t)=\pmb{x}(t)$ 
+
+方法
+$$
+\bar{\pmb{p}}_0=\pmb{p}_0\\
+\bar{\pmb{p}}_{n+1}=\pmb{p}_n\\
+\bar{\pmb{p}}_{i}=\frac{i}{n+1}\pmb{p}_{i-1}+\left(1-\frac{i}{n+1}\right)\pmb{p}_i,i=1,\dots,n\\
+$$
+
+> 示例
+>
+> ![1570786423038](assets/1570786423038.jpg)
 
