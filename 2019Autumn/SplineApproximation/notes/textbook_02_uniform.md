@@ -288,3 +288,127 @@ $$
 
 ### 2.3.5 最佳逼近函数的计算
 
+本节 M 是 n 维 Haar 空间
+
+求在 $I$ 中的 $n + 1$ 个点上的最佳逼近元，不断改变 $n + 1$ 个点，以逐步逼近 $I$ 上的最佳逼近
+
+拟范数
+
+$$
+\|x\|_\tau\triangleq\max_i|x(t_i)|
+$$
+
+> 算法数学语言描述为
+> $$
+> \begin{align}
+> m^{(k)}
+> &=\mathop{\arg\min}_\limits{m\in M} \|x-m\|_\tau\\
+> &=\mathop{\arg\min}_\limits{\pmb{\alpha} \in \mathbb{R}^n} \|x-\pmb{\alpha}\cdot\pmb{m}\|_\tau\\
+> \end{align}\\
+> x,\tau^{(k)},m^{(k)}\to\tau^{(k+1)}\\
+> \lim_\limits{k\to\infty} m^{(k)}=P_Mx\\
+> $$
+
+**引理 2.3** $\forall \tau \in I_{0,0}^{n+1}$，若 $e\triangleq x-m$，满足 $e(t_i)e(t_i+1)<0$，则
+$$
+\min_i|e(t_i)|\le d_\tau(x,M) \le\max_i|e(t_i)|
+$$
+其中 $d_\tau(x,M)=\inf_\limits{m\in M}\|x-m\|_\tau$ 
+
+> 可知 $d_\tau(x,M)\le d(x,M)$，理由如下
+> $$
+> d_\tau(x,M)=\inf_\limits{m\in M}\|x-m\|_\tau\le\inf_\limits{m\in M}\|x-m\|=d(x,M)
+> $$
+
+#### 2.3.5.1 Remes 第一算法
+
+**步骤 1** 
+
+对于给定的 $\tau\in I_{0,0}^n$，基于 $\|\cdot\|_\tau$ 计算从 M 对 x 的最佳逼近元 $m_\tau=\pmb{\alpha}\cdot\pmb{m}$，令 $e_\tau=x-m_\tau$，满足交错定理
+$$
+\sigma(-1)^ie_\tau(t_i)=d_\tau(x,M)\triangleq d_\tau
+$$
+
+> 这个交错定理是个变式，也不知道怎么来的
+>
+> 此外 $\|e_\tau\|\ge\|e_\tau\|_\tau=d_\tau$ 
+
+两边同时乘以 $\sigma(-1)^i$，移项可得
+$$
+m_\tau(t_i)+(-1)^id=x(t_i),i=1,2,\dots,n+1
+$$
+这是一个关于 $\pmb{\alpha}$ 和 $d=\sigma d_\tau$ 的线性方程组，解得 $d_\tau=|d|$。
+
+> $$
+> \begin{align}
+> d_\tau&\ge0\\
+> d&=\sigma d_\tau\\
+> d_\tau&=\sigma d=|d|
+> \end{align}
+> $$
+
+**步骤 2** 
+
+若 $d_\tau=\|e_\tau\|$，则 $m_\tau = P_M x$ 
+
+>$\|x-m_\tau\|=d_\tau=d_\tau(x,M)\le d(x,M)$，又 $d(x,M)\ge\|x-m\|$，则 $\|x-m_\tau\|=d(x,M)$，即 $m_\tau=P_M x$ 
+
+一般
+$$
+d_\tau=\|e_\tau\|_\tau<\|e_\tau\|
+$$
+则 $\exist \xi \in I,|e_\tau(\xi)|>d_\tau$，取 $\xi$ 使 $|e_\tau(\xi)|$ 尽量大（如 $|e_\tau(\xi)|=\|e_\tau\|$），用 $\xi$ 代替某个 $t_i$，这样就从 $\tau$ 得到 $s\in I_{0,0}^{n+1}$，满足 $e_\tau(s_i)e_\tau(s_{i+1})<0$ 
+
+> $e_\tau(t_i)e_\tau(t_{i+1})<0$，说明 $m_\tau$ 和 $x$ 是交错的， $\xi$ 会与某个 $t_i$ 处于同一个交错波瓣中
+>
+> ![1570861182394](assets/1570861182394.jpg)
+> $$
+> \begin{align}
+> s_i &= \xi\\
+> s_j &= t_j,j\neq i\\
+> \end{align}
+> $$
+
+重复步骤 1 和步骤 2 即可
+
+**分析** 
+
+对于 $s\in I_{0,0}^{n+1}$，可按步骤 1 计算 $d_s=d_s(x,M)$，由于
+$$
+\bar{d}\triangleq\max_i|e_\tau(s_i)|> d_\tau = \min_i|e_\tau(s_i)|
+$$
+
+> 这里的记号很有迷惑性，这么写其实是为了适用于 Remes 第二算法
+>
+> 其实 $\max_\limits{i}|e_\tau(s_i)|=e_\tau(\xi)$，$\min_\limits{i}|e_\tau(s_i)|=|e_\tau(t_i)|,t_i\neq \xi$。
+
+由引理 2.3 得
+$$
+\bar{d}=\max_i|e_\tau(s_i)|>d_s=d_s(x,M)>\min_i|e_\tau(s_i)| = d_\tau
+$$
+
+> 我们看到 $d_s > d_\tau$，这样一步步迭代后 $d_s$ 会越来越大，从而逼近 $P_Mx$，证明参见定理 2.13
+
+#### 2.3.5.2 Remes 第二算法
+
+将 Remes 第一算法的更新点的操作对所有 $t_i$ 进行，这样
+$$
+\|e_\tau\|=\max_i|e_r(s_i)|,\min_i|e_\tau(s_i)|\ge d_\tau
+$$
+
+#### 2.3.5.3 Remes 算法收敛性
+
+**定理 2.13** 设 $x\in X\backslash M,m^{(k)}\in M,e^{(k)}=x-m^{(k)},\tau^{(k)}\in I_{0,0}^{n+1}(k=0,1,\dots)$，满足
+$$
+d_{\tau^{(k)}}(x,M)=d^{(k)}=\|x-m^{(k)}\|_{\tau^{(k)}}\\
+e^{(k)}(t_i^{(k+1)})e^{(k)}(t_{i+1}^{(k+1)})<0(i=1,\dots,n)\\
+\|e^{(k)}\|_{\tau^{(k)}}=d^{(k)}\le\min_i\left|e^{(k)}(t_i^{(k+1)})\right|,\|e^{(k)}\|=\max_i\left|e_r(t_i^{(k+1)})\right|
+$$
+则
+$$
+\lim_\limits{r\to\infty}m^{(k)}=P_Mx
+$$
+**推论 2.9** 
+$$
+\left\|P_Mx-m^{(k)}\right\|\le\frac{(1-\beta)^k}{\beta r_x}(d(x,M)-d^{(0)})
+$$

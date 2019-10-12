@@ -20,6 +20,7 @@ $$
 > $$
 > \lim_{n\to\infty}\|x-m_n\|=d(x,M)
 > $$
+> 若 $\|x-m\|\le d(x,M)$，又 $d(x,M)\ge\|x-m\|$，则 $\|x-m\|=d(x,M)$，即 $m\in B_M(x)$。
 
 ---
 

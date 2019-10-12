@@ -10,5 +10,5 @@
   - [01. Fit](notes/01_Fit.md) 
   - [02. Bezier Curve](notes/02_BezierCurve.md) 
   - [03. Differential Geometry of Curve](notes/03_DifferentialGeometryCurve.md) 
-  - 04. Bezier Spline
+  - [04. Bezier Spline](notes/04_BezierSpline.md) 
 
