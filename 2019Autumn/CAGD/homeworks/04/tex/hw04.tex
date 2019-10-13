@@ -1,0 +1,186 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业4}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年10月13日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{理论作业}  %目录的前缀页面都会自动排版不需要手动排版
+
+% 正文字号：小四
+\subsection{题 1}
+证明：设 $f(x)\in C^2[a,b]$ 是任一被插值函数，$S(x)$ 是自然插值三次样条函数（端点条件均为二阶导数为 0），则有
+$$
+\int _ { a } ^ { b } \left[ S ^ { \prime \prime } ( x ) \right] ^ { 2 } d x \leq \int _ { a } ^ { b } \left[ f ^ { \prime \prime } ( x ) \right] ^ { 2 } d x
+$$
+式中等号仅当$f(x)\equiv S(x)$时成立。
+
+证：令 $g=f-S$，设 $a=t_0<t_1<\dots<t_n=b$ 为插值节点，则 $g(t_i)=0(i=0,1,\dots,n)$，且
+$$
+\int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) \right) ^ { 2 } d x= \int _ { a } ^ { b } \left( S ^ { \prime \prime } ( x ) \right) ^ { 2 } d x + \int _ { a } ^ { b } \left( g ^ { \prime \prime } ( x ) \right) ^ { 2 } d x + 2 \int _ { a } ^ { b } \left( S ^ { \prime \prime } ( x ) g ^ { \prime \prime } ( x ) \right) d x
+$$
+$S(x)$ 是自然插值三次样条函数，则 $S^{\prime\prime}(t_0)=S^{\prime\prime}(t_n)=0$ 且每个区间 $[t_{i-1},t_i]$ 上 $S^{\prime\prime\prime}(t)$ 是常数，记为 $s_i$，则
+$$
+\begin{aligned}
+\int _ { a } ^ { b } \left( S ^ { \prime \prime } ( x ) g ^ { \prime \prime } ( x ) \right) d x
+& = \sum _ { i = 1 } ^ { n } \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( S ^ { \prime \prime } ( x ) g ^ { \prime \prime } ( x ) \right) d x \\
+& = \sum _ { i = 1 } ^ { n } \left( S ^ { \prime \prime } g ^ { \prime } \left( t _ { i } \right) - S ^ { \prime \prime } g ^ { \prime } \left( t _ { i - 1 } \right) - \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( S ^ { \prime \prime \prime } ( x ) g ^ { \prime } ( x ) \right) d x \right) \\
+& = S ^ { \prime \prime } g ^ { \prime } (t_n)-S ^ { \prime \prime } g ^ { \prime }(t_0) - \sum _ { i = 1 } ^ { n } \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( S ^ { \prime \prime \prime } ( x ) g ^ { \prime } ( x ) \right) d x \\
+& = - \sum _ { i = 1 } ^ { n } s _ { i } \left( g \left( t _ { i } \right) - g \left( t _ { i - 1 } \right) \right) \\
+& = 0
+\end{aligned}
+$$
+则
+$$
+\int _ { a } ^ { b } \left( S ^ { \prime \prime } ( x ) \right) ^ { 2 } d x = \int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) \right) ^ { 2 } d x - \int _ { a } ^ { b } \left( g ^ { \prime \prime } ( x ) \right) ^ { 2 } d x \le \int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+$$
+
+
+\newpage
+
+\subsection{题 2}
+证明：设 $f(x)\in C^2[a,b]$ 是任一被插值函数，$S_f(x)$ 是带有斜率边界条件的插值三次样条函数，$S(x)$ 是与 $S_f(x)$ 具有相同分割的任一三次样条函数，则有
+$$
+\int _ { a } ^ { b } \left[ f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right] ^ { 2 } d x \leq \int _ { a } ^ { b } \left[ f ^ { \prime \prime } ( x ) - S ^ { \prime \prime } ( x ) \right] ^ { 2 } d x
+$$
+
+证：令 $g=S-S_f$，设 $a=t_0<t_1<\dots<t_n=b$ 为插值节点，则 $g(t_i)=0(i=0,1,\dots,n)$，且
+$$
+\int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) - S ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+= \int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
++ \int _ { a } ^ { b } \left( g ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+- 2 \int _ { a } ^ { b } \left( \left( f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right) g ^ { \prime \prime } ( x ) \right) d x
+$$
+$S_f(x)$ 带有斜率边界条件，则 $(f-S_f)^{\prime}(t_0)=(f-S_f)^{\prime}(t_n)=0$.
+$S_f(x)$ 和 $S(x)$ 是三次样条函数，则每个区间 $[t_{i-1},t_i]$ 上 $S_f^{\prime\prime\prime}$ 和 $S^{\prime\prime\prime}$ 是常数，则 $g^{\prime\prime\prime}=S^{\prime\prime\prime}-S_f^{\prime\prime\prime}$ 也是常数，记为 $g_i$，则
+$$
+\begin{aligned}
+&\int _ { a } ^ { b } \left( \left( f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right) g ^ { \prime \prime } ( x ) \right) d x \\
+= & \sum _ { i = 1 } ^ { n } \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( \left( f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right) g ^ { \prime \prime } ( x ) \right) d x \\
+= & \sum _ { i = 1 } ^ { n } \left(\left( \left( f - S _ { f } \right) ^ { \prime } g ^ { \prime \prime } \left( t _ { i } \right) - \left( f - S _ { f } \right) ^ { \prime } g ^ { \prime \prime } \left( t _ { i - 1 } \right) \right) - \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( \left( f - S _ { f } \right) ^ { \prime } ( x ) g ^ { \prime \prime \prime } ( x ) \right) d x\right)\\
+= & \left( f - S _ { f } \right) ^ { \prime } g ^ { \prime \prime } \left( t _ { n } \right) 
+- \left( f - S _ { f } \right) ^ { \prime } g ^ { \prime \prime } \left( t _ { 0 } \right)
+- \sum _ { i = 1 } ^ { n } \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( \left( f - S _ { f } \right) ^ { \prime } ( x ) g ^ { \prime \prime \prime } ( x ) \right) d x\\
+= & - \sum _ { i = 1 } ^ { n } g _ { i } \int _ { t _ { i - 1 } } ^ { t _ { i } } \left( f - S _ { f } \right) ^ { \prime } ( x ) d x\\
+= & - \sum _ { i = 1 } ^ { n } g _ { i } \left( \left( f - S _ { f } \right) \left( t _ { i } \right) - \left( f - S _ { f } \right) \left( t _ { i - 1 } \right) \right)\\
+= & 0
+\end{aligned}
+$$
+则
+$$
+\int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) - S _ { f } ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+= \int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) - S ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+- \int _ { a } ^ { b } \left( g ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+\le \int _ { a } ^ { b } \left( f ^ { \prime \prime } ( x ) - S ^ { \prime \prime } ( x ) \right) ^ { 2 } d x
+$$
+
+\newpage
+
+\section{编程作业}
+\subsection{简述}
+实现 3 次 \Bezier 样条曲线的交互式生成程序。
+
+参考 Microsoft Word 或 Powerpoint 中的“插入”-“线条”-“曲线”的画图工具的交互界面：
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img0}
+  \caption{3 次\Bezier 样条曲线交互示例}
+\end{figure}
+\subsection{算法}
+用户输入 $n+1$ 个顶点 $\pmb{k}_{0},\pmb{k}_{1},\dots,\pmb{k}_{n}$，然后根据 Uniform、Chordal 或 Centripetal 参数化来生成结序列 $t_0,t_1,\dots,t_n$，满足 $t_0<t_1<\dots<t_n$。选择 Bessel、Natural 或 Close 端点条件，再根据插值、$C^1$ 连续和 $C^2$ 连续条件求出 $3n+1$ 个 \Bezier 点 $\pmb{b}_0,\pmb{b}_1,\dots,\pmb{b}_{3n}$。然后用 De Casteljau 算法求出由 $\pmb{b}_{3*i},\pmb{b}_{3*i+1},\pmb{b}_{3*i+2},\pmb{b}_{3*i+3}(i=0,\dots,n-1)$ 决定的 \Bezier 曲线，这 $n$ 条曲线就构成了 \Bezier 样条曲线。
+
+\newpage
+
+\subsubsection{参数化}
+\begin{itemize}
+\item Uniform：$t_{i+1}-t_i=C$，程序实现中选择 $C=1$  
+\item Chordal：$t_{i+1}-t_i=\|\pmb{k}_{i+1}-\pmb{k}_i\|$ 
+\item Centripetal：$t_{i+1}-t_i=\sqrt{\|\pmb{k}_{i+1}-\pmb{k}_i\|}$ 
+\end{itemize}
+
+\subsubsection{端点条件}
+\begin{itemize}
+\item Bessel
+$$
+\begin{aligned}
+\pmb{p} ( t ) &= \frac { \left( t _ { 2 } - t \right) \left( t _ { 1 } - t \right) } { \left( t _ { 2 } - t _ { 0 } \right) \left( t _ { 1 } - t _ { 0 } \right) } \pmb{k} _ { 0 } + \frac { \left( t _ { 2 } - t \right) \left( t - t _ { 0 } \right) } { \left( t _ { 2 } - t _ { 1 } \right) \left( t _ { 1 } - t _ { 0 } \right) } \pmb{k} _ { 1 } + \frac { \left( t _ { 0 } - t \right) \left( t _ { 1 } - t \right) } { \left( t _ { 2 } - t _ { 1 } \right) \left( t _ { 2 } - t _ { 0 } \right) } \pmb{k} _ { 2 }\\
+\dot { \pmb{p} } \left( t _ { 0 } \right) &= - \frac { \left( t _ { 2 } - t _ { 0 } \right) + \left( t _ { 1 } - t _ { 0 } \right) } { \left( t _ { 2 } - t _ { 0 } \right) \left( t _ { 1 } - t _ { 0 } \right) } \pmb{k} _ { 0 } + \frac { \left( t _ { 2 } - t _ { 0 } \right) } { \left( t _ { 2 } - t _ { 1 } \right) \left( t _ { 1 } - t _ { 0 } \right) } \pmb{k} _ { 1 } - \frac { \left( t _ { 1 } - t _ { 0 } \right) } { \left( t _ { 2 } - t _ { 1 } \right) \left( t _ { 2 } - t _ { 0 } \right) } \pmb{k} _ { 2 }\\
+\pmb { b } _ { 1 } &= \pmb { b } _ { 0 } + \frac { t _ { 1 } - t _ { 0 } } { 3 } \dot { \pmb { p } } \left( t _ { 0 } \right)
+\end{aligned}
+$$
+\item Natural
+$$
+\begin{array} { l } { \ddot { \pmb{x} } \left( t _ { 0 } \right) = 0 \Leftrightarrow \pmb{b} _ { 1 } = \frac { \pmb{b} _ { 2 } + \pmb{b} _ { 0 } } { 2 } } \\ { \ddot { \pmb{x} } \left( t _ { n } \right) = 0 \Leftrightarrow \pmb{b} _ { 3 n - 1 } = \frac { \pmb{b} _ { 3 n - 2 } + \pmb{b} _ { 3 n } } { 2 } } \end{array}
+$$
+\item Close（在程序实现中允许首尾结点不相接）
+$$
+\begin{array} { l } 
+{ \dot { \pmb{x} } \left( t _ { 0 } \right) = \dot { \pmb{x} } \left( t _ { n } \right) } \\
+{ \ddot { \pmb{x} } \left( t _ { 0 } \right) = \ddot { \pmb{x} } \left( t _ { n } \right) } \end{array}
+$$
+\end{itemize}
+
+\newpage
+
+\subsection{程序结果}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{img2}
+  \caption{不同参数化和不同端点条件下的结果比对}
+\end{figure}
+
+其中{\color{red}红点}是中间的控制点，{\color{yellow}黄点}是首尾控制点，{\color{cyan}青色曲线}是 \Bezier 样条曲线。
+
+可以明显看到 Close 端点条件在{\color{yellow}黄点}处更平滑。
+
+\end{CJK*}
+\end{document}
