@@ -22,7 +22,7 @@ function varargout = App_BezierSpline(varargin)
 
 % Edit the above text to modify the response to help App_BezierSpline
 
-% Last Modified by GUIDE v2.5 13-Oct-2019 21:27:13
+% Last Modified by GUIDE v2.5 13-Oct-2019 21:57:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -66,11 +66,12 @@ clc;
 
 hold on;
 
-global userData complete radius inControl;
+global userData complete radius inControl  curIdx;
 userData = UserData();
 complete = false;
 radius = 0.5;
 inControl = true;
+ curIdx = -1;
 
 % --- Outputs from this function are returned to the command line.
 function varargout = App_BezierSpline_OutputFcn(hObject, eventdata, handles) 
@@ -117,7 +118,7 @@ function menuP_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns menuP contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from menuP
-global userData;
+global userData inControl;
 cla(handles.axes1);
 DrawBezierSpline(userData.GetP(), handles.menuP.Value, handles.menuEC.Value, inControl);
 
@@ -161,14 +162,33 @@ function figure1_WindowButtonMotionFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global userData complete radius inControl;
-
-if complete
-    return;
-end
+global userData complete radius inControl curIdx;
 
 curP = handles.axes1.CurrentPoint;
 curP = [curP(1, 1), curP(1, 2)];
+
+if complete
+    cla(handles.axes1);
+    if curIdx >= 0
+        if handles.menuEC.Value == 3 && curIdx == 1 && sqrt(sum((curP-userData.GetLastP()).^2)) < radius
+            userData = userData.SetPat(curIdx, userData.GetLastP());
+            DrawCircle(userData.GetLastP(), radius);
+        elseif handles.menuEC.Value == 3 && curIdx == userData.Size() && sqrt(sum((curP-userData.GetFirstP()).^2)) < radius
+            userData = userData.SetPat(curIdx, userData.GetFirstP());
+            DrawCircle(userData.GetFirstP(), radius);
+        else
+            userData = userData.SetPat(curIdx, curP);
+            DrawCircle(curP, radius);
+        end
+    else
+        idx = userData.GetCloseP(curP, radius);
+        if idx >= 0 && inControl
+            DrawCircle(userData.GetPat(idx), radius);
+        end
+    end
+    DrawBezierSpline(userData.GetP(), handles.menuP.Value, handles.menuEC.Value, inControl);
+    return;
+end
 
 % out of range
 if curP(1) < handles.axes1.XLim(1) || curP(1) > handles.axes1.XLim(2) || curP(2) < handles.axes1.YLim(1) || curP(2) > handles.axes1.YLim(2)
@@ -204,20 +224,26 @@ function figure1_WindowButtonDownFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global userData recentPress complete radius inControl;
+global userData recentPress complete radius inControl  curIdx;
+
+curP = handles.axes1.CurrentPoint;
+curP = [curP(1, 1), curP(1, 2)];
 
 if complete
+    idx = userData.GetCloseP(curP, radius);
+    if idx >= 0 && inControl
+        userData = userData.SetPat(idx, curP);
+        cla(handles.axes1);
+        DrawBezierSpline(userData.GetP(), handles.menuP.Value, handles.menuEC.Value, inControl);
+        DrawCircle(curP, radius);
+        curIdx = idx;
+    else
+        curIdx = -1;
+    end
     return;
 end
 
 cla(handles.axes1);
-
-%TODO
-%1. mouse key type
-%2. min dist
-
-curP = handles.axes1.CurrentPoint;
-curP = [curP(1, 1), curP(1, 2)];
 
 if userData.Size() > 1 && handles.menuEC.Value == 3 && sqrt(sum((curP-userData.GetFirstP()).^2)) < radius
     curP = userData.GetFirstP();
@@ -248,3 +274,13 @@ global userData inControl;
 inControl = ~inControl;
 cla(handles.axes1);
 DrawBezierSpline(userData.GetP(), handles.menuP.Value, handles.menuEC.Value, inControl);
+
+
+% --- Executes on mouse press over figure background, over a disabled or
+% --- inactive control, or over an axes background.
+function figure1_WindowButtonUpFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global curIdx;
+curIdx = -1;

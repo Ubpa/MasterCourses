@@ -42,6 +42,18 @@ classdef UserData
             P = obj.P;
         end
         
+        function P = GetPat(obj, i)
+            %GETP 返回所有控制点
+            %    返回所有控制点
+            P = obj.P(i, :);
+        end
+        
+        function obj = SetPat(obj, i, pos)
+            %GETP 返回所有控制点
+            %    返回所有控制点
+            obj.P(i, :) = pos;
+        end
+        
         function P = GetLastP(obj)
             %GETP 返回所有控制点
             %    返回所有控制点
@@ -52,6 +64,16 @@ classdef UserData
             %GETP 返回所有控制点
             %    返回所有控制点
             P = obj.P(1, :);
+        end
+        
+        function idx = GetCloseP(obj, pos, radius)
+            idx = -1;
+            for i = 1:obj.Size()
+                if sqrt(sum((obj.P(i, :) - pos).^2)) < radius
+                    idx = i;
+                    return;
+                end
+            end
         end
     end
 end

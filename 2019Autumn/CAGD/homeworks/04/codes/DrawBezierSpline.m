@@ -32,8 +32,10 @@ for i = 1:n
 end
 
 if inControl
-    plot(k(:,1), k(:, 2), '.r', 'MarkerSize', 32);
-    plot(b(:,1), b(:, 2), 'g', 'LineWidth', 2);
+    plot(k(2:n,1), k(2:n, 2), '.r', 'MarkerSize', 32);
+    plot(k(1,1), k(1, 2), '.y', 'MarkerSize', 32);
+    plot(k(n+1,1), k(n+1, 2), '.y', 'MarkerSize', 32);
+    %plot(b(:,1), b(:, 2), 'g', 'LineWidth', 2);
 end
 
 end
