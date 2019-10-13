@@ -6,6 +6,7 @@
   - [01. 拟合](homeworks/solutions/01/) 
   - [02. Bezier 曲线](homeworks/solutions/02/) 
   - [03. 渐屈线](homeworks/solutions/03/) 
+  - [04. Bezier 样条](homeworks/solutions/04/) 
 - [笔记](notes/) 
   - [01. Fit](notes/01_Fit.md) 
   - [02. Bezier Curve](notes/02_BezierCurve.md) 
