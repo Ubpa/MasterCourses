@@ -412,3 +412,4 @@ $$
 $$
 \left\|P_Mx-m^{(k)}\right\|\le\frac{(1-\beta)^k}{\beta r_x}(d(x,M)-d^{(0)})
 $$
+
