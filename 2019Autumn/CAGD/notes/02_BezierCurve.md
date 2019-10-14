@@ -109,7 +109,7 @@ $$
   
 - 端点：$\pmb{x}(0)=\pmb{p}_0,\pmb{x}(1)=\pmb{p}_n$ 
 
-### 2.3.3 升阶
+### 2.3.3 升阶 degree elevation
 
 给定 $\pmb{p}_0,\dots,\pmb{p}_n$ 可得 $\pmb{x}(t)$，想生成 $n+2$ 个点来得到曲线 $\bar{\pmb{x}}(t)$，满足 $\bar{\pmb{x}}(t)=\pmb{x}(t)$ 
 
@@ -124,3 +124,70 @@ $$
 >
 > ![1570786423038](assets/1570786423038.jpg)
 
+### 2.3.4 划分 subdivision
+
+给定 $\pmb{b}_0,\pmb{b}_n\to \pmb{x}(t),t\in [0,1]$，想要两条曲线
+
+- $\pmb{b}_0^{[1]},\dots,\pmb{b}_n^{[1]}\to \pmb{x}^{[1]}(t)$ 
+- $\pmb{b}_0^{[2]},\dots,\pmb{b}_n^{[2]}\to \pmb{x}^{[2]}(t)$ 
+
+两条曲线合并可得到 $\pmb{x}=\pmb{x}^{[1]}\cup \pmb{x}^{[2]}$ 
+
+结果 $\pmb{b}^{[1]}_i = \pmb{b}_0^{(i)},\pmb{b}_i^{[2]}=\pmb{b}^{(n-i)}_i(i=0,\dots,n)$  
+
+![1571038016040](assets/1571038016040.jpg)
+
+### 2.3.5 曲线范围 curve range
+
+![1571038696436](assets/1571038696436.jpg)
+
+## 2.4 矩阵表示
+
+三次 Bezier 曲线 $P(t) = V_0B_{0,3}+V_1B_{1,3}+V_2B_{2,3}+V_3B_{3,3}$ 
+$$
+\begin{aligned}
+B_{0,3}&=(1-t)^3\\
+B_{1,3}&=3t(1-t)^2\\
+B_{2,3}&=3t^2(1-t)\\
+B_{3,3}&=t^3\\
+\end{aligned}
+$$
+
+可写成矩阵形式
+$$
+P(t)=
+\left[\begin{matrix}
+t^3 & t^2 & t & 1
+\end{matrix}\right]
+\left(\begin{matrix}
+-1 &  3 & -3 &  1\\
+ 3 & -6 &  3 &  0\\
+-3 &  3 &  0 &  0\\
+ 1 &  0 &  0 &  0
+\end{matrix}\right)
+\left[\begin{matrix}
+V0\\
+V1\\
+V2\\
+V3\\
+\end{matrix}\right]
+$$
+切向量
+$$
+P^\prime(t)=
+\left[\begin{matrix}
+3t^2 & 2t & 1 & 0
+\end{matrix}\right]
+\left(\begin{matrix}
+-1 &  3 & -3 &  1\\
+ 3 & -6 &  3 &  0\\
+-3 &  3 &  0 &  0\\
+ 1 &  0 &  0 &  0
+\end{matrix}\right)
+\left[\begin{matrix}
+V0\\
+V1\\
+V2\\
+V3\\
+\end{matrix}\right]
+$$
