@@ -12,6 +12,8 @@ $$
 $$
 或者换个记法，令 $\Lambda\triangleq \text{span}\{\lambda_i\}_{i=1}^n$，希望将 $x$ 分解为 $x=m+(x-m)$，其中 $m\in M$，$x-m\in \Lambda_\perp\triangleq\{y\in X:\lambda y = 0,\forall \lambda \in \Lambda\}$ 
 
+> P 就是一个将任意连续函数 x 转变成合适的插值函数 m 的算子
+>
 > $\lambda_i$ 可以视为点泛函来方便理解，称为**插值点** 
 >
 > $\lambda_i(Px)=\lambda_ix\quad(i=1,2,\dots,n)$ 称为**插值条件** 
@@ -47,6 +49,8 @@ $$
 > \lambda_i x=\lambda_im=\sum_{j=1}^n\alpha_j(\lambda_i m_j)\quad(i=1,2,\dots,n)
 > $$
 > 的充要条件为 $G\triangleq (\lambda_i m_j)_{i,j=1}^n$ 可逆
+>
+> 其实这说明插值点在 M 上是线性无关的，参考 [3.2.2 极小线性投影](#3.2.2 极小线性投影) 上的引理 3.1
 
 若 $M$ 和 $\Lambda$ 给出正确的线性插值问题，则确定了从 $X$ 到 $M$ 的线性投影算子 $P\triangleq P_{M,\Lambda}$，且满足
 $$
@@ -81,11 +85,17 @@ $$
 & \hat m_i\perp \Lambda_{i-1}, \hat\lambda_i\perp M_{i-1}
 \end{aligned}
 $$
+> $\hat m_i=m_i-P_{i-1}m_i$ 就是基函数与其在低维空间上的满足线性插值条件的拟合函数的误差，因此这个误差函数满足 $m_i\perp \Lambda_{i-1}$。
+>
+> 插值空间上也有类似结论
+
 **定理 3.2** 设 $\hat m_i$ 和 $\hat\lambda_i$ 的定义如前，则
 
 - $\text{span}\{\hat m_i(t)\}^k_{i=1}=\text{span}\{m_i(t)\}^k_{i=1}=M_k$，$\text{span}\{\hat \lambda_i(t)\}^k_{i=1}=\text{span}\{\lambda_i(t)\}^k_{i=1}=\Lambda_k$ $(i=1,2,\dots,n)$ 
 - $\hat\lambda_i \hat m_j = 0(i\neq j),\hat\lambda_i \hat m_i\neq 0$ 
 - $P_k x=\sum_{j=1}^k\frac{\hat \lambda_j x}{\hat \lambda_j \hat m_j} \hat m_j$ 
+
+TODO Newton 插值
 
 ## 3.2 线性插值的误差
 
@@ -95,10 +105,36 @@ $$
 $$
 |\mu(I-P)x|\le d(\mu,\Lambda)\|I-P\|d(x,M)
 $$
+> 证明：
+>
+> 满足插值条件的 P 有 $\Lambda P X=\Lambda X\Leftrightarrow\Lambda P = \Lambda I\Leftrightarrow \Lambda(I-P)=0 \Leftrightarrow \forall \lambda \in \Lambda,\lambda(I-P)=0$ 
+>
+> 此外 $PM=M\Leftrightarrow P|_M = I\Leftrightarrow (I - P|_M)=0\Leftrightarrow \forall m \in M, (I-P)m=0$。
+>
+> 则
+> $$
+> \begin{aligned} \mu ( I - P ) x & = ( \mu - \lambda ) ( I - P ) x \\ & = ( \mu - \lambda ) ( I - P ) ( x - m ) \\ & \leqslant \| \mu - \lambda \| \cdot \| I - P \| \cdot \| x - m \| \end{aligned}
+> $$
+> 由此得
+> $$
+> \begin{aligned} | \mu ( I - P ) x | & \leqslant \inf _ { \lambda \in A } \| \mu - \lambda \| \cdot \| I - P \| \cdot \inf _ { m \in M } \| x - m \| \\ & = d ( \mu , \Lambda ) \| I - P \| d ( x , M ) \end{aligned}
+> $$
+
 **推论 3.1** 
 $$
 \|x-Px\|\le \|I-P\| d(x,M)
 $$
+
+> 证明：
+>
+> $\forall m \in M$，有
+> $$
+> \|(I-P)x\|=\|(I-P)(x-m)\|\le \|I-P\|\|x-m\|
+> $$
+> 则
+> $$
+> \|x-Px\|\le \|I-P\| d(x,M)
+> $$
 
 ### 3.2.2 极小线性投影
 
@@ -108,13 +144,139 @@ $$
 
 **引理 3.1** 设 $M$ 是 $X$ 中的 $n$ 维子空间，$\{\lambda_i\}_{i=1}^m\subset X^*$，则 $\{\lambda_i\}_{i=1}^m$ 在 $M$ 上线性无关的充要条件是 $\exist \{m_j\}_{j=1}^m\subset M$ 使得 $(\lambda_i m_j)_{i,j=1}^n=I_n$。
 
+> $\{\lambda_i\}_{i=1}^m$ 在 $M\triangleq \text{span}\{m_i^\prime\}_{i=1}^n$ 上线性无关的充要条件是矩阵 $G\triangleq (\lambda_i m_j^\prime)_{i,j=1}^n$ 可逆，因为
+> $$
+> G = \left( \begin{array} { c } { \lambda _ { 1 } } \\ { \lambda _ { 2 } } \\ { \vdots } \\ { \lambda _ { n } } \end{array} \right) \left( m _ { 1 } ^ { \prime } , m _ { 2 } ^ { \prime } , \cdots , m _ { n } ^ { \prime } \right) = \lambda \left( m ^ { \prime } \right) ^ { \mathrm { T } }
+> $$
+>
+> 可逆，取 $m=(G^{-1})^\top m^\prime$，则
+> $$
+> \lambda m ^ { \mathrm { T } } = \lambda \left( G ^ { - \mathrm { T } } m ^ { \prime } \right) ^ { \mathrm { T } } = \lambda \left( m ^ { \prime } \right) ^ { \mathrm { T } } G ^ { - 1 } = G \cdot G ^ { - 1 } = I _ { n }
+> $$
+
 **推论 3.2** 设 $M=\text{span}\{m_i\}_{i=1}^n$，则 $\exist\{\lambda_i\}_{i=1}^n\subset \Lambda$，使得 $\lambda_i m_j=\delta_{ij}$。
 
 **定理 3.4** 设 $X$ 是可分的（即具有可数的稠密子集）赋范线性空间，$M\subset X$，$\dim(M)=n$，则存在从 $X$ 到 $M$ 的极小和最优的线性投影。
 
-## 3.2.3 线性投影算子的范数
+### 3.2.3 线性投影算子的范数
 
 **定理 3.5** 设 $P$ 是从 $M$ 和 $\Lambda$ 所决定的线性投影算子，则
 $$
 \|P\|=\sup_{m\in M}\inf_{\lambda \in \Lambda}\frac{\|\lambda\|\|m\|}{|\lambda m|}
 $$
+
+令 $M\triangleq \text{span}\{m\}_{i=1}^n,\Lambda=\text{span}\{\lambda_i\}_{i=1}^n$，则
+$$
+\| P \| = \sup _ { \alpha } \inf _ { \beta } \frac { \left\| \sum _ { j = 1 } ^ { n } \alpha _ { j } m _ { j } \right\| \cdot \left\| \sum _ { i = 1 } ^ { n } \beta _ { i } \lambda _ { i } \right\| } { \left| \sum _ { i , j = 1 } ^ { n } \alpha _ { j } \beta _ { i } \lambda _ { i } m _ { j } \right| }
+$$
+若存在常数 $c_m,C_m,c_\lambda,C_\lambda$ 使得
+$$
+\begin{array} { l } { c _ { m } \| \alpha \| _ { \infty } \leqslant \left\| \sum _ { j = 1 } ^ { n } \alpha _ { j } m _ { j } \right\| \leqslant C _ { m } \| \alpha \| _ { \infty } } \\ { c _ { \lambda } \| \beta \| _ { 1 } \leqslant \left\| \sum _ { i = 1 } ^ { n } \beta _ { i } \lambda _ { i } \right\| \leqslant C _ { \lambda } \| \beta \| _ { 1 } } \end{array}
+$$
+
+> **中间步骤** 
+>
+> 那么
+> $$
+> c _ { \lambda } c _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } \leqslant \| P \| \leqslant C _ { \lambda } C _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| }
+> $$
+> 注意到
+> $$
+> \begin{aligned}
+> \inf _ { \alpha } \sup _ { \beta } \left( \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \|\beta\|_1 }\cdot \frac{1}{\| \alpha \| _ { \infty }} \right)
+> & = \inf _ { \alpha } \frac { \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty } } { \| \alpha \| _ { \infty } } \\
+> & = \inf _ { \alpha ^ { \prime } } \frac { \left\| \alpha ^ { \prime } \right\| _ { \infty } } { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \alpha ^ { \prime } \right\| _ { \infty } } \\
+> & = \frac { 1 } { \sup _ { \alpha ^ { \prime } } \frac { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \alpha ^ { \prime } \right\| _ { \infty } } { \left\| \alpha ^ { \prime } \right\| _ { \infty } } } = \frac { 1 } { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } }
+> \end{aligned}
+> $$
+>
+> > **第一个等号** 
+> >
+> > 若 $(\lambda_i m_j)\alpha$ 在第 k 个分量达到绝对值最大，那么通过取 $\beta_j=\delta_{kj}$ 可得
+> > $$
+> > \sup _ { \beta } \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \geqslant \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
+> > $$
+> > 另一方面
+> > $$
+> > \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \leqslant \frac { \| \beta \| _ { 1 } \cdot \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty } } { \| \beta \| _ { 1 } } = \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
+> > $$
+> > **后边的等号** 
+> >
+> > 可以写成
+> > $$
+> > \inf_\alpha\frac{\|(\lambda_i m_j)\alpha\|_\infty}{\|\alpha\|_\infty}
+> > =\min\{\lambda_i m_j\}_{i,j=1}^n
+> > = \frac { 1 } { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } }
+> > $$
+>
+
+从而可得
+$$
+c _ { \lambda } c _ { m } \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } \leqslant \| P \| \leqslant C _ { \lambda } C _ { m } \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty }
+$$
+
+### 3.2.4 多项式插值节点的最优选择
+
+> 设 $\Lambda\triangleq \text{span}\{\lambda_i\}_{i=1}^n$，$\lambda_i=[t_i]$，$\tau\in I_{0,0}^n$，$M=\text{span}\{m_i\}_{i=1}^n$，
+> $$
+> m_i(t)=l_i(t)=\prod_{j=1,j\neq i}^n\frac{t-t_j}{t_i-t_j}
+> $$
+>
+> 由于
+> $$
+> \lambda=\sum_{i=1}^n\beta_i\lambda_i=\sum_{i=1}^n\beta_i[t_i]
+> $$
+> 故
+> $$
+> \|\lambda\|=\sum_{i=1}^n|\beta_i|=\|\beta\|_1\quad\Rightarrow\quad c_\lambda=C_\lambda=1
+> $$
+> 令 $L_\tau(t)=\sum_{i=1}^n |l_i(t)|$，称为 Lebesgue 函数，有
+> $$
+> \begin{array} { l } { \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right\| = \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } l _ { i } ( t ) \right\| \leqslant \| \alpha \| _ { \infty } \left\| L _ { \tau } ( t ) \right\| _ { \infty } } \\ { \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right\| = \sup _ { t } \left| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } ( t ) \right| \geqslant \max _ { i } \left| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right| _ { t = t _ { i } } = \max _ { l } \left| \alpha _ { l } \right| = \| \alpha \| _ { \infty } } \end{array}
+> $$
+> 又 $\left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } = \left\| I _ { n } \right\| = 1$，则 $1 \leqslant \left\| P _ { n , r } \right\| \leqslant \left\| L _ { \tau } ( t ) \right\| _ { \infty }$，事实上可证明右侧等号成立，则 $1 \leqslant \left\| P _ { n , r } \right\| = \left\| L _ { \tau } ( t ) \right\| _ { \infty }$
+
+$\tau^e$ 是 $[a,b]$ 上扩充的 Tchebycheff 点，有
+$$
+\|L_{n,\tau^e}\|\sim\frac{2}{\pi}\ln n+0.6
+$$
+虽然 $\lim_\limits{n \to \infty}\|P_{n,\tau^e}\|=\infty$，但因为阶为 $\ln n$，所以趋于无穷的速度不快。因而从逼近阶的角度，扩充的 Tchebycheff 插值节点 $\tau^e$ 可作为近似的最优插值节点
+
+### 3.2.5 从 $\overset{\circ}{C}$ 到 $\overset{\circ}{\mathcal{P}}_n$ 的极小投影
+
+令
+$$
+\overset{\circ}{\mathcal{P}}_n \triangleq\text{span}\{1,\sin rt,\cos rt\}_{r=1}^n
+$$
+为 $2n + 1$ 维的三角多项式空间，为方便起见，记
+$$
+\overset{\circ}{\mathcal{P}}_n\triangleq\text{span}\{e_r\}_{r=-n}^n,e_r\triangleq^{\sqrt{-1}rt}
+$$
+系数可为复数，$\overset{\circ}{C}$ 表示连续的周期为 $2\pi$ 的函数空间，显然 $\dim \overset{\circ}{\mathcal{P}}_n=2n+1$，$\overset{\circ}{\mathcal{P}}_n\subset \overset{\circ}{C}$，定义线性投影算子 $S_n:\overset{\circ}{C}\mapsto\overset{\circ}{\mathcal{P}}_n$，如下
+$$
+S_nf=\sum _ { r = - n } ^ { n } \left( \frac { 1 } { 2 \pi } \int _ { - \pi } ^ { \pi } f \cdot e _ { - r } \mathrm { d } t \right) e _ { r }
+$$
+
+为函数 $f$ 的 Fourier 级数前 $2n+1$ 项的部分和，可知
+$$
+\begin{aligned} S _ { n } ( f ) & = \frac { 1 } { 2 \pi } \int _ { - \pi } ^ { \pi } f \mathrm { d } t + \frac { 1 } { 2 \pi } \sum _ { r = 1 } ^ { n } \left( \int _ { - \pi } ^ { \pi } f \mathrm { e } ^ { - \sqrt { - 1 } r s } \mathrm { d } s \cdot \mathrm { e } ^ { \sqrt { - 1 } r t } + \int _ { - \pi } ^ { \pi } f \mathrm { e } ^ { \sqrt { - 1 } r s } \mathrm { d } s \cdot \mathrm { e } ^ { - \sqrt { - 1 } r t } \right) \\ & = \frac { 1 } { 2 \pi } \int _ { - \pi } ^ { \pi } f \mathrm { d } t + \frac { 1 } { 2 \pi } \sum _ { r = 1 } ^ { n } \left( \int _ { - \pi } ^ { \pi } f \cdot \left( \mathrm { e } ^ { - \sqrt { - 1 } r ( s - t ) } + \mathrm { e } ^ { \sqrt { - 1 } r ( s - t ) } \right) \mathrm { d } s \right) \\ & = \frac { 1 } { 2 \pi } \int _ { - \pi } ^ { \pi } f \mathrm { d } t + \frac { 1 } { \pi } \sum _ { r = 1 } ^ { n } \int _ { - \pi } ^ { \pi } f \cdot \cos ( s - t ) \mathrm { d } s \\ & = \frac { 1 } { 2 \pi } \int _ { - \pi } ^ { \pi } f \mathrm { d } t + \frac { 1 } { \pi } \sum _ { r = 1 } ^ { n } \left( \int _ { - \pi } ^ { \pi } f \cos r t \mathrm { d } t \cdot \cos r t + \int _ { - \pi } ^ { \pi } f \sin r t \mathrm { d } t \cdot \sin r t \right) \end{aligned}
+$$
+**定理 3.7** $S_n$ 是从 $\overset{\circ}{C}$ 到 $\overset{\circ}{\mathcal{P}}_n$ 的极小投影，且
+$$
+\|S_n\|=\frac{4}{\pi^2}\ln n+O(1)
+$$
+
+## 3.4 从 $C[a,b]$ 到 $\mathcal{P}_n$ 的线性投影算子的下界
+
+$$
+\|P\|\ge\frac{2}{\pi^2}\ln n+O(1)
+$$
+
+## 3.5 线性投影算子的收敛性质
+
+**定理 3.10** 设 X 是 Banach 空间，$\{P_n\}$ 是从 $X\to M_n$ 的线性投影算子序列，$\text{range} P_n=M_n$，则
+$$
+\lim_\limits{n \to \infty} \|P_n-I\|=0
+$$
+（即对 $\forall x\in X$，$\|P_n-O\|\to 0$s 当且仅当 $\|P_n\|$ 一致有界，且 $\lim M_n=X$，其中 $\lim M_n\triangleq \{x\in X,d(x,M_n)\to 0\}$。
+
