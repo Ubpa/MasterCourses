@@ -1,7 +1,7 @@
 function d = DeBoorPoints(k, s)
     n = size(k,1) - 1;
     
-    if n <= 1
+    if n <= 0
         d = k;
         return;
     end
@@ -53,6 +53,5 @@ function d = DeBoorPoints(k, s)
             A(i,i+1) = N(t,idx-1,4,s(idx-3));
         end
     end
-    A
     d = A \ b;
 end

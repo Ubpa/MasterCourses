@@ -22,7 +22,7 @@ function varargout = App_BSpline(varargin)
 
 % Edit the above text to modify the response to help App_BSpline
 
-% Last Modified by GUIDE v2.5 18-Oct-2019 12:39:07
+% Last Modified by GUIDE v2.5 19-Oct-2019 03:01:43
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -94,6 +94,7 @@ function btnBack_Callback(hObject, eventdata, handles)
 global uiMngr;
 uiMngr.GetPointData().Pop();
 uiMngr.RefreshAxes();
+uiMngr.SetComplete(false);
 
 
 % --- Executes on button press in btnReset.
@@ -133,6 +134,11 @@ function figure_WindowButtonDownFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global uiMngr;
+
+if uiMngr.IsComplete()
+    return;
+end
+
 [p, isInRange] = uiMngr.GetAxesP();
 if ~isInRange
     return;
@@ -140,4 +146,16 @@ end
 
 pd = uiMngr.GetPointData();
 pd.Push([p,uiMngr.GetMultiplicity()]);
+if strcmp(handles.figure.SelectionType, 'alt')
+    uiMngr.SetComplete(true);
+end
+uiMngr.RefreshAxes();
+
+
+% --- Executes on mouse motion over figure - except title and menu.
+function figure_WindowButtonMotionFcn(hObject, eventdata, handles)
+% hObject    handle to figure (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global uiMngr;
 uiMngr.RefreshAxes();

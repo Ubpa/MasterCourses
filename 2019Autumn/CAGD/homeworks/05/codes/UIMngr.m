@@ -4,6 +4,7 @@ classdef UIMngr < handle
         handles;
         pd;
         isCtrl;
+        complete;
     end
     
     methods
@@ -12,6 +13,14 @@ classdef UIMngr < handle
             obj.pd = PointData();
             obj.handles = handles;
             obj.isCtrl = true;
+            obj.complete = false;
+        end
+        
+        function isComplete = IsComplete(obj)
+            isComplete = obj.complete;
+        end
+        function SetComplete(obj, isComplete)
+            obj.complete = isComplete;
         end
         
         function pd = GetPointData(obj)
@@ -21,11 +30,20 @@ classdef UIMngr < handle
         function Reset(obj)
             obj.pd.Reset();
             obj.RefreshAxes();
+            obj.complete = false;
+            obj.isCtrl = true;
         end
         
         function RefreshAxes(obj)
             cla(obj.handles.axes);
-            DrawBSpline(obj.pd.GetAllP(), obj.isCtrl);
+            [axesP, isInRange] = obj.GetAxesP();
+            if isInRange && ~obj.complete % track mouse
+                curP = [axesP, obj.GetMultiplicity()];
+                p = [obj.pd.GetAllP(); curP];
+            else
+                p = obj.pd.GetAllP();
+            end
+            DrawBSpline(p, obj.isCtrl);
         end
         
         function [p, isInRange] = GetAxesP(obj)
