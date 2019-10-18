@@ -143,7 +143,6 @@ $$
   \begin{aligned} T & = \left( t _ { 0 } , t _ { 1 } , t _ { 2 } , t _ { 3 } , t _ { 4 } , \ldots , t _ { n + 2 } , t _ { n + 3 } , t _ { n + 4 } , t _ { n + 5 } , t _ { n + 6 } \right) \\ & = \left( s _ { 0 } , s _ { 0 } , s _ { 0 } , s _ { 0 } , s _ { 1 } , \ldots , s _ { n - 1 } , s _ { n } , s _ { n } , \quad s _ { n } , \quad s _ { n } \right) \end{aligned}
   $$
   
-
 - 插值条件
   $$
   \begin{aligned}
@@ -230,7 +229,7 @@ $$
 - 2 个端点条件
 - $C^2$ 连续、插值条件
 
-从而得到 $\pmb{b}_0,\dots,b_{3n}$ 
+从而得到 $\pmb{b}_0,\dots,\pmb{b}_{3n}$ 
 
 现想得到相同曲线的 B-spline 形式
 
@@ -240,9 +239,11 @@ $$
 
 - $\pmb{d}_0,\dots,\pmb{d}_{n+2}$ 满足
   $$
-  \begin{aligned} d _ { 0 } & = b _ { 0 } \\ d _ { 1 } & = b _ { 1 } \\ d _ { i } & = b _ { 3 i - 4 } + \frac { \Delta _ { i - 1 } } { \Delta _ { i - 2 } } \left( b _ { 3 i - 4 } - b _ { 3 i - 5 } \right) \text { for } i = 2 , \ldots , n \\ d _ { n + 1 } & = b _ { 3 n - 1 } \\ d _ { n + 2 } & = b _ { 3 n } \end{aligned}
+  \begin{aligned} \pmb{d} _ { 0 } & = \pmb{b} _ { 0 } \\ \pmb{d} _ { 1 } & = \pmb{b} _ { 1 } \\ \pmb{d} _ { i } & = \pmb{b} _ { 3 i - 4 } + \frac { \Delta _ { i - 1 } } { \Delta _ { i - 2 } } \left( \pmb{b} _ { 3 i - 4 } - \pmb{b} _ { 3 i - 5 } \right) \text { for } i = 2 , \ldots , n \\ \pmb{d} _ { n + 1 } & = \pmb{b} _ { 3 n - 1 } \\ \pmb{d} _ { n + 2 } & = \pmb{b} _ { 3 n } \end{aligned}
   $$
   其中 $\Delta_i= t_{i+1}-t_i,t=0,\dots,n-1$ 
 
+> 示例
+>
 > ![1571324448351](assets/1571324448351.jpg)
 

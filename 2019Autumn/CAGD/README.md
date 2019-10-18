@@ -11,6 +11,7 @@
   - [02. Bezier 曲线](homeworks/02/) 
   - [03. 渐屈线](homeworks/03/) 
   - [04. Bezier 样条](homeworks/04/) 
+  - [05. B-Splines](homeworks/05/) 
 - [笔记](notes/) 
   - [01. Fit](notes/01_Fit.md) 
   - [02. Bezier Curve](notes/02_BezierCurve.md) 
