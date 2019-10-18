@@ -1,10 +1,12 @@
 classdef UIMngr < handle
     
-    properties(Access = private) % default public
+    properties % default public
         handles;
+        radius = 0.75;
         pd;
         isCtrl;
         complete;
+        hoverIdx;
     end
     
     methods
@@ -14,6 +16,7 @@ classdef UIMngr < handle
             obj.handles = handles;
             obj.isCtrl = true;
             obj.complete = false;
+            obj.hoverIdx = -1;
         end
         
         function isComplete = IsComplete(obj)
@@ -32,13 +35,26 @@ classdef UIMngr < handle
             obj.RefreshAxes();
             obj.complete = false;
             obj.isCtrl = true;
+            obj.hoverIdx = -1;
         end
         
         function RefreshAxes(obj)
             cla(obj.handles.axes);
             [axesP, isInRange] = obj.GetAxesP();
+            curP = [axesP, obj.GetMultiplicity()];
+            if obj.complete
+                if obj.hoverIdx ~= -1
+                    obj.pd.SetPat(obj.hoverIdx, curP);
+                    DrawCircle(axesP, obj.radius);
+                else
+                    [c, found] = obj.pd.GetCloseP(axesP, obj.radius);
+                    if  found && obj.isCtrl
+                        DrawCircle(c, obj.radius);
+                    end
+                end
+            end
+            
             if isInRange && ~obj.complete % track mouse
-                curP = [axesP, obj.GetMultiplicity()];
                 p = [obj.pd.GetAllP(); curP];
             else
                 p = obj.pd.GetAllP();

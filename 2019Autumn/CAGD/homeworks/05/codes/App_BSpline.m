@@ -22,7 +22,7 @@ function varargout = App_BSpline(varargin)
 
 % Edit the above text to modify the response to help App_BSpline
 
-% Last Modified by GUIDE v2.5 19-Oct-2019 03:01:43
+% Last Modified by GUIDE v2.5 19-Oct-2019 03:52:43
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -134,17 +134,24 @@ function figure_WindowButtonDownFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global uiMngr;
+pd = uiMngr.GetPointData();
+[p, isInRange] = uiMngr.GetAxesP();
 
 if uiMngr.IsComplete()
+    [~, found, idx] = pd.GetCloseP(p, uiMngr.radius);
+    if found && uiMngr.isCtrl
+        pd.SetPat(idx, [p, uiMngr.GetMultiplicity()]);
+        uiMngr.hoverIdx = idx;
+    else
+        uiMngr.hoverIdx = -1;
+    end
     return;
 end
 
-[p, isInRange] = uiMngr.GetAxesP();
 if ~isInRange
     return;
 end
 
-pd = uiMngr.GetPointData();
 pd.Push([p,uiMngr.GetMultiplicity()]);
 if strcmp(handles.figure.SelectionType, 'alt')
     uiMngr.SetComplete(true);
@@ -159,3 +166,13 @@ function figure_WindowButtonMotionFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global uiMngr;
 uiMngr.RefreshAxes();
+
+
+% --- Executes on mouse press over figure background, over a disabled or
+% --- inactive control, or over an axes background.
+function figure_WindowButtonUpFcn(hObject, eventdata, handles)
+% hObject    handle to figure (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global uiMngr;
+uiMngr.hoverIdx = -1;
