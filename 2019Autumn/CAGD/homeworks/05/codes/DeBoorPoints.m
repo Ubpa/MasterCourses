@@ -65,9 +65,15 @@ for i = 2:size(p,1)-1
     elseif p(i,3)==2 % 直线
         if p(i-1,3) ~= 2
             % begin
-            A(r, r) = 1;
-            A(r, r+1) = -2;
-            A(r, r+2) = 1;
+            if p(i+1,3) ~= 2
+                % 单直线点
+                A(r, r) = 1;
+                b(r,:) = p(i,1:2);
+            else
+                A(r, r) = 1;
+                A(r, r+1) = -2;
+                A(r, r+2) = 1;
+            end
             
             A(r+1, r+1) = 1;
             b(r+1,:) = p(i,1:2);
@@ -134,8 +140,6 @@ else
     A(n+3,n+3) = 1;
     b(n+3,:) = p(size(p,1),1:2);
 end
-
-[A,b]
 
 d = A\b;
 

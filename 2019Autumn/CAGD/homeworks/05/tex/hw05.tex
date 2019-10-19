@@ -1,0 +1,253 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业5}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年10月19日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{题 1}  %目录的前缀页面都会自动排版不需要手动排版
+\subsection{题目}
+已知如图所示的平面型值点，求作非均匀 4 阶（3次）B 样条插值曲线，并用程序实现。要求
+
+(1) 用红色圆圈显示型值点，用蓝色方块显示所求得的插值 B 样条的控制顶点
+
+(2) 递交程序代码及作业报告
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{p1}
+  \caption{题 1 题图}
+\end{figure}
+
+\newpage
+
+
+\subsection{解答}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p1_answer}
+  \caption{题 1 解答图}
+\end{figure}
+
+根据个人的喜好，我将型值点分成了三种颜色。{\color{red}红色}的是 $C^2$ 点，{\color{green}绿色}的是直线点/双重点，{\color{blue}蓝色}的是尖点/三重点。{\color{cyan}青色}的圆圈是控制点，虚线是控制点间的连线。
+
+由于题 2 的代码具有泛用性，所以不单独提供题 1 的代码。
+\newpage
+
+% 正文字号：小四
+\section{题 2}
+\subsection{题目}
+将上述程序进行扩展，写一个通用的非均匀 4 阶插值 B 样条曲线的作图软件：用户在平面上用鼠标制定型值点以及型值点的类型（直线、尖点、$C^2$ 点），软件自动生成插值的 B 样条曲线。
+
+(1) 用户界面可自行设计，要求界面友好，操作方便，各种条件设置灵活；
+
+(2) 递交程序代码、软件使用说明书及测试报告。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{p2}
+  \caption{题 2 题图}
+\end{figure}
+
+\newpage
+
+\subsection{算法}
+用户输入 $n+1$ 个型值点 $\pmb{p}_0,\dots,\pmb{p}_n$，其中它们的重数为 $m_0,\dots,m_n$，结序列为 $s^*_0,\dots,s^*_n$，根据均匀参数化，满足 $s^*_i=i(i=0,\dots,n)$。要求计算一条 B 样条曲线 $\pmb{x}(t),t\in[s^*_0,s^*_n]$，满足插值条件
+$$
+\pmb{x}(s^*_i)=\pmb{p}_i\quad(i=0,\dots,n)
+$$
+
+我查看了往届的师兄师姐的优秀报告，思路都是在二重点和三重点之间进行分段，逐段求解，最终再整合。而我选择的方案是在二重点和三重点处设置特殊条件，从而\textbf{用单个线性系统求解出所有控制点}，方法统一。
+
+输入的多重点相当于 $\sum_{i=0}^n m_i$ 个输入点，令 $N= \sum_{i=0}^n m_i - 1$，则记这些输入点为 $\pmb{k}_0,\dots,\pmb{k}_{N}$，对应结序列 $s_0,\dots,s_N$，多重点 $\pmb{p}_i$ 对应的 $\pmb{k}_j$ 和 $s_j$ 同于 $\pmb{p}_i$ 和 $s^*_i$。我们求 $N+3$ 个 de Boor 点 $\pmb{d}_0,\dots,\pmb{d}_{N+2}$，结序列为
+$$
+\begin{aligned}
+T&=(&t_0,&t_1,&t_2,&t_3,&t_4,&\dots,&t_{n+2},&t_{n+3},&t_{n+4},&t_{n+5},&t_{n+6})\\
+&=(&s_0,&s_0,&s_0,&s_0,&s_1,&\dots,&s_{n-1},&s_{n},&s_{n},&s_{n},&s_{n})\\
+\end{aligned}
+$$
+
+下边根据\textbf{ $C^2$点、多线段、尖点、端点}来分别阐述相应的约束条件。接着在得到所有 de Boor 点后，再依据结序列 $T$，利用 de Boor 算法求出特定的 $\pmb{x}(t)$ 以绘制曲线。
+
+\subsubsection{$C^2$ 点}
+对于一个 $C^2$ 点 $\pmb{p_i}$，对应一个控制点$\pmb{d}_j$，可设置一个约束条件——插值条件
+$$
+\pmb{x} \left( s^* _ { i } \right) = \pmb{p} _ { i } = N _ { j , 4 } \left( s _ { j } \right) \pmb{d} _ { j } + N _ { j + 1,4 } \left( s _ { i } \right) \pmb{d} _ { j + 1 } + N _ { j + 2,4 } \left( s _ { j } \right) \pmb{d} _ { j + 2 }
+$$
+
+\newpage
+\subsubsection{多线段}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{multiline}
+  \caption{多线段}
+\end{figure}
+对于 $k(k>0)$ 段的多线段，记型值点依次为 $\pmb{p}_i,\dots,\pmb{p}_{i+k}$，每个型值点对应两个控制点，总共 $2k+2$ 个控制点，记为 $\pmb{d}_j,\dots,\pmb{d}_{j+2k+1}$。我们设置 $2k+2$ 个条件：
+\begin{itemize}
+\item 首端 $\pmb{p}_i$：一个插值条件，一个共线条件（默认对称）
+$$
+\begin{aligned}
+\pmb{d}_{j+2}-\pmb{d}_{j+1}&=\pmb{d}_{j+1}-\pmb{d}_{j}\\
+\pmb{d}_{j+1}&= \pmb{p}_i\\
+\end{aligned}
+$$
+\item 内部点 $\pmb{p}_{i+a}(a=1,\dots,k-1)$：两个插值条件
+$$
+\begin{aligned}
+\pmb{d}_{j+2a}&=\pmb{p}_{j+a}\\
+\pmb{d}_{j+2a+1}&=\pmb{p}_{j+a}\\
+\end{aligned}
+$$
+\item 尾端 $\pmb{p}_{i+k}$：一个插值条件，一个共线条件（默认对称）
+$$
+\begin{aligned}
+\pmb{d}_{j+2k}&= \pmb{p}_{i+k}\\
+\pmb{d}_{j+2k+1}-\pmb{d}_{j+2k}&=\pmb{d}_{j+2k}-\pmb{d}_{j+2k-1}\\
+\end{aligned}
+$$
+\end{itemize}
+对于单个直线点，满足两个插值条件：$\pmb{d}_j=\pmb{d}_{j+1}=\pmb{p}_i$
+\newpage
+\subsubsection{尖点}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{cusp}
+  \caption{尖点}
+\end{figure}
+
+对于尖点 $\pmb{p}_i$，其对应三个控制点，记为 $\pmb{d}_{j-1},\pmb{d}_{j},\pmb{d}_{j+1}$，满足两个共线条件（默认对称）和一个插值条件
+$$
+\begin{aligned}
+\pmb{d}_{j-2}-\pmb{d}_{j-1}&=\pmb{d}_{j-1}-\pmb{d}_{j}\\
+\pmb{d}_{j}&=\pmb{p}_i\\
+\pmb{d}_{j+2}-\pmb{d}_{j+1}&=\pmb{d}_{j+1}-\pmb{d}_{j}\\
+\end{aligned}
+$$
+
+\newpage
+\subsubsection{端点}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{end}
+  \caption{直线点、尖点作为端点}
+\end{figure}
+支持$C^2$、直线点、尖点作为端点。首端各情况对应的约束条件为
+\begin{itemize}
+\item $C^2$：一个插值条件，一个共线条件（默认对称）
+$$
+\begin{aligned}
+\pmb{d}_0 &= \pmb{k}_0\\
+\pmb{d}_2 - \pmb{d}_1&= \pmb{d}_1 - \pmb{d}_0\\
+\end{aligned}
+$$
+\item 直线点：两个插值条件，一个共线条件（默认对称）
+$$
+\begin{aligned}
+\pmb{d}_0 &= \pmb{k}_0\\
+\pmb{d}_2 - \pmb{d}_1 &= \pmb{d}_1 - \pmb{d}_0\\
+\pmb{d}_2 &= \pmb{k}_0\\
+\end{aligned}
+$$
+\item 尖点：三个插值条件，一个共线条件（默认对称）
+$$
+\begin{aligned}
+\pmb{d}_0 &= \pmb{k}_0\\
+\pmb{d}_2 - \pmb{d}_1 &= \pmb{d}_1 - \pmb{d}_0\\
+\pmb{d}_2 &= \pmb{k}_0\\
+\pmb{d}_3 &= \pmb{k}_0\\
+\end{aligned}
+$$
+\end{itemize}
+
+尾端类似，故省略。
+
+\newpage
+\subsubsection{de Boor 算法}
+因为我的线性系统中含有相同的 $t$，故没法简单直接靠矩阵算出来。所以还是用 de Boor 算法。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{deBoor}
+  \caption{de Boor 算法}
+\end{figure}
+
+\newpage
+\subsection{实验结果}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{p2_answer}
+  \caption{题图实现}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{heart}
+  \caption{心形}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{TV}
+  \caption{小电视}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{test}
+  \caption{测试}
+\end{figure}
+
+
+\end{CJK*}
+\end{document}

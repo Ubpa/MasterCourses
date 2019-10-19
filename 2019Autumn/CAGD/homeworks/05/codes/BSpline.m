@@ -28,6 +28,7 @@ function rst = BSpline(s, d, x)
 %     c4 = N(t, idx+3, 4, x);
 %     rst = c1 * d(idx, :) + c2 * d(idx+1,:) + c3 * d(idx+2, :) + c4 * d(idx+3, :);
     
+    % de Boor algorithm
     curN = zeros(7,1);
     for i = 1:7
     	curN(i) = N(t,left+i-1,1,x);
