@@ -22,7 +22,7 @@ function varargout = App_BSpline(varargin)
 
 % Edit the above text to modify the response to help App_BSpline
 
-% Last Modified by GUIDE v2.5 19-Oct-2019 03:52:43
+% Last Modified by GUIDE v2.5 19-Oct-2019 13:30:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -138,10 +138,14 @@ pd = uiMngr.GetPointData();
 [p, isInRange] = uiMngr.GetAxesP();
 
 if uiMngr.IsComplete()
-    [~, found, idx] = pd.GetCloseP(p, uiMngr.radius);
+    [targetP, found, idx] = pd.GetCloseP(p, uiMngr.radius);
     if found && uiMngr.isCtrl
-        pd.SetPat(idx, [p, uiMngr.GetMultiplicity()]);
-        uiMngr.hoverIdx = idx;
+        if strcmp(handles.figure.SelectionType, 'alt')
+            pd.SetPat(idx, [targetP(1:2), uiMngr.GetMultiplicity()]);
+        else
+            pd.SetPat(idx, [p, targetP(3)]);
+            uiMngr.hoverIdx = idx;
+        end
     else
         uiMngr.hoverIdx = -1;
     end

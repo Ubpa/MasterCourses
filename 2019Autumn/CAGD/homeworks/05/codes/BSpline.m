@@ -21,7 +21,7 @@ function rst = BSpline(s, d, x)
     % extent t
     t = [s(1); s(1); s(1); s; s(size(s,1)); s(size(s,1)); s(size(s,1))];
     
-%     idx = left;
+% 	idx = left;
 %     c1 = N(t, idx, 4, x);
 %     c2 = N(t, idx+1, 4, x);
 %     c3 = N(t, idx+2, 4, x);

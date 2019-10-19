@@ -47,11 +47,11 @@ classdef PointData < handle
         
         function [p, found, idx] = GetCloseP(obj, pos, radius)
             found = false;
-            p = zeros(0, 2);
+            p = zeros(0, 3);
             idx = -1;
             for i = 1:obj.Size()
                 if pdist([obj.P(i,1:2); pos]) < radius
-                    p = obj.P(i,1:2);
+                    p = obj.P(i, :);
                     found = true;
                     idx = i;
                     return;

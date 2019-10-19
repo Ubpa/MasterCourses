@@ -41,21 +41,22 @@ classdef UIMngr < handle
         function RefreshAxes(obj)
             cla(obj.handles.axes);
             [axesP, isInRange] = obj.GetAxesP();
-            curP = [axesP, obj.GetMultiplicity()];
             if obj.complete
                 if obj.hoverIdx ~= -1
-                    obj.pd.SetPat(obj.hoverIdx, curP);
+                    lastP = obj.pd.GetPat(obj.hoverIdx);
+                    obj.pd.SetPat(obj.hoverIdx, [axesP, lastP(3)]);
                     DrawCircle(axesP, obj.radius);
                 else
                     [c, found] = obj.pd.GetCloseP(axesP, obj.radius);
                     if  found && obj.isCtrl
-                        DrawCircle(c, obj.radius);
+                        DrawCircle(c(1:2), obj.radius);
                     end
                 end
             end
             
             if isInRange && ~obj.complete % track mouse
-                p = [obj.pd.GetAllP(); curP];
+                newP = [axesP, obj.GetMultiplicity()];
+                p = [obj.pd.GetAllP(); newP];
             else
                 p = obj.pd.GetAllP();
             end

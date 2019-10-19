@@ -1,8 +1,7 @@
 function DrawBSpline(p, isDrawCtrl)
-
 nP = size(p,1);
 
-% expand
+% gen k s
 k = zeros(3*nP,3);%第三维用来标识直线的首或尾
 s = zeros(3*nP,1);
 i = 1;
@@ -38,20 +37,19 @@ end
 k = k(1:idx-1,:);
 s = s(1:idx-1);
 
+% compute de Boor points
 d = DeBoorPoints(k, s);
 
 % draw B-Spline
 if size(d,1)>2
-    sX = (s(1):0.02:s(size(s,1)))';
+    sX = (s(1):0.05:s(size(s,1)))';
     sN = size(sX, 1);
     sY = zeros(sN, 2);
     for i = 1: sN
         sY(i,:) = BSpline(s, d, sX(i));
     end
     
-tic;
-    plot(sY(:,1), sY(:,2), 'LineWidth', 3);
-toc;
+    plot(sY(:,1), sY(:,2), 'LineWidth', 2);
 end
 
 % draw ctrl
@@ -64,6 +62,5 @@ if isDrawCtrl
     plot(p(bR,1), p(bR,2), 'b.', 'MarkerSize', 32);
     
     plot(d(:,1),d(:,2),'c--');
-    
     plot(d(:,1),d(:,2), 'c.', 'MarkerSize', 16);
 end
