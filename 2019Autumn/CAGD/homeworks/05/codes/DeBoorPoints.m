@@ -1,57 +1,142 @@
-function d = DeBoorPoints(k, s)
-    n = size(k,1) - 1;
+function [d, s] = DeBoorPoints(p)
+if size(p,1) <= 1
+    d = p;
+    s = 0;
+    return;
+end
+
+% k0, ..., kn
+n = sum(p(:,3)) - 1;
+s = zeros(n+1,1);
+r = 1;
+for i = 1 : size(p,1)
+    m = p(i,3);
+    s(r:r+m-1) = repmat(i-1, [m,1]);
+    r = r + m;
+end
+
+t = [s(1);s(1);s(1);s;repmat(s(size(s,1)), [3,1])];% t0, ..., tn + 6 for N
+
+% d0, ..., dn+2
+A = zeros(n+3,n+3);
+b = zeros(n+3,2);
+
+% begin
+if p(1,3)==1 % C2
+    A(1,1) = 1;
+    b(1,:) = p(1,1:2);
+
+    A(2,1) = 1;
+    A(2,2) = -2;
+    A(2,3) = 1;
+elseif p(1,3)==2 % 直线
+	A(1,1) = 1;
+    b(1,:) = p(1,1:2);
+
+    A(2,1) = 1;
+    A(2,2) = -2;
+    A(2,3) = 1;
     
-    if n <= 0
-        d = k;
-        return;
-    end
+	A(3,3) = 1;
+    b(3,:) = p(1,1:2);
+else % 尖点
+	A(1,1) = 1;
+    b(1,:) = p(1,1:2);
+
+    A(2,1) = 1;
+    A(2,2) = -2;
+    A(2,3) = 1;
     
-    % extent k t
-    t = [s(1); s(1); s(1); s; s(n+1); s(n+1); s(n+1)];
-    k = [k(1,:);k;k(size(k,1), :)];
-    
-    A = zeros(n+3);
-    b = k(:,1:2);
-    
-    for i=1:(n+3)
-        idx = i+2; % for t
-        if t(idx) == t(idx-1)
-            if t(idx) == t(idx+1) % 尖点
-                A(i, i) = 1;
-            elseif k(i,3) == 1 % 直线首
-                A(i,i) = 1;
-            elseif k(i-1,3) == 1 % 直线右自然
-                A(i,i-2) = t(idx+1) - t(idx-1);
-                A(i,i-1) = -(t(idx+1)-t(idx-1)) - (t(idx)-t(idx-2));
-                A(i,i) = t(idx) - t(idx-2);
-                b(i,:) = [0, 0];
-            else %尖点右自然
-                A(i,i-1) = t(idx+2) - t(idx);
-                A(i,i) = -(t(idx+2)-t(idx)) - (t(idx+1)-t(idx-1));
-                A(i,i+1) = t(idx+1) - t(idx-1);
-                b(i,:) = [0, 0];
-            end
-        elseif t(idx) == t(idx+1)
-            if k(i,3) == 1 % 直线尾
-                A(i,i) = 1;
-            elseif k(i+1,3) == 1 % 下一直线首
-                % 直线左自然
-                A(i,i) = t(idx+2) - t(idx);
-                A(i,i+1) = -(t(idx+2)-t(idx)) - (t(idx+1)-t(idx-1));
-                A(i,i+2) = t(idx+1) - t(idx-1);
-                b(i,:) = [0, 0];
-            else
-                %尖点左自然
-                A(i,i-1) = t(idx+1) - t(idx-1);
-                A(i,i) = -(t(idx+1)-t(idx-1)) - (t(idx)-t(idx-2));
-                A(i,i+1) = t(idx) - t(idx-2);
-                b(i,:) = [0, 0];
-            end
+	A(3,3) = 1;
+    b(3,:) = p(1,1:2);
+	A(4,4) = 1;
+    b(4,:) = p(1,1:2);
+end
+
+% inner
+r = 2 + p(1,3);
+for i = 2:size(p,1)-1
+    if p(i,3)==1 % C2
+        A(r,r-1) = N(t,r-1,4,s(r-1));
+        A(r,r) = N(t,r,4,s(r-1));
+        A(r,r+1) = N(t,r+1,4,s(r-1));
+        b(r,:) = p(i,1:2);
+        r = r+1;
+    elseif p(i,3)==2 % 直线
+        if p(i-1,3) ~= 2
+            % begin
+            A(r, r) = 1;
+            A(r, r+1) = -2;
+            A(r, r+2) = 1;
+            
+            A(r+1, r+1) = 1;
+            b(r+1,:) = p(i,1:2);
+        elseif p(i+1,3) ~= 2
+            % end
+            A(r, r) = 1;
+            b(r,:) = p(i,1:2);
+            
+            A(r+1, r-1) = 1;
+            A(r+1, r) = -2;
+            A(r+1, r+1) = 1;
         else
-            A(i,i-1) = N(t,idx-3,4,s(idx-3));
-            A(i,i) = N(t,idx-2,4,s(idx-3));
-            A(i,i+1) = N(t,idx-1,4,s(idx-3));
+            % inner
+            A(r, r) = 1;
+            A(r+1, r+1) = 1;
+            b(r,:) = p(i,1:2);
+            b(r+1,:) = p(i,1:2);
         end
+        r = r+2;
+	else % 尖点
+        A(r, r-1) = 1;
+        A(r, r) = -2;
+        A(r, r+1) = 1;
+        
+        A(r+1, r+1) = 1;
+        b(r+1, :) = p(i,1:2);
+        
+        A(r+2, r+1) = 1;
+        A(r+2, r+2) = -2;
+        A(r+2, r+3) = 1;
+        r = r+3;
     end
-    d = A \ b;
+end
+
+% end
+if p(size(p,1),3)==1 % C2
+    A(n+2, n+1)=1;
+    A(n+2, n+2)=-2;
+    A(n+2, n+3)=1;
+
+    A(n+3,n+3) = 1;
+    b(n+3,:) = p(size(p,1),1:2);
+elseif p(size(p,1),3)==2 % 直线
+    A(n+1,n+1) = 1;
+    b(n+1,:) = p(size(p,1),1:2);
+    
+    A(n+2, n+1)=1;
+    A(n+2, n+2)=-2;
+    A(n+2, n+3)=1;
+
+    A(n+3,n+3) = 1;
+    b(n+3,:) = p(size(p,1),1:2);
+else
+    A(n,n) = 1;
+    b(n,:) = p(size(p,1),1:2);
+    
+    A(n+1,n+1) = 1;
+    b(n+1,:) = p(size(p,1),1:2);
+    
+    A(n+2, n+1)=1;
+    A(n+2, n+2)=-2;
+    A(n+2, n+3)=1;
+
+    A(n+3,n+3) = 1;
+    b(n+3,:) = p(size(p,1),1:2);
+end
+
+[A,b]
+
+d = A\b;
+
 end
