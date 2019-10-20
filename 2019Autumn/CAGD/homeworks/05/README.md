@@ -27,15 +27,15 @@
 
 ## 代码说明
 
-- [`UIMngr.m`](codes\UIMngr.m)：管理 UI 的类
-- [`PointData.m`](codes\PointData.m)：储存型值点数据的类型
-- [`N.m`](codes\N.m)：B-Spline 基函数
-- [`testN.m`](codes\testN.m)：简单测试 B-Spline 基函数
-- [`DrawCircle.m`](codes\DrawCircle.m)：绘制圆
-- [`DrawBSpline.m`](codes\DrawBSpline.m)：绘制 B 样条曲线
-- [`DeBoorPoints.m`](codes\DeBoorPoints.m)：根据型值点求控制点，核心
-- [`BSpline.m`](codes\BSpline.m)：根据控制点和结序列，求特定点 $t$ 的曲线值 $\pmb{x}(t)$ 
-- [`App_BSpline.m`](codes\App_BSpline.m)：应用，运行这个脚本以运行程序
+- [`UIMngr.m`](codes/UIMngr.m)：管理 UI 的类
+- [`PointData.m`](codes/PointData.m)：储存型值点数据的类型
+- [`N.m`](codes/N.m)：B-Spline 基函数
+- [`testN.m`](codes/testN.m)：简单测试 B-Spline 基函数
+- [`DrawCircle.m`](codes/DrawCircle.m)：绘制圆
+- [`DrawBSpline.m`](codes/DrawBSpline.m)：绘制 B 样条曲线
+- [`DeBoorPoints.m`](codes/DeBoorPoints.m)：根据型值点求控制点，核心
+- [`BSpline.m`](codes/BSpline.m)：根据控制点和结序列，求特定点 $t$ 的曲线值 $\pmb{x}(t)$ 
+- [`App_BSpline.m`](codes/App_BSpline.m)：应用，运行这个脚本以运行程序
 - `App_BSpline.fig`：UI 相关二进制文件，有 guide 自动生成
 
 ## 性能说明

@@ -7,4 +7,9 @@
 - [02. 一致逼近](notes/textbook_02_UniformApproximation.md) 
 - [03. 线性插值](notes/textbook_03_LinearInterpolation.md) 
 
+## 作业
+
+- 0：[0_0.md](homeworks/0_0.md)，[0_1.md](homeworks/0_1.md) 
+- [1.md](homeworks/1.md) 
+- [2.md](homeworks/2.md) 
 

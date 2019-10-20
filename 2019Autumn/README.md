@@ -1,4 +1,4 @@
-# 2019 Autumn
+# 2019 秋
 
 - [计算机辅助几何设计 CAGD](CAGD/) 
 - [图论](GraphTheory/) 
