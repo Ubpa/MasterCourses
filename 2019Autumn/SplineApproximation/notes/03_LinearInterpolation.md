@@ -85,9 +85,32 @@ $$
 & \hat m_i\perp \Lambda_{i-1}, \hat\lambda_i\perp M_{i-1}
 \end{aligned}
 $$
-> $\hat m_i=m_i-P_{i-1}m_i$ 就是基函数与其在低维空间上的满足线性插值条件的拟合函数的误差，因此这个误差函数满足 $m_i\perp \Lambda_{i-1}$。
+> $\hat m_i=m_i-P_{i-1}m_i$ 就是基函数与其在低维空间上的满足线性插值条件的拟合函数的误差，因此这个误差函数满足 $\hat{m}_i\perp \Lambda_{i-1}$。
 >
 > 插值空间上也有类似结论
+>
+> ---
+>
+> 证明：$\lambda_i P_{i-1} \in \Lambda_{i+1}$，即证 $\exist \pmb{\alpha} \in \mathbb{R}^{i-1},\forall x \in X, \lambda_iP_{i-1}x=\sum_{j=1}^{i-1}\alpha_j \lambda_j x$ 
+>
+> 先看特例 $\{m_l\}_{l=1}^{i-1}$ 
+>
+> $\lambda_i m_l = \lambda_i P_{i-1}m_l=\sum_{j=1}^{i-1}\alpha_j\lambda_j m_l(l=1,\dots,i-1)$，因 $\{\lambda_jm_l\}_{j,l=1}^{i-1}$ 可逆（$\{\lambda_jm_l\}_{j,l=1}^{n}$ 可逆），故可由此方程组确定 $\pmb{\alpha}$。
+>
+> 则 $\forall x \in X$，有
+> $$
+> \begin{aligned}
+> \lambda_i P_{i-1}x&=\lambda_i \sum_{l=1}^{i-1}\beta_l m_l\\
+> &=\sum_{l=1}^{i-1}\beta_l\lambda_im_l\\
+> &=\sum_{l=1}^{i-1}\beta_l\sum_{j=1}^{i-1}\alpha_j\lambda_j m_l\\
+> &=\sum_{j=1}^{i-1}\alpha_j\lambda_j\sum_{l=1}^{i-1}\beta_l m_l\\
+> &=\sum_{j=1}^{i-1}\alpha_j\lambda_j(P_{i-1}x)\\
+> &=\sum_{j=1}^{i-1}\alpha_j\lambda_jx\\
+> \end{aligned}
+> $$
+> 最后一个等号用了插值条件 $\lambda_j x=\lambda_j(P_{i-1}x),j=1,\dots,i-1$。
+>
+> 其他证明见于 [homeworks/2.md](../homeworks/2.md) 
 
 **定理 3.2** 设 $\hat m_i$ 和 $\hat\lambda_i$ 的定义如前，则
 
@@ -242,7 +265,7 @@ $$
 $$
 虽然 $\lim_\limits{n \to \infty}\|P_{n,\tau^e}\|=\infty$，但因为阶为 $\ln n$，所以趋于无穷的速度不快。因而从逼近阶的角度，扩充的 Tchebycheff 插值节点 $\tau^e$ 可作为近似的最优插值节点
 
-### 3.2.5 从 $\overset{\circ}{C}$ 到 $\overset{\circ}{\mathcal{P}}_n$ 的极小投影
+## 3.3 从 $\overset{\circ}{C}$ 到 $\overset{\circ}{\mathcal{P}}_n$ 的极小投影
 
 令
 $$
@@ -250,7 +273,7 @@ $$
 $$
 为 $2n + 1$ 维的三角多项式空间，为方便起见，记
 $$
-\overset{\circ}{\mathcal{P}}_n\triangleq\text{span}\{e_r\}_{r=-n}^n,e_r\triangleq^{\sqrt{-1}rt}
+\overset{\circ}{\mathcal{P}}_n\triangleq\text{span}\{e_r\}_{r=-n}^n,e_r\triangleq e^{\sqrt{-1}rt}
 $$
 系数可为复数，$\overset{\circ}{C}$ 表示连续的周期为 $2\pi$ 的函数空间，显然 $\dim \overset{\circ}{\mathcal{P}}_n=2n+1$，$\overset{\circ}{\mathcal{P}}_n\subset \overset{\circ}{C}$，定义线性投影算子 $S_n:\overset{\circ}{C}\mapsto\overset{\circ}{\mathcal{P}}_n$，如下
 $$
