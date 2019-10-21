@@ -137,7 +137,7 @@ $B\subseteq E(D)$，记
 $$
 \pmb{w}(B)=\sum_{e\in B}\pmb{w}(e)
 $$
-设 $S\subset V(D)$，记 $E_D^+(S)=(S,\bar{S})$，即起点在 S 终点在 $\bar{S}$ 的边集，记 $E^-_D(S)=(\bar{S},S)$，记
+设 $S\subset V(D)$，记 $E_D^+(S)=(S,\bar{S})$，即起点在 $S$ 终点在 $\bar{S}$ 的边集，记 $E^-_D(S)=(\bar{S},S)$，记
 $$
 \pmb{w}^+(S)=\pmb(E_D^+(S))\\
 \pmb{w}^-(S)=\pmb(E_D^-(S))\\
