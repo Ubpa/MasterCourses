@@ -23,11 +23,21 @@
 
 **定理 2.1.3** G 是 n 阶树 $\Leftrightarrow$ G 连通且 $e(G)=n-1$ 
 
+> 连通 n 个点只需要 $n-1$ 条边
+
 **推论 2.1.3** G 是 n 阶林 $\Leftrightarrow$ $e(G)= n-\omega(G)$ 
+
+> 这个结论比**定理 2.1.3** 更具一般性
+>
+> 任意 n 阶图 G，有 $e(G)\ge n-\omega(G)$，当 G 是林时取等号
 
 **推论 2.1.3(1)** 无孤立点的林至少有 $2\omega$ 个 1 度点，特别的，非平凡树至少有两个一度点（称为树的叶点，和叶点相邻的点称为支撑点）
 
 **定理 1**（Bondy's Theorem）设 $\mathcal{A}=\{A_1,A_2,\dots,A_n\}$ 是 $X=\{1,2,\dots,n\}$ 的 n 个不同子集构成的子集族，则 $\exist x \in X$ 使得 $A_1\backslash \{x\},A_2\backslash\{x\},\dots,A_n\backslash \{x\}$ 互不相同。
+
+> **推论** 设 $\mathcal{A}=\{A_1,A_2,\dots,A_n\}$ 是 $X=\{1,2,\dots,n\}$ 的 n 个不同子集构成的子集族，则 $\exist x \in X$ 使得 $A_1\cup \{x\},A_2\cup\{x\},\dots,A_n\cup \{x\}$ 互不相同。
+>
+> 可由上述定理推得
 
 ### 支撑林与支撑树
 
@@ -95,6 +105,8 @@ F 是 D 的支撑子图，并且 $\omega(F)=\omega(D)$。若 F 是林，则称 F
 
 **推论 2.1.6** G 中恰含 $|V(G)|-\omega(G)$ 个不同的基本键
 
+> 支撑林的每一条边都属于某个键，键可能不止含此条边
+
 ## 2.2 图的向量空间
 
 ### 顶点空间与圈空间
@@ -154,7 +166,7 @@ $$
 >
 > ![1571642772126](assets/1571642772126.jpg)
 
-由推论 2.1.5，D 有 $m-n+\omega$ 个基本圈，他们的圈向量线性无关。
+由[推论 2.1.5](#支撑林与支撑树)，D 有 $m-n+\omega$ 个基本圈，他们的圈向量线性无关。
 
 D 的所有圈向量构成 $\mathcal{E}(D)$ 的子空间，称为 D 的圈空间 cycle space，记为 $\mathcal{C}(D)$，显然 $\dim \mathcal{C}(D) \ge m-n+\omega$。
 
@@ -162,7 +174,7 @@ D 的所有圈向量构成 $\mathcal{E}(D)$ 的子空间，称为 D 的圈空间
 $$
 \pmb{\delta}_{\pmb{p}}(a)=\pmb{p}(x)-\pmb{p}(y),\forall a=(x,y)\in E(D)
 $$
-称 $\pmb{\delta}_{\pmb{p}}$ 为 D 的割向量 cut vector
+称 $\pmb{\delta}_{\pmb{p}}$ 为 D 的**割向量** cut vector
 
 > 示例
 >
@@ -185,13 +197,17 @@ $$
 0,&u\notin S\\
 \end{matrix}\right.
 $$
-则 $\pmb{g}_B=\pmb{\delta}_{\pmb{p}}$，则 $\pmb{g}_B$ 是 D 的割向量，$\pmb{g}_B$ 称为键 B 的割向量
+则 $\pmb{g}_B=\pmb{\delta}_{\pmb{p}}$，则 $\pmb{g}_B$ 是 $D$ 的割向量，$\pmb{g}_B$ 称为键 $B$ 的割向量
 
 > 示例
 >
 > ![1571644200316](assets/1571644200316.jpg)
 
-由推论 2.1.6，D 有 $n-\omega$ 个基本键，且对应割向量线性无关
+由[推论 2.1.6](#余树与边割集)，$D$ 有 $n-\omega$ 个基本键，且对应割向量线性无关
+
+> $n-\omega$ 是支撑林的边数
+>
+> 这 $n-\omega$ 个割向量就是割空间的基
 
 D 的所有割向量构成 $\mathcal{E}(D)$ 的子空间，称为 D 的割空间 cut space，记为 $\mathcal{B}(D)$，显然 $\dim\mathcal{B}(D)\ge n-\omega$。
 
@@ -224,17 +240,13 @@ E(\bar{F})&=\{a_1,a_2,\dots,a_{m-n+\omega}\}\\
 E(F)&=\{a_{m-n+\omega+1},\dots,a_m\}\\
 \end{aligned}
 $$
-由定理 2.1.5 知，$\forall a_i \in E(\bar{F})$，$F+a_i$ 含唯一圈 $C_i$，称为 D 中对应于 F 的基本圈
+由[定理 2.1.5](#支撑林与支撑树) 知，$\forall a_i \in E(\bar{F})$，$F+a_i$ 含唯一圈 $C_i$，称为 D 中对应于 F 的基本圈
 
 用 $\pmb{f}_i$ 表示对应于圈 $C_i$ 且 $\pmb{f}_{C_i}(a_i)=1$ 的圈向量
 
 > 用 $a_i$ 定向
 
-则
-$$
-\pmb{f}_1,\pmb{f}_2,\dots,\pmb{f}_{m-n+\omega}
-$$
-为行而构成的 $(m-n+\omega)\times m$ 阶矩阵 $C_F$ 必有下列分块表示形式
+则 $\pmb{f}_1,\pmb{f}_2,\dots,\pmb{f}_{m-n+\omega}$ 为行而构成的 $(m-n+\omega)\times m$ 阶矩阵 $C_F$ 必有下列分块表示形式
 $$
 C_F=\left(\begin{matrix}
 I_{m-n+\omega} & C_2
@@ -242,23 +254,29 @@ I_{m-n+\omega} & C_2
 $$
 其中 $I_{m-n+\omega} = C_F|\bar{\bar{F}}$ 为 $m-n+\omega$ 阶单位方阵，而 $C_2=C_F|F$ 是 $(m-n+\omega)\times(n-\omega)$ 阶矩阵
 
+> 这个 $I_{m-n+\omega}$ 来的很简单
+>
+> $\pmb{f}_i(a_i)=1$，且基本圈，且 $C_i$ 除了 $a_i$，其余边都在支撑林上，即 $E(C_i)\subseteq T \cup \{a_i\}$ 
+>
+> 则 $f_i(a_j)=0\quad(j=1,\dots,i-1,i+1,\dots,m-n+\omega)$  
+>
+> 则 $f_i(a_j)=\delta_{i,j}\quad(i,j=1,\dots,m-n+\omega)$ 
+
 由于 $\text{rank}(C_F)=m-n+\omega$，则 $\pmb{f}_1,\pmb{f}_2,\dots,\pmb{f}_{m-n+\omega}$ 是 $\mathcal{C}(D)$ 中的一组基，$C_F$ 称为 $\mathcal{C}(D)$ 中对应于 F 的基矩阵。
 
-由定理 2.1.6 知，$\forall a_j \in E(F)$，$\bar{F}+a_j$ 含唯一键 $B_j$，称为 D 中对应于 F 的基本键
+由[定理 2.1.6](#余树与边割集) 知，$\forall a_j \in E(F)$，$\bar{F} + a_j$ 含唯一键 $B_j$，称为 D 中对应于 F 的基本键
 
 用 $\pmb{g}_i$ 表示对应于键 $B_i$ 且 $\pmb{g}_{B_i}(a_i)=1$ 的割向量
 
 > 用 $a_i$ 定向
 
-则
-$$
-\pmb{g}_{m-n+\omega+1},\pmb{g}_{m-n+\omega+2},\dots,\pmb{g}_{m}
-$$
-为行而构成的 $(n-\omega)\times m$ 阶矩阵 $C_F$ 必有下列分块表示形式
+则 $\pmb{g}_{m-n+\omega+1},\pmb{g}_{m-n+\omega+2},\dots,\pmb{g}_{m}$ 为行而构成的 $(n-\omega)\times m$ 阶矩阵 $C_F$ 必有下列分块表示形式
 $$
 B_F=\left(\begin{matrix}B_1 & I_{n-\omega}\end{matrix}\right)
 $$
 其中 $I_{n-\omega} = B_F|F$ 为 $n-\omega$ 阶单位方阵，而 $B_1=B_F|\bar{F}$ 是 $(n-\omega)\times(m-n+\omega)$ 阶矩阵
+
+> $\pmb{g}_{B_i}(a_i)=1$，且键 $B_i$ 除 $a_i$ 外不含支撑林上的
 
 由于 $\text{rank}(B_F)=n-\omega$，则 $\pmb{g}_{m-n+\omega+1},\pmb{g}_{m-n+\omega+2},\dots,\pmb{g}_{m}$ 是 $\mathcal{B}(D)$ 中的一组基，$B_F$ 称为 $\mathcal{B}(D)$ 中对应于 F 的基矩阵。
 
@@ -289,11 +307,27 @@ $$
 > \end{matrix}\right]
 > \end{aligned}
 > $$
+> > 看 $\pmb{f}_1$ 怎么算
+> >
+> > $a_1$ 对应的基本圈是 $C_1=\{a_1,a_8,a_7\}$，圈的定向由 $a_1$ 决定，所以 $\pmb{f}_1(a_1)=1$，$\pmb{f}_1(a_8)=-1$，$\pmb{f}_1(a_7)=1$，其余为 0
+> >
+> > 步骤就是
+> >
+> > - 确定对应的边（$a_1$）
+> > - 找到对应的基本圈（$C_1=\{a_1,a_8,a_7\}$）
+> > - 根据边来定向（$a_1$ 正，$a_8$ 反，$a_7$ 正）
+> > - 根据定向确定向量
+>
 > 则图中圈向量可以表示为
+>
+> > $\pmb{f}^+(x_i)=f^-(x_i)$，因此是圈向量
+>
 > $$
 > \begin{aligned} \mathbf { f } & = \left( \mathbf { f } \left( a _ { 1 } \right) , \mathbf { f } \left( a _ { 2 } \right) , \mathbf { f } \left( a _ { 3 } \right) , \cdots , \mathbf { f } \left( a _ { 8 } \right) , \mathbf { f } \left( a _ { 9 } \right) \right) \\ & = \left( 0 , \frac { 1 } { 2 } , - 2,0 , - 2,2 , \frac { 3 } { 2 } , \frac { 1 } { 2 } , \frac { 3 } { 2 } \right) \\ & = 0 \cdot \mathbf { f } _ { 1 } + \frac { 1 } { 2 } \cdot \mathbf { f } _ { 2 } + ( - 2 ) \cdot \mathbf { f } _ { 3 } + 0 \cdot \mathbf { f } _ { 4 } \\ & = \sum _ { i = 1 } ^ { 4 } \mathbf { f } \left( a _ { i } \right) \mathbf { f } _ { i } \end{aligned}
 > $$
 > 这说明 $\pmb{f}$ 的值是由 $\pmb{f}|\bar{T}$ 上的值所唯一确定的，这对所有圈向量都成立
+>
+> > 因为 $\pmb{f}|\bar{T}$ 是圈空间的基向量
 >
 > 另外，$\mathcal{B}(D)$ 对应 $T$ 的基矩阵为
 > $$
@@ -308,11 +342,11 @@ $$
 > \end{matrix}\right]
 > =
 > \left[\begin{matrix}
->  0&  0& -1& -1&  1&  0&  0&  0&  0\\
->  0&  0&  1&  1&  0&  1&  0&  0&  0\\
+> 0&  0& -1& -1&  1&  0&  0&  0&  0\\
+> 0&  0&  1&  1&  0&  1&  0&  0&  0\\
 > -1&  1&  1&  1&  0&  0&  1&  0&  0\\
->  1& -1&  0&  0&  0&  0&  0&  1&  0\\
->  0&  1&  1&  0&  0&  0&  0&  0&  1\\
+> 1& -1&  0&  0&  0&  0&  0&  1&  0\\
+> 0&  1&  1&  0&  0&  0&  0&  0&  1\\
 > \end{matrix}\right]
 > =
 > \left[\begin{matrix}
@@ -320,6 +354,16 @@ $$
 > \end{matrix}\right]
 > \end{aligned}
 > $$
+> > 看 $\pmb{g}_5$ 怎么算
+> >
+> > $a_5=(x_1,x_2)$ 将 T 分成两部分 $\{x_2\}$ 和 $\{x_1,x_3,x_4,x_5,x_6\}$，根据 $a_5$ 的起点和端点位置，令 $S=\{x_1,x_3,x_4,x_5,x_6\}$，$\bar{S}=\{x_2\}$，有 $B=[S,\bar{S}]=\{a_3,a_4,a_5\}$，其中 $a_5\in(S,\bar{S})$，则 $\pmb{g}(a_5)=1$；$a_3,a_4 \in (\bar{S},S)$，则 $\pmb{g}(a_3)=\pmb{g}(a_4)=-1$。其余为 0。
+> >
+> > 步骤就是
+> >
+> > - 确定对应的边
+> > - 取掉边，支撑树分成两部分，根据边的定向确定 $S$ 和 $\bar{S}$，再确定出割集 $B=[S,\bar{S}]$ 
+> > - B 中属于 $(S,\bar{S})$ 的边 $a$ 满足 $\pmb{g}(a)=1$，属于 $(\bar{S},S)$ 的边 $a$ 满足 $\pmb{g}(a)=-1$，不在 B 中的边 $a$ 满足 $\pmb{g}(a)=0$ 
+>
 > ![1571642647652](assets/1571642647652.jpg)
 >
 > 上图所示割向量为
