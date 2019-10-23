@@ -295,6 +295,8 @@ $$
 \|P\|\ge\frac{2}{\pi^2}\ln n+O(1)
 $$
 
+用 $\overset{\circ}{C}_E\triangleq \{f\in \overset{\circ}{C}:f(-t)=t\}$ 表示周期为 $2\pi$ 的偶的连续函数空间
+
 ## 3.5 线性投影算子的收敛性质
 
 **定理 3.10** 设 X 是 Banach 空间，$\{P_n\}$ 是从 $X\to M_n$ 的线性投影算子序列，$\text{range} P_n=M_n$，则
