@@ -516,3 +516,42 @@ $$
 
 **推论 2.3.5**（Cayley 公式）$\tau(K_n)=n^{n-1}(n\ge 2)$ 
 
+## 2.4 最小连接问题
+
+假设在某地区内要修建一个连接若干个城镇的公路系统，已知城 $x_i$ 与 城 $x_j$ 之间直通公路的造价为 $c_{ij}$，设计一个造价最低的建造方案，这类问题称为最小连接问题 minimum connection problem
+
+加权图 $(G,\pmb{w})$，$\pmb{w}(x_iy_j)=c_{i,j}$，找权和最小的支撑树，称为最小树 minimum tree
+
+显然，最小连接问题有解 $\Leftrightarrow$ G 为连通图
+
+### 支撑树算法
+
+1. 任取 $x_0\in V(G)$，令 $V_0=\{x_0\}$，$T_0=\empty$，$k=0$ 
+2. 取 $e_k\in [V_{k-1},\bar{V}_{k-1}]$，则 $\exist u \in V_{k-1}$，$x_k \in \bar{V}_{k-1}$ 使 $e_k=u x_k$，令 $V_k=V_{k-1}\cup \{x_k\}$，$T_k=T_{k-1}\cup\{e_k\}$ 
+3. 若 $k<n-1$，则 $k\leftarrow k + 1$，转 2；若 $k=n-1$，停止，$T_{n-1}$ 即为支撑树
+
+> 人话
+>
+> 从一个点出发，然后不断找边来延伸，最终得到的就是支撑树
+
+### Prim 算法 
+
+1. 任取 $x_0\in V(G)$，令 $l(x_0) = 0$，$l(x)=\infty (x\neq x_0)$，$V_0=\{x_0\}$，$T_0=\empty$，且 $k=0$ 
+2. 对 $\forall x \in N_G(x_{k-1})\cap \bar{V}_{k-1}$，$l(x)=\min\{\pmb{w}(x_{k-1}),l(x)\}$ 
+3. 取 $x_k = \mathop{\arg\min}_\limits{x\in \bar{V}_{k-1}} l(x)$，设 $e_k=u x_k$，$u\in V_{k-1}$ 满足 $\pmb{w}(e_k)=l(x_k)$，令 $V_k=V_{k-1}\cup\{x_k\}$，$T_k=T_{k-1}\cup{e_k}$ 
+4. 若 $k<n-1$，则 $k\leftarrow k+1$，转 2；若 $k=n-1$，则停止，$T_{k-1}$ 即为最小树
+
+> 像 dijkstra 算法，差别关键在于 $l(x)$ 的更新[^prim_vs_dijkstra] 
+
+算法复杂度为 $\Theta(n^2)$ 
+
+> 示例
+>
+> ![1571816733251](assets/1571816733251.jpg)
+
+**定理 2.4.1** 按 Prim 算法求出的 $T_{n-1}$ 是加权连通图 $(G,\pmb{w})$ 的最小树
+
+## 参考
+
+[^prim_vs_dijkstra]: 豆沙包lo. [Dijkstra算法与Prim算法的异同](https://blog.csdn.net/qq284565035/article/details/51583314). 
+
