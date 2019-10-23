@@ -24,6 +24,8 @@
 **定理 2.1.3** G 是 n 阶树 $\Leftrightarrow$ G 连通且 $e(G)=n-1$ 
 
 > 连通 n 个点只需要 $n-1$ 条边
+>
+> 还有一个等价条件：$e(G)=n-1$，且 G 不含圈
 
 **推论 2.1.3** G 是 n 阶林 $\Leftrightarrow$ $e(G)= n-\omega(G)$ 
 
@@ -371,4 +373,146 @@ $$
 > \begin{aligned} \mathbf { g } & = ( 1,9,14,4,18,15,7,8,10 ) \\ & = 18 \cdot \mathbf { g } _ { 5 } + 15 \cdot \mathbf { g } _ { 6 } + 7 \cdot \mathbf { g } _ { 7 } + 8 \cdot \mathbf { g } _ { 8 } + 10 \cdot \mathbf { g } _ { 9 } \\ & = \sum _ { j = 5 } ^ { 9 } \mathbf { g } \left( a _ { j } \right) \mathbf { g } _ { j } \end{aligned}
 > $$
 > 说明 $\pmb{g}$ 的值由 $\pmb{g}|T$ 上的值所唯一确定，事实上对任何割向量，此结论都成立
+
+## 2.3 支撑树的数目
+
+用 $\tau(D)$ 表示无环连通图 D 中支撑树的数目
+
+B 是割空间 $\mathcal{B}(D)$ 的基矩阵
+
+从定理 2.2.2 知，若 $R\subseteq E(D)$ 且 $|R|=n-1$，则子方阵 $B|R$ 可逆 $\Leftrightarrow$ $D[R]$ 是 D 的支撑树
+
+于是，$\tau(D)$ 等于 B 中 $n-1$ 阶可逆方阵的数目
+
+设 M 是 $n\times m$ 阶矩阵，M 中满阶子方阵行列式为 0，-1 或 1，则称 M 为幺模矩阵 unimodular matrix
+
+**Proposition 3.1** 设 B 是割空间 $\mathcal{B}(D)$ 的基矩阵，F 是 D 的支撑林，$B_F$ 是 $\mathcal{B}(D)$ 中对应于 F 的基矩阵。这 B 由 $B|F$ 唯一确定，且 $B=(B|F)B_F$ 
+
+> 证明
+>
+> 存在唯一可逆的 P，使得 $B=PB_F$，则 $B|F=(PB_F)|F=P(B_F|F)=P$，故 $B=(B|F)B_F$ 
+
+**proposition 3.2** 设 $C
+$ 是圈空间 $\mathcal{C}(D)$ 的基矩阵，F 是 D 的支撑林，$C_F$ 是 $\mathcal{C}(D)$ 中对应于 F 的基矩阵，则 $C$ 由 $C|\bar{F}$ 唯一确定，且 $C=(C|\bar{F})C_F$ 
+
+**proposition 3.3** 设 D 是无环有向图，F 是 D 中支撑林，$B_F$ 和 $C_F$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中对应于 F 的基矩阵，则 $B_F$ 和 $C_F$ 都是幺模矩阵
+
+> 设 P 是 $B_F$ 的满阶子方阵，阶数为 $n-\omega$ 
+>
+> 设 R 是 P 对应的边集，令 $F_1\triangleq D[R]$，则 $P=B_F|F_1$ 
+>
+> 若 $F_1$ 含圈，则 $\det P=0$ 
+>
+> 下设 $F_1$ 是支撑林，$B_1$ 是 $\mathcal{B}(D)$ 中对应于 $F_1$ 的基矩阵
+>
+> 由 Proposition 3.1 知
+> $$
+> (B_F|F_1)B_1=B_F
+> $$
+> 两边限制在 F 上，有
+> $$
+> (B_F|F_1)(B_1|F)=B_F|F=I
+> $$
+> 两边取行列式
+> $$
+> \det(B_F|F_1)\det(B_1|F)=1
+> $$
+> 由于是整数矩阵，则
+> $$
+> \det P = \det (B_F|F_1)=\pm 1
+> $$
+> 则 $B_F$ 是幺模矩阵
+
+**proposition 3.4** 设 M 是无环有向图 D 的关联矩阵，K 是从 M 中删去任何一行后得到的子矩阵，则 K 是幺模矩阵
+
+> P 是 K 的满阶子方阵
+>
+> > 归纳法
+> >
+> > P 的一阶子方阵是幺模的
+> >
+> > 假设 P 的任一 k 阶子方阵是幺模的，设 $Q=(q_{ij})(1\le i,j\le n+1)$ 是 P 中的 $k+1$ 阶子方阵
+> >
+> > 每列至多两个非零元素，若每列都有两个非零元素，则 Q 中所有行向量之和为 0 向量，则 $\det Q = 0$ 
+> >
+> > 下设 Q 至少有一列至多有一个非零元素，记为 $q_{i,j}(=0,-1,或1)$，则
+> > $$
+> > \det Q = (-1)^{i+j}q_{ij}\det Q_{ij}
+> > $$
+> > 其中 $\det Q_{ij}$ 是 Q 的 k 阶子方阵，由假设知 $\det Q_{ij}=0,\pm 1$，则 $\det Q = 0,$ \pm 1
+> >
+> > 由 k 的任意性知 $\det P = 0, \pm 1$ 
+>
+> P 是幺模的
+>
+> 由 P 的任意性知 K 是幺模矩阵
+
+**定理 2.3** B 和 C 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
+$$
+\tau(D)=\det(BB^\top)=\det(CC^\top)
+$$
+**推论 2.3.1** B 和 C 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
+$$
+\tau(D)=\left|
+\det
+\left(\begin{matrix}
+B\\
+C
+\end{matrix}\right)
+\right|
+$$
+
+> $$
+> \begin{aligned}
+> \tau^2
+> &=\det(BB^\top)\det(CC^\top)\\
+> &=\det\left(\begin{matrix}
+> BB^\top & 0\\
+> 0 & CC^\top\\
+> \end{matrix}\right)\\
+> &=\det\left(\begin{matrix}
+> BB^\top & BC^\top\\
+> CB^\top & CC^\top\\
+> \end{matrix}\right)\\
+> &=\det\left(
+> \left(\begin{matrix}B\\C\\\end{matrix}\right)
+> \left(\begin{matrix}B^\top & C^\top\\\end{matrix}\right)
+> \right)\\
+> &=\det\left(\begin{matrix}B\\C\\\end{matrix}\right)
+> \det\left(\begin{matrix}B^\top & C^\top\\\end{matrix}\right)\\
+> &=\left(\det\left(\begin{matrix}B\\C\\\end{matrix}\right)\right)^2
+> \end{aligned}
+> $$
+
+**推论 2.3.2** D 是无环**连通**有向图，T 是支撑树，$B_T$ 和 $C_T$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中对应 T 的基矩阵，K 是从 D 的关联矩阵 M 中删去任意一行后得到的矩阵，则
+$$
+\tau(D)=\det (B_TB_T^\top)=\det(C_TC_T^\top)=\det(KK^\top)
+$$
+
+> 示例
+>
+> ![1571812556334](assets/1571812556334.jpg)
+>
+> 关联矩阵为
+> $$
+> \mathbf { M } = \left( \begin{array} { r r r r r r r r r } { 0 } & { 0 } & { 0 } & { 0 } & { 0 } & { - 1 } & { 1 } & { 1 } & { 0 } \\ { - 1 } & { 1 } & { 0 } & { 0 } & { 0 } & { 0 } & { 0 } & { - 1 } & { 0 } \\ { 1 } & { 0 } & { 0 } & { - 1 } & { 0 } & { 0 } & { - 1 } & { 0 } & { 1 } \\ { 0 } & { 0 } & { 1 } & { 1 } & { - 1 } & { 0 } & { 0 } & { 0 } & { 0 } \\ { 0 } & { 0 } & { 0 } & { 0 } & { 1 } & { 1 } & { 0 } & { 0 } & { 0 } \\ { 0 } & { - 1 } & { - 1 } & { 0 } & { 0 } & { 0 } & { 0 } & { 0 } & { - 1 } \end{array} \right)
+> $$
+> K 为从 M 中删去最后一行所得到的矩阵，则
+> $$
+> \operatorname { det } \mathbf { K K } ^ { \top } = \operatorname { det } \left( \begin{array} { r r r r r } { 3 } & { - 1 } & { - 1 } & { 0 } & { - 1 } \\ { - 1 } & { 3 } & { - 1 } & { 0 } & { 0 } \\ { - 1 } & { - 1 } & { 4 } & { - 1 } & { 0 } \\ { 0 } & { 0 } & { - 1 } & { 3 } & { - 1 } \\ { - 1 } & { 0 } & { 0 } & { - 1 } & { 2 } \end{array} \right) = 66
+> $$
+> 支撑树 T 的边集为 $E(T)=\{a_5,a_6,a_7,a_8,a_9\}$，则
+> $$
+> \begin{aligned}
+> \mathbf { B } _ { T } \mathbf { B } _ { T } ^ { \top } &= \left( \begin{array} { r r r r r } { 3 } & { - 2 } & { - 2 } & { 0 } & { - 1 } \\ { - 2 } & { 3 } & { 2 } & { 0 } & { 1 } \\ { - 2 } & { 2 } & { 5 } & { - 2 } & { 2 } \\ { 0 } & { 0 } & { - 2 } & { 3 } & { - 1 } \\ { - 1 } & { 1 } & { 2 } & { - 1 } & { 3 } \end{array} \right)\\
+> \mathbf { C } _ { T } \mathbf { C } _ { T } ^ { \top } &= \left( \begin{array} { r r r r } { 3 } & { - 2 } & { - 1 } & { - 1 } \\ { - 2 } & { 4 } & { 2 } & { 1 } \\ { - 1 } & { 2 } & { 5 } & { 3 } \\ { - 1 } & { 1 } & { 3 } & { 4 } \end{array} \right)
+> \end{aligned}
+> $$
+> 因而有 $\det (B_TB_T^\top)=66=\det (C_T)C_T^\top$ 
+
+**推论 2.3.3** 设 $T_n$ 表示 $n(\ge2)$ 阶竞赛图，则 $\tau(T_n)=n^{n-2}$ 
+
+**推论 2.3.4**（矩阵-树定理，Kirchhoff）G 是无环连通图，$\tau(G)=\det (KK^\top)$，其中 K 是 G 的任何一个定向图 D 的关联矩阵 M 中删去任意一行后得到的矩阵
+
+**推论 2.3.5**（Cayley 公式）$\tau(K_n)=n^{n-1}(n\ge 2)$ 
 
