@@ -120,5 +120,88 @@ $\forall f\in V^*,\|f\|=\sup\{|f(x)|:\|x\|\le 1\}=\sup \left\{\frac{|f(x)|}{\|x\
 
 集合 S 的完备集是 S 的所有极限点的集合
 
+# 切比雪夫多项式
 
+$$
+\begin{aligned}
+T_0(x)&=1\\
+T_1(x)&=\cos\theta=x\\
+T_2(x)&=\cos2\theta\\
+\dots&\\
+T_n(x)&=\cos n\theta
+\end{aligned}
+$$
+
+## 递推公式
+
+由 $\cos (n+1)\theta=2\cos\theta\cos(n\theta)-\cos(n-1)\theta$ 得
+$$
+T_{n+1}(x)=2xT_n(x)-T_{n-1}(x)\quad(n\ge1)
+$$
+则 $T_0(x)=1$，$T_1(x)=x$，$T_2(x)=2x^2-1$，$T_3(x)=4x^3-3x$，$T_4(x)=8x^4-8x^2+1$ 
+
+![image-20191024114926766](assets/image-20191024114926766.jpg)
+
+## 正交性
+
+已知
+$$
+\int_0^\pi\cos(m\theta)\cos(n\theta)\mathbb{d}\theta=0\quad(m\neq n)
+$$
+则
+$$
+\begin{aligned}
+(T_m,T_n)=&\int_{-1}^1\frac{1}{\sqrt{1-x^2}}T_m(x)T_n(x)\mathbb{d}x\\
+\xlongequal{x=\cos\theta}&\int_0^\pi\cos m\theta\cos n\theta \mathbb{d}\theta\\
+=& 0
+\end{aligned}
+$$
+
+则切比雪夫多项式在 $[-1,1]$ 上带权 $\rho(x)=\frac{1}{\sqrt{1-x^2}}$ 正交
+
+## 零点
+
+$$
+T_n(x)=\cos(n\theta)=\cos (n\arccos x)
+$$
+
+取
+$$
+n\arccos x=\frac{(2k+1)\pi}{2}\quad(k=0,1,\dots,n-1)
+$$
+即
+$$
+\begin{aligned}
+x_k&=\cos\frac{(2k+1)\pi}{2n}\quad(k=0,1,\dots,n-1)\\
+&=\cos\frac{\pi}{2n},\cos\frac{3\pi}{2n},\dots,\cos\frac{(2n-1)\pi}{2n}
+\end{aligned}
+$$
+
+> $x_0>x_1>\dots>x_{n-1}$ 
+>
+> 在 $[-1,1]$ 上共 n 个零点
+
+## 极性
+
+$T_n(x)$ 的最高次项 $x^n$ 的系数为 $2^{n-1}$，$[-1,1]$ 上与 0 的偏差最小且首项系数为 1 的 n 次多项式是
+$$
+P_n(x)=\frac{T_n(x)}{2^{n-1}}
+$$
+
+> 函数 $f(t)$ 在 $[-1,1]$ 上与 0 的偏差指的是
+> $$
+> \max_\limits{-1\le t\le1}|f(t)|=\|f\|_{[-1,1]}
+> $$
+>
+> ---
+>
+> 证明
+>
+> 记 $[-1,1]$ 上与 0 的偏差最小且首项系数为 1 的 n 次多项式集合为 $\mathcal{P}_n^0$，$C_n=\frac{1}{2^{n-1}}$， $T_n^0=C_n T_n(x)$ 
+>
+> 由于 $T_n(x)$ 首项系数为 $C_n$，则 $T_n^0 \in \mathcal{P}^0$ 
+>
+> $\|T_n^0\|_{[1,1]}=C_n$，且 $T_n^0(x)$ 交替达到最大值 $C_n$ 和最小值 $-C_n$ 各 n 次
+>
+> 若 $\exist p\in \mathcal{P}_n^0$ 满足 $\|p\|_{[-1,1]}<\|T_n^0\|_{[-1,1]}=C_n$，则 $T_n^0-p$ 在 $[-1,1]$ 上正负号交替 n 次，则有 n 个零点，但 $T_n^0-p\in \mathcal{P}_{n-1}$ 不能有 n 个零点，矛盾。
 
