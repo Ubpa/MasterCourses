@@ -205,3 +205,18 @@ $$
 >
 > 若 $\exist p\in \mathcal{P}_n^0$ 满足 $\|p\|_{[-1,1]}<\|T_n^0\|_{[-1,1]}=C_n$，则 $T_n^0-p$ 在 $[-1,1]$ 上正负号交替 n 次，则有 n 个零点，但 $T_n^0-p\in \mathcal{P}_{n-1}$ 不能有 n 个零点，矛盾。
 
+# 全纯函数[^holomorphic]
+
+设 $U\subset \overset{\circ}{C}$ 是开子集且 $f:U\to \overset{\circ}{C}$ 是一个单复变函数，称 $f$ 在 $z_0\in U$ （复）可微（[complex] differentiable）或全纯，如果极限 $f^\prime(z_0)=\lim_\limits{z \to z_0}\frac{f(z)-f(z_0)}{z-z_0}$ 存在。
+
+若 $f$ 在 $U$ 中处处可微，则称 $f$ 在 $U$ 上全纯（holomorphic over $U$） 
+
+# 最大模原理[^maxmod]
+
+$|f|$ 在复分析中，最大模原理说明如果单变量复变函数 $f$ 是一个[全纯函数](#全纯函数[^holomorphic])，那么它的模的局部最大值不可能在其定义域的内部取到。
+
+# 参考
+
+[^holomorphic]: 百度百科. [全纯函数](https://baike.baidu.com/item/%E5%85%A8%E7%BA%AF%E5%87%BD%E6%95%B0).
+[^maxmod]: 百度百科. [最大模原理](https://baike.baidu.com/item/%E6%9C%80%E5%A4%A7%E6%A8%A1%E5%8E%9F%E7%90%86).
+
