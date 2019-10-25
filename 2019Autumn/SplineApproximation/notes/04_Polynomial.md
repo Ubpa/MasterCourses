@@ -199,7 +199,39 @@ $$
 
 ## 4.2 连续模
 
+**定义 4.1** 设 $f\in C(I)$，$\rho(t_1,t_2)$ 为 $t_1$ 和 $t_2$ 之间的距离，其中 $t_1,t_2\in I$，函数
+$$
+\omega_f(h)\triangleq\sup_\limits{\rho(t_1,t_2)\le h}|f(t_1)-f(t_2)|
+$$
+是从 $[0,+\infty]$ 到 $[0,\infty]$ 的映射，称为函数 $f$ 的连续模，不致歧义时记为 $\omega(h)$ 
 
+性质
+
+- $\lim_\limits{h\to 0^+}\omega(h)=\omega(0)=0$ 
+- $\omega(h)$ 单调上升
+- $\omega(h_1+h_2)\le\omega(h_1)+\omega(h_2)$，即次可加性
+- $\omega_{f_1+f_2}(h)=\omega_{f_1}(h)+\omega_{f_2}(h)$ 
+- $\forall n \in \mathbb{Z}^+,\omega(nh)\le n \omega(h)$ 
+- $\forall \lambda >0,\omega(\lambda h)\le(\lambda+1)\omega(h)$ 
+- $\omega(h)$ 是连续函数
+- $f\in \text{Lip}_M \alpha \Leftrightarrow \omega_f(h)\le Mh^\alpha$ （$f\in \text{Lip}_M\alpha$ 就是 $\forall t_1,t_2,|f(t_1)-f(t_2)|\le M|t_1-t_2|^\alpha$）
+- 若 $f\neq \text{C}$，则 $\lim_\limits{h\to 0}\frac{\omega_f(h)}{h}>0$ 
 
 ## 4.3 平滑模
+
+**定义 4.2** 函数 $f$ 在区间 $I$ 上的 $r$ 阶平滑模定义为
+$$
+\omega_{I,f,r}(h)\triangleq\sup_\limits{0\le s\le h}\|\Delta_s^rf(t)\|_{\infty(I)}
+$$
+不致歧义时，记为 $\omega_r(h)$。$\omega_r(0)=0$ 
+
+性质
+
+- $\omega_r(h)$ 单调增
+- $\omega_{r,f_1+f_2}(h)\le\omega_{r,f_1}(h)+\omega_{r,f_2}(h)$ 
+- $\omega_{r,f}(h) \le 2^j\omega_{r-j,f}(h)$，特别地，$\omega_{r,f}(h)\le 2^r \|f\|_\infty$ 
+- $\forall k \in \mathbb{Z}^+,\omega_r(kh)\le k^r\omega_{r}(h)$；$\forall \lambda>0,\omega_r(\lambda h)\le \lambda\omega_r(h)$ 
+- $\forall f \in C^{(j)}[a,b](0\le j\le r-1),\omega_{r,f}(h)\le h^j\omega_{r-j,f^{(j)}}(h)$；$\forall f\in C^{(r)}[a,b],\omega_{r,f}(h)\le h^r\|f^{(r)}\|_\infty$ 
+- 若 $\omega_{r,f}(h) > 0(h>0)$，则 $\lim_\limits{h\to 0}\frac{\omega_{r,f}(h)}{h^r}>0$ 
+- 若 $f \in C^{(r)}[a,b]$，则 $\lim_\limits{h\to 0}\frac{\omega_{r,f}(h)}{h^r}=0\Leftrightarrow f\in \mathcal{P}_r$ 
 

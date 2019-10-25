@@ -217,7 +217,7 @@ $$
 $$
 且
 $$
-T_n^\prime(1)=n\left|\lim_\limits{\theta\to0}\frac{\sin (n\theta)}{\sin\theta}\right|=n^2
+T_n^\prime(1)=n\lim_\limits{\theta\to0}\frac{\sin (n\theta)}{\sin\theta}=n^2
 $$
 
 ## 极性
@@ -253,6 +253,14 @@ $$
 # 最大模原理[^maxmod] 
 
 $|f|$ 在复分析中，最大模原理说明如果单变量复变函数 $f$ 是一个[全纯函数](#全纯函数[^holomorphic])，那么它的模的局部最大值不可能在其定义域的内部取到。
+
+# 函数 r 阶差分
+
+$\Delta_hf(t)=f(t+h)-f(t)$ 是函数 $f$ 在点 $t$ 的步长为 $h$ 的**一阶向前差分**，那么
+$$
+\Delta_h^r f(t) \triangleq \Delta(\Delta_h^{r-1}f(t)) =\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)
+$$
+称为 $f$ 在 $t$ 点步长为 $h$ 的 $r$ 阶向前差分
 
 # 参考
 
