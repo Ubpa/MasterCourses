@@ -116,7 +116,86 @@ $$
 
 **定理 4.2** 设 $p\in \mathcal{P}_n$ 是 $[-1,1]$ 上 $n-1$ 次多项式，若 $\|\sqrt{1-t^2}p(t)\|\le M$，则 $\|p\|\le nM$ 
 
+> 证明
+>
+> $T_n(t)$ 零点 $\xi_i=\cos\frac{2i-1}{2n}\pi$ 
+>
+> 若 $t\in [\xi_n,\xi_i]$，则 $\sqrt{1-t^2}\ge\sqrt{1-\xi_1^2}=\sin\frac{\pi}{2n}\ge\frac{1}{n}$，故
+> $$
+> \begin{aligned}
+> |p(t)|\le n\sqrt{1-t^2}|p(t)|\le nM
+> \end{aligned}
+> $$
+> 当 $t\in[-1,1]\backslash[\xi_n,\xi_1]$ 时，$t-\xi_i(i=1,\dots,n)$ 同号
+>
+> 在 $\xi_i(i=1,2,\dots,n)$ 插值于 $p(t)$ 的 Lagrange 插值多项式即为 $p(t)$，则
+> $$
+> p(t)=\sum_{i=1}^n p(\xi_i)\frac{w(t)}{(t-\xi_i)w^\prime(t)}
+> $$
+> 其中 $w(t)=\prod_\limits{i=1}^n(t-\xi_i)$ 
+>
+> 由于
+> $$
+> \begin{aligned}
+> T_n(t) &= 2^{n-1}w(t)\\
+> T_n^\prime(\xi_i) &= \frac{(-1)^{i-1}n}{\sqrt{1-\xi_i^2}}
+> \end{aligned}
+> $$
+> 则
+> $$
+> \begin{aligned}
+> p(t)&=\sum_{i=1}^n p(\xi_i)\frac{w(t)}{(t-\xi_i)w^\prime(t)}\\
+> &=\sum_{i=1}^n p(\xi_i)\frac{T_n(t)}{(t-\xi_i)T_n^\prime(t)}\\
+> &=\frac{1}{n}\sum_{i=1}^n \sqrt{1-\xi_i^2}p(\xi_i)\frac{(-1)^{i-1}T_n(t)}{t-\xi_i}\\
+> \end{aligned}
+> $$
+> 故
+> $$
+> \begin{aligned}
+> |p(t)|
+> &\le\frac{1}{n}\sum_{i=1}^n\left|\sqrt{1-\xi_i^2}p(\xi_i)\frac{T_n(t)}{t-\xi_i}\right|\\
+> &\le\frac{M}{n}\sum_{i=1}^n\left|\frac{T_n(t)}{t-\xi_i}\right|\\
+> &=\frac{M}{n}\left|\sum_{i=1}^n\frac{T_n(t)}{t-\xi_i}\right|\\
+> &=\frac{M}{n}\left|T_n^\prime(t)\right|\\
+> &\le nM
+> \end{aligned}
+> $$
+>
+> > 第一行是绝对值不等式
+> >
+> > 第二行是定理已知条件
+> >
+> > 第三行是因为 $t-\xi_i(i=1,\dots,n)$ 同号
+> >
+> > 第四行是 $T_n^\prime(x)=\sum_{i=1}^n\frac{T_n(x)}{(x-\xi_i)}$ 
+> >
+> > 第五行是 $|T^\prime_n(x)|= n \left|\frac{\sin (n\theta)}{\sin\theta}\right|\le n^2$ 
+
 **定理 4.3**（Markov 不等式）设 $p_n\in \mathcal{P}_{n+1}$，且在 $[-1,1]$ 中 $\|p_n\|\le M$，则 $\|p^\prime_n(t)\|\le n^2M$ 
+
+> 证明
+>
+> 由[推论 4.1](#4.1.1 Bernstein 不等式) 知
+> $$
+> |p^\prime(t)|\le\frac{nM}{\sqrt{1-t^2}}
+> $$
+> 则
+> $$
+> \left|\sqrt{1-t^2}\frac{p^\prime(t)}{n}\right|\le M
+> $$
+> 由定理 4.2 知
+> $$
+> \left|\frac{p^\prime(t)}{n}\right|\le nM
+> $$
+> 即
+> $$
+> \|p^\prime(t)\|\le n^2M
+> $$
+
+当 $p_n(t)=T_n(t)=\cos(n\arccos t)$ 时，定理 4.3 不等式等号成立。$M=1$，且
+$$
+T_n^\prime(1)=n\lim_\limits{\theta\to 0}\frac{\sin n\theta}{\sin \theta}=n^2
+$$
 
 ## 4.2 连续模
 

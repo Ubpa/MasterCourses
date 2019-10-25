@@ -142,6 +142,12 @@ $$
 
 ![image-20191024114926766](assets/image-20191024114926766.jpg)
 
+## 展开式
+
+$$
+T_n(x)=2^{n-1}\prod_{i=1}^n(x-\xi_i)
+$$
+
 ## 正交性
 
 已知
@@ -159,6 +165,17 @@ $$
 
 则切比雪夫多项式在 $[-1,1]$ 上带权 $\rho(x)=\frac{1}{\sqrt{1-x^2}}$ 正交
 
+## 最值
+
+$$
+\|T_n\|_{[-1,1]}=1
+$$
+
+最值点为
+$$
+x_i=\cos\frac{i \pi}{n} (i=0,1,\dots,n)
+$$
+
 ## 零点
 
 $$
@@ -167,12 +184,12 @@ $$
 
 取
 $$
-n\arccos x=\frac{(2k+1)\pi}{2}\quad(k=0,1,\dots,n-1)
+n\arccos \xi_i=\frac{(2i+1)\pi}{2}\quad(i=0,1,\dots,n-1)
 $$
 即
 $$
 \begin{aligned}
-x_k&=\cos\frac{(2k+1)\pi}{2n}\quad(k=0,1,\dots,n-1)\\
+\xi_i&=\cos\frac{(2i-1)\pi}{2n}\quad(i=1,\dots,n)\\
 &=\cos\frac{\pi}{2n},\cos\frac{3\pi}{2n},\dots,\cos\frac{(2n-1)\pi}{2n}
 \end{aligned}
 $$
@@ -180,6 +197,28 @@ $$
 > $x_0>x_1>\dots>x_{n-1}$ 
 >
 > 在 $[-1,1]$ 上共 n 个零点
+
+## 导数
+
+$$
+\begin{aligned}
+T_n^\prime(x)&=\frac{n\sin (n\arccos x)}{\sqrt{1-x^2}}
+=\frac{n\sin (n\theta)}{\sin\theta}\\
+&=2^{n-1}\sum_{i=1}^n\prod_{j=1,j\neq i}^n (t-\xi_j)
+=\sum_{i=1}^n\frac{T_n(x)}{(x-\xi_i)}\\
+T_n^\prime(\xi_i)&=\frac{(-1)^{i-1}n}{\sqrt{1-\xi_i^2}}
+=\prod_{j=1,j\neq i}^n (\xi_i-\xi_j)\\
+\end{aligned}
+$$
+
+此外
+$$
+|T^\prime_n(x)|= n \left|\frac{\sin (n\theta)}{\sin\theta}\right|\le n^2
+$$
+且
+$$
+T_n^\prime(1)=n\left|\lim_\limits{\theta\to0}\frac{\sin (n\theta)}{\sin\theta}\right|=n^2
+$$
 
 ## 极性
 
@@ -201,17 +240,17 @@ $$
 >
 > 由于 $T_n(x)$ 首项系数为 $C_n$，则 $T_n^0 \in \mathcal{P}^0$ 
 >
-> $\|T_n^0\|_{[1,1]}=C_n$，且 $T_n^0(x)$ 交替达到最大值 $C_n$ 和最小值 $-C_n$ 各 n 次
+> $\|T_n^0\|_{[1,1]}=C_n$，且 $T_n^0(x)$ 交替最大值 $C_n$ 和最小值 $-C_n$ 共 $n+1$ 次
 >
-> 若 $\exist p\in \mathcal{P}_n^0$ 满足 $\|p\|_{[-1,1]}<\|T_n^0\|_{[-1,1]}=C_n$，则 $T_n^0-p$ 在 $[-1,1]$ 上正负号交替 n 次，则有 n 个零点，但 $T_n^0-p\in \mathcal{P}_{n-1}$ 不能有 n 个零点，矛盾。
+> 若 $\exist p\in \mathcal{P}_n^0$ 满足 $\|p\|_{[-1,1]}<\|T_n^0\|_{[-1,1]}=C_n$，则 $T_n^0-p$ 在 $[-1,1]$ 上正负号交替 $n+1$ 次，则有 n 个零点，但 $T_n^0-p\in \mathcal{P}_{n-1}$ 不能有 n 个零点，矛盾。
 
-# 全纯函数[^holomorphic]
+# 全纯函数[^holomorphic] 
 
 设 $U\subset \overset{\circ}{C}$ 是开子集且 $f:U\to \overset{\circ}{C}$ 是一个单复变函数，称 $f$ 在 $z_0\in U$ （复）可微（[complex] differentiable）或全纯，如果极限 $f^\prime(z_0)=\lim_\limits{z \to z_0}\frac{f(z)-f(z_0)}{z-z_0}$ 存在。
 
-若 $f$ 在 $U$ 中处处可微，则称 $f$ 在 $U$ 上全纯（holomorphic over $U$） 
+若 $f$ 在 $U$ 中处处可微，则称 $f$ 在 $U$ 上全纯（holomorphic over $U$）
 
-# 最大模原理[^maxmod]
+# 最大模原理[^maxmod] 
 
 $|f|$ 在复分析中，最大模原理说明如果单变量复变函数 $f$ 是一个[全纯函数](#全纯函数[^holomorphic])，那么它的模的局部最大值不可能在其定义域的内部取到。
 
