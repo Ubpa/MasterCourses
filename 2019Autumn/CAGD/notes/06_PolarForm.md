@@ -290,6 +290,10 @@ $$
 > - 1 次：$f(t_1)=c_0+c_1t_1$ 
 > - 2 次：$f(t_1,t_2)=c_0+c_1\frac{t_1+t_2}{2} + c_2t_1t_2$ 
 > - 3 次：$f(t_1,t_2,t_3)=c_0+c_1\frac{t_1+t_2+t_3}{3}+c_2\frac{t_1t_2+t_2t_3+t_1t_3}{3}+c_3t_1t_2t_3$ 
+>
+> ---
+>
+> 两者都是只有 $n+1$ 个变量，即自由度为 $n+1$，只需提供四个采样点即可确定函数
 
 ### 06.2.5 泛化
 
@@ -363,7 +367,150 @@ $$
 
 ## 06.3 Bezier 样条
 
+### 06.3.1 Bezier 曲线
 
+#### 06.3.1.1 极形式
+
+用极形式表示 Bezier 曲线
+$$
+\begin{aligned} f ( t , \ldots , t ) & = ( 1 - t ) f ( t , \ldots , t , 0 ) + t f ( t , \ldots , t , 1 ) \\
+& = ( 1 - t ) [ ( 1 - t ) f ( t , \ldots , t , 0,0 ) + t f ( t , \ldots ,t, 0,1 ) ] + t [ ( 1 - t ) f ( t , \ldots , t , 1,0 ) + t f ( t , \ldots , t , 1,1 ) ] \\
+& = ( 1 - t ) ^ { 2 } f ( t , \ldots , t , 0,0 ) + 2 t ( 1 - t ) t f ( t , \ldots , 0,1 ) + t ^ { 2 } f ( t , \ldots , t , 1,1 ) \\ & = \cdots \\ & = \sum _ { i = 0 } ^ { n } \left( \begin{array} { c } { n } \\ { i } \end{array} \right) t ^ { i } ( 1 - t ) ^ { n - i } f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)\\
+& = \sum _ { i = 0 } ^ { n } B_n^i(t) f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)\end{aligned}
+$$
+因此 $f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)=\pmb{p}_i$ 
+
+> 示例
+>
+> 对于 3 次 Bezier 曲线，极形式为 $\pmb{p}(t_1,t_2,t_3)$，四个样本点为
+> $$
+> \begin{aligned}
+> \pmb{p}(0,0,0)&=\pmb{p}_0\\
+> \pmb{p}(0,0,1)&=\pmb{p}_1\\
+> \pmb{p}(0,1,1)&=\pmb{p}_2\\
+> \pmb{p}(1,1,1)&=\pmb{p}_3\\
+> \end{aligned}
+> $$
+> 由此可确定出极形式内的四个参数 $c_0,c_1,c_2,c_3$，由此求出极形式 $\pmb{p}(t_1,t_2,t_3)$，Bezier 曲线即为 $\pmb{p}(t,t,t)$ 
+>
+> ![image-20191026170726697](assets/image-20191026170726697.jpg)
+
+#### 06.3.1.2 de Castlejau 算法
+
+- Bezier 点：$\pmb{p}_i^{(0)}(t)=f(\underbrace{0,\dots,0}_{d-i},\underbrace{1,\dots,1}_{i})$ 
+- 内部点：$\pmb{p}_i^{(j)}(t)=f(\underbrace{0,\dots,0}_{d-i-j},\underbrace{1,\dots,1}_{i},\underbrace{t,\dots,t}_{j})$ 
+- 迭代计算：$\pmb{p}_i^{(j)}(t)=(1-t)\pmb{p}_i^{(j-1)}+t\pmb{p}_{i+1}^{(j-1)}(t)$ 
+
+> 示例
+>
+> ![image-20191026171958768](assets/image-20191026171958768.jpg)
+>
+> 每次线性组合就是需要底下一层的两个
+>
+> $i+1$ 个 1 的项与 $i$ 个 1 的项线性组合后得到 $i$ 个 1 且 $t$ 多一个的项
+
+#### 06.3.1.3 泛化
+
+$f(t)$ 是 $t\in [u,v]$ 的 d 阶 Bezier 曲线，$\pmb{p}$ 是 $f$ 的极形式，则 Bezier 点用极形式表示为
+$$
+\pmb{b}_i=p(\underbrace{u,\dots,u}_{d-i},\underbrace{v,\dots,v}_i)
+$$
+
+> 示例
+>
+> 三次 Bezier 曲线
+>
+> $\pmb{p}(u,u,u),\pmb{p}(u,u,v),\pmb{p}(u,v,v),\pmb{p}(v,v,v)$ 
+>
+> ![image-20191026172459228](assets/image-20191026172459228.jpg)
+
+#### 06.3.1.4 変基
+
+给定 n 次多项式 $\pmb{p}(t)$，想要 Bezier 曲线的控制点 $\{\pmb{b}_i\}_{i=0}^n$ 
+
+解决方法
+
+- $\pmb{p}(t)\mapsto \pmb{b}(t_1,\dots,t_n)$ 
+- 控制点 $\pmb{b}_i=\pmb{b}(\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)$，$i=0,\dots,n$ 
+
+> 示例
+>
+> $p(t)=1+2t+3t^2-t^3$ 
+>
+> - 线性代数
+>   $$
+>   \left( \begin{array} { c c c c } { 1 } & { 0 } & { 0 } & { 0 } \\ { - 3 } & { 3 } & { 0 } & { 0 } \\ { 3 } & { - 6 } & { 3 } & { 0 } \\ { - 1 } & { 3 } & { - 3 } & { 1 } \end{array} \right) ^ { - 1 } \left( \begin{array} { c } { 1 } \\ { 2 } \\ { 3 } \\ { - 1 } \end{array} \right) = \left( \begin{array} { c } { 1 } \\ { 5 / 3 } \\ { 10 / 3 } \\ { 5 } \end{array} \right)
+>   $$
+>
+> - 极形式
+>   $$
+>   \pmb{b} \left( t _ { 0 } , t _ { 1 } , t _ { 2 } \right) = 1 + 2 \frac { t _ { 0 } + t _ { 1 } + t _ { 2 } } { 3 } + 3 \frac { t _ { 0 } t _ { 1 } + t _ { 1 } t _ { 2 } + t _ { 0 } t _ { 2 } } { 3 } - t _ { 0 } t _ { 1 } t _ { 2 }
+>   $$
+>   则
+>   $$
+>   \begin{aligned}
+>   \pmb{b}(0,0,0)&=1\\
+>   \pmb{b}(0,0,1)&=\frac{5}{3}\\
+>   \pmb{b}(0,1,1)&=\frac{10}{3}\\
+>   \pmb{b}(1,1,1)&=5\\
+>   \end{aligned}
+>   $$
+
+### 06.3.1 多曲线段
+
+![image-20191026203411697](assets/image-20191026203411697.jpg)
+
+两条曲线段
+$$
+\{ \boldsymbol { p } ( 0,0,0 ) , \boldsymbol { p } ( 0,0,1 ) , \boldsymbol { p } ( 0,1,1 ) , \boldsymbol { p } ( 1,1,1 ) \} , \{ p ( 1,1,1 ) , \boldsymbol { p } ( 1,1,2 ) , \boldsymbol { p } ( 1,2,2 ) , \boldsymbol { p } ( 2,2,2 ) \}
+$$
+
+#### 06.3.1.1 导数
+
+$$
+\frac { \mathbb{d} } { \mathbb{d} t } F ( t ) = d f ( t , \ldots , t , \hat { 1 } ) = d ( f ( t , \ldots , t , 1 ) - f ( t , \ldots , t , 0 ) )
+$$
+
+![image-20191026203616107](assets/image-20191026203616107.jpg)
+
+#### 06.3.1.2 细分
+
+![image-20191026203655630](assets/image-20191026203655630.jpg)
+
+#### 06.3.1.3 升阶
+
+在 [06.2.9 升阶](#06.2.9 升阶) 介绍了升阶，对 Bezier 曲线 $\pmb{b}(t_1,\dots,t_d)$ 升阶得到
+$$
+\pmb{b} ^ { ( + 1 ) } \left( t _ { 1 } , \ldots , t _ { d + 1 } \right) = \frac { 1 } { d + 1 } \sum _ { i = 1 } ^ { d + 1 } \pmb{b} \left( t _ { 1 } , \ldots , t _ { i - 1 } , t _ { i + 1 } , \ldots , t _ { d + 1 } \right)
+$$
+升阶后的曲线 $\pmb{b}^{(+1)}$ 的 $d+2$ 个控制点 $\pmb{b}^{(+1)}_0,\dots,\pmb{b}^{(+1)}_{d+1}$ 为
+
+- 当 $i=1,\dots,d$ 时
+  $$
+  \begin{aligned}
+  \pmb{b}_i^{(+1)}
+  &=\pmb{b}^{(+1)}(\underbrace{0,\dots,0}_{d+1-i},\underbrace{1,\dots,1}_i)\\
+  &=\frac{i}{d+1}\pmb{b}(\underbrace{0,\dots,0}_{d+1-i},\underbrace{1,\dots,1}_{i-1}) + \left(1-\frac{i}{d+1}\right)\pmb{b}(\underbrace{0,\dots,0}_{d-i},\underbrace{1,\dots,1}_i)\\
+  &=\frac{i}{d+1}\pmb{b}_{i-1} + \left(1-\frac{i}{d+1}\right)\pmb{b}_i\\
+  \end{aligned}
+  $$
+
+- 其他
+  $$
+  \begin{aligned}
+  \pmb{b}_0^{(+1)}&=\pmb{b}_0\\
+  \pmb{b}_{d+1}^{(+1)}&=\pmb{b}_d\\
+  \end{aligned}
+  $$
+  > 将 $\pmb{b}_{-1}$ 和 $\pmb{b}_{d+1}$ 视为 $\pmb{0}$ 的话可以并入上边的公式
+
+多次升阶
+
+> TODO ... 
+>
+> PPT 上是错误的
+
+重复升阶可以收敛到 Bezier 曲线上
 
 ## 06.4 B 样条
 
