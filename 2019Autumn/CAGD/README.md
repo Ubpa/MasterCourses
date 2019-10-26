@@ -18,4 +18,5 @@
   - [03. 曲线微分几何](notes/03_DifferentialGeometryCurve.md) 
   - [04. Bezier 样条](notes/04_BezierSpline.md) 
   - [05. B 样条](notes/05_BSpline.md) 
+  - [06. 极形式 / Blossom](notes/06_PolarForm.md) 
 
