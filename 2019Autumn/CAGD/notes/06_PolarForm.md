@@ -514,3 +514,60 @@ $$
 
 ## 06.4 B 样条
 
+### 06.4.1 极形式
+
+分段多项式曲线的极形式是存在且唯一的
+
+给定 $k$ 阶（$k-1$ 次）B 样条 $\pmb{x}$ 
+
+- 结向量 $T=(t_0,\dots,t_{n+k})$ 
+- de Boor 点 $\pmb{d}_0,\dots,\pmb{d}_n$ 
+
+$\underline { \pmb{x} }(u_1,\dots,u_{k-1})$ 是 $\pmb{x}(t)$ 的极形式，则 de Boor 点可表示为
+$$
+\pmb{d}_i=\underline{\pmb{x}}(t_{i+1},\dots,t_{i+k-1})
+$$
+
+> 示例
+>
+> $k=4,n=5$ 
+>
+> ![image-20191026221904996](assets/image-20191026221904996.jpg)
+
+有一个很重要的点，$\underline{\pmb{x}}$ 是用 k 个点确定的，然而总共是 $n+1$ 个点，所以不是用一个 $\underline{\pmb{x}}$ 就能表示出整个 $\pmb{x}$，而是分段的表示。
+
+每一段 $[t_i,t_{i+1})$ 就对应一条曲线，总共 $n-k+2$ 条 $k-1$ 次曲线，连接处 $C^{k-2}$ 连续。对应的控制点为 $\pmb{d}_{i-(k-1)},\dots,\pmb{d}_i$，由此可确定相应的 $\underline{\pmb{x}}$。
+
+### 06.4.2 极形式下的 de Boor 算法
+
+想要求 $\pmb{x}(t)$，确定出 $t$ 前后 $k-1$ 个结
+$$
+r_{k-1}\le\dots\le r_1\le t < s_1\le \dots \le s_{k-1}
+$$
+则中间节点为
+$$
+\pmb{x} _ { j } ^ { (l) } ( t ) = \underline { \pmb{x} } ( r _ { k-1-l-j } , \dots , r _ { 1 }, \underbrace{t , \ldots , t}_l , s _ { 1 } , \dots , s _ { j } )
+$$
+其中 $l=0,\dots,k-1$，$j=0,\dots,k-1-l$ 
+
+最终曲线是
+$$
+\pmb{x}(t)=\pmb{x}_0^{(k-1)}(t)=\underline{\pmb{x}}(\underbrace{t,\dots,t}_{k-1})
+$$
+
+> 一段示例
+>
+> $k=4$ 
+>
+> ![image-20191026224855162](assets/image-20191026224855162.jpg)
+>
+> 插值示例
+>
+> ![image-20191026225014185](assets/image-20191026225014185.jpg)
+>
+> 一般示例
+>
+> ![image-20191026230412977](assets/image-20191026230412977.jpg)
+>
+> 连续曲线是最终求得的曲线，这是多段拼接起来的，每段曲线相关的控制点在同一虚线框内标出。
+
