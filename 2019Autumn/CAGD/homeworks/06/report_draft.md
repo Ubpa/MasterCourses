@@ -309,10 +309,7 @@ A=\left[\begin{matrix}
 0 & 6 & 24 & 60
 \end{matrix}\right],
 P=\left[\begin{matrix}
-P_0\\
-P_1\\
-P_2\\
-P_3
+P_0 &  P_1 & P_2 & P_3
 \end{matrix}\right]
 $$
 则
