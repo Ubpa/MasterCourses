@@ -160,7 +160,10 @@ $$
 
 给定以下三次多项式曲线
 $$
-F ( u ) = \left( \begin{array} { c } { 15 } \\ { - 6 } \end{array} \right) u ^ { 3 } + \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) u ^ { 2 } - \left( \begin{array} { l } { 9 } \\ { 9 } \end{array} \right) u
+F ( u ) =
+  \left( \begin{array} { c } { 15 } \\ { - 6 } \end{array} \right) u ^ { 3 }
++ \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) u ^ { 2 }
+- \left( \begin{array} { l } { 9 } \\ { 9 } \end{array} \right) u
 $$
 及参数区间 $[0,1]$ 
 
@@ -171,6 +174,79 @@ $$
    注：$f \left( u _ { 1 } , u _ { 2 } , \hat { 1 } \right) = f \left( u _ { 1 } , u _ { 2 } , 1 \right) - f \left( u _ { 1 } , u _ { 2 } , 0 \right)$ 
 
 ## 解
+
+### 1
+
+$$
+\begin{aligned}
+F^\prime(u)
+&= \left( \begin{array} { c } { 45 } \\ { - 18 } \end{array} \right) u ^ { 2 }
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) u
+- \left( \begin{array} { l } { 9 } \\ { 9 } \end{array} \right)\\
+F^\prime(u)
+&= \left( \begin{array} { c } { 90 } \\ { - 36 } \end{array} \right) u
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
+\end{aligned}
+$$
+
+### 2
+
+$$
+f(u_1,u_2,u_3)=
+  \left( \begin{array} { c } { 15 } \\ { -6 } \end{array} \right) u_1 u_2 u_3
++ \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) \frac{u_1u_2+u_2u_3+u_1u_3}{3}
+- \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right) \frac{u_1+u_2+u_3}{3}
+$$
+
+记 $f^{(1)}$ 和 $f^{(2)}$ 分别为 $F^\prime$ 和 $F^{\prime\prime}$ 的极形式，有
+$$
+\begin{aligned}
+f^{(1)}(u_1,u_2)&=
+  \left( \begin{array} { c } { 45 } \\ { -18 } \end{array} \right) u_1u_2
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) \frac{u_1+u_2}{2}
+- \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)\\
+
+f^{(2)}(u_1)&=
+  \left( \begin{array} { c } { 90 } \\ { -36 } \end{array} \right) u_1
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
+\end{aligned}
+$$
+由于
+$$
+\begin{aligned}
+3f(u_1,u_2,\hat{1})
+&=3\left(f(u_1,u_2,1)-f(u_1,u_2,0)\right)\\
+&=3\left(
+  \left( \begin{array} { c } { 15 } \\ { -6 } \end{array} \right) u_1 u_2
++ \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) \frac{u_1u_2+u_2+u_1}{3}
+- \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right) \frac{u_1+u_2+1}{3}
+- \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) \frac{u_1u_2}{3}
++ \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right) \frac{u_1+u_2}{3}
+\right)\\
+&= \left( \begin{array} { c } { 45 } \\ { -18 } \end{array} \right) u_1 u_2
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) \frac{u_2+u_1}{2}
+- \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)\\
+\end{aligned}
+$$
+故 $f^{(1)}(u_1,u_2)=3f(u_1,u_2,\hat{1})$ 
+
+由于
+$$
+\begin{aligned}
+6f(u_1,\hat{1},\hat{1})&=2\left(3f(u_1,1,\hat{1})-3f(u_1,0,\hat{1})\right)\\
+&=2\left(f^{(1)}(u_1,1)-f^{(1)}(u_1,0)\right)\\
+&=2\left(
+  \left( \begin{array} { c } { 45 } \\ { -18 } \end{array} \right) u_1
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) \frac{u_1+1}{2}
+- \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)
+- \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) \frac{u_1}{2}
++ \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)
+\right)\\
+&= \left( \begin{array} { c } { 90 } \\ { -36 } \end{array} \right) u_1
++ \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
+\end{aligned}
+$$
+故 $f^{(2)}(u_1)=6f(u_1,\hat{1},\hat{1})$ 
 
 # 3
 
