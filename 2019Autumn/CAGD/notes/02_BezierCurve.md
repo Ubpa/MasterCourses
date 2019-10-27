@@ -33,7 +33,7 @@
   \pmb{b}_i^r(t)&=(1-t)\pmb{b}_i^{r-1}(t)+t\pmb{b}_{i+1}^{r-1}(t), r=1,\dots,n,i=0,\dots,n-r\\
   \end{align}
   $$
-- $\pmb{x}(t)=\pmb{b}_0^n(t)$
+- $\pmb{x}(t)=\pmb{b}_0^n(t)$ 
 
 > 示例
 >
