@@ -1,28 +1,88 @@
-# 1
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
 
-## é¢˜
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
 
-ç»™å®šä»¥ä¸‹ä¸‰æ¬¡å¤šé¡¹å¼æ›²çº¿
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% ±êÌâ×ÖºÅ£ºÈıºÅ
+\title{\erhao ¡¶¼ÆËã»ú¸¨Öú¼¸ºÎÉè¼Æ¡·×÷Òµ5}
+\author{IDºÅ: 36  \qquad  ĞÕÃû: ×¯ÌÎ}  %µİ½»×÷ÒµÊ±ÌîÉÏIDºÅºÍĞÕÃû
+\date{2019Äê10ÔÂ27ÈÕ}
+\maketitle
+
+% Ä¿Â¼
+\tableofcontents  %±íÊ¾Ä¿Â¼²¿·Ö¿ªÊ¼
+
+\newpage
+
+\xiaosi
+
+\section{Ìâ 1}  %Ä¿Â¼µÄÇ°×ºÒ³Ãæ¶¼»á×Ô¶¯ÅÅ°æ²»ĞèÒªÊÖ¶¯ÅÅ°æ
+\subsection{ÌâÄ¿}
+¸ø¶¨ÒÔÏÂÈı´Î¶àÏîÊ½ÇúÏß
 $$
 P ( u ) = - \left( \begin{array} { c } { 7 / 8 } \\ { 5 / 8 } \end{array} \right) u ^ { 3 } + \left( \begin{array} { c } { 9 } \\ { 15 / 4 } \end{array} \right) u ^ { 2 } - \left( \begin{array} { c } { 57 / 2 } \\ { 9 / 2 } \end{array} \right) u + \left( \begin{array} { c } { 30 } \\ { - 1 } \end{array} \right)
 $$
 
-1. è®¡ç®— $P(u)$ çš„æå½¢å¼åŠå…¶åœ¨åŒºé—´ $[2,4]$ å†…çš„ Bezier æ§åˆ¶å¤šè¾¹å½¢çš„é¡¶ç‚¹ $P_0,P_1,P_2,P_3$ï¼Œå¹¶å¤§è‡´å‹¾å‹’å‡ºè¯¥æ§åˆ¶å¤šè¾¹å½¢ï¼›
-2. ç”¨ de Casteljau ç®—æ³•è®¡ç®—åœ¨é‡‡æ ·ç‚¹ $u=\{4/2,3,7/2\}$ å¤„çš„å¤šé¡¹å¼æ›²çº¿ $P(u)$ï¼Œå¹¶åœ¨ 1.  å›¾ä¸­ç”»å‡ºï¼›
-3. ç”¨ 2. ä¸­ç»“æœå°†æ›²çº¿åœ¨ $u=3$ å¤„ç»†åˆ†ï¼Œå†å°†å³è¾¹éƒ¨åˆ†æ›²çº¿åœ¨ä¸­ç‚¹ $u=7/2$ å¤„ç»†åˆ†ã€‚å°†æ§åˆ¶å¤šè¾¹å½¢åœ¨ 1. å›¾ä¸­ç”»å‡ºï¼Œå¹¶ç”»å‡º $P(u)$ è¡¨ç¤ºçš„æ›²çº¿ã€‚
+1) ¼ÆËã $P(u)$ µÄ¼«ĞÎÊ½¼°ÆäÔÚÇø¼ä $[2,4]$ ÄÚµÄ Bezier ¿ØÖÆ¶à±ßĞÎµÄ¶¥µã $P_0,P_1,P_2,P_3$£¬²¢´óÖÂ¹´ÀÕ³ö¸Ã¿ØÖÆ¶à±ßĞÎ£»
 
-## è§£
+2) ÓÃ de Casteljau Ëã·¨¼ÆËãÔÚ²ÉÑùµã $u=\{4/2,3,7/2\}$ ´¦µÄ¶àÏîÊ½ÇúÏß $P(u)$£¬²¢ÔÚ 1) Í¼ÖĞ»­³ö£»
 
-![image-20191027164238208](assets/image-20191027164238208.jpg)
+3) ÓÃ 2) ÖĞ½á¹û½«ÇúÏßÔÚ $u=3$ ´¦Ï¸·Ö£¬ÔÙ½«ÓÒ±ß²¿·ÖÇúÏßÔÚÖĞµã $u=7/2$ ´¦Ï¸·Ö¡£½«¿ØÖÆ¶à±ßĞÎÔÚ 1) Í¼ÖĞ»­³ö£¬²¢»­³ö $P(u)$ ±íÊ¾µÄÇúÏß¡£
 
-- çº¢è‰²çš„æ˜¯ 1. çš„æ§åˆ¶å¤šè¾¹å½¢
-- è“è‰²åœ†ç‚¹æ˜¯ 2. çš„ä¸‰ä¸ªé‡‡æ ·ç‚¹
-- ç»¿è‰²çš„å¤šè¾¹å½¢æ˜¯ $u=3$ å¤„ç»†åˆ†æ›²çº¿çš„å·¦éƒ¨åˆ†çš„æ§åˆ¶å¤šè¾¹å½¢ï¼Œé»„è‰²å’Œæ´‹çº¢è‰²çš„å¤šè¾¹å½¢æ˜¯å³éƒ¨åˆ†åœ¨ä¸­ç‚¹ç»†åˆ†çš„ä¸¤æ›²çº¿çš„æ§åˆ¶å¤šè¾¹å½¢
-- é’è‰²çš„æ˜¯æ›²çº¿ $P(u)$ 
+\subsection{½â}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p1}
+  \caption{Ìâ 1 ´ğ°¸Í¼}
+\end{figure}
 
-### 1
+\begin{itemize}
+\item ºìÉ«µÄÊÇ 1) µÄ¿ØÖÆ¶à±ßĞÎ
+\item À¶É«Ô²µãÊÇ 2) µÄÈı¸ö²ÉÑùµã
+\item ÂÌÉ«µÄ¶à±ßĞÎÊÇ $u=3$ ´¦Ï¸·ÖÇúÏßµÄ×ó²¿·ÖµÄ¿ØÖÆ¶à±ßĞÎ£¬»ÆÉ«ºÍÑóºìÉ«µÄ¶à±ßĞÎÊÇÓÒ²¿·ÖÔÚÖĞµãÏ¸·ÖµÄÁ½ÇúÏßµÄ¿ØÖÆ¶à±ßĞÎ
+\item ÇàÉ«µÄÊÇÇúÏß $P(u)$ 
+\end{itemize}
 
-æå½¢å¼ä¸º
+\subsubsection{1)}
+¼«ĞÎÊ½Îª
 $$
 \begin{aligned}
 q(u_1,u_2,u_3)=
@@ -32,8 +92,7 @@ q(u_1,u_2,u_3)=
 + \left( \begin{array} { c } { 30 } \\ { - 1 } \end{array} \right)
 \end{aligned}
 $$
-
-åˆ™æ§åˆ¶å¤šå˜æ€§é¡¶ç‚¹ä¸º
+Ôò¿ØÖÆ¶à±äĞÔ¶¥µãÎª
 $$
 \begin{aligned}
 P_0&=q(2,2,2)=\left( \begin{array} { c } { 2 } \\ { 0 } \end{array} \right)\\
@@ -42,32 +101,13 @@ P_2&=q(2,4,4)=\left( \begin{array} { c } { 3 } \\ { 4 } \end{array} \right)\\
 P_3&=q(4,4,4)=\left( \begin{array} { c } { 4 } \\ { 1 } \end{array} \right)\\
 \end{aligned}
 $$
-
-### 2
-
-```matlab
-t = 0.75
-P00=[2,0];
-P01=[0,2];
-P02=[3,4];
-P03=[4,1];
-
-P10=(1-t)*P00 + t*P01
-P11=(1-t)*P01 + t*P02
-P12=(1-t)*P02 + t*P03
-
-P20=(1-t)*P10 + t*P11
-P21=(1-t)*P11 + t*P12
-
-P30=(1-t)*P20 + t*P21
-```
-
+\newpage
+\subsubsection{2)}
+ÄÚ²¿µãÎª
 $$
 P^{(k)}_i(u)=\frac{4-u}{4-2}P_i^{(k-1)}+\frac{u}{4-2}P^{(k-1)}_{i+1}\quad(k=1,\dots,3,\ i=0,\dots3-k)
 $$
-
-#### u = 4/2
-
+µ± $u=4/2$ Ê±£¬ÓĞ
 $$
 \begin{aligned}
 P^{(1)}_0&=1\cdot P_0^{(0)}+0\cdot P^{(0)}_{1}=\left( \begin{array} { c } { 2 } \\ { 0 } \end{array} \right)\\
@@ -78,9 +118,7 @@ P^{(2)}_1&=1\cdot P_1^{(1)}+0\cdot P^{(1)}_{2}=\left( \begin{array} { c } { 0 } 
 P^{(3)}_0&=1\cdot P_0^{(2)}+0\cdot P^{(2)}_{1}=\left( \begin{array} { c } { 2 } \\ { 0 } \end{array} \right)\\
 \end{aligned}
 $$
-
-#### u = 3
-
+µ± $u=3$ Ê±
 $$
 \begin{aligned}
 P^{(1)}_0&=0.5\cdot P_0^{(0)}+0.5\cdot P^{(0)}_{1}=\left( \begin{array} { c } { 1 } \\ { 1 } \end{array} \right)\\
@@ -91,9 +129,7 @@ P^{(2)}_1&=0.5\cdot P_1^{(1)}+0.5\cdot P^{(1)}_{2}=\left( \begin{array} { c } { 
 P^{(3)}_0&=0.5\cdot P_0^{(2)}+0.5\cdot P^{(2)}_{1}=\left( \begin{array} { c } { 1.875 } \\ { 2.375 } \end{array} \right)\\
 \end{aligned}
 $$
-
-#### u = 7/2
-
+µ± $u = 7/2$ Ê±
 $$
 \begin{aligned}
 P^{(1)}_0&=0.25\cdot P_0^{(0)}+0.75\cdot P^{(0)}_{1}=\left( \begin{array} { c } { 0.5 } \\ { 1.5 } \end{array} \right)\\
@@ -105,28 +141,24 @@ P^{(3)}_0&=0.25\cdot P_0^{(2)}+0.75\cdot P^{(2)}_{1}=\left( \begin{array} { c } 
 \end{aligned}
 $$
 
-### 3
+\subsubsection{3)}
+ÔÚ $u=3$ ´¦Ï¸·ÖµÄÁ½Ìõ Bezier ÇúÏßµÄ¿ØÖÆµã·Ö±ğÎª $\left\{P_0^{(0)},P_0^{(1)},P_0^{(2)},P_0^{(3)}\right\}$ ºÍ $\left\{P_0^{(3)},P_1^{(2)},P_2^{(1)}, P_3^{(0)}\right\}$ 
 
-åœ¨ $u=3$ å¤„ç»†åˆ†çš„ä¸¤æ¡ Bezier æ›²çº¿çš„æ§åˆ¶ç‚¹åˆ†åˆ«ä¸º $\left\{P_0^{(0)},P_0^{(1)},P_0^{(2)},P_0^{(3)}\right\}$ å’Œ $\left\{P_0^{(3)},P_1^{(2)},P_2^{(1)}, P_3^{(0)}\right\}$ 
-
-å³éƒ¨æ›²çº¿ç»†åˆ†åçš„ä¸¤æ¡ Bezier æ›²çº¿çš„æ§åˆ¶ç‚¹åˆ†åˆ«ä¸º
+ÓÒ²¿ÇúÏßÏ¸·ÖºóµÄÁ½Ìõ Bezier ÇúÏßµÄ¿ØÖÆµã·Ö±ğÎª
 $$
 \left\{
 \left(\begin{matrix}
 1.875\\
 2.375
 \end{matrix}\right),
-
 \left(\begin{matrix}
 2.1875\\
 2.5625
 \end{matrix}\right),
-
 \left(\begin{matrix}
 2.59375\\
 2.59375
 \end{matrix}\right),
-
 \left(\begin{matrix}
 2.984375\\
 2.390625
@@ -140,17 +172,14 @@ $$
 2.984375\\
 2.390625
 \end{matrix}\right),
-
 \left(\begin{matrix}
 3.375\\
 2.1875
 \end{matrix}\right),
-
 \left(\begin{matrix}
 3.75\\
 1.75\\
 \end{matrix}\right),
-
 \left(\begin{matrix}
 4\\
 1
@@ -158,29 +187,25 @@ $$
 \right\}
 $$
 
-# 2
-
-## é¢˜
-
-ç»™å®šä»¥ä¸‹ä¸‰æ¬¡å¤šé¡¹å¼æ›²çº¿
+\section{Ìâ 2}
+\subsection{ÌâÄ¿}
+¸ø¶¨ÒÔÏÂÈı´Î¶àÏîÊ½ÇúÏß
 $$
 F ( u ) =
   \left( \begin{array} { c } { 15 } \\ { - 6 } \end{array} \right) u ^ { 3 }
 + \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) u ^ { 2 }
 - \left( \begin{array} { l } { 9 } \\ { 9 } \end{array} \right) u
 $$
-åŠå‚æ•°åŒºé—´ $[0,1]$ 
+¼°²ÎÊıÇø¼ä $[0,1]$ 
 
-1. è®¡ç®— $F$ çš„ä¸€é˜¶å’ŒäºŒé˜¶å¯¼æ•°ï¼›
+1) ¼ÆËã $F$ µÄÒ»½×ºÍ¶ş½×µ¼Êı£»
 
-2. è®¡ç®— $F$ çš„æå½¢å¼ $f(u_1,u_2,u_3)$ åŠå¯¼æ•° $F^\prime$ å’Œ $F^{\prime\prime}$ çš„æå½¢å¼ï¼Œè¯æ˜å®ƒä»¬åˆ†åˆ«ç­‰äº $3f(u_1,u_2,\hat{1})$ å’Œ $6f(u_1,\hat{1},\hat{1})$ã€‚
+2) ¼ÆËã $F$ µÄ¼«ĞÎÊ½ $f(u_1,u_2,u_3)$ ¼°µ¼Êı $F^\prime$ ºÍ $F^{\prime\prime}$ µÄ¼«ĞÎÊ½£¬Ö¤Ã÷ËüÃÇ·Ö±ğµÈÓÚ $3f(u_1,u_2,\hat{1})$ ºÍ $6f(u_1,\hat{1},\hat{1})$¡£
 
-   æ³¨ï¼š$f \left( u _ { 1 } , u _ { 2 } , \hat { 1 } \right) = f \left( u _ { 1 } , u _ { 2 } , 1 \right) - f \left( u _ { 1 } , u _ { 2 } , 0 \right)$ 
+×¢£º$f \left( u _ { 1 } , u _ { 2 } , \hat { 1 } \right) = f \left( u _ { 1 } , u _ { 2 } , 1 \right) - f \left( u _ { 1 } , u _ { 2 } , 0 \right)$ 
 
-## è§£
-
-### 1
-
+\subsection{½â}
+\subsubsection{1)}
 $$
 \begin{aligned}
 F^\prime(u)
@@ -192,30 +217,26 @@ F^{\prime\prime}(u)
 + \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
 \end{aligned}
 $$
-
-### 2
-
+\subsubsection{2)}
 $$
 f(u_1,u_2,u_3)=
   \left( \begin{array} { c } { 15 } \\ { -6 } \end{array} \right) u_1 u_2 u_3
 + \left( \begin{array} { c } { 27 } \\ { 10 } \end{array} \right) \frac{u_1u_2+u_2u_3+u_1u_3}{3}
 - \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right) \frac{u_1+u_2+u_3}{3}
 $$
-
-è®° $f^{(1)}$ å’Œ $f^{(2)}$ åˆ†åˆ«ä¸º $F^\prime$ å’Œ $F^{\prime\prime}$ çš„æå½¢å¼ï¼Œæœ‰
+¼Ç $f^{(1)}$ ºÍ $f^{(2)}$ ·Ö±ğÎª $F^\prime$ ºÍ $F^{\prime\prime}$ µÄ¼«ĞÎÊ½£¬ÓĞ
 $$
 \begin{aligned}
 f^{(1)}(u_1,u_2)&=
   \left( \begin{array} { c } { 45 } \\ { -18 } \end{array} \right) u_1u_2
 + \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right) \frac{u_1+u_2}{2}
 - \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)\\
-
 f^{(2)}(u_1)&=
   \left( \begin{array} { c } { 90 } \\ { -36 } \end{array} \right) u_1
 + \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
 \end{aligned}
 $$
-ç”±äº
+
 $$
 \begin{aligned}
 3f(u_1,u_2,\hat{1})
@@ -230,9 +251,9 @@ $$
 - \left( \begin{array} { c } { 9 } \\ { 9 } \end{array} \right)\\
 \end{aligned}
 $$
-æ•… $f^{(1)}(u_1,u_2)=3f(u_1,u_2,\hat{1})$ 
+¹Ê $f^{(1)}(u_1,u_2)=3f(u_1,u_2,\hat{1})$ 
 
-ç”±äº
+ÓÉÓÚ
 $$
 \begin{aligned}
 6f(u_1,\hat{1},\hat{1})&=2\left(3f(u_1,1,\hat{1})-3f(u_1,0,\hat{1})\right)\\
@@ -248,32 +269,32 @@ $$
 + \left( \begin{array} { c } { 54 } \\ { 20 } \end{array} \right)\\
 \end{aligned}
 $$
-æ•… $f^{(2)}(u_1)=6f(u_1,\hat{1},\hat{1})$ 
-
-# 3
-
-## é¢˜
-
-ç»™å®šç”±ä¸€ä¸‹å››ç‚¹åŠç»“ç‚¹å‘é‡ $[0,1,2,3,4,5]$ å®šä¹‰çš„å‡åŒ€ B æ ·æ¡
+¹Ê $f^{(2)}(u_1)=6f(u_1,\hat{1},\hat{1})$ 
+\newpage
+\section{Ìâ 3}
+¸ø¶¨ÓÉÒ»ÏÂËÄµã¼°½áµãÏòÁ¿ $[0,1,2,3,4,5]$ ¶¨ÒåµÄ¾ùÔÈ B ÑùÌõ
 $$
 P _ { 0 } = \left( \begin{array} { c } { - 2 } \\ { - 10 } \end{array} \right) , \quad P _ { 1 } = \left( \begin{array} { c } { - 4 } \\ { 2 } \end{array} \right) , \quad P _ { 2 } = \left( \begin{array} { c } { 6 } \\ { 5 } \end{array} \right) , \quad P _ { 3 } = \left( \begin{array} { c } { 4 } \\ { - 7 } \end{array} \right)
 $$
 
-1. ç”¨ de Boor ç®—æ³•è®¡ç®—æ›²çº¿åœ¨ $t=2.5$ å¤„çš„ä½ç½®ã€‚å‹¾å‹’å‡ºæ§åˆ¶å¤šè¾¹å½¢å’Œæ­¤ç®—æ³•æ„é€ å‡ºçš„ç›¸å…³ç‚¹ï¼›
-2. å¯¹äº 1. ä¸­çš„ B æ ·æ¡ï¼Œè®¡ç®—èƒ½è¡¨ç¤ºåŒä¸€æ›²çº¿çš„ç›¸åº” Bezier æ§åˆ¶é¡¶ç‚¹ã€‚åœ¨ 1. å›¾ä¸­ç”»å‡ºæ§åˆ¶é¡¶ç‚¹å’Œ Bezier æ›²çº¿
+1) ÓÃ de Boor Ëã·¨¼ÆËãÇúÏßÔÚ $t=2.5$ ´¦µÄÎ»ÖÃ¡£¹´ÀÕ³ö¿ØÖÆ¶à±ßĞÎºÍ´ËËã·¨¹¹Ôì³öµÄÏà¹Øµã£»
 
-## è§£
-
-![image-20191027194326265](assets/image-20191027194326265.jpg)
-
-- çº¢è‰²çš„åœ†ç‚¹æ˜¯ $P_0^{(0)},P_1^{(0)},P_2^{(0)},P_3  ^{(0)}$ï¼Œçº¢è‰²è™šçº¿æ˜¯ç›¸åº”æ§åˆ¶å¤šè¾¹å½¢
-- ç»¿è‰²çš„åœ†ç‚¹æ˜¯ $P_0^{(1)},P_1^{(1)},P_2^{(1)}$ 
-- é»„è‰²çš„åœ†ç‚¹æ˜¯ $P_0^{(2)},P_1^{(2)}$ 
-- é’è‰²çš„åœ†ç‚¹æ˜¯ $P_0^{(3)}$ 
-- é’è‰²çš„å®æ›²çº¿æ˜¯ Bezier æ›²çº¿
-
-### 1
-
+2) ¶ÔÓÚ 1) ÖĞµÄ B ÑùÌõ£¬¼ÆËãÄÜ±íÊ¾Í¬Ò»ÇúÏßµÄÏàÓ¦ Bezier ¿ØÖÆ¶¥µã¡£ÔÚ 1) Í¼ÖĞ»­³ö¿ØÖÆ¶¥µãºÍ Bezier ÇúÏß
+\subsection{½â}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{p3}
+  \caption{Ìâ 3 ´ğ°¸Í¼}
+\end{figure}
+\begin{itemize}
+\item ºìÉ«µÄÔ²µãÊÇ $P_0^{(0)},P_1^{(0)},P_2^{(0)},P_3  ^{(0)}$£¬ºìÉ«ĞéÏßÊÇÏàÓ¦¿ØÖÆ¶à±ßĞÎ
+\item ÂÌÉ«µÄÔ²µãÊÇ $P_0^{(1)},P_1^{(1)},P_2^{(1)}$ 
+\item »ÆÉ«µÄÔ²µãÊÇ $P_0^{(2)},P_1^{(2)}$ 
+\item ÇàÉ«µÄÔ²µãÊÇ $P_0^{(3)}$ 
+\item ÑóºìÉ«µÄÔ²µãÊÇ Bezier ÇúÏßµÄ¿ØÖÆµã $\pmb{b}_0,\pmb{b}_1,\pmb{b}_2,\pmb{b}_3$ 
+\item ÇàÉ«µÄÊµÇúÏßÊÇ Bezier ÇúÏß
+\end{itemize}
+\subsubsection{1)}
 $$
 \begin{aligned}
 P^{(1)}_0&=\frac{0.5}{3}\cdot P_0^{(0)}+\frac{2.5}{3}\cdot P^{(0)}_{1}=\left( \begin{array} { c } { -11/3 } \\ { 0 } \end{array} \right)\\
@@ -284,14 +305,12 @@ P^{(2)}_1&=\frac{1.5}{2}\cdot P_1^{(1)}+\frac{0.5}{2}\cdot P^{(1)}_{2}=\left( \b
 P^{(3)}_0&=\frac{0.5}{1}\cdot P_0^{(2)}+\frac{0.5}{1}\cdot P^{(2)}_{1}=\left( \begin{array} { c } { 1 } \\ { 3 } \end{array} \right)\\
 \end{aligned}
 $$
-
-### 2
-
-è®¾æå½¢å¼ä¸º
+\subsubsection{2)}
+Éè¼«ĞÎÊ½Îª
 $$
 \pmb{p}(t_1,t_2,t_3)=\pmb{c}_0+\frac{t_1+t_2+t_3}{3}\pmb{c}_1+\frac{t_1t_2+t_2t_3+t_1t_3}{3}\pmb{c}_2+t_1t_2t_3\pmb{c}_3
 $$
-åˆ™
+Ôò
 $$
 \begin{aligned}
 P_0&=\pmb{p}(0,1,2)=\pmb{c}_0+\pmb{c}_1+\frac{2}{3}\pmb{c}_2\\
@@ -300,7 +319,7 @@ P_2&=\pmb{p}(2,3,4)=\pmb{c}_0+3\pmb{c}_1+\frac{26}{3}\pmb{c}_2+24\pmb{c}_3\\
 P_3&=\pmb{p}(3,4,5)=\pmb{c}_0+4\pmb{c}_1+\frac{47}{3}\pmb{c}_2+60\pmb{c}_3\\
 \end{aligned}
 $$
-ä»¤
+Áî
 $$
 A=\left[\begin{matrix}
 1 & 1 & 1 &  1\\
@@ -315,24 +334,23 @@ P_2\\
 P_3
 \end{matrix}\right]
 $$
-åˆ™
+Ôò
 $$
 \left[\begin{matrix}
 \pmb{c}_0 & \pmb{c}_1 & \pmb{c}_2 & \pmb{c}_3
 \end{matrix}\right]A=P
 $$
-å³
+¼´
 $$
 \left[\begin{matrix}
 \pmb{c}_0 & \pmb{c}_1 & \pmb{c}_2 & \pmb{c}_3
 \end{matrix}\right]=PA^{-1}=
-
 \left[\begin{matrix}
 46& -68 & 30 & -4\\
 -24.5& 13.5 & 1.5 & -1\\
 \end{matrix}\right]
 $$
-æ•… Bezier æ§åˆ¶é¡¶ç‚¹ä¸º
+¹Ê Bezier ¿ØÖÆ¶¥µãÎª
 $$
 \begin{aligned}
 \pmb{b}_0&=\pmb{p}(2,2,2)=\left[\begin{matrix}
@@ -353,3 +371,6 @@ $$
 \end{matrix}\right]\\
 \end{aligned}
 $$
+
+\end{CJK*}
+\end{document}
