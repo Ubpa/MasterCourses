@@ -262,3 +262,92 @@ $$
 
 ## 解
 
+![image-20191027194326265](assets/image-20191027194326265.jpg)
+
+- 红色的圆点是 $P_0^{(0)},P_1^{(0)},P_2^{(0)},P_3  ^{(0)}$，红色虚线是相应控制多边形
+- 绿色的圆点是 $P_0^{(1)},P_1^{(1)},P_2^{(1)}$ 
+- 黄色的圆点是 $P_0^{(2)},P_1^{(2)}$ 
+- 青色的圆点是 $P_0^{(3)}$ 
+- 青色的实曲线是 Bezier 曲线
+
+### 1
+
+$$
+\begin{aligned}
+P^{(1)}_0&=\frac{0.5}{3}\cdot P_0^{(0)}+\frac{2.5}{3}\cdot P^{(0)}_{1}=\left( \begin{array} { c } { -11/3 } \\ { 0 } \end{array} \right)\\
+P^{(1)}_1&=\frac{1.5}{3}\cdot P_1^{(0)}+\frac{1.5}{3}\cdot P^{(0)}_{2}=\left( \begin{array} { c } { 1 } \\ { 3.5 } \end{array} \right)\\
+P^{(1)}_2&=\frac{2.5}{3}\cdot P_2^{(0)}+\frac{0.5}{3}\cdot P^{(0)}_{3}=\left( \begin{array} { c } { 17/3 } \\ { 3 } \end{array} \right)\\
+P^{(2)}_0&=\frac{0.5}{2}\cdot P_0^{(1)}+\frac{1.5}{2}\cdot P^{(1)}_{1}=\left( \begin{array} { c } { -1/6 } \\ { 2.625 } \end{array} \right)\\
+P^{(2)}_1&=\frac{1.5}{2}\cdot P_1^{(1)}+\frac{0.5}{2}\cdot P^{(1)}_{2}=\left( \begin{array} { c } { 13/6 } \\ { 3.375 } \end{array} \right)\\
+P^{(3)}_0&=\frac{0.5}{1}\cdot P_0^{(2)}+\frac{0.5}{1}\cdot P^{(2)}_{1}=\left( \begin{array} { c } { 1 } \\ { 3 } \end{array} \right)\\
+\end{aligned}
+$$
+
+### 2
+
+设极形式为
+$$
+\pmb{p}(t_1,t_2,t_3)=\pmb{c}_0+\frac{t_1+t_2+t_3}{3}\pmb{c}_1+\frac{t_1t_2+t_2t_3+t_1t_3}{3}\pmb{c}_2+t_1t_2t_3\pmb{c}_3
+$$
+则
+$$
+\begin{aligned}
+P_0&=\pmb{p}(0,1,2)=\pmb{c}_0+\pmb{c}_1+\frac{2}{3}\pmb{c}_2\\
+P_1&=\pmb{p}(1,2,3)=\pmb{c}_0+2\pmb{c}_1+\frac{11}{3}\pmb{c}_2+6\pmb{c}_3\\
+P_2&=\pmb{p}(2,3,4)=\pmb{c}_0+3\pmb{c}_1+\frac{26}{3}\pmb{c}_2+24\pmb{c}_3\\
+P_3&=\pmb{p}(3,4,5)=\pmb{c}_0+4\pmb{c}_1+\frac{47}{3}\pmb{c}_2+60\pmb{c}_3\\
+\end{aligned}
+$$
+令
+$$
+A=\left[\begin{matrix}
+1 & 1 & 1 &  1\\
+1 & 2 & 3 &  4\\
+\frac{ 2}{3} & \frac{ 11}{3} & \frac{26}{3} & \frac{47}{3}\\
+0 & 6 & 24 & 60
+\end{matrix}\right],
+P=\left[\begin{matrix}
+P_0\\
+P_1\\
+P_2\\
+P_3
+\end{matrix}\right]
+$$
+则
+$$
+\left[\begin{matrix}
+\pmb{c}_0 & \pmb{c}_1 & \pmb{c}_2 & \pmb{c}_3
+\end{matrix}\right]A=P
+$$
+即
+$$
+\left[\begin{matrix}
+\pmb{c}_0 & \pmb{c}_1 & \pmb{c}_2 & \pmb{c}_3
+\end{matrix}\right]=PA^{-1}=
+
+\left[\begin{matrix}
+46& -68 & 30 & -4\\
+-24.5& 13.5 & 1.5 & -1\\
+\end{matrix}\right]
+$$
+故 Bezier 控制顶点为
+$$
+\begin{aligned}
+\pmb{b}_0&=\pmb{p}(2,2,2)=\left[\begin{matrix}
+-2\\
+0.5
+\end{matrix}\right]\\
+\pmb{b}_1&=\pmb{p}(2,2,3)=\left[\begin{matrix}
+-\frac{2}{3}\\
+3
+\end{matrix}\right]\\
+\pmb{b}_2&=\pmb{p}(2,3,3)=\left[\begin{matrix}
+\frac{8}{3}\\
+4
+\end{matrix}\right]\\
+\pmb{b}_3&=\pmb{p}(3,3,3)=\left[\begin{matrix}
+4\\
+2.5
+\end{matrix}\right]\\
+\end{aligned}
+$$
