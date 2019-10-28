@@ -7,11 +7,12 @@
 - [02. 一致逼近](notes/textbook_02_UniformApproximation.md) 
 - [03. 线性插值](notes/textbook_03_LinearInterpolation.md) 
 - [04. 多项式的性质和平滑模](notes/04_Polynomial.md) 
+- [05. 最佳逼近的定量理论](notes/05_Quantify.md) 
 
 ## 作业
 
 - 0：[0_0.md](homeworks/0_0.md)，[0_1.md](homeworks/0_1.md) 
 - [1.md](homeworks/1.md) 
 - [2.md](homeworks/2.md) 
-- [3.md](homeworks/3.md) 
+- 3：[3_0.md](homeworks/3_0.md) 
 
