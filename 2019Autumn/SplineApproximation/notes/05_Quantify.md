@@ -231,11 +231,59 @@ $$
 >
 > > 奇数偶数情形都证好了，所以才有这个结论
 
+广义 Jackson 核
+$$
+J_{n,r}(t)\triangleq F_n^r(t)
+$$
+设 $\lambda_{n,r}=\int_{-\pi}^\pi J_{n,r}(t)\mathrm{d}t$，$L_{n,r}(t)=J_{n,r}(t)/\lambda_{n,r}$ 
+
+**引理 5.2** $L_{n,r}$ 有如下性质
+
+1. $L_{n,r}(t)=L_{n,r}(-t)$ 
+2. $\int_{-\pi}^\pi L_{n,r}(t)\mathrm{d}t=1$ 
+3. $L_{n,r}(t)\in \overset{\circ}{\mathcal{P}}_{r(n-1)}$ 
+4. $\int_0^\pi t^k L_{n,r}(t)\mathrm{d}t=O(n^{-k})(1\le k \le 2r-2)$ 
+
+> 证明类似引理 5.1
+
+**引理 5.3** 
+$$
+\int_{-\pi}^\pi L_{\lceil n/r \rceil,r}(s)f(t+ks)\mathrm{d}s \in \overset{\circ}{\mathcal{P}}_n\quad(k=1,\dots,r)
+$$
 **定理 5.3**（Jackson-Stechkin 定理）$\forall r \in \mathbb{Z}^+$，$\forall f \in \overset{\circ}{C}$，$\exist C_r$，使得
 $$
 d(f,\overset{\circ}{\mathcal{P}}_n)\le C_r\omega_r\left(f,\frac{1}{n}\right)
 $$
 
 > 定理 5.2 是定理 5.3 的特殊情况（$r=2$）
-
+>
+> 证
+>
+> 定义
+> $$
+> (\Delta^0_{n,r}f)(t)\triangleq-\int_{-\pi}^\pi\sum_{k=1}^rC_k^r(-1)^kf(t+ks)L_{\lceil n/r \rceil,r}(s)\mathrm{d}s
+> $$
+>
+> > 高阶差分公式为
+> > $$
+> > \Delta_h^r f(t)=\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)
+> > $$
+> > 对比 $(\Delta_{n,r}^0 f)(t)$，有
+> > $$
+> > \Delta_s^r f(t) = (-1)^{r}(f(t)-(\Delta_{n,r}^0f)(t))
+> > $$
+> > 因此
+> > $$
+> > |\Delta_s^r f(t)| = |f(t)-(\Delta_{n,r}^0f)(t)|
+> > $$
+>
+> 由引理 3 得 $(\Delta^0_{n,r}f)(t) \in \overset{\circ}{\mathcal{P}}_n$ 
+>
+> 则
+> $$
+> \begin{aligned} \left| f - I _ { n , r } f ( t ) \right| & = \left| \int _ { - \pi } ^ { \pi } \left( \Delta _ { s } ^ { r } f \right) ( t ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \right| \\
+> & \leqslant \int _ { - \pi } ^ { \pi } \omega _ { r } ( f , | s | ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \\
+> & \leqslant \omega _ { r } \left( f , \frac { 1 } { \lceil n/r \rceil } \right) \int _ { - \pi } ^ { \pi } \left( \lceil n/r \rceil | s | + 1 \right) ^ { r } L _ { n ^ { \prime } , r } \mathrm { d } s \\
+> & \leqslant C _ { r } \omega _ { r } \left( f , \frac { 1 } { n } \right) \end{aligned}
+> $$
 

@@ -258,7 +258,7 @@ $|f|$ 在复分析中，最大模原理说明如果单变量复变函数 $f$ 是
 
 $\Delta_hf(t)=f(t+h)-f(t)$ 是函数 $f$ 在点 $t$ 的步长为 $h$ 的**一阶向前差分**，那么
 $$
-\Delta_h^r f(t) \triangleq \Delta(\Delta_h^{r-1}f(t)) =\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)
+\Delta_h^r f(t) \triangleq \Delta(\Delta_h^{r-1}f(t)) =\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)=\sum_{i=0}^r(-1)^iC^i_rf(t+(r-i)h)
 $$
 称为 $f$ 在 $t$ 点步长为 $h$ 的 $r$ 阶向前差分
 
