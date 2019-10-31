@@ -258,32 +258,266 @@ $$
 > 定理 5.2 是定理 5.3 的特殊情况（$r=2$）
 >
 > 证
->
-> 定义
-> $$
+>   
+>   定义
+>   $$
 > (\Delta^0_{n,r}f)(t)\triangleq-\int_{-\pi}^\pi\sum_{k=1}^rC_k^r(-1)^kf(t+ks)L_{\lceil n/r \rceil,r}(s)\mathrm{d}s
-> $$
->
-> > 高阶差分公式为
+>$$
+> 
+>> 高阶差分公式为
 > > $$
 > > \Delta_h^r f(t)=\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)
 > > $$
 > > 对比 $(\Delta_{n,r}^0 f)(t)$，有
-> > $$
+>> $$
 > > \Delta_s^r f(t) = (-1)^{r}(f(t)-(\Delta_{n,r}^0f)(t))
 > > $$
 > > 因此
 > > $$
 > > |\Delta_s^r f(t)| = |f(t)-(\Delta_{n,r}^0f)(t)|
 > > $$
->
+> 
 > 由引理 3 得 $(\Delta^0_{n,r}f)(t) \in \overset{\circ}{\mathcal{P}}_n$ 
->
+> 
 > 则
 > $$
 > \begin{aligned} \left| f - I _ { n , r } f ( t ) \right| & = \left| \int _ { - \pi } ^ { \pi } \left( \Delta _ { s } ^ { r } f \right) ( t ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \right| \\
-> & \leqslant \int _ { - \pi } ^ { \pi } \omega _ { r } ( f , | s | ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \\
+>& \leqslant \int _ { - \pi } ^ { \pi } \omega _ { r } ( f , | s | ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \\
 > & \leqslant \omega _ { r } \left( f , \frac { 1 } { \lceil n/r \rceil } \right) \int _ { - \pi } ^ { \pi } \left( \lceil n/r \rceil | s | + 1 \right) ^ { r } L _ { n ^ { \prime } , r } \mathrm { d } s \\
-> & \leqslant C _ { r } \omega _ { r } \left( f , \frac { 1 } { n } \right) \end{aligned}
+>& \leqslant C _ { r } \omega _ { r } \left( f , \frac { 1 } { n } \right) \end{aligned}
 > $$
+
+### 5.1.2 Bernstein 逆定理
+
+**定理 5.4** 设 $\varphi(u)$ 为单调下降的非负函数，序列 $0<u_k\le u_{k+1}\le\dots\le u_l$ 满足 $2\le u_i/u_{i-1}\le 4\quad(i=k+1,k+2,\dots,l)$，则 $\forall p \in \mathbb{R}$，$\exist M_p$，满足
+$$
+\sum _ { i = k } ^ { l } u _ { i } ^ { p } \varphi \left( u _ { i } \right) \leqslant M _ { p } \sum _ { \left[ \frac { 1 } { 2 } u _ { k } \right] \leqslant n < u _ { l } } ( n + 1 ) ^ { p - 1 } \varphi ( n )
+$$
+
+> 将无规律的样本点转换成均匀点
+>
+> 证明
+>
+> 令 $u_{k-1}=u_k/2$，则
+> $$
+> \begin{aligned}
+> \sum_{i=k}^lu_i^p\varphi(u_i)
+> &=\sum_{i=k}^lu_i^{p-1}\varphi(u_i)u_i\\
+> &\le 2\sum_{i=k}^l u_i^{p-1}\varphi(u_i)(u_i-u_{i-1})
+> \end{aligned}
+> $$
+> 当 $t\in[n,n+1]$ 时，有 $t^{p-1}\varphi(t)\le (n+1)^{p-1}\varphi(n)$ 
+>
+> 当 $p<1$ 时
+> $$
+> \begin{aligned}
+> \sum_{i=k}^l u_i^{p-1}\varphi(u_i)(u_i-u_{i-1})
+> &\le \int_{u_{k-1}}^{u_l}t^{p-1}\varphi(t)\mathrm{d}t\\
+> &\le \sum_{\lfloor u_{k-1}\rfloor\le n < u_l} n^{p-1}\varphi(n)\\
+> &\le M_p \sum_{\lfloor u_{k-1}\rfloor\le n < u_l} (n+1)^{p-1}\varphi(n)\\
+> \end{aligned}
+> $$
+>
+> > 图示
+> >
+> > ![image-20191031111214552](assets/image-20191031111214552.png)
+> > 
+>
+> 当 $p>1$ 时
+> $$
+> \begin{aligned}
+> \sum_{i=k}^l u_i^{p-1}\varphi(u_i)(u_i-u_{i-1})
+> &\le \sum_{i=k}^l (4u_{i-1})^{p-1}\varphi(u_i)(u_i-u_{i-1})\\
+> &\le 4^{p-1}\int_{u_{k-1}}^{u_l}t^{p-1}\varphi(t)\mathrm{d}t\\
+> &\le 4^{p-1} \sum_{\lfloor u_{k-1}\rfloor\le n < u_l} (n+1)^{p-1}\varphi(n)\\
+> &= M_p \sum_{\lfloor u_{k-1}\rfloor\le n < u_l} (n+1)^{p-1}\varphi(n)\\
+> \end{aligned}
+> $$
+
+**推论 5.1** 
+$$
+\sum _ { i = k } ^ { l } \left( 2 ^ { i } \right) ^ { p } \varphi \left( 2 ^ { i } \right) \leqslant M _ { p } \sum _ { \lfloor 2 ^ { k - 1 } \rfloor \leqslant n < 2 ^ { l }} ( n + 1 ) ^ { p - 1 } \varphi ( n )
+$$
+
+> 定理 5.4 中取 $u_i=2^i$ 即可
+
+**定理 5.5**（Bernstein 逆定理）$\exist M_p$，$\forall f \in \overset{\circ}{C},h>0$，有
+$$
+\omega _ { p } ( f , h ) \leqslant M_p h ^ { p } \sum _ { 0 \leqslant n \leqslant h^{-1} } ( n + 1 ) ^ { p - 1 } d ( f , \overset{\circ} { \mathcal { P } } _ { n } )
+$$
+> 令 $\|f-T_n\|_\infty=d(f,\overset{\circ}{\mathcal{P}}_n)\triangleq E_n(f)$ 
+>
+> > 即 $T_n=B_{\overset{\circ}{\mathcal{P}}_n}(f)$ 
+>
+> 当 $h>1$ 时，$n$ 仅能取 0，有
+> $$
+> \begin{aligned}
+> \omega_p(f,h)
+> &= \omega_p(f-T_0,h)\\
+> &\le2^p \|f-T_0\|_\infty\\
+> &=2^p d(f,\overset{\circ}{\mathcal{P}}_0)\\
+> &\le 2^p h^pd(f,\overset{\circ}{\mathcal{P}}_0)\\
+> \end{aligned}
+> $$
+> 下设 $h\le1$，取 $k\in\mathbb{Z}$ 使得 $2^k\le h^{-1} < 2^{k+1}$，有
+> $$
+> \begin{aligned}
+> \left| \Delta _ { h } ^ { p } f ( t ) \right| & \leqslant \left| \Delta _ { h } ^ { p } T _ { 2 ^ { k } } ( t ) \right| + \left| \Delta _ { h } ^ { p } \left( f - T _ { 2 ^ { k } } \right) ( t ) \right| \\
+> & \leqslant h ^ { p } \left\| T _ { 2 ^ { k } } ^ { ( p ) } \right\| _ { \infty } + \omega _ { p } \left( f - T _ { 2 ^ { k } } , h \right) \leqslant h ^ { p } \left\| T _ { 2 ^ { k } } ^ { ( p ) } \right\| _ { \infty } + 2 ^ { p } \left\| f - T _ { 2 ^ { k } } \right\| _ { \infty }
+> \end{aligned}
+> $$
+> 下边分别估计 $\left\| T _ { 2 ^ { k } } ^ { ( p ) } \right\|$ 和 $\left\| f - T _ { 2 ^ { k } } \right\| _ { \infty }$ 的上界
+> $$
+> \begin{aligned}
+> \left\| T _ { 2 ^ { k } } ^ { ( p ) } \right\|
+> & \leqslant \left\| \left( T _ { 1 } - T _ { 0 } \right) ^ { ( p ) } \right\| + \sum _ { i = 1 } ^ { k } \left\| \left( T _ { 2 ^ { i } } - T _ { 2 ^ { i - 1 } } \right) ^ { ( p ) } \right\| \\
+> & \leqslant 1 ^ { p } \left\| T _ { 1 } - T _ { 0 } \right\| + \sum _ { i = 1 } ^ { k } \left( 2 ^ { i } \right) ^ { p } \left\| T _ { 2 ^ { i } } - T _ { 2 ^ { i - 1 } } \right\| \\
+> & \leqslant \varphi ( 1 ) + \varphi ( 0 ) + \sum _ { i = 1 } ^ { k } \left( 2 ^ { i } \right) ^ { p } \left\| T _ { 2 ^ { i } } - T _ { 2 ^ { i - 1 } } \right\| \\
+> & \leqslant 2 \varphi ( 0 ) + \sum _ { i = 1 } ^ { k } \left( 2 ^ { i } \right) ^ { p } \left( \varphi \left( 2 ^ { i } \right) + \varphi \left( 2 ^ { i - 1 } \right) \right) \\
+> & = 2 \varphi ( 0 ) + 2 ^ { p + 1 } \sum _ { i = 0 } ^ { k - 1 } \left( 2 ^ { i } \right) ^ { p } \varphi \left( 2 ^ { i } \right) \\
+> & \leqslant 2 \varphi ( 0 ) + M _ { p } \sum _ { 0 \leqslant n \leqslant 2 ^ { k - 1 } } ( n + 1 ) ^ { p - 1 } \varphi ( n ) \\
+> & \leqslant M _ { p } \sum _ { n=0 }^{2^k} ( n + 1 ) ^ { p - 1 } \varphi ( n ) 
+> \end{aligned}
+> $$
+>
+> > 第 1 行：绝对值不等式
+> >
+> > 第 2 行：[Bernstein 不等式](04_Polynomial.md) 
+> >
+> > 第 3 行：$\|T_a-T_b\|=\|T_a-f+f-T_b\|\le\|f-T_a\|+\|f-T_b\|$ 
+> >
+> > 第 4 行：单调性
+> >
+> > 第 6 行：推论 5.1
+> >
+> > 第 7 行：将 $\varphi(0)$ 放到后边的和式内，$M_p$ 增 2 即可
+>
+> $$
+> \sum _ { n = 1 } ^ { 2 ^ { k } } ( n + 1 ) ^ { p - 1 } \varphi ( n ) \geqslant \varphi \left( 2 ^ { k } \right) \sum _ { n = 1 } ^ { 2 ^ { k } } ( n + 1 ) ^ { p - 1 } \geqslant M _ { p } ^ { \prime \prime } 2 ^ { k p } \varphi \left( 2 ^ { k } \right)
+> $$
+>
+> 即 $2^p\varphi(2^k)\le M_p 2^{-kp}\sum _ { n=0  }^{2^k} ( n + 1 ) ^ { p - 1 } \varphi ( n ) $ 
+>
+> > 上式用了不等式
+> > $$
+> > \sum _ { n = 1 } ^ { 2 ^ { k } } ( n + 1 ) ^ { p - 1 } \geqslant \int _ { 1 } ^ { 2 ^ { k } + 1 } t ^ { p - 1 } \mathrm { d } t = \frac { 1 } { p } \left( \left( 2 ^ { k } + 1 \right) ^ { p } - 1 \right) \geqslant M _ { p } 2 ^ { k p }
+> > $$
+>
+> 结合两个估计可得
+> $$
+> \begin{aligned}
+> \left| \Delta _ { h } ^ { p } f ( t ) \right|
+> &\leqslant M _ { p } \left( h ^ { p } + 2 ^ { - k p } \right) \sum _ { n = 0 } ^ { 2 ^ { k } } ( n + 1 ) ^ { p - 1 } \varphi ( n )\\
+> &\leqslant M _ { p }  h ^ { p } \sum _ { 0\leqslant n\leqslant h^{-1} } ^ { 2 ^ { k } } ( n + 1 ) ^ { p - 1 } \varphi ( n )\\
+> \end{aligned}
+> $$
+>
+> > 上式用到了
+> > $$
+> > h^p\le2^{-kp}<2^ph^p
+> > $$
+> > 
+
+**推论 5.2**（Bernstein）设 $0<\alpha <1$，则 $d(f,\overset{\circ}{\mathcal{P}}_n)=O(n^{-\alpha}) \Leftrightarrow \omega(f,h)=O(h^\alpha)$ 
+
+> 必要性
+>
+> 由 [Jackson-Stechkin 定理](#5.1.1 Jackson 型定理) 知
+> $$
+> d(f,\overset{\circ}{\mathcal{P}}_n)=O(\omega(f,1/n))=O(n^\alpha)
+> $$
+> 充分性
+>
+> 由 Bernstein 逆定理（定理 5.5），取 $p=1$ 得
+> $$
+> \begin{aligned} \omega ( f , h ) & \leqslant C h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } d \left( f , \mathcal { P } _ { n } \right) \\
+> & \leqslant C _ { 1 } h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } n ^ { - \alpha } + C _ { 2 } h d \left( f , \hat { \mathcal { P } } _ { 0 } \right) \\
+> & \leqslant C _ { 1 } h \int _ { 0 } ^ { h^{-1} } t ^ { - \alpha } \mathrm { d } t + C _ { 2 } h \leqslant C h ^ { \alpha } \end{aligned}
+> $$
+
+**推论 5.3** $d(f,\overset{\circ}{\mathcal{P}}_n)=O(n^{-1}) \Leftrightarrow \omega_2(f,h)=O(h)$ 
+
+> 必要性
+>
+> 由 [Jackson-Zygmund 定理](#5.1.1 Jackson 型定理) 知
+> $$
+> d(f,\overset{\circ}{\mathcal{P}}_n)=O(\omega_2(f,1/n))=O(n^{-1})
+> $$
+> 充分性
+>
+> 由 Bernstein 逆定理（定理 5.5），取 $p=2$ 得
+> $$
+> \begin{aligned}
+> \omega_2(f,h)&\le Mh^2\sum_{0\le n\le h^{-1}}(n+1)d(f,\overset{\circ}{P}_n)\\
+> &= Mh^2\left(d(f,\overset{\circ}{P}_0)+\sum_{1\le n\le h^{-1}}(n+1)d(f,\overset{\circ}{P}_n)\right)\\
+> &\le Mh^2\left(\|f\|+\sum_{1\le n\le h^{-1}}(n+1)n^{-1}\right)\\
+> &\le Mh^2\left(\|f\|+\int_{1}^{h^{-1}}\frac{t+1}{t}\mathrm{d}t\right)\\
+> &\le Mh^2\left(\|f\|+h^{-1}\right)=O(h)\\
+> \end{aligned}
+> $$
+>
+> > 因为我们关注的是 $h\to 0$ 的情形，所以上式的 $h$ 项更关键
+
+**定理 5.6** 设整数 $p\ge 1$，
+$$
+\sum_{n=1}^\infty n^{p-1}E_n(f)<\infty
+$$
+则 $f\in \overset{\circ}{C}^{(p)}$，且
+$$
+d \left( f ^ { ( p ) } , \hat { \mathcal { P } } _ { n } \right) \leqslant M _ { p } \sum _ { k = \left[ \frac { m } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f )
+$$
+
+> 由定理 5.1 知，
+> $$
+> f=\lim_{r\to\infty}T_{2^rm}=T_m+\sum_{i=1}^\infty (T_{2^im}-T_{2^{i-1}m})
+> $$
+>
+> 则
+> $$
+> \begin{aligned} \sum _ { i = 1 } ^ { \infty } \left\| \left( T _ { 2 ^ { i } m } - T _ { 2 ^ { i - 1 } m } \right) ^ { ( j ) } \right\| & \leqslant \sum _ { i = 1 } ^ { \infty } \left( 2 ^ { i } m \right) ^ { j } \left\| T _ { 2 ^ { i } m } - T _ { 2 ^ { i - 1 } m } \right\| \\ & \leqslant 2 \sum _ { i = 1 } ^ { \infty } \left( 2 ^ { i } m \right) ^ { j } E _ { 2 ^ { i - 1 } m } = 2 ^ { j + 1 } \sum _ { i = 0 } ^ { \infty } \left( 2 ^ { i } m \right) ^ { j } \varphi \left( 2 ^ { i } m \right)\\
+> &\leqslant M _ { p } \sum _ { n = \left[ \frac { m } { 2 } \right] } ^ { \infty } ( n + 1 ) ^ { j - 1 } \varphi ( n ) < \infty
+> \end{aligned}
+> $$
+>
+> 其中 $\varphi(n)=E_n(f)$ 
+>
+> > 上边不等号的推演类似于定理 5.5
+>
+> 由于求导后的级数一致收敛，所以 $f\in \overset{\circ}{C}^{(p)}$，且
+> $$
+> \begin{aligned} \left\| f ^ { ( p ) } - T _ { m } ^ { ( p ) } \right\| & \leqslant \sum _ { i = 1 } ^ { \infty } \left\| \left( T _ { 2 ^ i m } - T _ { 2 ^ { i - 1 } m }\right) ^ { ( p ) } \| \right.\\ & \leqslant M _ { p } ^ { \prime } \sum _ { n = \left( \frac { m } { 2 } \right) } ^ { \infty } ( n + 1 ) ^ { p - 1 } E _ { n } ( f ) \leqslant M _ { p } \sum _ { n = \left( \frac { m } { 2 } \right) } ^ { \infty } n ^ { p - 1 } E _ { n } ( f ) \end{aligned}
+> $$
+
+**推论 5.4** 设 $0<\alpha<1$，则
+$$
+f\in \overset{\circ}{\text{Lip}}_\alpha^{(p)}\triangleq\{f\in \overset{\circ}{C}^{(p)} : f^{(p)}\in \text{Lip} \alpha\} \Leftrightarrow d(f,\overset{\circ}{\mathcal{P}}_n)=O\left(\frac{1}{n^{p+\alpha}}\right)
+$$
+
+> 充分性
+>
+> 由 Jackson-Stechkin 定理，得
+> $$
+> d \left( f , \overset{\circ} { \mathcal { P } } _ { n } \right) = O \left( \omega _ { p + 1 } ( f , 1 / n ) \right) = O \left( n ^ { - p } \omega \left( f ^ { ( p ) } , 1 / n \right) \right) = O \left( n ^ { - p - \alpha } \right)
+> $$
+>
+> > 第一个等号：Jackson-Stechkin 定理
+> >
+> > 第二个等号：连续模性质
+> >
+> > 第三个等号：左侧结论
+>
+> 必要性
+>
+> 由右侧可得
+> $$
+> \sum _ { n = 1 } ^ { \infty } n ^ { p - 1 } E _ { n } ( f ) = O \left( \sum _ { 1 } ^ { \infty } n ^ { - 1 - \alpha } \right) < \infty
+> $$
+> 则由定理 5.6 可得 $f\in \overset{\circ}{C}^{(p)}$，且
+> $$
+> \begin{align}
+> \begin{aligned} d \left( f ^ { ( p ) } , \overset{\circ} { \mathcal { P } } _ { n } \right) & \leqslant M _ { p } ^ { \prime } \sum _ { k = \left[ \frac { n } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f ) \leqslant M _ { p } ^ { \prime \prime } \sum _ { k = \left[ \frac { n } { 2 } \right] } ^ { \infty } k ^ { p - 1 } \cdot k ^ { - p - \alpha } \\ & \leqslant M _ { p } \int _ { \left[ \frac { n } { 2 } \right] } ^ { \infty } t ^ { - 1 - \alpha } \mathrm { d } t = O \left( n ^ { - \alpha } \right) \end{aligned}
+> \end{align}
+> $$
+> 
+> 由推论 5.2 知 $\omega(f^{(p)},h)=O(h^\alpha)$，即 $f^{(p)} \in \text{Lip}\alpha$，即 $f\in \overset{\circ}{\text{Lip}}_\alpha^{(p)}$ 
 

@@ -262,6 +262,11 @@ $$
 $$
 称为 $f$ 在 $t$ 点步长为 $h$ 的 $r$ 阶向前差分
 
+若 $f(x)$ 在 $[t,t+rh]$ 上有 $r-1$ 阶导数，则
+$$
+\Delta_h^r f(t)=h^r f^{(r-1)}(\xi_n) \le h^r\|f^{(r-1)}\|_\infty
+$$
+
 # 参考
 
 [^holomorphic]: 百度百科. [全纯函数](https://baike.baidu.com/item/%E5%85%A8%E7%BA%AF%E5%87%BD%E6%95%B0).
