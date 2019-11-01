@@ -135,7 +135,7 @@ $$
 1. $L_n(t)=L_n(-t)$ 
 2. $\int_{-\pi}^\pi L_n(t)=1$，由 1 得 $2\int_0^\pi L_n(t)=1$ 
 3. $L_n(t) \in \overset{\circ}{\mathcal{P}}_{2n-2}$ 
-4. $\int_0^\pi (ns+1)L_n^2(s)\mathrm{d}s = O(1)$ 
+4. $\int_0^\pi (ns+1)^2L_n(s)\mathrm{d}s = O(1)$ 
 
 > 1，2 显然
 >
@@ -149,7 +149,7 @@ $$
 > & = \int _ { 0 } ^ { \pi } \left(\frac{t/2}{\sin(t/2)}\right)^4 t ^ { r } \left( \frac { \sin \frac { n t } { 2 } } { t / 2 } \right) ^ { 4 } \mathrm { d } t \\
 > & = c \int _ { 0 } ^ { \pi } t ^ { r } \left( \frac { \sin \frac { n t } { 2 } } { t / 2 } \right) ^ { 4 } \mathrm { d } t \\
 > & = c \int _ { 0 } ^ { \frac { n\pi } { 2 } } \left( \frac { 2 u } { n } \right) ^ { r } \left( \frac { \sin u } { u } \right) ^ { 4 } n ^ { 4 } \cdot \frac { 2 } { n } \mathrm { d } u \\
-> & = c \left( \frac { 2 } { n } \right) ^ { r - 3 } \int _ { 0 } ^ { \frac { n\pi } { 2 } } \frac { \sin ^ { 4 } u } { u ^ { 4 - r } } \mathrm { d } u
+> & = c \frac { 1 } { n^ { r - 3 } } \int _ { 0 } ^ { \frac { n\pi } { 2 } } \frac { \sin ^ { 4 } u } { u ^ { 4 - r } } \mathrm { d } u
 > \end{aligned}
 > $$
 > 第三个等号时积分中值定理，其中 $u=\frac{nt}{2}$ 
@@ -430,8 +430,8 @@ $$
 >
 > 由 Bernstein 逆定理（定理 5.5），取 $p=1$ 得
 > $$
-> \begin{aligned} \omega ( f , h ) & \leqslant C h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } d \left( f , \mathcal { P } _ { n } \right) \\
-> & \leqslant C _ { 1 } h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } n ^ { - \alpha } + C _ { 2 } h d \left( f , \hat { \mathcal { P } } _ { 0 } \right) \\
+> \begin{aligned} \omega ( f , h ) & \leqslant C h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } d \left( f , \overset{\circ}{\mathcal { P }} _ { n } \right) \\
+> & \leqslant C _ { 1 } h \sum _ { 0 \leqslant n \leqslant h ^ { - 1 } } n ^ { - \alpha } + C _ { 2 } h d \left( f , \overset{\circ} { \mathcal { P } } _ { 0 } \right) \\
 > & \leqslant C _ { 1 } h \int _ { 0 } ^ { h^{-1} } t ^ { - \alpha } \mathrm { d } t + C _ { 2 } h \leqslant C h ^ { \alpha } \end{aligned}
 > $$
 
@@ -464,7 +464,7 @@ $$
 $$
 则 $f\in \overset{\circ}{C}^{(p)}$，且
 $$
-d \left( f ^ { ( p ) } , \hat { \mathcal { P } } _ { n } \right) \leqslant M _ { p } \sum _ { k = \left[ \frac { m } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f )
+d \left( f ^ { ( p ) } , \overset{\circ} { \mathcal { P } } _ { n } \right) \leqslant M _ { p } \sum _ { k = \left[ \frac { m } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f )
 $$
 
 > 由定理 5.1 知，
