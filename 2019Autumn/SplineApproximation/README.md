@@ -3,9 +3,9 @@
 ## 笔记
 
 - [基础](notes/basic.md) 
-- [01. 赋范线性空间中的逼近问题引论](notes/textbook_01_Introduction.md) 
-- [02. 一致逼近](notes/textbook_02_UniformApproximation.md) 
-- [03. 线性插值](notes/textbook_03_LinearInterpolation.md) 
+- [01. 赋范线性空间中的逼近问题引论](notes/01_Introduction.md) 
+- [02. 一致逼近](notes/02_UniformApproximation.md) 
+- [03. 线性插值](notes/03_LinearInterpolation.md) 
 - [04. 多项式的性质和平滑模](notes/04_Polynomial.md) 
 - [05. 最佳逼近的定量理论](notes/05_Quantify.md) 
 

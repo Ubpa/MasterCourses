@@ -20,4 +20,5 @@
   - [04. Bezier 样条](notes/04_BezierSpline.md) 
   - [05. B 样条](notes/05_BSpline.md) 
   - [06. 极形式 / Blossom](notes/06_PolarForm.md) 
+  - [07. 有理样条曲线](notes/07_Rational.md) 
 
