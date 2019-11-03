@@ -1,0 +1,220 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业7}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年11月03日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{题 1}  %目录的前缀页面都会自动排版不需要手动排版
+\subsection{题目}
+编程计算并绘制出以 $x$ 点为中心的 $3$ 维立方体 $[-d,d]^3$ 在 2 维平面上的透视投影，其中 $x$ 点和 $d$ 的大小由用户指定，立方体相邻顶点之间用直线段相连，对相机参数和方位进行合理假设。
+
+\subsection{解}
+$d=1$，$\pmb{x}=(0,0,0)$ 的正方体的八个顶点对应矩阵为（第四列是齐次项）
+$$
+X_0 = \left[\begin{matrix}
+        -1 &-1& -1 & 1\\
+        -1 &-1 &1& 1\\
+        1 &-1 &1& 1\\
+        1 &-1& -1& 1\\
+        -1 &1& -1& 1\\
+        -1& 1& 1& 1\\
+        1 &1 &1& 1\\
+        1 &1 &-1& 1\\
+\end{matrix}\right]
+$$
+模型矩阵为
+$$
+M=TS=\left[\begin{matrix}
+1 & 0 & 0 & \pmb{x}.x\\
+0 & 1 & 0 & \pmb{x}.y\\
+0 & 0 & 1 & \pmb{x}.z\\
+0 & 0 & 0 & 1\\
+\end{matrix}\right]
+\left[\begin{matrix}
+d & 0 & 0 & 0\\
+0 & d & 0 & 0\\
+0 & 0 & d & 0\\
+0 & 0 & 0 & 1\\
+\end{matrix}\right]
+$$
+假设相机处于 $(0,0,0)$，朝向 $(0,0,-1)$，上方向为 $(0,1,0)$，成像距离为 1，则相机视矩阵 $V$ 和投影矩阵 $P$ 分别为
+$$
+\text{V} =
+\left[\begin{matrix}
+1 & 0 & 0& 0\\
+0 & 1 & 0& 0\\
+0 & 0 & -1& 0\\
+0 & 0 & 0& 1\\
+\end{matrix}\right], \quad 
+P = \left[\begin{matrix}
+1 & 0 & 0 & 0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 1 & 0\\
+\end{matrix}\right]
+$$
+则投影后坐标为
+$$
+X_1=(PVMX_0^\top)^\top
+$$
+最后做透视除法即可得成像平面坐标
+
+示例如下
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{p1}
+  \caption{题 1 示例图}
+\end{figure}
+
+\section{题 2 和 题 3}
+因为两题相近，所以放在一起来说明
+\subsection{题}
+2. 使用有理二次 \Bezier 样条绘制椭圆 $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ 和双曲线 $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$，使得样条分段尽可能少。参数 $a$ 和 $b$ 由用户指定。
+
+3. 在 3D 空间中绘制前一题中用齐次坐标表示的 \Bezier 曲线（即做投影变换之前的三维曲线）
+
+\subsection{解}
+3 个控制点的有理 \Bezier 曲线和其对偶曲线可绘制椭圆和双曲线
+
+记椭圆的控制点为 $\pmb{p}_0,\pmb{p}_1,\pmb{p}_2$，\Bezier 曲线为 $\pmb{x}(t)$，对偶曲线为 $\pmb{x}^\prime(t)$；双曲线的控制点为 $\pmb{q}_0,\pmb{q}_1,\pmb{q}_2$，Bezier 曲线为 $\pmb{y}(t)$，对偶曲线为 $\pmb{y}^\prime(t)$ 
+
+椭圆控制点矩阵 $P$ 和双曲线控制点矩阵 $Q$ 分别为
+$$
+P = 
+\left[\begin{matrix}
+\pmb{p}_0 & \pmb{p}_1 & \pmb{p}_2
+\end{matrix}\right]
+=
+\left[\begin{matrix}
+a & 0 & 1\\ 
+a & b & 1\\ 
+0 & 2b & 2\\ 
+\end{matrix}\right],\quad 
+Q = 
+\left[\begin{matrix}
+\pmb{q}_0 & \pmb{q}_1 & \pmb{q}_2
+\end{matrix}\right]
+=
+\left[\begin{matrix}
+a & 0 & 1\\ 
+a & b & 1\\ 
+2a & 2b & 0\\ 
+\end{matrix}\right]
+$$
+其对偶曲线相当于 $\omega_1$ 取反，则对偶曲线的控制点矩阵为
+$$
+P^\prime
+=
+\left[\begin{matrix}
+a & 0 & 1\\ 
+-a & -b & -1\\ 
+0 & 2b & 2\\ 
+\end{matrix}\right],\quad 
+Q^\prime =
+\left[\begin{matrix}
+a & 0 & 1\\ 
+-a & -b & -1\\ 
+2a & 2b & 0\\ 
+\end{matrix}\right]
+$$
+采样点 $0=t_0<\dots<t_n=1$ 矩阵为
+$$
+T=\left[\begin{matrix}
+1 & t_0 & t_0^2\\
+\vdots & \vdots & \vdots\\
+1 & t_n & t_n^2\\
+\end{matrix}\right]
+$$
+二次 \Bezier 相应矩阵为
+$$
+B = \left[\begin{matrix}
+ 1 &  0 & 0\\
+-2 &  2 & 0\\
+ 1 & -2 & 1
+\end{matrix}\right]
+$$
+则 $\pmb{x}(t),\pmb{x^\prime}(t),\pmb{y}(t),\pmb{y^\prime}(t)$ 上的采样点 $X,X^\prime,Y,Y^\prime$ 为
+$$
+X = T B P,\quad X^\prime=TBP^\prime\\
+Y = T B Q,\quad Y^\prime=TBQ^\prime\\
+$$
+直接画出来就是 3D 的，进行透视投影后画出来就是 2D 的
+
+\newpage
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{p2_0}
+  \caption{题 2 椭圆 示例图}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{p2_1}
+  \caption{题 2 双曲线 示例图}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{p3_0}
+  \caption{题 3 椭圆 示例图}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{p3_1}
+  \caption{题 3 双曲线 示例图}
+\end{figure}
+
+\end{CJK*}
+\end{document}

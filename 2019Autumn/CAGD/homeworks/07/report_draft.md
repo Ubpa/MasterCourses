@@ -28,7 +28,7 @@ d & 0 & 0 & 0\\
 0 & 0 & 0 & 1\\
 \end{matrix}\right]
 $$
-假设相机处于 $(0,0,0)$，看向 $(0,0,-1)$，上方向为 $(0,1,0)$，则相机矩阵为
+假设相机处于 $(0,0,0)$，朝向 $(0,0,-1)$，上方向为 $(0,1,0)$，成像距离为 1，则相机视矩阵 $V$ 和投影矩阵 $P$ 分别为
 $$
 \text{V} =
 \left[\begin{matrix}
@@ -36,10 +36,7 @@ $$
 0 & 1 & 0& 0\\
 0 & 0 & -1& 0\\
 0 & 0 & 0& 1\\
-\end{matrix}\right]
-$$
-假设成像距离为 1，则投影矩阵为
-$$
+\end{matrix}\right], \quad 
 P = \left[\begin{matrix}
 1 & 0 & 0 & 0\\
 0 & 1 & 0 & 0\\
@@ -110,7 +107,7 @@ T=\left[\begin{matrix}
 1 & t_n & t_n^2\\
 \end{matrix}\right]
 $$
-3 阶 Bezier 矩阵为
+二次 Bezier 相应矩阵为
 $$
 B = \left[\begin{matrix}
  1 &  0 & 0\\
