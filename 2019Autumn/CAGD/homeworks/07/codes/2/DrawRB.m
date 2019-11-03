@@ -5,20 +5,20 @@ function DrawRB(a, b, type)
 
 if type == 1% 1: ellipse
     P = [
-        a a 0
-        0 b 2*b
-        1 1 2
+        a 0 1
+        a b 1
+        0 2*b 2
     ];
 else % 2: hyperbola
     P = [
-        a a 2*a
-        0 b 2*b
-        1 1 0
+        a 0 1
+        a b 1
+        2*a 2*b 0
     ];
 end
 
 dualP=P;
-dualP(:,2) = - dualP(:,2);
+dualP(2,:) = - dualP(2,:);
 
 % bezier matrix
 B = [
@@ -36,14 +36,14 @@ nT2 = size(t2,1);
 t = [t1;t2];
 
 % x
-x = t * B * P';
+x = t * B * P;
 x = x(:,1:2)./x(:,3);
 
 plot(x(1:nT1,1),x(1:nT1,2), 'c', 'linewidth', 2);
 plot(x(nT1+(1:nT2),1),x(nT1+(1:nT2),2), 'c', 'linewidth', 2);
 
 % dual x
-dualX = t * B * dualP';
+dualX = t * B * dualP;
 dualX = dualX(:,1:2)./dualX(:,3);
 
 plot(dualX(1:nT1,1),dualX(1:nT1,2), 'c', 'linewidth', 2);

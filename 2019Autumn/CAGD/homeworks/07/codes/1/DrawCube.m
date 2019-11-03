@@ -1,8 +1,6 @@
-function DrawCube(pos, scale)
-pos
-scale
+function DrawCube(x, d)
     % cube 8 points
-    points = 0.5 * [
+    points = [
         -1 -1 -1
         -1 -1 1
         1 -1 1
@@ -35,16 +33,16 @@ scale
     % model matrix
     % scale
     S = [
-        scale 0 0 0
-        0 scale 0 0
-        0 0 scale 0
+        d 0 0 0
+        0 d 0 0
+        0 0 d 0
         0 0 0 1
     ];
     % translate
     T = [
-        1 0 0 pos(1)
-        0 1 0 pos(2)
-        0 0 1 pos(3)
+        1 0 0 x(1)
+        0 1 0 x(2)
+        0 0 1 x(3)
         0 0 0 1
     ];
     model = T * S;
@@ -64,9 +62,8 @@ scale
         0 0 1 0
         0 0 1 0
     ];
-    model * points'
-    view * model * points'
-    screenPos = project * view * model * points'
+
+    screenPos = project * view * model * points';
     screenPos = (screenPos(1:3, :) ./ screenPos(4, :))';
 %     for i = 1 : size(screenPos, 1)
 %         plot(screenPos(i, 1), screenPos(i, 2), 'y.', 'MarkerSize', 32);

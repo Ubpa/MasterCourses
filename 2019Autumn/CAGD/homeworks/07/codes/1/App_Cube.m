@@ -22,7 +22,7 @@ function varargout = App_Cube(varargin)
 
 % Edit the above text to modify the response to help App_Cube
 
-% Last Modified by GUIDE v2.5 03-Nov-2019 11:32:53
+% Last Modified by GUIDE v2.5 03-Nov-2019 18:23:22
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -83,7 +83,7 @@ function edit_x_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_x as text
 %        str2double(get(hObject,'String')) returns contents of edit_x as a double
-
+RefreshAxes(handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit_x_CreateFcn(hObject, eventdata, handles)
@@ -106,7 +106,7 @@ function edit_y_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_y as text
 %        str2double(get(hObject,'String')) returns contents of edit_y as a double
-
+RefreshAxes(handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit_y_CreateFcn(hObject, eventdata, handles)
@@ -129,7 +129,7 @@ function edit_z_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_z as text
 %        str2double(get(hObject,'String')) returns contents of edit_z as a double
-
+RefreshAxes(handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit_z_CreateFcn(hObject, eventdata, handles)
@@ -143,101 +143,53 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
-% --- Executes on slider movement.
-function slider_scale_Callback(hObject, eventdata, handles)
-% hObject    handle to slider_scale (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-RefreshAxes(handles)
-
-% --- Executes during object creation, after setting all properties.
-function slider_scale_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider_scale (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
-% --- Executes on slider movement.
-function slider_x_Callback(hObject, eventdata, handles)
-% hObject    handle to slider_x (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-RefreshAxes(handles)
-
-% --- Executes during object creation, after setting all properties.
-function slider_x_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider_x (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
-% --- Executes on slider movement.
-function slider_y_Callback(hObject, eventdata, handles)
-% hObject    handle to slider_y (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-RefreshAxes(handles)
-
-% --- Executes during object creation, after setting all properties.
-function slider_y_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider_y (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
-% --- Executes on slider movement.
-function slider_z_Callback(hObject, eventdata, handles)
-% hObject    handle to slider_z (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-RefreshAxes(handles)
-
-% --- Executes during object creation, after setting all properties.
-function slider_z_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider_z (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
 %----------------------
 
 function RefreshAxes(handles)
 cla(handles.axes);
-x = handles.slider_x.Value;
-y = handles.slider_y.Value;
-z = handles.slider_z.Value;
-scale = handles.slider_scale.Value;
-DrawCube([x,y,z], scale);
+x = str2double(handles.edit_x.String);
+y = str2double(handles.edit_y.String);
+z = str2double(handles.edit_z.String);
+d = str2double(handles.edit_d.String);
+if size(x,1)==0
+    uiwait(msgbox('x should be a number, set x = 0 as default','Error', 'error', 'modal'));
+    handles.edit_x.String = '0';
+    x = 0;
+end
+if size(y,1)==0
+    uiwait(msgbox('y should be a number, set y = 0 as default','Error', 'error', 'modal'));
+    handles.edit_y.String = '0';
+    y = 0;
+end
+if size(z,1)==0
+    uiwait(msgbox('z should be a number, set z = -5 as default','Error', 'error', 'modal'));
+    handles.edit_z.String = '-5';
+    z = -5;
+end
+if size(d,1)==0
+    uiwait(msgbox('d should be a number, set d = 2 as default','Error', 'error', 'modal'));
+    handles.edit_d.String = '2';
+    d = 2;
+end
+DrawCube([x,y,z], d);
+
+function edit_d_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_d (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_d as text
+%        str2double(get(hObject,'String')) returns contents of edit_d as a double
+RefreshAxes(handles)
+
+% --- Executes during object creation, after setting all properties.
+function edit_d_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_d (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
