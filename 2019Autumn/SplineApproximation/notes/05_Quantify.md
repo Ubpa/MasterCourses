@@ -173,18 +173,8 @@ $$
 >
 > 注意到 $\lambda_n = O(n^3)$ 
 >
-> > $$
-> > \begin{aligned}
-> > \lambda_n &= \int _{-\pi}^\pi J_n(t) \mathrm{d}t \\
-> > &\le \int _{-\pi}^\pi \|J_n\|_\infty \mathrm{d}t \\
-> > &\le \int _{-\pi}^\pi J_n(0) \mathrm{d}t \\
-> > &\le \int _{-\pi}^\pi n^4 \mathrm{d}t \\
-> > &\le n^3|^{\pi}_{-\pi} \\
-> > \end{aligned}
-> > $$
-> >
-> > 故 $\lambda_n = O(n^3)$ 
->
+> > 参考书中引理 5.2 (4) 的另一证法的 (5.1.3) 式和 (5.1.4) 式
+> 
 > 从而有
 > $$
 > \int _ { 0 } ^ { \pi } t ^ { r } L _ { n } ( t ) \mathrm { d } t = \frac { c } { \lambda _ { n } } \int _ { 0 } ^ { \pi } t ^ { r } J _ { n } ( t ) \mathrm { d } t = c \frac { n ^ { 3 - r } } { n ^ { 3 } } = O \left( n ^ { - r } \right) \quad ( r = 0,1,2 )
