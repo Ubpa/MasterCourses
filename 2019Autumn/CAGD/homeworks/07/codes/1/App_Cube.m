@@ -235,9 +235,9 @@ end
 %----------------------
 
 function RefreshAxes(handles)
-    cla(handles.axes);
-    x = handles.slider_x.Value;
-    y = handles.slider_y.Value;
-    z = handles.slider_z.Value;
-    scale = handles.slider_scale.Value;
-    DrawCube([x,y,z], scale);
+cla(handles.axes);
+x = handles.slider_x.Value;
+y = handles.slider_y.Value;
+z = handles.slider_z.Value;
+scale = handles.slider_scale.Value;
+DrawCube([x,y,z], scale);
