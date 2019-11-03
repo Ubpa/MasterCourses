@@ -13,6 +13,7 @@
   - [04. 作业 4 | Bezier 样条](homeworks/04/) 
   - [05. 作业 5 | B 样条](homeworks/05/) 
   - [06. 作业 6 | 极形式](homeworks/06/) 
+  - [07. 作业 7 | 投影与有理 Bezier 曲线](homeworks/07/) 
 - [笔记](notes/) 
   - [01. 拟合](notes/01_Fit.md) 
   - [02. Bezier 曲线](notes/02_BezierCurve.md) 
