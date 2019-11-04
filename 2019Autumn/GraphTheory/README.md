@@ -2,8 +2,9 @@
 
 ## 笔记
 
-- [1. 图](notes/01_Graph.md) 
-- [2. 树](notes/02_Tree.md) 
+- [1. 图](notes/1_Graph.md) 
+- [2. 树](notes/2_Tree.md) 
+- [3. 平图](notes/3_Tree.md) 
 
 ## 作业
 
