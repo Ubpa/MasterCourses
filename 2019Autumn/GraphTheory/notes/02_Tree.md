@@ -551,6 +551,39 @@ $$
 
 **定理 2.4.1** 按 Prim 算法求出的 $T_{n-1}$ 是加权连通图 $(G,\pmb{w})$ 的最小树
 
+## 2.5 最短路问题
+
+设有一个贴图系统连接着若干个城市，$x_0$ 是该系统中的一个固定城市（比如是首都或者省会城市）。在该系统中试求从 $x_0$ 到其他各城市的最短路线。这个问题称为最短路问题。
+
+用一个具有**正权值**函数 $\pmb{w}$ 的加权简单无限图 $(G,\pmb{w})$ 来表示这个铁路系统，其中 $\pmb{w}\in \mathcal{E}(G)$。边 $e=xy$ 上的值 $\pmb{w}(e)$ 表示城市 $x$ 和城市 $y$ 之间的铁路里程。于是，最短路问题就转化为在 $(G,\pmb{w})$ 中找出 $x_0$ 到 $G$ 中各点最短路。
+
+更一般的最短路问题的提法是：设 $(D,\pmb{w})$ 是有**正值加权**简单有向图，$x_0$ 是 $D$ 中的一个固定顶点。寻找从 $x_0$ 到 $D$ 中各点最短有向路。
+
+最短路问题有解 $\Leftrightarrow$ $D$ 中存在根在 $x_0$ 的支撑外向树。
+
+**Moore-Dijkstra 算法** 
+
+> 复杂度 $O(n^2)$ 
+
+1. $l(x_0)=0$，$l(x)=\infty(x\neq x_0)$，$S_0=\{x_0\}$，$T_0=\empty$ 且 $k=0$ 
+
+2. $\forall x\in N_D^+(x_k)\cap \overline{S_k}$，
+   $$
+   l(x)=\min\{l(x),l(x_k)+\pmb{w}(x_k,x)\}
+   $$
+
+3. $x_{k+1}=\mathop{\arg\min}_\limits{x\in \overline{S_k}}\{l(x)\}$ ，取 $x_j\in S_k(j\le k)$ 且 $(x_j,x_{k+1})\in E(D)$，令 $S_{k+1}=S_k\cup\{x_{k+1}\}$，$T_{k+1}=T_k \cup (x_j,x_{k+1})$ 
+
+4. 若 $k=n-1$ 则停止，否则 $k\leftarrow k+1$，转 2
+
+> 示例
+>
+> ![image-20191103233857210](assets/image-20191103233857210.jpg)
+
+**定理 2.5.1** 设 $T$ 是 $(D,\pmb{w})$ 中由 Moore-Dijkstra 算法求出的根在 $x_0$ 的支撑外向树，则对每个 $x\in V(D)$，$T$ 中 $(x_0,x)$ 路是 $D$ 中最短 $(x_0,x)$ 路
+
+距离矩阵 $\{d_D(x_i,x_j)\}_{i,j=1}^n$ 可由 Moore-Dijkstra算法求得，然后找到最大元素即可求得直径，复杂度为 $O(n^3)$ 
+
 ## 参考
 
 [^prim_vs_dijkstra]: 豆沙包lo. [Dijkstra算法与Prim算法的异同](https://blog.csdn.net/qq284565035/article/details/51583314). 
