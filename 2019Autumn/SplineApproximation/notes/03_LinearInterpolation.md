@@ -6,7 +6,7 @@ $P_M$ 不是线性算子，虽然 $P_Mx=B_M(x)$，但难以严格求出，即使
 
 ### 3.1.1 问题的提出
 
-X 是线性空间，$M\triangleq \text{span}\{m_i(t)\}_{i=1}^n\subset X$，$\dim (M) = n$，$\{\lambda_i\}_{i=1}^n\subset X^*$，所谓**线性插值问题**，是指 $\forall x \in X$，求 $m=Px\in M$，使得 $Px$ 在 $\{\lambda_i\}_{i=1}^n$ 上插值与 $x$，即
+$X$ 是线性空间，$M\triangleq \text{span}\{m_i(t)\}_{i=1}^n\subset X$，$\dim (M) = n$，$\{\lambda_i\}_{i=1}^n\subset X^*$，所谓**线性插值问题**，是指 $\forall x \in X$，求 $m=Px\in M$，使得 $Px$ 在 $\{\lambda_i\}_{i=1}^n$ 上插值于 $x$，即
 $$
 \lambda_i(Px)=\lambda_ix\quad(i=1,2,\dots,n)
 $$
@@ -65,7 +65,7 @@ $$
 $$
 解方程求出 $\{\alpha_j\}_{j=1}^n$ 即可确定 $Px$ 的表达式。
 
-> 方程简记为 $G\pmb{\alpha}=\pmb{b}$，其中$\pmb{\alpha}=\left[\begin{matrix}\alpha_1 \\ \dots \\ \alpha_n \end{matrix}\right]$，$\pmb{b}=\left[\begin{matrix}\lambda_1x\\\dots\\\lambda_n x\end{matrix}\right]$，则 $\pmb{\alpha}=G^{-1}\pmb{b}$ 
+> 方程简记为 $G\boldsymbol{\alpha}=\boldsymbol{b}$，其中$\boldsymbol{\alpha}=\left[\begin{matrix}\alpha_1 \\ \vdots \\ \alpha_n \end{matrix}\right]$，$\boldsymbol{b}=\left[\begin{matrix}\lambda_1x\\\vdots\\\lambda_n x\end{matrix}\right]$，则 $\boldsymbol{\alpha}=G^{-1}\boldsymbol{b}$ 
 
 若恰好 $\lambda_i m_j=0(i\neq j)$，则 $\alpha_i=\lambda_ix/\lambda_i m_i$，但一般没这么恰好。但我们可以用**双正交化**过程，同时改变 $\lambda_i$ 和 $m_j$，从而得到 $\hat{\lambda}_i$ 和 $\hat{m}_j$，使之满足 $\hat\lambda_i \hat m_j=0(i\neq j)$。
 
@@ -91,11 +91,11 @@ $$
 >
 > ---
 >
-> 证明：$\lambda_i P_{i-1} \in \Lambda_{i+1}$，即证 $\exist \pmb{\alpha} \in \mathbb{R}^{i-1},\forall x \in X, \lambda_iP_{i-1}x=\sum_{j=1}^{i-1}\alpha_j \lambda_j x$ 
+> 证明：$\lambda_i P_{i-1} \in \Lambda_{i+1}$，即证 $\exist \boldsymbol{\alpha} \in \mathbb{R}^{i-1},\forall x \in X, \lambda_iP_{i-1}x=\sum_{j=1}^{i-1}\alpha_j \lambda_j x$ 
 >
 > 先看特例 $\{m_l\}_{l=1}^{i-1}$ 
 >
-> $\lambda_i m_l = \lambda_i P_{i-1}m_l=\sum_{j=1}^{i-1}\alpha_j\lambda_j m_l(l=1,\dots,i-1)$，因 $\{\lambda_jm_l\}_{j,l=1}^{i-1}$ 可逆（$\{\lambda_jm_l\}_{j,l=1}^{n}$ 可逆），故可由此方程组确定 $\pmb{\alpha}$。
+> $\lambda_i m_l = \lambda_i P_{i-1}m_l=\sum_{j=1}^{i-1}\alpha_j\lambda_j m_l(l=1,\dots,i-1)$，因 $\{\lambda_jm_l\}_{j,l=1}^{i-1}$ 可逆（$\{\lambda_jm_l\}_{j,l=1}^{n}$ 可逆），故可由此方程组确定 $\boldsymbol{\alpha}$。
 >
 > 则 $\forall x \in X$，有
 > $$
