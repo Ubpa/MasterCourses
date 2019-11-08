@@ -14,6 +14,7 @@
   - [05. 作业 5 | B 样条](homeworks/05/) 
   - [06. 作业 6 | 极形式](homeworks/06/) 
   - [07. 作业 7 | 投影与有理 Bezier 曲线](homeworks/07/) 
+  - [08. 作业 8 | 样条曲面](homeworks/08/) 
 - [笔记](notes/) 
   - [01. 拟合](notes/01_Fit.md) 
   - [02. Bezier 曲线](notes/02_BezierCurve.md) 
@@ -22,4 +23,5 @@
   - [05. B 样条](notes/05_BSpline.md) 
   - [06. 极形式 / Blossom](notes/06_PolarForm.md) 
   - [07. 有理样条曲线](notes/07_Rational.md) 
+  - [08. 样条曲面](notes/08_SplineSurface.md) 
 
