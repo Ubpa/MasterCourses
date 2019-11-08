@@ -1,4 +1,4 @@
-function DrawSphere(M)
+function DrawSphere(M, isCtrl)
     % control points
     p = zeros(3,3,4);
     p(1,1,:) = M * [1;0;0;1];
@@ -12,6 +12,18 @@ function DrawSphere(M)
     p(3,1,:) = M * [0;2;0;2];
     p(3,2,:) = M * [0;2;2;2];
     p(3,3,:) = M * [0;0;4;4];
+    
+    if isCtrl
+        % draw control points
+        p_eucl = p(:,:,1:3) ./ p(:,:,4);
+        p_eucl_rs = reshape(p_eucl, 9, 3);
+        plot3(p_eucl_rs(:,1), p_eucl_rs(:,2), p_eucl_rs(:,3), 'r.', 'MarkerSize', 24);
+
+        for i = 1:3
+            plot3(p_eucl(i,:,1), p_eucl(i,:,2), p_eucl(i,:,3), 'c:', 'LineWidth', 1);
+            plot3(p_eucl(:,i,1), p_eucl(:,i,2), p_eucl(:,i,3), 'c:', 'LineWidth', 1);
+        end
+    end
     
     % homogeneous
     n = 32;
@@ -29,6 +41,10 @@ function DrawSphere(M)
     p_eucl = p_homo(:,:,1:3) ./ p_homo(:,:,4);
     
     % draw
-    surf(p_eucl(:,:,1), p_eucl(:,:,2), p_eucl(:,:,3));
+    if isCtrl
+        surf(p_eucl(:,:,1), p_eucl(:,:,2), p_eucl(:,:,3),'FaceAlpha', 0.7);
+    else
+        surf(p_eucl(:,:,1), p_eucl(:,:,2), p_eucl(:,:,3));
+    end
     shading interp;
 end

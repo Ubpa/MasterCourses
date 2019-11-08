@@ -22,7 +22,7 @@ function varargout = App_Sphere(varargin)
 
 % Edit the above text to modify the response to help App_Sphere
 
-% Last Modified by GUIDE v2.5 07-Nov-2019 21:05:09
+% Last Modified by GUIDE v2.5 08-Nov-2019 19:31:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -44,6 +44,8 @@ end
 % End initialization code - DO NOT EDIT
 
 
+global isCtrl;
+
 % --- Executes just before App_Sphere is made visible.
 function App_Sphere_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -60,6 +62,8 @@ guidata(hObject, handles);
 
 % UIWAIT makes App_Sphere wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
+global isCtrl;
+isCtrl = false;
 hold on;
 RefreshAxes(handles);
 
@@ -117,7 +121,18 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
+
+% --- Executes on button press in btn_control.
+function btn_control_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_control (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global isCtrl;
+isCtrl = ~isCtrl;
+RefreshAxes(handles);
+
 function RefreshAxes(handles)
+global isCtrl;
 cla(handles.axes);
 theta = 2 * pi * handles.slider_theta.Value;
 scale = 2;
@@ -125,12 +140,12 @@ handles.axes.CameraPosition(1) = scale*cos(theta);
 handles.axes.CameraPosition(2) = scale*sin(theta);
 handles.axes.CameraPosition(3) = handles.slider_z.Value;
 R = zeros(4,4,8);
-Ry = makehgtform('yrotate', pi/2);
+Ry = makehgtform('yrotate', pi);
 for i=1:4
     Rzi = makehgtform('zrotate', (i-1) * pi/2);
     R(:,:,i) = Rzi;
     R(:,:,i+4) = Rzi * Ry;
 end
 for i = 1: size(R,3)
-    DrawSphere(R(:,:,i));
+    DrawSphere(R(:,:,i), isCtrl);
 end
