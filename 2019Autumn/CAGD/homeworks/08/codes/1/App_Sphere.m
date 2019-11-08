@@ -139,13 +139,16 @@ scale = 2;
 handles.axes.CameraPosition(1) = scale*cos(theta);
 handles.axes.CameraPosition(2) = scale*sin(theta);
 handles.axes.CameraPosition(3) = handles.slider_z.Value;
-R = zeros(4,4,8);
-Ry = makehgtform('yrotate', pi);
-for i=1:4
-    Rzi = makehgtform('zrotate', (i-1) * pi/2);
-    R(:,:,i) = Rzi;
-    R(:,:,i+4) = Rzi * Ry;
-end
-for i = 1: size(R,3)
-    DrawSphere(R(:,:,i), isCtrl);
-end
+
+Rot = makehgtform('axisrotate',[1,-1,0],pi); 
+yzR = ReflectMat([1,0,0], 0);
+xzR = ReflectMat([0,1,0], 0);
+xyR = ReflectMat([0,0,1], 0);
+DrawSphere(eye(4), isCtrl);
+DrawSphere(yzR, isCtrl);
+DrawSphere(xzR, isCtrl);
+DrawSphere(xyR, isCtrl);
+DrawSphere(eye(4)*Rot, isCtrl);
+DrawSphere(yzR*Rot, isCtrl);
+DrawSphere(xzR*Rot, isCtrl);
+DrawSphere(xyR*Rot, isCtrl);
