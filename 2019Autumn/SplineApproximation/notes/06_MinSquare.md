@@ -2,8 +2,10 @@
 
 本章考虑内积空间中的逼近问题，范数为
 $$
-\|f\|^2=\int_T |f(t)|^2\rho(t)\mathrm{d}t
+\|f\|_2=\sqrt{\int_T |f(t)|^2\rho(t)\mathrm{d}t}
 $$
+一般可把 $\cdot_2$ 忽略，写成 $\|f\|$ 
+
 其中 $\rho(t)>0$ 是权函数
 
 > 典型内积空间有
@@ -119,10 +121,251 @@ L^\top\alpha = D^{-1}\beta
 $$
 由于 $L$ 为三角阵，很容易解出 $\beta$ 和 $\alpha$ 
 
+## 6.2 正交函数系
+
+Hilbert 空间与赋范线性空间的根本区别是在内积空间中有**正交**的概念。
+
+已知的规范正交函数系有
+
+- 三角函数系 $\left\{\frac{1}{\sqrt{2}},\cos t,\sin t\right\}$ 关于 $\left\langle f,g \right\rangle=\frac{1}{\pi}\int_{-\pi}^\pi f(t)g(t) \mathrm{d}t$ 规范正交
+
+- Legendre 多项式
+  $$
+  L_n(t)=\frac{1}{2^n n!}\frac{\mathrm{d}^n}{\mathrm{d}t^n}(t^2-1)^n
+  $$
+  是 $[-1,1]$ 上的正交多项式系
+  
+- Tchebycheff 多项式 $\{T_n(t)=\cos(n\arccos t)\}_{n=0}^\infty$ 是在 $[-1,1]$ 上对权函数 $\frac{1}{\sqrt{1-t^2}}$ 的正交多项式系
+
+- Jacobi 多项式 $\left\{P_j^{(\alpha,\beta)} \right\}_{j=0}^\infty$ 是关于内积
+  $$
+  \left\langle f,g \right\rangle = \int_{-1}^1 f(t)g(t)(1-t)^\alpha(1+t)^\beta\mathrm{d}t\quad(-1<\alpha,\beta<0)
+  $$
+  的正交系。特别地，当 $\alpha=\beta=0$ 时，Jacobi 多项式就是 Legendre 多项式；当 $\alpha=\beta=-1/2$ 时，Jacobi 多项式就是 Tchebycheff 多项式
+  
+- Sturm-Liouville 型微分方程边值问题
+
+设 $\{\varphi_i\}_{i=1}^\infty$ 是规范的正交函数系，即
+$$
+\left\langle \varphi_i,\varphi_k \right\rangle = \int_a^b \rho(t)\varphi_i(t)\varphi_k(t)\mathrm{d}t = \delta_{ik}
+$$
+$\forall f \in L_{2,\rho}[a,b]$，令
+$$
+c_k=\left\langle f,\varphi_k \right\rangle=\int_a^b\rho(t)f(t)\varphi_k(t)\mathrm{d}t
+$$
+则称
+$$
+\sum_{k=1}^\infty c_k\varphi_k(t)
+$$
+为 $f$ 的**形式上**的 Fourier 级数，而
+$$
+S_n(f)\triangleq\sum_{k=1}^n c_k \varphi_k
+$$
+称为 $f$ 的 Fourier 级数前 n 项的和
+
+**引理 6.1** 
+
+(1)
+$$
+\left\|f-S_n(f)\right\|_2=\min_\limits{\pmb{\alpha}\in \mathbb{R}^n} \left\|f-\sum_{k=1}^n a_k\varphi_k\right\|_2
+$$
+
+(2) 若数列 $\{c_k\}_{k=1}^\infty$ 满足
+$$
+\sum_{k=1}^\infty c_k^2 < + \infty
+$$
+
+则在 $L_{2,\rho}$ 中存在唯一的函数 $f(t)$ 使 $c_k=\left\langle f,\varphi_k \right\rangle$，且
+$$
+\lim_\limits{n\to \infty}\left\|f-\sum_{k=1}^nc_k\varphi_k\right\|_2\to 0
+$$
+
+> **证明** 
+>
+> (1)
+> $$
+> \begin{aligned}
+> \left\|f-\sum_{k=1}^n a_k\varphi_k\right\|^2
+> &= \|f\|^2-2\sum_{k=1}^na_k\left\langle f,\varphi_k \right\rangle + \sum_{k=1}^n a_k^2\\
+> &= \|f\|^2 - \sum_{k=1}^n c_k^2 + \sum_{k=1}^n(a_k-c_k)^2
+> \end{aligned}
+> $$
+> 当且仅当 $a_k=c_k$ 时取极小值
+>
+> (2)
+>
+> 令
+> $$
+> S_n(t)=\sum_{k=1}^n c_k\varphi_k(t)
+> $$
+> 当 $n$ 充分大且 $m>n$ 时，由 $\varphi_k(t)$ 的规范正交性有
+> $$
+> \|S_m-S_n\|^2=\sum_{k=n+1}^m c_k^2 < \epsilon
+> $$
+> 则 $\{S_n\}$ 是 Cauchy 列，由 $L_{2,\rho}$ 的**完备性**知，存在唯一的 $f\in L_{2,\rho}$ 使得
+> $$
+> \lim_\limits{n\to\infty}\|S_n-f\|_2\to 0
+> $$
+> 又
+> $$
+> \begin{aligned}
+> \left\langle f-S_n,\varphi_k \right\rangle
+> &\le \|f-S_n\|\|\varphi_k\|\\
+> &=\|f-S_n\|
+> \end{aligned}
+> $$
+> 则 $\lim_\limits{n\to\infty} \left\langle f-S_n,\varphi_k \right\rangle = 0$，因而 $\left\langle f,\varphi_k \right\rangle=\lim_\limits{n\to 0}\left\langle S_n,\varphi_k \right\rangle=c_k$ 
+
+内积空间中任意一组线性无关的函数系都可以通过 **Schmidt 正交化** 得到等价的规范正交系
+
+**引理 6.2** 设 $\omega_1(t),\dots,\omega_n(t),\dots$ 是 $L_{2,\rho}[a,b]$ 中一组线性无关函数系（数目有限或可数），再设 $\psi_1(t)=\omega_1$，
+$$
+\psi _ { n } ( t ) = \left| \begin{array} { c c c c } { \left\langle \omega _ { 1 } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { 1 } , \omega _ { n - 1 } \right\rangle } & { \omega _ { 1 } } \\ { \left\langle \omega _ { 2 } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { 2 } , \omega _ { n - 1 } \right\rangle } & { \omega _ { 2 } } \\ { \vdots } & { } & { \vdots } & { \vdots } \\ { \left\langle \omega _ { n } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { n } , \omega _ { n - 1 } \right\rangle } & { \omega _ { n } } \end{array} \right|
+$$
+以及 $\Delta_0\triangleq 1$，$\Delta_m\triangleq G(\omega_1,\dots,\omega_n)\triangleq \det\left(\left\{\left\langle \omega_i,\omega_j \right\rangle\right\}_{i,j=1}^n\right)$，其中 $G$ 称为 $\omega_1,\dots,\omega_n$ 的 Gram 行列式，则
+$$
+\varphi_k(t)=\frac{\psi_k(t)}{\sqrt{\Delta_k\Delta_{k-1}}}\quad(k\ge 1)
+$$
+是一组规范正交系，且
+$$
+\text{span}\{\varphi_i\}_{i=1}^k=\text{span}\{\omega_i\}_{i=1}^k\triangleq M_k\quad (k=1,2,\dots)
+$$
+
+> **证明** 
+>
+> 由 $\psi_n(t)$ 定义，显然有
+> $$
+> \left\langle \psi_n,\omega_k \right\rangle=
+> \left\{\begin{array}{l}
+> \Delta_n & k=n\\
+> 0 & k < n
+> \end{array}\right.
+> $$
+> 因而，当 $k\le n$ 时，
+> $$
+> \begin{aligned}
+> \left\langle \varphi_n,\varphi_k \right\rangle
+> &=\frac{\left\langle \psi_n,\psi_k \right\rangle}{\sqrt{\Delta_n\Delta_{n-1}\Delta_k\Delta_{k-1}}}\\
+> &=\frac{\left\langle \psi_n,\Delta_{k-1}\omega_k+\sum_{i=1}^{k-1}\alpha_i\omega_i \right\rangle}{\sqrt{\Delta_n\Delta_{n-1}\Delta_k\Delta_{k-1}}}\\
+> &=\delta_{kn}
+> \end{aligned}
+> $$
+>
+> > 由 $\psi_k$ 定义知其为 $\omega_1,\dots,\omega_k$ 的线性组合，且 $\omega_k$ 的系数就是 $\Delta_{k-1}$ 
+>
+> 又
+> $$
+> \varphi_{k+1}=\frac{\Delta_k}{\sqrt{\Delta_{k+1}\Delta_k}}\omega_{k+1}+\sum_{i=1}^k\alpha_i\omega_i\in M_{k+1}
+> $$
+> 但 $\varphi_{k+1}\notin M_k$，则 $\text{span}_{i=1}^{k+1}=M_{k+1}$ 
+>
+> > $\omega_1,\dots,\omega_k$ 线性无关 $\Rightarrow$ $\Delta_k\neq 0$ 
+
+**定理 6.3**（Gram 定理）设 $M_n\triangleq \text{span}\{f_i\}_{i=1}^n$ 是内积空间 $H$ 中的 $n$ 维子空间，则 $\forall g\in H$，都有
+$$
+d^2(g,M_n)\triangleq d^2=\frac{G(f_1,\dots,f_n,g)}{G(f_1,\dots,f_n)}
+$$
+
+> **证明** 
+>
+> 记 $f^* = \sum_{i=1}^n\alpha_i f_i = \mathcal{B}_M(g)$，则 $(g-f^*)\perp M_n$，即 $(g-f^*)\perp f_i$，则 $\{\alpha_i\}_{i=1}^n$ 满足方程组
+> $$
+> \sum_{i=1}^n\alpha_i\left\langle f_i,f_j \right\rangle=\left\langle g,f_j \right\rangle\quad(j=1,\dots,n) \tag{1}
+> $$
+> 方程组系数行列式为 $G(f_1,\dots,f_n)$ 
+>
+> 又
+> $$
+> \begin{aligned}
+> d^2
+> &=\left\langle g-f^*,g-f^* \right\rangle\\
+> &=\left\langle g-f^*,g \right\rangle - \left\langle g-f^*,f^* \right\rangle\\
+> &=\left\langle g-f^*,g \right\rangle
+> \end{aligned}
+> $$
+> 则
+> $$
+> \sum_{i=1}^n\alpha_i\left\langle g,f_i \right\rangle+d^2=\left\langle g,g \right\rangle \tag{2}
+> $$
+> (1) 和 (2) 组成 $n+1$ 个未知数 $(\alpha_1,\dots,\alpha_n,d^2)$ 和 $n+1$ 个方程的方程组，系数矩阵为
+> $$
+> \left( \begin{array} { c c c c c } { \left\langle f _ { 1 } , f _ { 1 } \right\rangle } & { \left\langle f _ { 1 } , f _ { 2 } \right\rangle } & { \cdots } & { \left\langle f _ { 1 } , f _ { n } \right\rangle } & { 0 } \\ { \vdots } & { \vdots } & { } & { \vdots } & { \vdots } \\ { \left\langle f _ { n } , f _ { 1 } \right\rangle } & { \left\langle f _ { n } , f _ { 2 } \right\rangle } & { \cdots } & { \left\langle f _ { n } , f _ { n } \right\rangle } & { 0 } \\ { \left\langle g , f _ { 1 } \right\rangle } & { \left\langle g , f _ { 2 } \right\rangle } & { \cdots } & { \left\langle g , f _ { n } \right\rangle } & { 1 } \end{array} \right)
+> $$
+> 行列式为 $G(f_1,\dots,f_n)$，用方程组右端替代系数矩阵最后一列得到 $G(f_1,\dots,f_n,g)$，则根据 Cramer 法则，有
+> $$
+> d^2=\frac{G(f_1,\dots,f_n,g)}{G(f_1,\dots,f_n)}
+> $$
+
+**推论 6.2** 若 $\{f_i\}_{i=1}^n$ 线性无关，则 $G(f_1,\dots,f_n)>0$ 
+
+> **证明** 
+>
+> $G(f_1)=\left\langle f_1,f_1 \right\rangle >0$，又
+> $$
+> d^2(f_2,M_1)=\frac{G(f_1,f_2)}{G(f_1)}>0
+> $$
+> 则 $G(f_1,f_2)>0$，依次类推有 $G(f_1,\dots,f_k)>0\quad(k=3,4,\dots,n)$ 
+
+**推论 6.3** $\forall m < n$，有
+$$
+G(f_1,\dots,f_n)\le G(f_1,\dots,f_m)G(f_{m+1},\dots,f_n)
+$$
+且等号成立的充要条件为
+$$
+\left\langle f_k,f_i \right\rangle=0\quad 
+(k=1,\dots,m;i=m+1,\dots,n)
+$$
+
+> **证明** 
+>
+> 令 $M_{n,k}\triangleq \text{span}\{f_i\}_{i=k+1}^n$，由 $d(f_k,M_{n,k})\le d(f_k,M_{m,k})$ 和 **定理 6.3** 可得
+> $$
+> \frac{G(f_k,\dots,f_n)}{G(f_{k+1},\dots,f_n)}
+> \le \frac{G(f_{k+1},\dots,f_m)}{G(f_{k+1},\dots,f_m)} \quad (k=1,\dots,m-1)
+> $$
+> 即
+> $$
+> \frac{G(f_k,\dots,f_n)}{G(f_k,\dots,f_m)}
+> \le \frac{G(f_{k+1},\dots,f_n)}{G(f_{k+1},\dots,f_m)} \quad (k=1,\dots,m-1)
+> $$
+> 故
+> $$
+> \frac{G(f_1,\dots,f_n)}{G(f_1,\dots,f_m)}\le\frac{G(f_2,\dots,f_n)}{G(f_2,\dots,f_m)}\le\dots\le\frac{G(f_m,\dots,f_n)}{G(f_m)} \tag{1}
+> $$
+> 另外，由 $d(f_m,M_{n,m})\le\|f_m\|$ 知
+> $$
+> d^2(f_m,M_{n,m})\le\frac{G(f_m,\dots,f_n)}{G(f_{m+1},\dots,f_n)}\le G(f_m)=\|f_m\|^2 \tag{2}
+> $$
+> 由 (1) 和 (2) 可得
+> $$
+> G(f_1,\dots,f_n)\le G(f_1,\dots,f_m)G(f_{m+1},\dots,f_n)
+> $$
+> 上式等号成立时，要求 $d(f_m,M_{n,m})=\|f_m\|$ 和 $d(f_k,M_{n,k})= d(f_k,M_{m,k})\quad (k=1,\dots,m-1)$，前者再由 **定理 6.2** 可知 $(f_m-0)\perp M_{n,m}$，即
+> $$
+> \left\langle f_m,f_i \right\rangle = 0 \quad (i=m+1,\dots,n)
+> $$
+> 对 $k=m-1$，有 $d(f_{m-1},M_{n,m-1})=\|f_{m-1}-\alpha f_m\|$，由 **定理 6.2** 知
+> $$
+> (f_{m-1}-\alpha f_m)\perp M_{n,m-1}=\text{span}\{f_m,\dots,f_n\}
+> $$
+> 从而可得 $(f_{m-1}-\alpha f_m)\perp M_{n,m}$，因此 $f_{m-1}\perp M_{n,m}$，此时
+> $$
+> \left\langle f_{m-1},f_i \right\rangle = 0 \quad (i=m+1,\dots,n)
+> $$
+> 以此类推可得
+> $$
+> \left\langle f_k,f_i \right\rangle = 0\quad (k=1,\dots,m-2;i=m+1,\dots,n)
+> $$
+
+由以上推论进一步可知道，对于线性无关组 $\{f_i\}_{i=1}^n$，有
+$$
+G(f_1,\dots,f_n)\le\left\langle f_1,f_1 \right\rangle \dots \left\langle f_n,f_n \right\rangle
+$$
+且等号成立的条件为 $\left\langle f_i,f_k \right\rangle = 0$（$i\neq k$ 且 $i,k=1,\dots,n$）
+
 ## 参考
 
 [^定义 1.4 的推论]: [**01_Introduction.md**](01_Introduction.md). 定义 1.4 的推论.
 [^定理 1.10]: [**01_Introduction.md**](01_Introduction.md). 定理 1.10.
-
 
 
