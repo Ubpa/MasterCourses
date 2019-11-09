@@ -4,7 +4,7 @@
 
 - [1. 图](notes/1_Graph.md) 
 - [2. 树](notes/2_Tree.md) 
-- [3. 平图](notes/3_Tree.md) 
+- [3. 平图](notes/3_Planar.md) 
 
 ## 作业
 
