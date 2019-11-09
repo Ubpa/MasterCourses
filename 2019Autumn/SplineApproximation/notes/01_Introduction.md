@@ -69,8 +69,8 @@ $I$ 是列紧的距离空间
 
 M 常取为 X 的真子空间
 
-- $\mathcal{P}_n$ [TODO]
-- [TODO]
+- $\mathcal{P}_n=\left\{\sum_{i=0}^{n-1} a_i t^{i-1},a_i\in \mathbb{R}\right\}$ 
+- $\overset{\circ}{\mathcal{P}}_n\triangleq\left\{a_0,\sum_{i=1}^n(a_i\cos it+b_i\sin it),a_i,b_i\in\mathbb{R}\right\}$ 
 - $\mathcal{S}(\mathcal{P}_m,[TODO],\Delta)$ [TODO]
 - $R_{m,n}[TODO]$ [TODO]
 
