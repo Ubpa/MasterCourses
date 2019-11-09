@@ -8,6 +8,7 @@
 - [03. 线性插值](notes/03_LinearInterpolation.md) 
 - [04. 多项式的性质和平滑模](notes/04_Polynomial.md) 
 - [05. 最佳逼近的定量理论](notes/05_Quantify.md) 
+- [06. 最小平方逼近](notes/06_MinSquare.md) 
 
 ## 作业
 
