@@ -22,7 +22,7 @@ function varargout = App_Ellipse(varargin)
 
 % Edit the above text to modify the response to help App_Ellipse
 
-% Last Modified by GUIDE v2.5 08-Nov-2019 19:59:40
+% Last Modified by GUIDE v2.5 09-Nov-2019 11:23:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -247,4 +247,3 @@ DrawEllipse(a,b,c,eye(4)*xyR, isCtrl);
 DrawEllipse(a,b,c,yzR*xyR, isCtrl);
 DrawEllipse(a,b,c,xzR*yzR*xyR, isCtrl);
 DrawEllipse(a,b,c,xzR*xyR, isCtrl);
-

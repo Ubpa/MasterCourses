@@ -1,0 +1,251 @@
+\documentclass[CJK]{article}
+\usepackage{CJK}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+
+%
+% font size
+%
+\newcommand{\chuhao}{\fontsize{42pt}{\baselineskip}\selectfont}
+\newcommand{\xiaochu}{\fontsize{36pt}{\baselineskip}\selectfont}
+\newcommand{\yihao}{\fontsize{28pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoyi}{\fontsize{24pt}{\baselineskip}\selectfont}
+\newcommand{\erhao}{\fontsize{21pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoer}{\fontsize{18pt}{\baselineskip}\selectfont}
+\newcommand{\sanhao}{\fontsize{15.75pt}{\baselineskip}\selectfont}
+\newcommand{\xiaosan}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\sihao}{\fontsize{14pt}{1.5\baselineskip}\selectfont}
+\newcommand{\xiaosi}{\fontsize{12pt}{\baselineskip}\selectfont}
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+\newcommand{\xiaowu}{\fontsize{9pt}{\baselineskip}\selectfont}
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}
+\newcommand{\xiaoliu}{\fontsize{6.5pt}{\baselineskip}\selectfont}
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}
+
+\newcommand{\Bezier}{B\'{e}zier}
+%
+
+% page margin
+\usepackage{geometry}
+\geometry{left=3.3cm, right=3.3cm, top=2.5cm, bottom=3.0cm}
+
+\usepackage{color}
+
+% paragraph
+\setlength{\parindent}{0pt}
+\setlength\parskip{\baselineskip}
+\renewcommand{\baselinestretch}{1.5}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+% 标题字号：三号
+\title{\erhao 《计算机辅助几何设计》作业8}
+\author{ID号: 36  \qquad  姓名: 庄涛}  %递交作业时填上ID号和姓名
+\date{2019年11月09日}
+\maketitle
+
+% 目录
+\tableofcontents  %表示目录部分开始
+
+\newpage
+
+\xiaosi
+
+\section{题 1}  %目录的前缀页面都会自动排版不需要手动排版
+\subsection{题目}
+将单位球面用一张双 2 次有理 \Bezier 曲面来表示，并绘制出来
+
+\subsection{解}
+
+控制点为
+$$
+\begin{aligned}
+\left[\begin{matrix}
+\pmb{p}_{11} & \pmb{p}_{21} & \pmb{p}_{31}
+\end{matrix}\right]
+&
+=
+\left[\begin{matrix}
+1 & 1 & 0\\
+0 & 0 & 0\\
+0 & 1 & 2\\
+1 & 1 & 2
+\end{matrix}\right]\\
+\left[\begin{matrix}
+\pmb{p}_{12} & \pmb{p}_{22} & \pmb{p}_{32}
+\end{matrix}\right]
+&=
+\left[\begin{matrix}
+1 & 1 & 0\\
+1 & 1 & 0\\
+0 & 1 & 2\\
+1 & 1 & 2
+\end{matrix}\right]\\
+\left[\begin{matrix}
+\pmb{p}_{13} & \pmb{p}_{23} & \pmb{p}_{33}
+\end{matrix}\right]
+&=
+\left[\begin{matrix}
+0 & 0 & 0\\
+2 & 2 & 0\\
+0 & 2 & 4\\
+2 & 2 & 4
+\end{matrix}\right]\\
+\end{aligned}
+$$
+双二次有理 \Bezier 曲面公式为
+$$
+\pmb{p}^{(hom)}(u,v)=\sum_{i=0}^2\sum_{j=0}^2B^2_i(u)B^2_j(v)\pmb{p}_{ij}
+$$
+投影即可得到欧式空间的球面
+
+这只是 $\frac{1}{8}$ 球面，将所有控制点通过多次镜面反射可得到完整球面
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p1}
+  \caption{题 1 解图}
+\end{figure}
+
+\section{题 2}
+\subsection{题}
+将椭球面 $3x^2+2y^2+z^2=1$ 用一张双 3 次有理 \Bezier 曲面来表示，并绘制出来
+
+\subsection{解}
+
+椭圆的一般方程为
+$$
+\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1
+$$
+对于题设可知 $a=\frac{\sqrt{3}}{3}$，$b=\frac{\sqrt{2}}{2}$，$c=1$
+
+控制点为
+$$
+\begin{aligned}
+\left[\begin{matrix}
+\pmb{p}_{11} & \pmb{p}_{21} & \pmb{p}_{31} & \pmb{p}_{41}
+\end{matrix}\right]
+&= \left[\begin{matrix}
+a & a & \frac{2}{3}a & 0\\
+0 & 0 & 0 & 0\\
+0 & \frac{2}{3}c & \frac{4}{3}c & 2c\\
+1 & 1 & \frac{4}{3} & 2\\
+\end{matrix}\right]\\
+\left[\begin{matrix}
+\pmb{p}_{12} & \pmb{p}_{22} & \pmb{p}_{32}  & \pmb{p}_{42}
+\end{matrix}\right]
+&=
+\left[\begin{matrix}
+a & a & \frac{2}{3}a & 0\\
+\frac{2}{3}b & \frac{2}{3}b & \frac{4}{9}b & 0\\
+0 & \frac{2}{3}c & \frac{4}{3}c & 2c\\
+1 & 1 & \frac{4}{3} & 2\\
+\end{matrix}\right]\\
+\left[\begin{matrix}
+\pmb{p}_{13} & \pmb{p}_{23} & \pmb{p}_{33}  & \pmb{p}_{43}
+\end{matrix}\right]
+&=
+\left[\begin{matrix}
+\frac{2}{3}a & \frac{2}{3}a & \frac{4}{9}a & 0\\
+\frac{4}{3}b & \frac{4}{3}b & \frac{8}{9}b & 0\\
+0 & \frac{8}{9}c & \frac{16}{9}c & \frac{8}{3}c\\
+\frac{4}{3} & \frac{4}{3} & \frac{16}{9} & \frac{8}{3}\\
+\end{matrix}\right]\\
+\left[\begin{matrix}
+\pmb{p}_{14} & \pmb{p}_{24} & \pmb{p}_{34}  & \pmb{p}_{44}
+\end{matrix}\right]
+&=
+\left[\begin{matrix}
+0 & 0 & 0 & 0\\
+2b & 2b & \frac{4}{3}b & 0\\
+0 & \frac{4}{3}c & \frac{8}{3}c & 4c\\
+2 & 2 & \frac{8}{3} & 4\\
+\end{matrix}\right]\\
+\end{aligned}
+$$
+
+双三次有理 \Bezier 曲面公式为
+$$
+\pmb{p}^{(hom)}(u,v)=\sum_{i=0}^3\sum_{j=0}^3B^3_i(u)B^3_j(v)\pmb{p}_{ij}
+$$
+投影即可得到欧式空间的椭球面
+
+这只是 $\frac{1}{8}$ 椭球面，将所有控制点通过多次镜面反射可得到完整椭球面
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{p2}
+  \caption{题 2 解图}
+\end{figure}
+
+\section{题 3}
+\subsection{题}
+某二次 \Bezier 三角形有顶点参数坐标 $a=(0,0)$，$b=(1,0)$，$c=(0.5,1)$ 和以下控制点，
+$$
+\begin{aligned}
+F(a,a)&=\left(\begin{matrix}0\\0\\0\end{matrix}\right),
+F(a,b)&=\left(\begin{matrix}2\\2\\4\end{matrix}\right),
+F(a,c)&=\left(\begin{matrix}4\\-2\\6\end{matrix}\right),\\
+F(b,b)&=\left(\begin{matrix}4\\4\\0\end{matrix}\right),
+F(b,c)&=\left(\begin{matrix}8\\0\\4\end{matrix}\right),
+F(c,c)&=\left(\begin{matrix}6\\-4\\4\end{matrix}\right).
+\end{aligned}
+$$
+问在 $p_1=(0.25,0,5)$，$p_2=(0.3,0.75)$，$p_3=(0.5,0.5)$ 三个参数中，哪个参数在三角形外？对在三角形内的参数，用 De Casteljau 算法计算曲面 $F(p,p)$ 在该参数处的坐标。
+\subsection{解}
+
+$$
+\begin{array}{llll}
+p_1 &=\frac{1}{2}a  &         &+\frac{1}{2}c\\
+p_2 &=\frac{7}{10}a  &-\frac{3}{40}b  &+\frac{3}{8}c\\
+p_3 &=\frac{1}{4}a &+\frac{1}{4}b   &+\frac{1}{2}c\\
+\end{array}
+$$
+
+则 $p_1$ 在三角形边上，$p_2$ 在三角形外，$p_3$ 在三角形内
+
+$$
+\begin{aligned}
+F(a,p_3)
+&=F\left(a,\frac{1}{4}a+\frac{1}{4}b+\frac{1}{2}c\right)\\
+&=\frac{1}{4}F(a,a)+\frac{1}{4}F(a,b)+\frac{1}{2}F(a,c)\\
+&=
+\left[\begin{matrix}
+\frac{5}{2}\\
+-\frac{1}{2}\\
+4
+\end{matrix}\right]\\
+F(b,p_3)
+&=F\left(b,\frac{1}{4}a+\frac{1}{4}b+\frac{1}{2}c\right)\\
+&=\frac{1}{4}F(a,b)+\frac{1}{4}F(b,b)+\frac{1}{2}F(b,c)\\
+&=
+\left[\begin{matrix}
+\frac{11}{2}\\
+\frac{3}{2}\\
+3
+\end{matrix}\right]\\
+F(c,p_3)
+&=F\left(c,\frac{1}{4}a+\frac{1}{4}b+\frac{1}{2}c\right)\\
+&=\frac{1}{4}F(a,c)+\frac{1}{4}F(b,c)+\frac{1}{2}F(c,c)\\
+&=
+\left[\begin{matrix}
+6\\
+-\frac{5}{2}\\
+\frac{9}{2}
+\end{matrix}\right]\\
+F(p_3,p_3)&=F\left(\frac{1}{4}a+\frac{1}{4}b+\frac{1}{2}c,p_3\right)\\
+&=\frac{1}{4}F(a,p_3)+\frac{1}{4}F(b,p_3)+\frac{1}{2}F(c,p_3)\\
+&=\left[\begin{matrix}
+5\\
+-1\\
+4
+\end{matrix}\right]
+\end{aligned}
+$$
+
+
+\end{CJK*}
+\end{document}
