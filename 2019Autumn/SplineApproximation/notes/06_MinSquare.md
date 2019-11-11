@@ -6,7 +6,7 @@ $$
 $$
 一般可把 $\cdot_2$ 忽略，写成 $\|f\|$ 
 
-其中 $\rho(t)>0$ 是权函数
+其中 $\rho(t)>0$ 是**权函数**（如果没提权函数是什么，就默认 $\rho(t)=1$）
 
 > 典型内积空间有
 > $$
@@ -362,6 +362,184 @@ $$
 G(f_1,\dots,f_n)\le\left\langle f_1,f_1 \right\rangle \dots \left\langle f_n,f_n \right\rangle
 $$
 且等号成立的条件为 $\left\langle f_i,f_k \right\rangle = 0$（$i\neq k$ 且 $i,k=1,\dots,n$）
+
+## 6.3 正交多项式的性质
+
+多项式组 $\{t_i\}_{i=0}^\infty$ 经 Schmidt 正交化可得到规范正交多项式系 $\{\varphi_i(t)\}_{i=0}^\infty$，其中 $\varphi_0=\psi_0=1$，
+$$
+\varphi_k(t)=\frac{\psi_k(t)}{\sqrt{\Delta_k\Delta_{k-1}}}
+$$
+是 $k$ 次多项式
+
+**定理 6.4** $\sqrt{\Delta_k/\Delta_{k-1}}\varphi_k(t)$ 是首项系数为 $1$ 的 $k$ 次多项式，它使积分
+$$
+\left\langle p,p \right\rangle = \int_a^b \rho(t)p^2(t)\mathrm{d}t
+$$
+
+在所有首项系数为 $1$ 的 $k$ 次多项式中达到极小
+
+> **证明** 
+>
+> $\psi_k(t)$ 首项系数为 $\Delta_{k-1}$，则易得 $\phi_k(t)$ 首项系数为 $1$ 
+>
+> 首项系数为 1 的 $k$ 次多项式 $p(t)$ 可表示为
+> $$
+> p(t)=\sqrt{\frac{\Delta_k}{\Delta_{k-1}}}\varphi_k(t) + \sum_{j=0}^{k-1}\alpha_j\varphi_j
+> $$
+> 由 $\{\varphi_i(t)\}_{i=0}^\infty$ 的正交性可得
+> $$
+> \left\langle p,p \right\rangle = \frac{\Delta_k}{\Delta_{k-1}} + \sum_{j=0}^{k-1}\alpha_j^2
+> $$
+> 此时 $\left\langle p,p \right\rangle$ 达到极小的充要条件为 $\alpha_i=0$，即
+> $$
+> p(t)=\sqrt{\frac{\Delta_k}{\Delta_{k-1}}}\varphi_k(t)
+> $$
+
+**定理 6.5** 设 $\{p_n(t)\}_{n=0}^\infty$ 是区间 $[a,b]$ 上关于权 $\rho(t)$ 的正交多项式系，$\deg(p_n(t))=n$，又设 $f\in C[a,b]$，且 $\left\langle f,p_i \right\rangle = 0\quad(i=0,\dots,n-1)$，则 $f$ 在 $(a,b)$ 中至少变号 $n$ 次或者恒等于 $0$。
+
+> **证明** 
+>
+> 由 $\left\langle f,p_0 \right\rangle = 0$ 可得
+> $$
+> \int_a^b\rho(t)f(t)\mathrm{d}t = 0
+> $$
+> 则 $f$ 恒等于 $0$ 或者至少在 $[a,b]$ 中变号一次。假设 $f$ 在$(a,b)$ 上变号次数 $k<n$，记变号点为 $r_1<\dots<r_k$，构造多项式 $p(t)=\prod_\limits{i=1}^k(t-r_i)$，则
+> $$
+> \int_a^b \rho(t)f(t)p(t)\mathrm{d} t\neq 0
+> $$
+> 但 $\deg(p(t))<n$，与 $\left\langle f,p_i \right\rangle=0\quad(i=0,\dots,n-1)$ 矛盾
+
+**推论 6.4** 设 $\{\varphi_n(t)\}_{n=0}^\infty$ 是 $[a,b]$ 上关于权 $\rho(t)$ 正交的多项式函数系，则 $\varphi_n(t)$ 的零点全部是单重的，且都在 $(a,b)$ 中
+
+**推论 6.5** 设 $\{\varphi_n(t)\}_{n=0}^\infty$ 是 $[a,b]$ 上关于权 $\rho(t)$ 正交的多项式函数系，记 $M_n\triangleq\text{span}\{\varphi_i\}_{i=0}^n$，$\varphi(t)=\sum_{i=0}^n c_i\varphi_i(t)$ 从 $M_n$ 对连续函数 $f$ 的最小平方逼近，则 $\varphi$ 在 $[a,b]$ 中至少 $n+1$ 个点上插值与 $f$ 
+
+> 由 定理 6.2 知 $(f-\varphi)\perp M\triangleq \text{span}\{\varphi_i\}_{i=0}^n$ 
+>
+> 由定理 6.5 可知 $f-\varphi$ 在 $(a,b)$ 中至少变号 $n+1$ 次，即 $\varphi$ 至少 $n+1$ 个点上插值与 $f$ 
+
+**定理 6.6** (1) 和 (2) 等价
+
+(1) $\{p_n(t)\}_{n=0}^\infty$ 是首相系数为 1 的正交多项式系，如
+$$
+\left\{ p _ { n } ( t ) = \sqrt { \frac { \Delta _ { n } } { \Delta _ { n - 1 } } \varphi _ { n } ( t ) } \right\} _ { n = 0 } ^ { \infty }
+$$
+(2) 递推关系
+$$
+\begin{array} { l } { p _ { n } ( t ) = \left( t - a _ { n } \right) p _ { n - 1 } ( t ) - b _ { n } p _ { n - 2 } ( t ) } \\ { p _ { 0 } = 1 , \quad p _ { 1 } = t - a _ { 1 } } \end{array}
+$$
+其中
+$$
+a _ { n } = \frac { \left\langle t p _ { n - 1 } , p _ { n - 1 } \right\rangle } { \left\langle p _ { n - 1 } , p _ { n - 1 } \right\rangle } , \quad b _ { n } = \frac { \left\langle t p _ { n - 1 } , p _ { n - 2 } \right\rangle } { \left\langle p _ { n - 2 } , p _ { n - 2 } \right\rangle }
+$$
+在实际中当我们需要计算正交多项式系时，采用的就是 **定理 6.6** 中的三项递推关系式，而不是用定义式
+$$
+p_n(t)=\sqrt{\frac{\Delta_n}{\Delta_{n-1}}}\varphi_n(t)
+$$
+**定理 6.7** 设 $\{p_n(t)\}_{n=0}^\infty$ 是首项系数为 1 的区间 $[a,b]$ 上的正交多项式系，则 $p_n(t)$ 和 $p_{n-1}(t)$ 的零点必互相交错。
+
+> 若设 $p_n$ 在 $[a,b]$ 上的 $n$ 个不同零点 $\lambda_{n,i}$ 满足
+> $$
+> a<\lambda_{n,1}<\dots<\lambda_{n,n}<b
+> $$
+> 则
+> $$
+> \lambda_{n-1.i-1}<\lambda_{n,i}<\lambda_{n-1,i}\quad(i=1,2,\dots,n)
+> $$
+> 其中 $\lambda_{n-1,0}\triangleq a$，$\lambda_{n-1,n}\triangleq b$ 
+
+人们常常希望用函数 $f$ 在 $n$ 个点的值的线性组合来逼近积分，即
+$$
+\int_a^b f(t) \mathrm{d}t \approx \sum_{k=1}^n A_k f(t_k)
+$$
+其中 $\{t_i\}_{i=1}^n$ 是 $[a,b]$ 中的点。Lagrange 插值多项式
+$$
+L(t) = \sum_{k=1}^n f(t_k)l_k(t)
+$$
+则
+$$
+\int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t \approx \sum _ { k = 1 } ^ { n } f \left( t _ { k } \right) \int _ { a } ^ { b } l _ { k } ( t ) \rho ( t ) \mathrm { d } t \triangleq \sum _ { k = 1 } ^ { n } A _ { k } \cdot f \left( t _ { k } \right)
+$$
+其中 $\{A_k\}$ 仅与 $\{t_k\}$ 和 $\rho(t)$ 有关，与 $f(t)$ 无关。当 $f$ 为小于 $n$ 次的多项式时，近似公式为等式。
+
+Guass 发现当 $\{t_i\}_{i=1}^n$ 设置巧妙时，上述近似积分对所有次数小于 $2n$ 的多项式都准确
+
+**定理 6.8** 设积分公式
+$$
+\int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t \approx  \sum _ { k = 1 } ^ { n } A _ { k } f \left( t _ { k } \right)
+$$
+对所有次数小于 $n$ 次的多项式准确，则该积分公式对所有次数小于 $2n$ 次的多项式 $f$ 准确的充要条件是 $\{t_i\}_{i=1}^n$ 是 $p _ { n } ( t ) = \sqrt{\frac{\Delta_n}{\Delta_{n-1}}} \varphi _ { n } ( t )$ 的零点
+
+> **证明** 
+>
+> - 充分性
+>
+>   $f$ 可表示为 $f=p_nQ+R$，其中 $Q$ 和 $R$ 都是次数小于 $n$ 的多项式，则
+>   $$
+>   \begin{aligned}
+>   \int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t
+>   & = \int _ { a } ^ { b } p _ { n } ( t ) Q ( t ) \rho ( t ) \mathrm { d } t + \int _ { a } ^ { b } R \rho ( t ) \mathrm { d } t \\
+>   & = \int _ { a } ^ { b } R \rho ( t ) \mathrm { d } t = \sum _ { k = 1 } ^ { n } A _ { k } R \left( t _ { k } \right) = \sum _ { k = 1 } ^ { n } A _ { k } f \left( t _ { k } \right) \end{aligned}
+>   $$
+>
+>   > $\int _ { a } ^ { b } p _ { n } ( t ) Q ( t ) \rho ( t ) \mathrm { d } t$ 为 0 是因为 $\left\langle p_n,p_i \right\rangle = 0\quad(i=0,\dots,n-1)$ 
+>
+> - 必要性
+>
+>   构造
+>   $$
+>   f(t)=p_k(t)\prod_{i=1}^n(t-t_i)
+>   $$
+>   其中 $k<n$，$f(t)$ 为 $k+n(<2n)$ 次多项式，且 $f(t_j)=0\quad(t_j=t_1,\dots,t_n)$ 
+>
+>   由题设知积分公式准确，即
+>   $$
+>   \int_a^b f(t)\rho(t)\mathrm{d}t=\sum_{k=1}^nA_kf(t_k)=0
+>   $$
+>   此时
+>   $$
+>   \int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t = \int _ { a } ^ { b } p _ { k } ( t ) \prod _ { i = 1 } ^ { n } \left( t - t _ { i } \right) \rho ( t ) \mathrm { d } t = 0
+>   $$
+>   即 $\prod _ { i = 1 } ^ { n } \left( t - t _ { i } \right)$ 与 $p_k\ (k=0,\dots,n01)$ 都是首项系数为 1 的正交多项式，则
+>   $$
+>   p_n=\prod _ { i = 1 } ^ { n } \left( t - t _ { i } \right)
+>   $$
+>   即 $\{t_i\}_{i=1}^n$ 是 $p_n$ 的零点
+
+**定理 6.9**（Stieltjes 定理）设 $f\in C[a,b]$，则对 Gauss 型积分公式
+$$
+\int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t \approx  \sum _ { k = 1 } ^ { n } A _ { nk } f \left( t _ { nk } \right)
+$$
+有
+$$
+\lim _ { n \rightarrow \infty } \sum _ { k = 1 } ^ { n } A _ { n k } f \left( t _ { n k } \right) = \int _ { a } ^ { b } f ( t ) \rho ( t ) \mathrm { d } t
+$$
+
+> **证明** 
+>
+> 先证 $A_{nk}>0$ 
+>
+> $p_n(t)$ 的零点为 $t_{nk}\ (k=1,\dots,n)$，故可令
+> $$
+> Q(t)\triangleq \frac{p_n(t)}{t-t_{nk}}
+> $$
+> 则 $Q^2(t)$ 的次数小于 $2n$，且 $Q^2(t_{ni})=0\ (i\neq k)$则
+> $$
+> 0 < \int _ { a } ^ { b } Q ^ { 2 } ( t ) \rho ( t ) \mathrm { d } t = \sum _ { i = 1 } ^ { n } A _ { n i } Q ^ { 2 } \left( t _ { n i } \right) = A _ { n k } \cdot Q ^ { 2 } \left( t _ { n k } \right)
+> $$
+> 即 $A_{nk}>0$ 
+>
+> 又 $f=I$ 时积分公式准确，即
+> $$
+> \int _ { a } ^ { b } \rho ( t ) \mathrm { d } t =  \sum _ { k = 1 } ^ { n } A _ { nk }
+> $$
+> 即 $\sum _ { k = 1 } ^ { n } A _ { nk }$ 与 $n$ 无关
+>
+> $\forall \epsilon >0$，$\exist p\in \mathcal{P}$，使得 $\|f-p\|_\infty<\epsilon /c$，其中 $c=2\int_a^b\rho(t)\mathrm{d}t$ 
+>
+> 故对充分大的 $n$，有
+> $$
+> \begin{aligned} \left| \int _ { a } ^ { b } f \cdot \rho ( t ) \mathrm { d } t - \sum _ { k = 1 } ^ { n } A _ { n k } f \left( t _ { n k } \right) \right| & = | \int f \rho ( t ) \mathrm { d } t - \int p \rho ( t ) \mathrm { d } t \\ & + \sum _ { k = 1 } ^ { n } A _ { n k } p \left( t _ { n k } \right) - \sum _ { k = 1 } ^ { n } A _ { n k } f \left( t _ { n k } \right) | \\ & \leqslant \int | f - p | \rho \mathrm { d } t + \sum _ { k = 1 } ^ { n } A _ { n k } \left| p \left( t _ { n k } \right) - f \left( t _ { n k } \right) \right| \\ & \leqslant \frac { \varepsilon } { c } \left( \int \rho \mathrm { d } t + \sum _ { k = 1 } ^ { n } A _ { n k } \right) = \varepsilon \end{aligned}
+> $$
 
 ## 参考
 
