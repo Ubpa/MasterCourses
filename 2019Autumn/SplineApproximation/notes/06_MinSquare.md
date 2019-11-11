@@ -541,6 +541,85 @@ $$
 > \begin{aligned} \left| \int _ { a } ^ { b } f \cdot \rho ( t ) \mathrm { d } t - \sum _ { k = 1 } ^ { n } A _ { n k } f \left( t _ { n k } \right) \right| & = | \int f \rho ( t ) \mathrm { d } t - \int p \rho ( t ) \mathrm { d } t \\ & + \sum _ { k = 1 } ^ { n } A _ { n k } p \left( t _ { n k } \right) - \sum _ { k = 1 } ^ { n } A _ { n k } f \left( t _ { n k } \right) | \\ & \leqslant \int | f - p | \rho \mathrm { d } t + \sum _ { k = 1 } ^ { n } A _ { n k } \left| p \left( t _ { n k } \right) - f \left( t _ { n k } \right) \right| \\ & \leqslant \frac { \varepsilon } { c } \left( \int \rho \mathrm { d } t + \sum _ { k = 1 } ^ { n } A _ { n k } \right) = \varepsilon \end{aligned}
 > $$
 
+## 6.4 正交展开的收敛性
+
+设 $\{\varphi_n\}_{n=0}^\infty$ 是 $[a,b]$ 上标准正交多项式，$\deg \varphi_n = n$，定义
+$$
+S_nf\triangleq\sum_{k=0}^n\left\langle f,\varphi_k \right\rangle\varphi_k
+$$
+已知 $\forall f \in L_{2,\rho}[a,b]$ 有
+$$
+\lim_\limits{n\to\infty}\|S_nf-f\|_2=0
+$$
+但 $\exist f$ 使得
+$$
+\lim_\limits{n\to\infty}\|S_nf-f\|_\infty\neq 0
+$$
+本节考虑一致逼近时 $f$ 需要满足的条件
+$$
+\lim_\limits{n\to\infty}\|S_nf-f\|_\infty = 0
+$$
+将 $S_nf$ 表示为积分算子的形式
+$$
+\begin{aligned} S _ { n } f ( t ) & = \sum _ { i = 0 } ^ { n } \left\langle f , \varphi _ { i } \right\rangle \varphi _ { i } = \int _ { a } ^ { b } f ( s ) \sum _ { i = 0 } ^ { n } \varphi _ { i } ( s ) \varphi _ { i } ( t ) \rho ( s ) \mathrm { d } s \\ & = \int _ { a } ^ { b } f ( s ) K _ { n } ( s , t ) \rho ( s ) \mathrm { d } s \end{aligned}
+$$
+其中
+$$
+K _ { n } ( s , t ) = \sum _ { i = 0 } ^ { n } \varphi _ { i } ( s ) \varphi _ { i } ( t )
+$$
+称为规范正交系的核
+
+设 $\varphi_n(t)$ 中 $t^n$ 的系数为 $\lambda_n^{-1}$，则 $p_n(t)=\lambda_n\varphi_n(t)$ 是首项系数为 1 的正交多项式系
+
+**定理 6.10**（Christoffe-Darboux 定理）
+$$
+\sum _ { i = 0 } ^ { n } \varphi _ { i } ( s ) \varphi _ { i } ( t ) = \lambda _ { n + 1 } \lambda _ { n } ^ { - 1 } \frac { \varphi _ { n + 1 } ( t ) \varphi _ { n } ( s ) - \varphi _ { n } ( t ) \varphi _ { n + 1 } ( s ) } { t - s }
+$$
+
+> **证明** 
+>
+> 证明过程运用运用 **定理 6.6** 的三项递推公式，较为繁琐，详见课本 P138
+
+**定理 6.11** 设 $t_0\in[a,b]$，若 $\varphi_n(t_0)$ 对 $n$ 一致有界，又设 $f\in C[a,b]$ 且在 $t_0$ 处满足 Lipschitz 条件，即 $|f(t)-f(t_0)|<\alpha|t-t_0|$，则
+$$
+f(t_0)=\sum_{n=0}^\infty\left\langle f,\varphi_n \right\rangle\varphi_n(t_0)
+$$
+
+> **证明** 
+>
+> 首先证明 $\lambda_n\lambda_{n-1}^{-1}$ 一致有界，则
+> $$
+> \begin{aligned} \lambda _ { n } ^ { 2 } & = \left\langle p _ { n } , p _ { n } \right\rangle = \left\langle p _ { n } , t p _ { n - 1 } \right\rangle \leqslant C \left\langle \left| p _ { n } \right| , \left| p _ { n - 1 } \right| \right\rangle \\ & \leqslant C \left\langle \left| p _ { n } \right| , \left| p _ { n } \right| \right\rangle ^ { 1 / 2 } \left\langle \left| p _ { n - 1 } \right| , \left| p _ { n - 1 } \right| \right\rangle ^ { 1 / 2 } \\ & \leqslant C \left\| p _ { n } \right\| \cdot \left\| p _ { n - 1 } \right\| = C \lambda _ { n } \lambda _ { n - 1 } \end{aligned}
+> $$
+> 则 $\lambda_n\lambda_{n-1}^{-1}\le C$ 一致有界
+>
+> 令
+> $$
+> \begin{aligned} \varepsilon _ { n } & = f \left( t _ { 0 } \right) - \left( S _ { n } f \right) \left( t _ { 0 } \right) = \int _ { a } ^ { b } \left( f \left( t _ { 0 } \right) - f ( t ) \right) \sum _ { i = 0 } ^ { n } \varphi _ { i } \left( t _ { 0 } \right) \varphi _ { i } ( t ) \rho ( t ) \mathrm { d } t \\ & = \lambda _ { n + 1 } \lambda _ { n } ^ { - 1 } \int _ { a } ^ { b } \frac { f \left( t _ { 0 } \right) - f ( t ) } { t _ { 0 } - t } \left( \varphi _ { n + 1 } \left( t _ { 0 } \right) \varphi _ { n } ( t ) - \varphi _ { n + 1 } ( t ) \varphi _ { n } \left( t _ { 0 } \right) \right) \rho ( t ) \mathrm { d } t \end{aligned}
+> $$
+> 记
+> $$
+> h(t)=\frac{f(t_0)-f(t)}{t_0-t}
+> $$
+> 由 Lipschitz 条件知 $|h(t)|\le \alpha$，又 $\lambda_{n+1}\lambda_n^{-1}\le C$，$|\varphi_n(t_0)|$ 一致有界且 $\lim_\limits{n\to\infty}\left\langle |h|,\varphi_n \right\rangle=0$，因此 $\lim_\limits{n\to\infty}\epsilon_n=0$ 
+>
+> > 证明下 $\lim_\limits{n\to\infty}\left\langle |h|,\varphi_n \right\rangle=0$，这也是习题 2
+> >
+> > 从引理 6.1(1) 的证明可知
+> > $$
+> > \sum_{n=0}^\infty\left\langle |h|,\varphi_n \right\rangle^2\le \| |h| \|^2 = \| h \|^2 < +\infty
+> > $$
+> > 则
+> > $$
+> > \lim_{n\to\infty}\left\langle |h|,\varphi_n \right\rangle = 0
+> > $$
+
+**推论 6.6** 设 $f\in C[-1,1]$，且 $f$ 满足 Lipschitz 条件，即 $|f(t_1)-f(t_2)|\le\alpha|t_1-t_2|$，则
+$$
+f=\sum_{i=0}^\infty\left\langle f,T_i \right\rangle T_i(t)
+$$
+即 $\lim_\limits{n\to\infty}\|f-S_nf\|_\infty = 0$ 
+
 ## 参考
 
 [^定义 1.4 的推论]: [**01_Introduction.md**](01_Introduction.md). 定义 1.4 的推论.
