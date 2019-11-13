@@ -140,3 +140,87 @@ $$
 
 **推论 4.1**（整数最大流最小截定理）任何整容量网络中都存在整数最大流而且其流量等于最小截容量
 
+## 4.2 Menger 定理
+
+设 $x$ 和 $y$ 是图 $D$ 中两不同顶点，$P_i$ 和 $P_j$ 是 $D$ 中两条 $(x,y)$ 路，若 $V(P_i)\cap V(P_j)=\{x,y\}$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**内部点不交**的(internally vertex-disjoint) $(x,y)$ 路；若 $E(P_i)\cap E(P_j)=\empty$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**边不交**的 (edge disjoint) $(x,y)$ 路
+
+用 $\zeta_D(x,y)$ 和 $\eta_D(x,y)$ 分别表示 $D$ 中内部点不交和边不交的 $(x,y)$ 路的最大条数
+
+### 4.2.1 边形式
+
+具有最小边数的 $(x,y)$ 截边集称为最小 $(x,y)$ 截边集 minimum cut-edge set。用 $\lambda_D(x,y)$ 表示最小 $(x,y)$ 截边集中的边数，称为 $D$ 的**局部边连通度** local edge-connectivity
+
+由定义，有
+$$
+\eta_D(x,y)\le\lambda_D(x,y)
+$$
+事实上，上式等号成立
+
+**定理 4.2.1**（Menger 定理（边形式））设 $x$ 和 $y$ 是 $D$ 中不同两顶点，则
+$$
+\eta_D(x,y)=\lambda_D(x,y)
+$$
+
+> **证明** 
+>
+> 定义 $\pmb{c}\in \mathcal{E}(D)$ 
+> $$
+> \pmb{c}(a)=1,\forall a \in E(D)
+> $$
+> 考虑整容量网络 $N=(D_{xy},\pmb{c})$ 
+>
+> 由 **推论 4.1** 知，$N$ 中存在整数最大 $(x,y)$ 流 $\pmb{f}$ 和最小 $(x,y)$ 截边集 $B=(S,\overline{S})$，使得
+> $$
+> \text{val}\pmb{f}=\text{cap}B
+> $$
+> 只需证明
+> $$
+> \eta_D(x,y)\ge \text{val}\pmb{f}=\text{cap}B\ge\lambda_D(x,y)
+> $$
+> 显然 $\text{cap}B\ge \lambda_D(x,y)$ 成立
+>
+> 令 $H$ 是 $\pmb{f}$ 的支撑图 $D_{\pmb{f}}$ 
+>
+> 断言 $H$ 包含 $\text{val}\pmb{f}$ 条边不交的 $(x,y)$ 路，即 $\eta_D(x,y)\ge \text{val}\pmb{f}$ 
+>
+> 定理得证
+
+**推论 4.2.1.1** 设 $x$ 和 $y$ 是无向图 $G$ 中任意两顶点，则 $\eta_G(x,y)=\lambda_G(x,y)$ 
+
+**推论 4.2.1.2**（L. Lovasz）$D$ 是 Euler 图 $\Leftrightarrow$ $D$ 连通，并且
+$$
+\eta_D(x,y)=\eta_D(y,x),\quad \forall x,y\in V(D)
+$$
+
+### 4.2.2 点形式
+
+设 $D$ 是有向图，$x$ 和 $y$ 是 $D$ 中不同两顶点，若存在 $S\subseteq V(D)\backslash \{x,y\}$ 使 $D-S$ 中不存在 $(x,y)$ 路，则称为 $D$ 中 $(x,y)$ **分离集** separating set
+
+具有最小顶点数目的 $(x,y)$ 分离集称为最小 $(x,y)$ 分离集。用 $\kappa_D(x,y)$ 表示 $D$ 中最小 $(x,y)$ 分离集中的顶点数目，称为 $D$ 的**局部点连通度** (local vertex-connectivity)
+
+对于有向图，$(x,y)$ 分离集不一定是 $(y,x)$ 分离集；对于无向图，$(x,y)$ 分离集一定是 $(y,x)$ 分离集，故写成 $xy$ 分离集。
+
+由定义，有
+$$
+\zeta_D(x,y)\le \kappa_D(x,y)
+$$
+事实上，上式等号成立
+
+**顶点分裂运算** spilt of a vertex：设 $u\in V(D)$，分裂 $u$ 为 $u^\prime$ 和 $u^{\prime\prime}$，添加新边 $(u^\prime,u^{\prime\prime})$，并把 $D$ 中以 $u$ 为起点的边用以 $u^{\prime\prime}$ 为起点的新边来代替；把 $D$ 中以 $u$ 为终点的边用以 $u^\prime$ 为终点的新边来代替，$d^+(u^\prime)=1$，$d^-(u^{\prime\prime})=1$ 
+
+> 示例
+>
+> ![image-20191113140605576](assets/image-20191113140605576.jpg)
+>
+> 顶点 $u$ 的分裂运算
+
+**定理 4.2.2**（Menger 定理）设 $x$ 和 $y$ 是 $D$ 中不同两顶点，且 $E_D(x,y)=\empty$，则
+$$
+\zeta_D(x,y)=\kappa_D(x,y)
+$$
+**推论 4.2.2** 设 $x$ 和 $y$ 是 $G$ 中不相邻两顶点，则
+$$
+\zeta_G(x,y) = \kappa_G(x,y)
+$$
+
+
