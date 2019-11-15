@@ -223,4 +223,109 @@ $$
 \zeta_G(x,y) = \kappa_G(x,y)
 $$
 
+## 4.3 连通度
+
+设 $D$ 是强连通图，非空集 $S\subset V(D)$，若 $D-S$ 是非强连通的，则称 $S$ 为 $D$ 的**分离集** separating set
+
+若 $D$ 中不含支撑子图 $K_n^*$，则 $D$ 必有分离集
+
+> 这样 $d(D)\ge 2$，取 $x,y\in V(D)$ 使得 $d_D(x,y)=d(D)$，则 $V(D)\backslash \{x,y\}$，就是 $D$ 的一个分离集（分离了 $x$ 和 $y$）
+>
+> > 感觉不太准确，应该是不含子图 $K_n^*$ 
+
+定义 $D$ 的**强连通度**（strong connectivity）
+$$
+\kappa(D)=\left\{\begin{array}{ll}
+0, & D 不是强连通\\
+n-1, & D 含支撑子图 K_n^*\\
+\text{min}\{|S| : S 是 D 的分离集\}, &\text{other}
+\end{array}\right.
+$$
+
+> 强连通度就是最小分离集的大小
+
+若 $\kappa(D)\ge k$，则称 $D$ 为强 $k$ 连通图
+
+> 这里竟然只是 $\ge$
+>
+> $K_n^*$ 是强 $n-1$ 连通图
+>
+> 有向圈是强 $1$ 连通图
+
+点数为 $\kappa=\kappa(D)$ 的分离集称为 $\kappa$ 分离集
+
+$\kappa(D)$ 还可写为
+$$
+\kappa(D)=\left\{\begin{array}{ll}
+n-1,&D含 K_n^*\\
+\min\{\kappa(x,y):\forall x,y\in V(D),E_D(x,y)=\empty\},&\text{other}
+\end{array}\right.
+$$
+设 $D$ 是强连通图，非空集 $B\subseteq E(D)$。若 $D-B$ 是非强连通的，则称 $B$ 为**截边集** cut-edge set
+
+非平凡强连通图必含截边集
+
+> 与 2.1 节定义的边割集 edge-cut set 不同
+
+定义 $D$ 的**强边连通度** strong edge-connectivity
+$$
+\lambda(D)=\left\{\begin{array}{ll}
+0,&n=1\ \text{or}\ D非强连通\\
+\min\{|B|:B是D的截边集\},&\text{other}
+\end{array}\right.
+$$
+若 $\lambda(D)\ge k$，则称 $D$ 为 $k$ 强边连通图
+
+> $K_n^*$ 是 $(n-1)$ 强边连通图
+>
+> 有向圈是 $1$ 强边连通图
+
+边数为 $\lambda=\lambda(D)$ 的截边集称为 $\lambda$ 截边集
+
+$\lambda(D)$ 可表示为
+$$
+\lambda(D)=\min\{\lambda_D(x,y):\forall x,y\in V(D)\}
+$$
+设 $G$ 是无向图，$D$ 是 $G$ 的对称有向图，有
+
+- $S$ 是 $G$ 的分离集 $\Leftrightarrow$ $S$ 是 $D$ 的分离集
+- $B=[S,\overline{S}]$ 是 $G$ 的截边集 $\Leftrightarrow$ $(S,\overline{S})$ 是 $D$ 的截边集
+
+因此 $\kappa(G)=\kappa(D),\lambda(G)=\lambda(D)$ 
+
+任何三个正整数 $\kappa,\lambda,\delta\ (\kappa\le\lambda\le\delta)$，均存在无向图 $G$ 使 $\kappa(G)=\kappa,\lambda(G)=\lambda,\delta(G)=\delta$ 
+
+令 $\delta(D)=\min\{\delta^+(D),\delta^-(D)\}$ 
+
+**定理 4.3.1**（Whitney 不等式）
+$$
+\kappa(D)\le \lambda(D)\le \delta(D)
+$$
+**推论 4.3.1.1** 对无向图 $G$ 有，$\kappa(G)\le\lambda(G)\le \delta(G)$ 
+
+**推论 4.3.1.2** 对任何简单平面图 $G$ 均有 $\kappa(G)\le \lambda(G)\le 5$ 
+
+**Proposition 3.1** 设 $D$ 是强连通简单图，$D$ 的直径 $d(D)\le 2$，则 $\lambda(D)=\delta(D)$ 
+
+**Proposition 3.2** 设 $G$ 是简单无向图，$V(G)=\{x_1,\dots,x_n\}$，$d_i=d_G(x_i)$ 且 $d_1\le \dots \le d_n$，$n\ge 2$，$1\le k\le n-1$，若存在 $i\le \lfloor\frac{1}{2}(n-k+1)\rfloor$，有
+$$
+d_i\le k+i-2 \Rightarrow d_{n-k+1}\ge n-i
+$$
+则 $\kappa(G)\ge k$ 
+
+**定理 4.3.2** 设 $k\ge 1$，并且设 $D$ 是 $n(\ge k+1)$ 阶有向图，则
+
+(i) $\kappa(D)\ge k \Leftrightarrow \zeta_D(x,y)\ge k,\forall x,y\in V(D)$ 
+
+(ii) $\lambda(D)\ge k \Leftrightarrow \eta_D(x,y)\ge k,\forall x,y \in V(D)$ 
+
+> 这个定理说明了局部（边）连通度与全局（边）连通度之间的关系
+
+**推论 4.3.2** 设 $D$ 是强连通有向图，则
+
+(i) $\kappa ( D ) \geqslant k \Rightarrow \left\{ \begin{array} { l l } { \kappa ( D - x ) \geqslant k - 1 , } & { \forall x \in V ( D ) } \\ { \kappa ( D - a ) \geqslant k - 1 , } & { \forall a \in E ( D ) } \end{array} \right.$ 
+
+(ii) $\lambda ( D ) \geqslant k \Rightarrow \lambda ( D - a ) \geqslant k - 1 , \quad \forall a \in E ( D )$ 
+
+> 这个推论说明了删点/边对强（边）连通度的影响
 
