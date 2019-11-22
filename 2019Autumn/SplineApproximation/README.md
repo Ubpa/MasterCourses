@@ -10,6 +10,7 @@
 - [05. 最佳逼近的定量理论](notes/05_Quantify.md) 
 - [06. 最小平方逼近](notes/06_MinSquare.md) 
 - [08. 多项式样条的基本空间](notes/08_PolynomialSpline.md) 
+- [09. B 样条及其性质](notes/09_BSpline.md) 
 
 ## 作业
 
@@ -18,8 +19,5 @@
 - [2.md](homeworks/2.md) 
 - 3：[3_0.md](homeworks/3_0.md)，[3_1.md](homeworks/3_1.md) 
 - 4：[4_0.md](homeworks/4_0.md)，[4_1.md](homeworks/4_1.md) 
-
-
-
 
 
