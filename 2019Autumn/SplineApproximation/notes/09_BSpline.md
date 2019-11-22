@@ -70,7 +70,7 @@ $$
 > $$
 > 
 
-**推论 9.2** $[t_1,\dots,t_{r+1}]f$ 是定义在所有光滑函数上的线性泛函，而且如果函数 $f$ 和 $g$ 在 $\{t_i\}_{i=1}^{r+1}$ 上满足 $D^{j-1}f(\tau_i)=D^{j-1}g(\tau_i)\ (i=1,\dots,d;j=1,\dots,l_i)$，则 $[t_1,\dots,t_{r+1}]f=[t_1,\dots,t_{r+1}]g$ 
+**推论 9.2** $[t_1,\dots,t_{r+1}]f$ 是定义在所有光滑函数上的**线性泛函**，而且如果函数 $f$ 和 $g$ 在 $\{t_i\}_{i=1}^{r+1}$ 上满足 $D^{j-1}f(\tau_i)=D^{j-1}g(\tau_i)\ (i=1,\dots,d;j=1,\dots,l_i)$，则 $[t_1,\dots,t_{r+1}]f=[t_1,\dots,t_{r+1}]g$ 
 
 **推论 9.3** 下述性质成立
 
@@ -168,4 +168,222 @@ $$
 (3) $|\Delta_h^rf(t)|\le 2^r\|f\|_\infty$ 
 
 (4) $\Delta_h^rf(t)=\int_0^h\dots\int_0^h D^rf(t+s_1+\dots+s_r)\mathrm{d}s_1\dots\mathrm{d}s_r$ 
+
+## 09.2 B 样条的定义及其性质
+
+### 09.2.1 B 样条的定义
+
+**定义 9.2** 设 $\{y_i\}_{i=-\infty}^{+\infty}$ 是一不减的实数序列。对给定的整数 $i$ 和 $m>0$ 以及所有的实数 $x$，
+$$
+Q _ { i } ^ { m } ( x ) \triangleq \left\{ \begin{array} { l l } { ( - 1 ) ^ { m } \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 1 } } & { y _ { i } < y _ { i + m } } \\ { 0 } & { y _ { i } = y _ { i + m } } \end{array} \right.
+$$
+称为 $m$ 阶的、节点为 $y_i,y_{i+1},\dots,y_{i+m}$ 的 **B 样条** 
+
+> B 样条 $Q_i^m(x)$ 是一个具有局部支集 $[y_i,y_{i+m}$) 的函数
+
+若
+$$
+y_i\le \dots\le y_{i+m}=
+\overbrace{\tau_1,\dots,\tau_1}^{m_1} 
+< \dots<\overbrace{\tau_d,\dots,\tau_d}^{m_d},\quad \sum_{i=1}^d m_i=m+1
+$$
+则 $Q_i^m(x)$ 是 $m$ 阶的、节点为 $\tau_1,\dots,\tau_d$，重度向量为 $(m_1,\dots,m_d)$ 的样条函数
+
+> $Q_i^m(x)$ 是多项式样条组成的函数
+
+当 $m=1$ 时，由定义可得
+$$
+Q_i^1(x)=\left\{\begin{array}{ll}
+\frac{1}{y_{i+1}-y_i},&y_i\le x < y_{i+1},\\
+0,&\text{other}.
+\end{array}\right.
+$$
+**定理 9.9** 
+
+(1) 设 $y_i<y_{i+1}=\cdots=y_{i+m}$，则
+$$
+Q_i^m(x)=\left\{\begin{array}{ll}
+\frac{(x-y_i)^{m-1}}{(y_{i+m}-y_i)^m},&y_i\le x < y_{i+m},\\
+0,&\text{other}.
+\end{array}\right.
+$$
+(2) 若 $y_i=\dots=y_{i+m-1}<y_{i+m}$，则
+$$
+Q_i^m(x)=\left\{\begin{array}{ll}
+\frac{(y_{i+m}-x)^{m-1}}{(y_{i+m}-y_i)^m},&y_i\le x < y_{i+m},\\
+0,&\text{other}.
+\end{array}\right.
+$$
+
+### 09.2.2 B 样条的性质
+
+**性质 1** B 样条函数满足如下递推关系：设 $m\ge 2$，$y_i<y_{i+m}$，则对所有的 $x\in \mathbb{R}$，都有
+$$
+Q_i^m(x)=\frac{(x-y_i)Q_i^{m-1}(x)+(y_{i+m}-x)Q_{i+1}^{m-1}(x)}{y_{i+m}-y_i}
+$$
+**性质 2** 设 $y_i<y_{i+m}$，$m>1$，$D_+$ 为右导数算子，则
+$$
+D_+Q_i^m(x)=(m-1)\frac{Q_i^{m-1}(x)-Q_{i+1}^{m-1}(x)}{y_{i+m}-y_i}
+$$
+**性质 3** 设 $y_i<y_{i+m}$，则：
+
+(1)
+$$
+\left\{\begin{array}{ll}
+Q_i^m(x)>0&y_i<x<y_{i+m}\\
+Q_i^m(x)=0&\text{other}
+\end{array}\right.
+$$
+(2) 在区间 $(y_i,y_{i+m})$ 的端点，
+$$
+\begin{array}{ll}
+(-1)^{k+m-\alpha_i}D_+^kQ_i^m(y_i)=0 & k=0,\dots,m-1-\alpha_i\\
+(-1)^{k+m-\alpha_i}D_+^kQ_i^m(y_i)>0 & k=m-\alpha_i,\dots,m-1
+\end{array}
+$$
+且
+$$
+\begin{array}{ll}
+(-1)^{m-\beta_{i+m}}D_-^kQ_i^m(y_{i+m})=0 & k=0,\dots,m-1-\beta_{i+m}\\
+(-1)^{m-\beta_{i+m}}D_-^kQ_i^m(y_{i+m})>0 & k=m-\beta_{i+m},\dots,m-1
+\end{array}
+$$
+其中
+$$
+\begin{aligned}
+\alpha_i&\triangleq\max\{j:y_i=\dots=y_{i+j-1}\}\\
+\beta_{i+m}&\triangleq\max\{j:y_{i+m}=\dots=y_{i+m-j+1}\}\\
+\end{aligned}
+$$
+**性质 4** 
+
+(1) 设 $y_l<y_{l+1}$，则在区间 $I_l\triangleq[y_l,y_{l+1}]$ 上，
+$$
+\mathcal{P}_m=\text{span}\{Q_i^m(x)\}_{i=l+1-m}^l
+$$
+(2) 如果 $l<r$，$y_{r-1}<y_r$，则 $\{Q_i^m(x)\}_{i=l-m+1}^{r-1}$ 在 $[y_l,y_r)$ 上是线性无关的
+
+定义
+$$
+N_i^m(x)\triangleq(y_{i+m}-y_i)Q_i^m(x)
+$$
+并称 $N_i^m(x)$ 为 $m$ 阶的、节点为 $y_i,\dots,y_{i+m}$ 的**规范 B 样条**，显然 $m=1$ 时，
+$$
+N_i^1(m)=\left\{\begin{array}{ll}
+1, &y_i\le x < y_{i+1},\\
+0, &\text{other}
+\end{array}\right.
+$$
+**性质 5** 规范 B 样条形成单位分解，即对任意 $x\in[y_j,y_{j+1})$，都有
+$$
+\sum_{i=j+1-m}^j N_i^m(x)=1
+$$
+**性质 6**（Marsden 恒等式）设 $l\le r$，$y_l< y_{r+1}$，则对任意 $y\in \mathbb{R}$，都有
+
+(1)
+$$
+(y-x)^{m-1}=\sum_{i=l+1-m}^r\varphi_{i,m}(y)N_i^m(x)\quad(y_l\le x< y_{r+1})
+$$
+其中
+$$
+\varphi_{i,m}(y)=\prod_{\nu=1}^{m-1}(y-y_{i+\nu}),\quad \varphi_{i,1}(y)\triangleq 1
+$$
+(2) 特别地，对于 $j=1,\dots,m$ 
+$$
+x^{j-1}=\sum_{i=l+1-m}^r\xi_i^{(j)}N_i^m(x)\quad(y_l\le x<y_{r+1})
+$$
+其中
+$$
+\xi _ { i } ^ { ( j ) } \triangleq ( - 1 ) ^ { j - 1 } \frac { ( j - 1 ) ! } { ( m - 1 ) ! } D ^ { m - j } \varphi _ { i , m } ( 0 ) \quad ( l + 1 - m \leqslant i \leqslant r )
+$$
+定义对称函数 $\text{symm}_j(t_1,\dots,t_p)$：
+$$
+\varphi(t)=\prod_{i=1}^p(t-t_i)=\sum_{j=0}^pt^{p-j}(-1)^j\text{symm}_j(t_1,\dots,t_p)
+$$
+由定义易得
+$$
+\begin{aligned}
+\text{symm}_0(t_1,\dots,t_p)&=1\\
+\text{symm}_1(t_1,\dots,t_p)&=\sum_{i=1}^p t_i\\
+\text{symm}_p(t_1,\dots,t_p)&=\prod_{i=1}^p t_i\\
+\end{aligned}
+$$
+定义式两边在 $t=0$ 处取 $p-j$ 次导数，得
+$$
+\text{symm}_j(t_1,\dots,t_p)=(-1)^j\frac{D^{p-j}\varphi(0)}{(p-j)!}
+$$
+故
+$$
+\xi_i^{(j)}=\frac{\text{symm}_{j-1}(y_{i+1},\dots,y_{i+m-1})}{C_{m-1}^{j-1}}
+$$
+对性质 6 (2) 取 $j=2$ 得
+$$
+x = \sum _ { i = l + 1 - m } ^ { r } \frac { y _ { i + 1 } + y _ { i + 2 } + \cdots + y _ { i + m - 1 } } { m - 1 } N _ { i } ^ { m } ( x )
+$$
+**性质 7** 
+
+(1)（差商的 Peano 表示）
+$$
+\left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] f = \int _ { y _ { i } } ^ { y _ { i + m } } \frac { ( - 1 ) ^ { j } D _ { + } ^ { j } Q _ { i } ^ { m } ( x ) D ^ { m - j } f ( x ) } { ( m - 1 ) ! } \mathrm { d } x
+$$
+(2)（矩量）
+$$
+\int_{y_i}^{y_{i+m}}(-1)^jD^j_+Q_i^m(x)\cdot x^\nu\mathrm{d}x=
+\left\{\begin{array}{ll}
+0,&\nu=0,\dots,j-1\\
+\frac{\nu!(m-1)!}{(m+\nu-j)!}\rho_{\nu-j}(y_i,\dots,y_{i+m}),&\nu=j,\dots
+\end{array}\right.
+$$
+特别地，
+$$
+\begin{aligned}
+\int _ { y _ { i } } ^ { y _ { i + m } } Q _ { i } ^ { m } ( x ) \mathrm { d } x &= \frac { 1 } { m } \\
+\int _ { y _ { i } } ^ { y _ { i + m } } x Q _ { i } ^ { m } ( x ) \mathrm { d } x &= \frac { y _ { i } + y _ { i + 1 } + \cdots + y _ { i + m } } { m ( m + 1 ) }
+\end{aligned}
+$$
+
+> 第一个取 $j=0,\nu=0$；第二个取 $j=0,\nu=1$ 
+
+性质 7 (1) 取 $j=0$ 得
+$$
+\left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] f = \int _ { y _ { i } } ^ { y _ { i + m } } \frac { Q _ { i } ^ { m } ( x ) D ^ { m } f ( x ) } { ( m - 1 ) ! } \mathrm { d } x
+\triangleq \int _ { y _ { i } } ^ { y _ { i + m } } K(x) D ^ { m }f ( x )\mathrm { d } x
+$$
+其中 $K(x)=\frac { Q _ { i } ^ { m } ( x )   } { ( m - 1 ) ! }=\frac{1}{(m-1)!}[y_i,\dots,y_{i+m}](\cdot-x)_+^{m-1}$ 
+
+记差商算子 $[y_i,\dots,y_{i+1}]$ 为 $L$，则
+$$
+L(f)=\int_{y_i}^{y_{i+m}}K(x)D^mf(x)\mathrm{d}x
+$$
+其中 $K(x)=\frac{1}{(m-1)!}L((\cdot-x)_+^{m-1})$ 
+
+**定理 9.10** 设 $f$ 为光滑函数，线性泛函 $L$ 为
+$$
+L ( f ) \triangleq \int _ { a } ^ { b } \sum _ { i = 0 } ^ { m - 1 } a _ { i } ( x ) f ^ { ( i ) } ( x ) \mathrm { d } x + \sum _ { i = 1 } ^ { n } \sum _ { j = 0 } ^ { m - 1 } b _ { i j } f ^ { ( j ) } \left( x _ { i } \right)
+$$
+且对任意 $p\in \mathcal{P}_m$，都有 $L(p)=0$，则
+$$
+L(f)=\int_{a}^{b}K(x)D^mf(x)\mathrm{d}x
+$$
+其中
+$$
+K(y)=\frac{1}{(m-1)!}L_x[(x-y)^{m-1}_+]
+$$
+**推论 9.5** 如果核 $K(y)$ 在 $[a,b]$ 上不改变符号，则对任意 $f\in C^m[a,b]$，都有
+$$
+L(f)=\frac{f^{(m)}(\xi)}{m!}L(x^m)\quad(a\le \xi \le b)
+$$
+**性质 8** B 样条的内积：设 $y_i<y_{i+m}$，$y_j<y_{j+n}$，则
+$$
+\int_{-\infty}^{+\infty}Q_i^m(x)Q_j^n(x)\mathrm{d}(x)=\frac{(-1)^m(m-1)!(n-1)!}{(m+n-1)!}[y_i,\dots,y_{i+m}]_x[y_j,\dots,y_{j+n}]_y(y-x)^{m+n-1}_+
+$$
+**性质 9** B 样条对节点的连续性依赖：设 $y_i\le \dots\le y_{i+m}=\overbrace{\tau_1,\dots,\tau_d}^{l_1},\dots,\overbrace{\tau_d,\dots,\tau_d}^{l_d}\ (\sum_{i=1}^d l_i=m+1)$，$y_i<y_{i+m}$，$y_i^{(\nu)}\le \dots\le y_{i+m}^{(\nu)}$ 是点的序列，且当 $\nu\to\infty$ 时，$y_j^{(\nu)}\to y_j$。又设 $Q_i^m(x)$，$Q_{i,\nu}^m(x)$ 是分别与节点 $\{y_j\}_{j=i}^{i+m}$，$\{y_j^{(\nu)}\}_{j=i}^{i+m}$ 相联系的 B 样条，则对 $k=0,\dots,m-1$，有
+$$
+D _ { + } ^ { k } Q _ { i , \nu } ^ { m } ( x ) \rightarrow D _ { + } ^ { k } Q _ { i } ^ { m } ( x ) \quad \left( \nu \rightarrow \infty , x \in \mathbb { R } \backslash J _ { i } ^ { k } \right)
+$$
+其中
+$$
+J_i^k\triangleq\{\tau_j:l_j\ge m-k\}
+$$
+且收敛在不包含 $J_i^k$ 的任何闭集上是一致的
 
