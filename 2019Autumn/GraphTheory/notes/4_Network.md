@@ -329,3 +329,67 @@ $$
 
 > 这个推论说明了删点/边对强（边）连通度的影响
 
+## 4.4 运输方案的设计-容量网络最大流算法
+
+设 $\pmb{f}\in \mathcal{E}(D)$ 是 $N=(D_{xy},\pmb{c})$ 中的 $(x,y)$ 流，$u$ 是 $D$ 中顶点，$u\neq x$。并设 $P$ 是 $D$ 中连接 $x$ 和 $u$ 的路（不一定是有向路）
+
+给定 $P$ 从 $x$ 到 $u$ 的方向为正向，用 $P^+$ 和 $P^-$ 分别表示 $E(P)$ 中与 $P$ 的正向和反向一致的边集。令
+$$
+\sigma(a)=\left\{\begin{array}{ll}
+\pmb{c}(a)-\pmb{f}(a),&a\in P^+\\
+\pmb{f}(a),&a\in P^-
+\end{array}\right.
+$$
+
+并令
+$$
+\sigma_P(u)=\min\{\sigma(a):a\in E(P)\}
+$$
+若 $\sigma_P(u)=0$，则称 $P$ 是 $\pmb{f}$ 饱和路 saturated path
+
+若 $\sigma_P(u)>0$，则称 $P$ 是 $\pmb{f}$ 非饱和路 unsaturated path
+
+$\pmb{f}$ 非饱和的 $(x,y)$ 路 $P$ 称为 $\pmb{f}$ 增广路 incrementing path，之所以称为增广路，是因为流 $\pmb{f}$ 的流量沿此路是可以增加的。事实上，由
+$$
+\tilde{\pmb{f}}(a)=\left\{\begin{array}{ll}
+\pmb{f}(a)+\sigma_P(y),&a\in P^+\\
+\pmb{f}(a)-\sigma_P(y),&a\in P^-\\
+\pmb{f}(a),&\text{other}
+\end{array}\right.
+$$
+所定义的 $\widetilde{\pmb{f}}\in \mathcal{E}(D)$ 是 $N$ 中的 $(x,y)$ 流并且 $\text{val}\widetilde{\pmb{f}}=\text{val}\pmb{f}+\sigma_P(y)$，流 $\widetilde{\pmb{f}}$ 称为基于 $\pmb{f}$ 增广路 $P$ 的修正流 revised flow
+
+> 示例
+>
+> ![image-20191123153959718](assets/image-20191123153959718.jpg)
+
+**定理 4.4.1** $N=(D_{xy},\pmb{c})$ 中的 $(x,y)$ 流 $\pmb{f}$ 是最大的 $\Leftrightarrow$ $N$ 中不含 $\pmb{f}$ 增广路
+
+定理 4.4.1 提供了求整容量网络中最大流最小截的有效算法，称为**标号法** labelling method
+
+标号法的基本思想是从 $N$ 中任何一个已知 $(x,y)$ 流 $\pmb{f}$（例如零流）开始，递归地构作出一个其流量不断增加的流序列，并且终止于最大流。在每个新的流 $\pmb{f}$ 作出之后，如果存在 $\pmb{f}$ 的增广路 $P$，则作出基于 $P$ 的修正流 $\widetilde{\pmb{f}}$，然后将 $\widetilde{\pmb{f}}$ 作为初始流重新执行算法。如果不存在 $\pmb{f}$ 增广路，则算法停止。由定理 4.4.1 知 $\pmb{f}$ 是最大流。
+
+**标号法** 
+
+1.任取 $N$ 中一个 $(x,y)$ 流 $\pmb{f}$（例如零流），并给 $x$ 以标号 $(-,\infty)$，并令 $L=\{x\}$ 
+
+2.删去 $L$ 中最前面元素 $u$（“**先进先出**”原则，保证第 4 步的 $(x,y)$ 增广路是 $D$ 中**最短路**）
+
+> (1) 若存在未被标号顶点 $z$，使得
+>
+> > (i) $a=(u,z)\in E(D)$，并且 $\pmb{f}(a)<\pmb{c}(a)$，则给 $z$ 以标号 $(u^+,\sigma(z))$；**或** 
+> >
+> > (ii) $a=(z,u)\in E(D)$，并且 $\pmb{f}(a)>0$，则给 $z$ 以标号 $(u^-,\sigma(z))$ 
+> >
+> > 其中 $\sigma(z)=\sigma_P(z)$，$P$ 为 $D$ 中 $\pmb{f}$ 非饱和的 $xz$ 路，将 $z$ 列入 $L$ 的后面
+>
+> (2) 若不存在这样的 $z$ 使得 (i)，(ii) 成立且 $L=\empty$，则停止。$\pmb{f}$ 是最大流
+
+3.若 $y$ 被标号，则进入第 $4$ 步；若 $y$ 未被标号，则转入第 2 步
+
+4.已被标号的顶点构成 $D$ 中一条 $\pmb{f}$ 增广路 $P$。构造基于流 $\pmb{f}$ 的增广路 $P$ 的修正流 $\widetilde{\pmb{f}}$。除掉所有标号并以 $\widetilde{\pmb{f}}$ 替代 $\pmb{f}$ 转入第 1 步
+
+**定理 4.4.2** 设 $N$ 是整容量网络，并设 $\pmb{f}$ 和 $S$ 分别是标号法终止时得到的 $(x,y)$ 流和已标号的顶点集，则 $\pmb{f}$ 是最大 $(x,y)$ 流，$(S,\overline{S})$ 是最小容量的 $(x,y)$ 截边集
+
+当 $\pmb{c}\equiv 1$ 时，标号法求出的最大流 $\pmb{f}$ 满足 $\lambda_D(x,y)=\text{val}\pmb{f}$。换言之，标号法为求图的强边连通度提供了一个有效算法
+
