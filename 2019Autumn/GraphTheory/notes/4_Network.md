@@ -393,3 +393,97 @@ $$
 
 当 $\pmb{c}\equiv 1$ 时，标号法求出的最大流 $\pmb{f}$ 满足 $\lambda_D(x,y)=\text{val}\pmb{f}$。换言之，标号法为求图的强边连通度提供了一个有效算法
 
+## *4.5 最优运输方案的设计-最小费用最大流算法
+
+4.4 节只考虑了流量，没有考虑费用，我们要设计一个**输送量最大**且总的**运输费用最小**的运输方案。这样的运输方案称为**最优运输方案**。
+
+用一个被称为费用容量网络 $N=(D_{xy},\pmb{b},\pmb{c})$ 表示该交通系统，其中 $\pmb{b}\in \mathcal{E}(D)$ 表示单位流量费用函数，$\pmb{c}\in \mathcal{E}(D)$ 是容量函数
+
+设 $\pmb{f}$ 是 $N$ 中 $(x,y)$ 流，则
+$$
+\pmb{b}(\pmb{f})=\sum_{a\in E(D)}\pmb{f}(a)\pmb{b}(a)
+$$
+定义为 $\pmb{f}$ 的费用 cost
+
+若对 $N$ 中其流量等于 $\text{val}\pmb{f}$ 的任何一个 $(x,y)$ 流 $\pmb{f}^\prime$ 均有
+$$
+\pmb{b}(\pmb{f})\le \pmb{b}(\pmb{f}^\prime)
+$$
+则称 $\pmb{f}$ 为**最小费用流** 
+
+最优运输方案的设计就是在费用容量网络 $N=(D_{xy},\pmb{b},\pmb{c})$ 中求最大 $(x,y)$ 流 $\pmb{f}$ 且使费用 $\pmb{b}(\pmb{f})$ 最小。这样的流称为最小费用最大流 minimum cost maximum flow。
+
+设 $N=(D_{xy},\pmb{b},\pmb{c})$ 为费用容量网络，$\pmb{f}$ 是 $N$ 中 $(x,y)$ 流。$C$ 是 $D$ 中有指定正向的圈。令
+$$
+\begin{aligned}
+\sigma_{\pmb{f}}(a)&=\left\{\begin{array}{ll}
+\pmb{c}(a)-\pmb{f}(a),&a\in C^+\\
+\pmb{f}(a),&a\in C^-
+\end{array}\right.\\
+\sigma_{\pmb{f}}(C)&=\min\{\sigma_{\pmb{f}}(a):a\in E(C)\}
+\end{aligned}
+$$
+若 $D$ 中的圈 $C$ 存在定向使 $\sigma_{\pmb{f}}(C)>0$，则称 $C$ 为 $\pmb{f}$ 增广圈 increment cycle
+
+对于 $\pmb{f}$ 增广圈 $C$ 和任意 $\sigma(0<\sigma\le \sigma_{\pmb{f}})$，我们可以定义
+$$
+\widetilde{\pmb{f}}_\sigma(a)=\left\{\begin{array}{ll}
+\pmb{f}(a)+\sigma,&a\in C^+\\
+\pmb{f}(a)-\sigma,&a\in C^-\\
+\pmb{f}(a),&\text{other}
+\end{array}\right.
+$$
+容易验证，$\widetilde{\pmb{f}}_\sigma$ 是 $N$ 中 $(x,y)$ 流，而且 $\text{val}\widetilde{\pmb{f}}=\text{val}\pmb{f}$ 
+
+$\widetilde{\pmb{f}}_\sigma$ 称为基于 $\pmb{f}$ 增广圈 $C$ 关于 $\sigma$ 的修正流 revised flow
+
+设 $C$ 是 $\pmb{f}$ 的增广圈，则定义增广圈 $C$ 的费用为
+$$
+\pmb{b}(C,\pmb{f})=\sum_{a\in C^+}\pmb{b}(a)-\sum_{a\in C^-}\pmb{b}(a)
+$$
+为寻找其费用为负的 $\pmb{f}$ 增广圈，可以通过辅助图 $D(\pmb{f})$ 来实现
+
+设 $a\in E(D)$，用 $\overset{\leftarrow}{a}$ 表示改变 $a$ 的方向后而得到的新边
+
+定义加权图 $(D(\pmb{f}),\pmb{w})$ 如下：$V(D(\pmb{f}))=V(D)$，设 $a\in E(D)$ 
+
+- 若 $\pmb{f}(a)< \pmb{c}(a)$，则 $a\in E(D(\pmb{f}))$ 且 $\pmb{w}(a)=\pmb{b}(a)$ 
+- 若 $\pmb{f}(a)>0$，则 $\overset{\leftarrow}{a}\in E(D(\pmb{f}))$，且 $\pmb{w}(\overset{\leftarrow}{a})=-\pmb{b}(a)$ 
+
+设 $C$ 是 $D$ 中 $\pmb{f}$ 增广圈，则对任何 $a\in E(C^+)$，均有 $\pmb{f}(a)<\pmb{c}(a)$，则 $a\in E(D(\pmb{f}))$；对任何 $a\in E(C^-)$，均有 $\pmb{f}(a)>0$，因而 $\overset{\leftarrow}{a}\in E(D(\pmb{f}))$，故用 $\overset{\leftarrow}{a}$ 代替 $a$，从而的得到 $D(\pmb{f})$ 中和 $C$ 对应的有向圈，记为 $\overset{\leftarrow}{C}$ 
+
+$C$ 是 $\pmb{f}$ 增广圈当且仅当 $\overset{\leftarrow}{C}$ 是 $D(\pmb{f})$ 中有向圈，且
+$$
+\pmb{b}(C,\pmb{f})=\pmb{w}(\overset{\leftarrow}{C})
+$$
+于是，寻找 $D$ 中费用小于 $0$ 的 $\pmb{f}$ 增广圈就等价于在 $D(\pmb{f})$ 中寻找负权和的有向圈，称为**负圈** 
+
+**定理 4.5.1**（最小费用流判定定理）$N=(D_{xy},\pmb{b},\pmb{c})$ 中 $(x,y)$ 流 $\pmb{f}$ 是最小费用流 $\Leftrightarrow$ 每条 $\pmb{f}$ 增广圈 $C$ 都有 $\pmb{b}(C,\pmb{f})\ge0$ $\Leftrightarrow$ $D(\pmb{f})$ 中不含负圈
+
+**Klein 算法** 
+
+从 $N$ 中任何一个 $(x,y)$ 最大流 $\pmb{f}$ 出发，检查每个 $\pmb{f}$ 增广圈。若所有 $\pmb{f}$ 增广圈的费用都是非负的，则 $\pmb{f}$ 就是所求的最小费用最大流。若存在 $\pmb{f}$ 增广圈 $C$ 使得 $\pmb{b}(C,\pmb{f})<0$，则用修正流 $\widetilde{\pmb{f}}$ 替代 $\pmb{f}$ 再重复上述过程。
+
+1. 求 $N$ 中最大 $(x,y)$ 流 $\pmb{f}$ 
+2. 构造 $D(\pmb{f})$ 
+3. 求 $D(\pmb{f})$ 中的负圈
+
+> - 若无负圈，则停止，此时 $\pmb{f}$ 是最小费用最大流
+> - 若 $D(\pmb{f})$ 含负圈 $\overset{\leftarrow}{C}$，则 $C^+\cup C^-$ 是 $\pmb{f}$ 增广圈（其正向与 $\overset{\leftarrow}{C}$ 的方向一致），作修正流 $\widetilde{\pmb{f}}$，并用 $\widetilde{\pmb{f}}$ 代替 $\pmb{f}$ 转入第 1 步
+
+---
+
+> 示例
+>
+> ![image-20191123225615746](assets/image-20191123225615746.jpg)
+>
+> (a) $N=(D_{xy},\pmb{b},\pmb{c})$ 
+>
+> (b) 粗边的 $C$ 是 $\pmb{f}$ 增广圈，满足 $\pmb{b}(C,\pmb{f})<0$ 
+>
+> (c) 修正流 $\widetilde{\pmb{f}}$ 
+>
+> (d) 辅助图 $D(\pmb{f})$，含负圈
+>
+> (e) 辅助图 $D(\widetilde{\pmb{f}})$，不含负圈
+
