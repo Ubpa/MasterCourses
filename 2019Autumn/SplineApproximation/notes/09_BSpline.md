@@ -22,13 +22,86 @@ f^\prime(t_1),&t_1=t_2.
 \end{aligned}
 $$
 
+> 差商是一个线性泛函，如果跟之前的**点泛函**联系起来，其实不需要第一条公式
+
 ---
 
 存在唯一的 $r$ 次多项式 $p_r(x)$ 在点 $\{t_i\}_{i=1}^{r+1}$ 插值于函数 $f$，即满足
 $$
 D^{j-1}p_r(\tau_i)=D^{j-1}f(\tau_i)\quad(i=1,\dots,d;j=1,\dots,l_i)
 $$
-**定理 9.1** $[t_1,\dots,t_{r+1}]f$ 即为点 $\{t_i\}_{i=1}^{r+1}$ 插值于函数 $f$ 的 $r$ 次多项式 $p_r(x)$ 的 $x^r$ 项系数
+> 插值条件
+
+**定理 9.1** $[t_1,\dots,t_{r+1}]f$ 即为在点 $\{t_i\}_{i=1}^{r+1}$ 插值于函数 $f$ 的 $r$ 次多项式 $p_r(x)$ 的 $x^r$ 项系数
+
+> **证明** 
+>
+> （数学归纳法）
+>
+> - 当 $r=1$ 时
+>
+> > - 若 $t_1<t_2$ 
+> >
+> > > $$
+> > > p_1(x)=\frac{f(t_2)-f(t_1)}{t_2-t_1}(x-t_1)+f(t_1)
+> > > $$
+> > >
+> > > 一次项系数为
+> > > $$
+> > > \frac{f(t_2)-f(t_1)}{t_2-t_1}=[t_1,t_2]f
+> > > $$
+> >
+> > - 若 $t_1=t_2$ 
+> >
+> > > $$
+> > > p_1(x)=f^\prime(t_1)(x-t_1)+f(t_1)
+> > > $$
+> > >
+> > > 一次项系数为
+> > > $$
+> > > f^\prime(t_1)=[t_1,t_2]f
+> > > $$
+> > >
+> >
+> > 综合以上两点知 $r=1$ 时定理成立
+>
+> - 设次数为 $r$ 时定理成立，即在 $t_1,\dots,t_r$ 插值于 $f$ 的 $r-1$ 次多项式 $p_{r-1}(x)$ 的 $x^{r-1}$ 项系数为 $[t_1,\dots,t_r]f$；在 $t_2,\dots,t_{r+1}$ 插值于 $f$ 的 $r-1$ 次多项式 $q_{r-1}(x)$ 的 $x^{r-1}$ 项系数为 $[t_2,\dots,t_{r+1}]f$ 
+>
+> > - 当 $t_1< t_{r+1}$ 时
+> >
+> > > $$
+> > > p_r(x)=\frac{(x-t_1)q_{r-1}(x)+(t_{r+1}-x)p_{r-1}(x)}{t_{r+1}-t_1}
+> > > $$
+> > >
+> > > 为 $r$ 次的 $x^r$ 系数为
+> > > $$
+> > > \frac{[t_2,\dots,t_{r+1}]f-[t_1,\dots,t_r]f}{t_{r+1}-t_1}=[t_1,\dots,t_{r+1}]f
+> > > $$
+> > > 的多项式，且由于
+> > > $$
+> > > \begin{aligned}
+> > > &D^{j-1}p_r(\tau_i)\\
+> > > =&\frac{1}{t_{r+1}-t_1}\Big((j-1)D^{j-2}q_{r-1}(\tau_i)+(\tau_i-t_1)D^{j-1}q_{r-1}(\tau_i)\\
+> > > &+(t_{r+1}-\tau_i)D^{j-1}p_{r-1}(\tau_i)-(j-1)D^{j-2}p_{r-1}(\tau_i)\Big)\\
+> > > =&D^{j-1}f(\tau_i)\quad(i=1,\dots,d;j=1,\dots,l_i)
+> > > \end{aligned}
+> > > $$
+> > > 故 $p_r(x)$ 在 $\{t_i\}_{i=1}^{r+1}$ 上插值于函数 $f$ 
+> >
+> > - 当 $t_1=t_{r+1}$ 时
+> >
+> > > $$
+> > > p_r(x)=p_{r-1}(x)+\frac{f^{(r)}(t_1)}{r!}(x-t_1)^r
+> > > $$
+> > >
+> > > 的 $x^r$ 项系数为
+> > > $$
+> > > \frac{f^{(r)}(t_1)}{r!}=[t_1,\dots,t_{r+1}]f
+> > > $$
+> >
+> > 综合以上两点知次数为 $r+1$ 时定理也成立
+>
+> 综上，由归纳法知定理成立
 
 ---
 
@@ -61,16 +134,41 @@ $$
 >
 > 插值多项式 $p_r(x)=\sum_{i=0}^r c_i x^i$，插值条件对应方程组的矩阵形式为
 > $$
-> M \left( \begin{array} { l l l } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { m } } \\ { u _ { 1 } , } & { u _ { 2 } , } & { \cdots , } & { u _ { m } } \end{array} \right)
+> M \left( \begin{array} { l l l } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r+1 } } \\ { 1 , } & { x , } & { \cdots , } & { x ^r } \end{array} \right)
 > \left(\begin{matrix}
 > c_0\\c_1\\\vdots\\c_r
 > \end{matrix}\right)=\left(\begin{matrix}
 > f(\tau_1)\\\vdots\\D^{l_1-1}f(\tau_1)\\\vdots\\f(\tau_d)\\\vdots\\D^{l_d-1}f(\tau_d)
 > \end{matrix}\right)
 > $$
-> 
+>
+> 由 Cramer 法则得
+> $$
+> [t_1,\dots,t_{r+1}]f=c_r=\frac{
+> D\left( \begin{array} { l l l }
+> { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r }, }  & { t _ { r + 1 } }\\
+> { 1 , } & { x , } & { \cdots , } & { x ^r, } & { f }
+> \end{array} \right)
+> }
+> {
+> D \left( \begin{array} { l l l } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r+1 } } \\ { 1 , } & { x , } & { \cdots , } & { x ^r } \end{array} \right)
+> }
+> $$
 
 **推论 9.2** $[t_1,\dots,t_{r+1}]f$ 是定义在所有光滑函数上的**线性泛函**，而且如果函数 $f$ 和 $g$ 在 $\{t_i\}_{i=1}^{r+1}$ 上满足 $D^{j-1}f(\tau_i)=D^{j-1}g(\tau_i)\ (i=1,\dots,d;j=1,\dots,l_i)$，则 $[t_1,\dots,t_{r+1}]f=[t_1,\dots,t_{r+1}]g$ 
+
+> **证明** 
+>
+> $p_r$ 是在 $\{t_i\}_{i=1}^{r+1}$ 上的插值于函数 $f$ 的 $r$ 次多项式
+>
+> $q_r$ 是在 $\{t_i\}_{i=1}^{r+1}$ 上的插值于函数 $g$ 的 $r$ 次多项式
+>
+> 则 $\forall \alpha,\beta\in \mathbb{R}$，$\alpha p_r+\beta q_r$ 是在 $\{t_i\}_{i=1}^{r+1}$ 上的插值于函数 $\alpha f+\beta g$ 的 $r$ 次多项式
+>
+> 因此 $\alpha p_r + \beta q_r$ 的 $x^r$ 项系数为
+> $$
+> [t_1,\dots,t_{r+1}](\alpha f+\beta g)=\alpha[t_1,\dots,t_{r+1}]f+\beta[t_1,\dots,t_{r+1}]g
+> $$
 
 **推论 9.3** 下述性质成立
 
@@ -84,7 +182,57 @@ $$
 \sum_\limits{1\le \alpha_i\le \dots\le \alpha_l\le r+1}t_{\alpha_1}\dots t_{\alpha_l},&l>0
 \end{array}\right.
 $$
-$\rho_l(t_1,\dots,t_{r+1})(l>0)$ 是 $C_{r+l}^{l}$ 项求和
+$\rho_l(t_1,\dots,t_{r+1})(l>0)$ 是 $C_{r+l}^{l}=\frac{(r+l)!}{r!l!}$ 项求和，则 $\rho_{j-r}(t_1,\dots,t_{r+1})(j>r)$ 是 $C_{j}^{j-r}=\frac{j!}{r!(j-r)!}$ 项求和
+
+> **证明** 
+>
+> - (1)
+>
+> > 插值条件 $D^{j-1}p_r(\tau_i)=D^{j-1}f(\tau_i)\ (i=1,\dots,d;j=1,\dots,l_i)$ 
+> >
+> > 由微分的 Rolle 中值定理知，$\exist \zeta \in [t_1,t_{r+1}]$，使得
+> > $$
+> > D^r(f-p_r(x))\Big|_{x=\zeta}=0
+> > $$
+> > 即 $f^{(r)}(\zeta)-r![t_1,\dots,t_{r+1}]f=0$ 
+>
+> - (2)
+>
+> > - 当 $j\le r$ 时
+> >
+> > > 由 (1) 显然可得 (2) 成立
+> >
+> > - 当 $j>r$ 时
+> >
+> > > - 当 $t_1=t_{r+1}$ 时
+> > >
+> > > > 由 (1) 显然可得 (2) 成立
+> > >
+> > > - 当 $t_1<t_{r+1}$ 时
+> > >
+> > > > （数学归纳法）
+> > > >
+> > > > - 当 $r=1$ 时
+> > > >
+> > > > > (2) 显然成立
+> > > >
+> > > > - 设次数为 $r-1$ 时，命题正确
+> > > >
+> > > > > $$
+> > > > > \begin{aligned} \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] x ^ { j } & = \frac { \left[ t _ { 2 } , t _ { 3 } , \cdots , t _ { r + 1 } \right] x ^ { j } - \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r } \right] x ^ { j } } { t _ { r + 1 } - t _ { 1 } } \\ & = \frac { \rho _ { j - r + 1 } \left( t _ { 2 } , t _ { 3 } , \cdots , t _ { r + 1 } \right) - \rho _ { j - r + 1 } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r } \right) } { t _ { r + 1 } - t _ { 1 } } \end{aligned}
+> > > > > $$
+> > > > >
+> > > > > 利用恒等式
+> > > > > $$
+> > > > > \rho _ { l } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) = t _ { 1 } \rho _ { l - 1 } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) + \rho _ { l } \left( t _ { 2 } , t _ { 3 } , \cdots , t _ { r + 1 } \right)
+> > > > > $$
+> > > > > 可得
+> > > > > $$
+> > > > > \begin{aligned} \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] x ^ { j } & = \frac { - t _ { 1 } \rho _ { j - r } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) + t _ { r + 1 } \rho _ { j - r } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) } { t _ { r + 1 } - t _ { 1 } } \\ & = \rho _ { j - r } \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) \end{aligned}
+> > > > > $$
+> > > > > 即次数为 $r$ 时，命题仍然正确
+> > > >
+> > > > 综合，由归纳法知 (2) 成立
 
 **定理 9.2** 
 
@@ -94,7 +242,7 @@ $$
 $$
 其中 $\omega(t)=\prod_{i=1}^{r+1}(t-t_i)$ 
 
-> 由此可推出 $\left[ t _ { 1 } , \cdots , t _ { r + 1 } \right] f=[t_{\pi(1)},\dots,t_{\pi(r+1)}]f$，$\pi$ 是任意置换函数
+> 由此可推出 $\left[ t _ { 1 } , \cdots , t _ { r + 1 } \right] f=[t_{\pi(1)},\dots,t_{\pi(r+1)}]f$，$\pi$ 是任意置换函数，即 $[t_1,\dots,t_{r+1}]$ 有**交换性** 
 
 (2) 设 $t_1\le t_2\le \dots\le t_{r+1}=\overbrace{\tau_1,\dots,\tau_1}^{l_1}<\dots<\overbrace{\tau_d,\dots,\tau_d}^{l_d}$，则
 $$
@@ -102,15 +250,92 @@ $$
 $$
 且 $\alpha_{i,l_i}\neq 0\ (i=1,\dots,d)$ 
 
+> **证明** 
+>
+> - (1)
+>
+> > 由 **推论 9.1** 知
+> > $$
+> > \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] f = \frac { D \left( \begin{array} { c c c c c } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r } , } & { t _ { r + 1 } } \\ { 1 , } & { x , } & { \cdots , } & { x ^ { r - 1 } , } & { f } \end{array} \right) } { V \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right) }
+> > $$
+> > 将 $D \left( \begin{array} { c c c c c } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r } , } & { t _ { r + 1 } } \\ { 1 , } & { x , } & { \cdots , } & { x ^ { r - 1 } , } & { f } \end{array} \right)$ 按最后一列展开，得
+> > $$
+> > D \left( \begin{array} { c c c c c } { t _ { 1 } , } & { t _ { 2 } , } & { \cdots , } & { t _ { r } , } & { t _ { r + 1 } } \\ { 1 , } & { x , } & { \cdots , } & { x ^ { r - 1 } , } & { f } \end{array} \right)=\sum_{i=1}^{r+1}(-1)^{r+1+i}f(t_i)V(t_1,\dots,t_{i-1},t_{i+1},\dots,t_{r+1})
+> > $$
+> > 故
+> > $$
+> > \begin{aligned}
+> > \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] f
+> > &= \sum_{i=1}^{r+1}(-1)^{r+1+i}f(t_i)\frac{V(t_1,\dots,t_{i-1},t_{i+1},\dots,t_{r+1})}{V \left( t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right)}\\
+> > &=\sum_{i=1}^{r+1}(-1)^{r+1+i}f(t_i)\frac{1}{(t_i-t_1)\dots(t_i-t_{i-1})(t_{i+1}-t_i)\dots(t_{r+1}-t_i)}\\
+> > &=\sum_{i=1}^{r+1}\frac{f(t_i)}{\omega^\prime(t_i)}\\
+> > \end{aligned}
+> > $$
+>
+> - (2)
+>
+> > 由 **推论 9.1** 且将右式分子的行列式按最后一列展开，得
+> > $$
+> > \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] f = \sum _ { i = 1 } ^ { d } \sum _ { j = 1 } ^ { l _ { i } } \alpha _ { i j } D ^ { j - 1 } f \left( \tau _ { i } \right)
+> > $$
+> > 其中
+> > $$
+> > \alpha_{i,l_i}\triangleq\frac{V(\overbrace{\tau_1,\dots,\tau_1}^{l_1},\dots,\overbrace{\tau_i,\dots,\tau_i}^{l_i-1},\dots,\overbrace{\tau_d,\dots,\tau_d}^{l_d})}{V(t_1,\dots,t_{r+1})}(-1)^{r+1+\sum_{j=1}^il_j}
+> > $$
+> > 不为 0
+
 **定理 9.3**（Leibniz 公式）对任意 $\{t_i\}_{i=1}^{r+1}$ 和光滑函数 $f$，$g$，都有
 $$
 \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] f \cdot g = \sum _ { i = 1 } ^ { r + 1 } \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \cdot \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g
 $$
+> **证明** 
+>
+> （数学归纳法）
+>
+> - 当 $r=0$ 时
+>
+> > 显然成立
+>
+> - 假设次数为 $r-1$ 时命题正确
+>
+> > - 当 $t_1=t_{r+1}$ 时
+> >
+> > > $$
+> > > \begin{aligned}
+> > > &\sum _ { i = 1 } ^ { r + 1 } \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \cdot \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g\\
+> > > = & \sum _ { i = 1 } ^ { r + 1 } \frac { D ^ { i - 1 } f \left( t _ { 1 } \right) } { ( i - 1 ) ! } \frac { D ^ { r + 1 - i } g \left( t _ { 1 } \right) } { ( r + 1 - i ) ! } \\
+> > > = & \frac { 1 } { r ! } \sum _ { i = 0 } ^ { r } D ^ { i } f \left( t _ { 1 } \right) \cdot D ^ { r - i } g \left( t _ { 1 } \right) \left( \begin{array} { c } { r } \\
+> > > { i } \end{array} \right) \\
+> > > = & \frac { D ^ { r } f \cdot g \left( t _ { 1 } \right) } { r ! } \\
+> > > = & [t_1,\dots,t_{r+1}]f\cdot g
+> > > \end{aligned}
+> > > $$
+> >
+> > - 当 $t_1<t_{r+1}$ 时
+> >
+> > > $$
+> > > \begin{aligned}
+> > > &\left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r + 1 } \right] f \cdot g \\
+> > > =& \frac { \left[ t _ { 2 } , t _ { 3 } , \cdots , t _ { r + 1 } \right] f \cdot g - \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { r } \right] f \cdot g } { t _ { r + 1 } - t _ { 1 } } \\
+> > > = &\frac { \sum _ { i = 2 } ^ { r + 1 } \left[ t _ { 2 } , t _ { 3 } , \cdots , t _ { i } \right] f \cdot \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g - \sum _ { i = 1 } ^ { r } \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \cdot \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r } \right] g } { t _ { r + 1 } - t _ { 1 } }\\
+> > > = & \frac { 1 } { t _ { r + 1 } - t _ { 1 } } \left\{ \sum _ { i = 2 } ^ { r + 1 } \left( \left( t _ { i } - t _ { 1 } \right) \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f + \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i - 1 } \right] f \right) \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g \right.\\
+> > > &\left. - \sum _ { i = 1 } ^ { r } \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \left( - \left( t _ { r + 1 } - t _ { i } \right) \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g + \left[ t _ { i + 1 } , t _ { i + 2 } , \cdots , t _ { r + 1 } \right] g \right) \right\}\\
+> > > = &\frac { 1 } { t _ { r + 1 } - t _ { 1 } } \left\{ \sum _ { i = 2 } ^ { r + 1 } \left( t _ { i } - t _ { 1 } \right) \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g \right.\\
+> > > &\left. \quad + \sum _ { i = 1 } ^ { r } \left( t _ { r + 1 } - t _ { i } \right) \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g \right\}\\
+> > > = &\sum _ { i = 1 } ^ { r + 1 } \left[ t _ { 1 } , t _ { 2 } , \cdots , t _ { i } \right] f \left[ t _ { i } , t _ { i + 1 } , \cdots , t _ { r + 1 } \right] g
+> > > \end{aligned}
+> > > $$
+> > > 即次数为 $r$ 时命题仍成立
+>
+> 综上，由归纳法知命题成立
+
 **推论 9.4** 差商满足消去性质，即
 $$
 [t_1,\dots,t_{r+1}](t-t_{r+1})f=[t_1,\dots,t_r]f
 $$
 
+> **证明** 
+>
 > 由 **定理 9.3** 得
 > $$
 > \begin{aligned}[]
