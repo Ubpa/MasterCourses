@@ -404,7 +404,7 @@ Q _ { i } ^ { m } ( x ) \triangleq \left\{ \begin{array} { l l } { ( - 1 ) ^ { m
 $$
 称为 $m$ 阶的、节点为 $y_i,y_{i+1},\dots,y_{i+m}$ 的 **B 样条** 
 
-> B 样条 $Q_i^m(x)$ 是一个具有局部支集 $[y_i,y_{i+m}$) 的函数
+> B 样条 $Q_i^m(x)$ 是一个具有**局部支集** $[y_i,y_{i+m}$) 的函数
 
 若
 $$
@@ -412,7 +412,7 @@ y_i\le \dots\le y_{i+m}=
 \overbrace{\tau_1,\dots,\tau_1}^{m_1} 
 < \dots<\overbrace{\tau_d,\dots,\tau_d}^{m_d},\quad \sum_{i=1}^d m_i=m+1
 $$
-则 $Q_i^m(x)$ 是 $m$ 阶的、节点为 $\tau_1,\dots,\tau_d$，重度向量为 $(m_1,\dots,m_d)$ 的样条函数
+则 $Q_i^m(x)$ 是 $m$ 阶的、节点为 $\tau_1,\dots,\tau_d$，重度向量为 $(m_1,\dots,m_d)$ 的**样条函数** 
 
 > $Q_i^m(x)$ 是多项式样条组成的函数
 
@@ -423,6 +423,20 @@ Q_i^1(x)=\left\{\begin{array}{ll}
 0,&\text{other}.
 \end{array}\right.
 $$
+> **证明** 
+> $$
+> \begin{aligned}
+> Q_i^1(x)
+> &=-[y_i,y_{i+1}](x-\cdot)^0_+\\
+> &=[y_i,y_{i+1}](\cdot-x)^0_+\\
+> &=\frac{(y_{i+1}-x)^0_+-(y_{i}-x)^0_+}{y_{i+1}-y_i}\\
+> &=\left\{\begin{array}{ll}
+> \frac{1}{y_{i+1}-y_i},&y_i\le x < y_{i+1},\\
+> 0,&\text{other}.
+> \end{array}\right.
+> \end{aligned}
+> $$
+
 **定理 9.9** 
 
 (1) 设 $y_i<y_{i+1}=\cdots=y_{i+m}$，则
@@ -488,21 +502,53 @@ $$
 $$
 (2) 如果 $l<r$，$y_{r-1}<y_r$，则 $\{Q_i^m(x)\}_{i=l-m+1}^{r-1}$ 在 $[y_l,y_r)$ 上是线性无关的
 
+---
+
 定义
 $$
 N_i^m(x)\triangleq(y_{i+m}-y_i)Q_i^m(x)
 $$
 并称 $N_i^m(x)$ 为 $m$ 阶的、节点为 $y_i,\dots,y_{i+m}$ 的**规范 B 样条**，显然 $m=1$ 时，
 $$
-N_i^1(m)=\left\{\begin{array}{ll}
+N_i^1(x)=\left\{\begin{array}{ll}
 1, &y_i\le x < y_{i+1},\\
 0, &\text{other}
 \end{array}\right.
 $$
-**性质 5** 规范 B 样条形成单位分解，即对任意 $x\in[y_j,y_{j+1})$，都有
+**性质 5** 规范 B 样条形成**单位分解**，即对任意 $x\in[y_j,y_{j+1})$，都有
 $$
 \sum_{i=j+1-m}^j N_i^m(x)=1
 $$
+> **直观理解** 
+>
+> ![image-20191124231127051](assets/image-20191124231127051.jpg)
+>
+> **证明** 
+>
+> （数学归纳法）
+>
+> - 当 $m=1$ 时
+>
+> > $$
+> > N_j^1(x)=1
+> > $$
+>
+> - 假设当阶数为 $m-1$ 时成立
+>
+> > $$
+> > \begin{aligned} \sum _ { i = j + 1 - m } ^ { j } N _ { i } ^ { m } ( x ) & = \sum _ { i = j + 1 - m } ^ { j } \left[\left( x - y _ { i } \right) Q _ { i } ^ { m - 1 } ( x ) + \left( y _ { i + m } - x \right) Q _ { i + 1 } ^ { m - 1 } ( x )\right] \\
+> > & = \sum _ { i = j + 1 - m } ^ { j } \left( x - y _ { i } + y _ { i + m - 1 } - x \right) Q _ { i } ^ { m - 1 } ( x ) \\
+> > & = \sum _ { i = j + 2 - m } ^ { j } N _ { i } ^ { m - 1 } ( x ) = 1 \end{aligned}
+> > $$
+> >
+> > > 第一个等号利用了 **性质 1** 
+> > >
+> > > 第二个等号利用了 $Q_{j+1-m}^{m-1}(x)=0=Q_{j+1}^{m-1}(x),\ x\in[y_j,y_{j+1})$ 
+> > >
+> > > 第三个等号利用了 $N_{j+1-m}^{m-1}(x)=0,\ x\in[y_j,y_{j+1})$ 
+> > >
+> > > 第四个等号利用了假设
+
 **性质 6**（Marsden 恒等式）设 $l\le r$，$y_l< y_{r+1}$，则对任意 $y\in \mathbb{R}$，都有
 
 (1)
@@ -521,6 +567,54 @@ $$
 $$
 \xi _ { i } ^ { ( j ) } \triangleq ( - 1 ) ^ { j - 1 } \frac { ( j - 1 ) ! } { ( m - 1 ) ! } D ^ { m - j } \varphi _ { i , m } ( 0 ) \quad ( l + 1 - m \leqslant i \leqslant r )
 $$
+> **证明** 
+>
+> (1)
+>
+> （数学归纳法）
+>
+> - 当 $m=1$ 时
+>
+> > 右边为
+> > $$
+> > \sum_{i=l}^r N_i^1(x)=1
+> > $$
+> > $N_i^1(x)$ 只在 $[y_i,y_{i+1})$ 上为 $1$，故和式在 $[y_l,y_{r+1})$ 上为 $1$ 
+>
+> - 假设阶数为 $m-1$ 时成立
+>
+> > $$
+> > \begin{aligned}
+> >  &\sum_{i=l+1-m}^r\varphi_{i.m}(y)N_i^m(x)\\
+> > =&\sum_{i=l+1-m}^r\varphi_{i.m}(y)\Big(\left( x - y _ { i } \right) Q _ { i } ^ { m - 1 } ( x ) + \left( y _ { i + m } - x \right) Q _ { i + 1 } ^ { m - 1 } ( x )\Big)\\
+> > =&\sum_{i=l+2-m}^r Q_i^{m-1}(x)\Big((x-y_i)\varphi_{i,m}(y)+(y_{i+m-1}-x)\varphi_{i-1,m}(y)\Big)\\
+> > =&\sum_{i=l+2-m}^r Q_i^{m-1}(x)\varphi_{i,m-1}(y)\Big((x-y_i)(y-y_{i+m-1})+(y_{i+m-1}-x)(y-y_i)\Big)\\
+> > =&\sum_{i=l+2-m}^r Q_i^{m-1}(x)\varphi_{i,m-1}(y)(y-x)(y_{i+m-1}-y_i)\\
+> > =&(y-x)\sum_{i=l+2-m}^r \varphi_{i,m-1}(y)N_i^{m-1}(x)\\
+> > =&(y-x)^{m-1}
+> > \end{aligned}
+> > $$
+> >
+> > > 第一个等号： **性质 1** 
+> > >
+> > > 第二个等号：求和中两项对 $Q$ 关于 $i$ 进行统一（首尾有零项，类似 **性质 5** 证明），然后由于 $Q_{l+1-m}^{m-1}(x)=0$ 而少一个求和项
+> > >
+> > > 第三个等号：根据 $\varphi$ 的定义，提取公因子 $\varphi_{i,m-1}$ 
+> > >
+> > > 第五个等号： $N$ 的定义
+> > >
+> > > 第六个等号：假设
+>
+> (2)
+>
+> 在 $y=0$ 处求对 $y$ 的 $m-j$ 次导数，得到
+> $$
+> ( - 1 ) ^ { j - 1 } \frac { ( m - 1 ) ! } { ( j - 1 ) ! } x ^ { j - 1 } = \sum _ { i = 1 + 1 - m } ^ { r } D ^ { m - j } \varphi _ { i , m } ( 0 ) N _ { i } ^ { m } ( x )
+> $$
+> 移项即可
+
+---
+
 定义对称函数 $\text{symm}_j(t_1,\dots,t_p)$：
 $$
 \varphi(t)=\prod_{i=1}^p(t-t_i)=\sum_{j=0}^pt^{p-j}(-1)^j\text{symm}_j(t_1,\dots,t_p)
@@ -536,6 +630,10 @@ $$
 定义式两边在 $t=0$ 处取 $p-j$ 次导数，得
 $$
 \text{symm}_j(t_1,\dots,t_p)=(-1)^j\frac{D^{p-j}\varphi(0)}{(p-j)!}
+$$
+因而
+$$
+\text{symm}_{j-1}(t_{i+1},\dots,t_{i+m-1})=(-1)^{j-1}\frac{D^{m-j}\varphi_{i,m}(0)}{(m-j)!}
 $$
 故
 $$
@@ -567,7 +665,41 @@ $$
 \end{aligned}
 $$
 
-> 第一个取 $j=0,\nu=0$；第二个取 $j=0,\nu=1$ 
+> **证明** 
+>
+> (1)
+>
+> 设 $f\in L_1^{m-j}[a,b]$ ，由带**积分余项**的 Taylor 公式知
+> $$
+> \begin{aligned}
+> f ( x ) & = \sum _ { k = 0 } ^ { m - j - 1 } \frac { D ^ { k } f ( a ) ( x - a ) ^ { k } } { k ! } + \int _ { a } ^ { x } \frac { ( x - y ) ^ { m - j - 1 } D ^ { m - j } f ( y ) } { ( m - j - 1 ) ! } \mathrm { d } y \\
+> & = \sum _ { k = 0 } ^ { m - j - 1 } \frac { D ^ { k } f ( a ) ( x - a ) ^ { k } } { k ! } + \int _ { a } ^ { b } \frac { ( x - y ) _ { + } ^ { m - j - 1 } D ^ { m - j } f ( y ) } { ( m - j - 1 ) ! } \mathrm { d } y
+> \end{aligned}
+> $$
+> 两边作用差商算子 $[y_i,\dots,y_{i+m}]$，得
+> $$
+> \left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right] f = \int _ { y _ { i } } ^ { y _ { i + m } } \frac { \left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right] ( \cdot - y ) _ { + } ^ { m - j - 1 } D ^ { m - j } f ( y ) } { ( m - j - 1 ) ! } \mathrm { d } y
+> $$
+> 注意到
+> $$
+> \begin{array} { l } { D _ { + , y } ^ { j } ( \cdot - y ) _ { + } ^ { m - 1 } = ( - 1 ) ^ { j } \frac { ( m - 1 ) ! } { ( m - j - 1 ) ! } ( \cdot - y ) _ { + } ^ { m - j - 1 } } \\ { ( \cdot - y ) ^ { m - 1 } = ( \cdot - y ) _ { + } ^ { m - 1 } + ( - 1 ) ^ { m - 1 } ( y - \cdot ) _ { + } ^ { m - 1 } } \end{array}
+> $$
+> 则
+> $$
+> \begin{aligned}
+> \left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right] f
+> &= \int _ { y _ { i } } ^ { y _ { i + m } } \frac { (-1)^j D^j_y \left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right] ( \cdot - y ) _ { + } ^ { m-1 } D ^ { m - j } f ( y ) } { ( m - 1 ) ! } \mathrm { d } y\\
+> &= \int _ { y _ { i } } ^ { y _ { i + m } } \frac { (-1)^j D^j_y Q_i^m(y) D ^ { m - j } f ( y ) } { ( m - 1 ) ! } \mathrm { d } y\\
+> \end{aligned}
+> $$
+>
+> > 根据 **推论 9.3 (1)**，$\left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right](\cdot-y)^{m-1}=0$ 
+>
+> (2)
+>
+> 令 (1) 中 $f(x)=x^{m-j+\nu}$ 再结合 **推论 9.1** 即可
+>
+> 对于两特别式，第一个取 $j=0,\nu=0$；第二个取 $j=0,\nu=1$ 
 
 性质 7 (1) 取 $j=0$ 得
 $$
@@ -594,6 +726,17 @@ $$
 $$
 K(y)=\frac{1}{(m-1)!}L_x[(x-y)^{m-1}_+]
 $$
+> **证明** 
+>
+> 设 $f\in L_1^{m-j}[a,b]$ ，由带**积分余项**的 Taylor 公式知
+> $$
+> f ( x ) = \sum _ { j = 0 } ^ { m-1 } \frac { D ^ { j } f ( a ) ( x - a ) ^ { j } } { j ! } + \int _ { a } ^ { b } \frac { ( x - y ) ^ { m - 1 }_+ D ^ { m } f ( y ) } { ( m - 1 ) ! } \mathrm { d } y
+> $$
+> 且对任意 $p\in \mathcal{P}_m$ 都有 $L(p)=0$，则
+> $$
+> L(f) = \int _ { a } ^ { b } \frac { L_x( x - y ) ^ { m - 1 }_+ D ^ { m } f ( y ) } { ( m - 1 ) ! } \mathrm { d } y=\int_a^b K(y)D^mf(y)\mathrm{d}y
+> $$
+
 **推论 9.5** 如果核 $K(y)$ 在 $[a,b]$ 上不改变符号，则对任意 $f\in C^m[a,b]$，都有
 $$
 L(f)=\frac{f^{(m)}(\xi)}{m!}L(x^m)\quad(a\le \xi \le b)
@@ -602,7 +745,11 @@ $$
 $$
 \int_{-\infty}^{+\infty}Q_i^m(x)Q_j^n(x)\mathrm{d}(x)=\frac{(-1)^m(m-1)!(n-1)!}{(m+n-1)!}[y_i,\dots,y_{i+m}]_x[y_j,\dots,y_{j+n}]_y(y-x)^{m+n-1}_+
 $$
-**性质 9** B 样条对节点的连续性依赖：设 $y_i\le \dots\le y_{i+m}=\overbrace{\tau_1,\dots,\tau_d}^{l_1},\dots,\overbrace{\tau_d,\dots,\tau_d}^{l_d}\ (\sum_{i=1}^d l_i=m+1)$，$y_i<y_{i+m}$，$y_i^{(\nu)}\le \dots\le y_{i+m}^{(\nu)}$ 是点的序列，且当 $\nu\to\infty$ 时，$y_j^{(\nu)}\to y_j$。又设 $Q_i^m(x)$，$Q_{i,\nu}^m(x)$ 是分别与节点 $\{y_j\}_{j=i}^{i+m}$，$\{y_j^{(\nu)}\}_{j=i}^{i+m}$ 相联系的 B 样条，则对 $k=0,\dots,m-1$，有
+**性质 9** B 样条对节点的连续性依赖：设
+$$
+y_i\le \dots\le y_{i+m}=\overbrace{\tau_1,\dots,\tau_d}^{l_1},\dots,\overbrace{\tau_d,\dots,\tau_d}^{l_d}\ (\sum_{i=1}^d l_i=m+1)
+$$
+$y_i<y_{i+m}$，$y_i^{(\nu)}\le \dots\le y_{i+m}^{(\nu)}$ 是点的序列，且当 $\nu\to\infty$ 时，$y_j^{(\nu)}\to y_j$。又设 $Q_i^m(x)$，$Q_{i,\nu}^m(x)$ 是分别与节点 $\{y_j\}_{j=i}^{i+m}$，$\{y_j^{(\nu)}\}_{j=i}^{i+m}$ 相联系的 B 样条，则对 $k=0,\dots,m-1$，有
 $$
 D _ { + } ^ { k } Q _ { i , \nu } ^ { m } ( x ) \rightarrow D _ { + } ^ { k } Q _ { i } ^ { m } ( x ) \quad \left( \nu \rightarrow \infty , x \in \mathbb { R } \backslash J _ { i } ^ { k } \right)
 $$
