@@ -18,4 +18,6 @@
 - [05.md](homeworks/05.md) 
 - [06.md](homeworks/06.md) 
 - [07.md](homeworks/07.md) 
+- [08.md](homeworks/08.md) 
+- [09.md](homeworks/09.md) 
 
