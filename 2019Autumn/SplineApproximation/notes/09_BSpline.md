@@ -184,6 +184,10 @@ $$
 $$
 $\rho_l(t_1,\dots,t_{r+1})(l>0)$ 是 $C_{r+l}^{l}=\frac{(r+l)!}{r!l!}$ 项求和，则 $\rho_{j-r}(t_1,\dots,t_{r+1})(j>r)$ 是 $C_{j}^{j-r}=\frac{j!}{r!(j-r)!}$ 项求和
 
+> (1) 可推得 $[t_1,\dots,t_{r+1}]\mathcal{P}_r = 0$，即 $[t_1,\dots,t_{r+1}]\perp \mathcal{P}_r$ 
+>
+> ---
+>
 > **证明** 
 >
 > - (1)
@@ -405,6 +409,12 @@ $$
 称为 $m$ 阶的、节点为 $y_i,y_{i+1},\dots,y_{i+m}$ 的 **B 样条** 
 
 > B 样条 $Q_i^m(x)$ 是一个具有**局部支集** $[y_i,y_{i+m}$) 的函数
+>
+> > **证明** 
+> >
+> > 当 $x<y_i$ 时，$(x-y)_+^{m-1}=0,y=y_i,\dots,y_{i+m}$ 
+> >
+> > 当 $x\ge y_{i+m}$ 时，$(x-y)^{m-1}_+=(x-y)^{m-1}\in \mathcal{P}_m$，由 **推论 9.3 (1)** 知 $\left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right](x-y)^{m-1}=0$ 
 
 若
 $$
@@ -454,16 +464,166 @@ Q_i^m(x)=\left\{\begin{array}{ll}
 \end{array}\right.
 $$
 
+> **证明** 
+>
+> > 只证明 (1)，(2) 类似
+>
+> 已知 $Q_i^m(x)$ 具有局部支集 $[y_i,y_{i+m})$ 
+>
+> 当 $y_i\le x<y_{i+m}$ 时
+>
+> 根据 **推论 9.1**，有
+> $$
+> \begin{aligned}
+> Q_i^m(x)
+> &=(-1)^m[y_i,\overbrace{y_{i+m},\dots,y_{i+m}}^m](x-\cdot)^{m-1}_+\\
+> &=(-1)^m\frac{
+> D\left(\begin{array}{lllll}
+> y_i,&y_{i+m},&\dots,&y_{i+m},&y_{i+m}\\
+> 1,&y,&\dots,&y^{m-1},&(x-y)^{m-1}_+
+> \end{array}\right)
+> }{V(y_i,y_{i+m},\dots,y_{i+m})}
+> \end{aligned}
+> $$
+> 分子为
+> $$
+> \left|\begin{matrix}
+> 1 & y_i & y_i^2 & \dots & y_i^{m-1} & (x-y_i)^{m-1}\\
+> 1 & y_{i+m} & y_{i+m}^2 & \dots & y_{i+m}^{m-1} & 0 \\
+>  & 1 & 2y_{i+m} & \dots & (m-1)y_{i+m}^{m-2} & 0 \\
+>  & & 2 & \dots & (m-1)(m-2)y_{i+m}^{m-3} & 0 \\
+>  & & & \ddots & \vdots& \vdots\\
+>  & & & & (m-1)! & 0
+> \end{matrix}\right|=(-1)^m(x-y_i)^{m-1}\prod_{\nu = 1}^{m-1}\nu !
+> $$
+> 对于分母，将 $y_i$ 视为变量，记 $f(y_i)=V(y_i,y_{i+m},\dots,y_{i+m})$，具体写为
+> $$
+> \left|\begin{matrix}
+> 1 & y_i & y_i^2 & \dots & y_i^m\\
+> 1 & y_{i+m} & y_{i+m}^2 & \dots  & y_{i+m}^m \\
+>  & 1 & 2y_{i+m} & \dots  & my_{i+m}^{m-1} \\
+>  & & 2 & \dots  & m(m-1)y_{i+m}^{m-2} \\
+>  & & & \ddots& \vdots\\
+>  & & & & m!
+> \end{matrix}\right|
+> $$
+> 易知
+> $$
+> f(y_{i+m})=f^\prime(y_{i+m})=\dots=f^{(m-1)}(y_{i+m})=0
+> $$
+> 因此 $f(y_i)=c(y_{i+m}-y_i)^m$，由于 $y_i^m$ 的系数为
+> $$
+> (-1)^m\prod_{\nu=1}^{m-1}\nu!=c(-1)^m
+> $$
+> 则
+> $$
+> V(y_i,y_{i+m},\dots,y_{i+m})=(y_{i+m}-y_i)^m\prod_{\nu=1}^{m-1}\nu!
+> $$
+> 故
+> $$
+> Q_i^m(x)=\frac{(x-y_i)^{m-1}}{(y_{i+m}-y_i)^m}
+> $$
+
+
+
 ### 09.2.2 B 样条的性质
 
 **性质 1** B 样条函数满足如下递推关系：设 $m\ge 2$，$y_i<y_{i+m}$，则对所有的 $x\in \mathbb{R}$，都有
 $$
 Q_i^m(x)=\frac{(x-y_i)Q_i^{m-1}(x)+(y_{i+m}-x)Q_{i+1}^{m-1}(x)}{y_{i+m}-y_i}
 $$
+> 令
+> $$
+> \alpha_{i,m}(x)=\frac{x-y_i}{y_{i+m}-y_i}
+> $$
+> 则
+> $$
+> \begin{aligned}
+> Q_i^m(x)
+> &=\alpha_{i,m}(x)Q_i^{m-1}(x)+(1-\alpha_{i,m}(x))Q_{i+1}^{m-1}(x)\\
+> &=\text{lerp}(Q_i^{m-1}(x), Q_{i+1}^{m-1}(x), \alpha_{i,m}(x))
+> \end{aligned}
+> $$
+> 再结合
+> $$
+> Q_i^1(x)=\left\{\begin{array}{ll}
+> \frac{1}{y_{i+1}-y_i},&y_i\le x < y_{i+1},\\
+> 0,&\text{other}.
+> \end{array}\right.
+> $$
+> 就是 $Q_i^m(x)$ 的**等价定义** 
+>
+> ---
+>
+> **证明** 
+>
+> - 当 $x<y_i$ 或 $x\ge y_{i+m}$ 时
+>
+> > 左右两边皆为 $0$ 
+>
+> - 当 $y_i\le x\le y_{i+m}$ 时
+>
+> > - 当 $y_i<y_{i+1}=\dots=y_{i+m}$ 时
+> >
+> > > 由 **定理 9.9 (1)** 得
+> > > $$
+> > > Q_i^m(x)=\frac{(x-y_i)^{m-1}}{(y_{i+m}-y_i)^m},\ Q_{i}^{m-1}=\frac{(x-y_i)^{m-2}}{(y_{i+m-1}-y_i)^{m-1}}
+> > > $$
+> > > 又 $Q_{i+1}^{m-1}(x)=0$，从而定理成立
+> >
+> > - 当 $y_i = \dots = y_{i+m-1}<y_{i+m}$ 时
+> >
+> > > 同上
+> >
+> > - 其他，即 $y_{i+1}<y_{i+m}$ 且 $y_i<y_{i+m-1}$ 
+> >
+> > > $$
+> > > \begin{aligned}
+> > > Q _ { i } ^ { m } ( x ) = & ( - 1 ) ^ { m } \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 2 } \cdot ( x - \cdot) \\
+> > > = & ( - 1 ) ^ { m } \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] ( x - ) _ { + } ^ { m - 2 } \cdot \left( x - y _ { i } \right) \\
+> > > & + ( - 1 ) ^ { m } \left[ y _ { i + 1 } , y _ { i + 2 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 2 } \cdot \left[ y _ { i } , y _ { i + 1 } \right] ( x - \cdot ) \\
+> > > = & ( - 1 ) ^ { m } \frac { x - y _ { i } } { y _ { i + m } - y _ { i } } \Big\{ - \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m - 1 } \right] ( x - \cdot ) _ { + } ^ { m - 2 }\\
+> > > & + \left[ y _ { i + 1 } , y _ { i + 2 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 2 } \Big\} + Q _ { i + 1 } ^ { m - 1 } ( x ) \\ 
+> > > = & \frac { \left( x - y _ { i } \right) Q _ { i } ^ { m - 1 } ( x ) + \left( y _ { i + m } - x \right) Q _ { i + 1 } ^ { m - 1 } ( x ) } { y _ { i + m } - y _ { i } } 
+> > > \end{aligned}
+> > > $$
+> > >
+> > > > 第一个等号：拆处一项
+> > > >
+> > > > 第二个等号：Leibniz 公式
+> > > >
+> > > > 第三个等号：$[y_i,y_{i+1}](x-\cdot)=-1$，差商递推
+
 **性质 2** 设 $y_i<y_{i+m}$，$m>1$，$D_+$ 为右导数算子，则
 $$
 D_+Q_i^m(x)=(m-1)\frac{Q_i^{m-1}(x)-Q_{i+1}^{m-1}(x)}{y_{i+m}-y_i}
 $$
+> **证明** 
+>
+> - 当 $y_i$ 或 $y_{i+m}$ 是 $m$ 重点时
+>
+> > 用定理 **定理 9.9** 即可证得
+>
+> - 当 $y_i<y_{i+m-1}$ 且 $y_{i+1}<y_{i+m}$ 时
+>
+> > $$
+> > \begin{aligned}
+> > D_+Q_i^m(x)
+> > & = ( - 1 ) ^ { m } \left[ y _ { i } , y _ { i + 2 } , \cdots , y _ { i + m } \right] D _ { + } ( x - \cdot ) _ { + } ^ { m - 1 } \\
+> > & = ( - 1 ) ^ { m } ( m - 1 ) \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 2 }\\
+> > & = ( - 1 ) ^ { m } ( m - 1 ) \frac { \left[ y _ { i + 1 } , y _ { i + 2 } , \cdots , y _ { i + m } \right] ( x - \cdot ) _ { + } ^ { m - 2 } - \left[ y _ { i } , y _ { i + 1 } , \cdots , y _ { i + m - 1 } \right] ( x - \cdot ) _ { + } ^ { m - 2 } } { y _ { i + m } - y _ { i } }\\
+> > & = ( m - 1 ) \frac { Q _ { i } ^ { m - 1 } ( x ) - Q _ { i + 1 } ^ { m - 1 } ( x ) } { y _ { i + m } - y _ { i } }
+> > \end{aligned}
+> > $$
+> > 第一个等号：$D_+$ 和 $[y_i,\dots,y_{i+m}]$ 可交换顺序
+> >
+> > 第二个等号：$D_+$ 作用于截断幂函数
+> >
+> > 第三个等号：差商定义
+> >
+> > 第四个等号：$Q$ 定义
+>
+
 **性质 3** 设 $y_i<y_{i+m}$，则：
 
 (1)
@@ -494,6 +654,90 @@ $$
 \beta_{i+m}&\triangleq\max\{j:y_{i+m}=\dots=y_{i+m-j+1}\}\\
 \end{aligned}
 $$
+> **证明** 
+>
+> (1)
+>
+> 支集外为 0 参考定义处的证明
+>
+> 当 $y_i\le x<y_{i+m}$ 时，（归纳法）
+>
+> - 当 $m=1$ 时
+>
+> > $$
+> > Q_{i}^1(x)=\frac{1}{y_{i+m}-y_i}>0
+> > $$
+>
+> - 假设 $m-1$ 时成立
+>
+> > 由 **性质 1** 得
+> > $$
+> > Q_i^m(x)=\frac{(x-y_i)Q_i^{m-1}(x)+(y_{i+m}-x)Q_{i+1}^{m-1}(x)}{y_{i+m}-y_i}
+> > $$
+> > 由于 $x-y_i,y_{i+m}-x,y_{i+m}-y_i>0$，由归纳假设 $Q_i^{m-1}(x)$ 与 $Q_{i+1}^{m-1}$ 中至少一个严格大于 $0$，则 $Q_i^m(x)>0$ 
+>
+> (2)
+>
+> 证左端点，右端点类似
+>
+> 当 $x<y_i$ 时，$Q_i^m(x)=0$，$y_i$ 是 $\alpha_i$ 重点，则 $Q_i^m(x)$ 在点 $y_i$ 应有 $m-1-\alpha_i$ 次连续导数，则
+> $$
+> D_+^kQ_i^m(y_i)=0 \quad (k=0,\dots,m-1-\alpha_i)
+> $$
+>
+> - 若 $\alpha_i=m$ 
+>
+> > 则根据 **定理 9.9** 有
+> > $$
+> > (-1)^kD^k_+Q_i^m(y_i)>0\quad(k=0,\dots,m-1)
+> > $$
+>
+> - 若 $\alpha_i<m$ 
+>
+> > （归纳法）
+> >
+> > - 当 $m=2$ 时
+> >
+> > > 有 $\alpha_i=1$，则
+> > > $$
+> > > D_+Q_i^2(y_i)=\frac{1}{(y_{i+1}-y_i)(y_{i+2}-y_{i})}>0
+> > > $$
+> >
+> > - 设 $m-1$ 时成立
+> >
+> > > 即
+> > > $$
+> > > ( - 1 ) ^ { k + m - 1 - \alpha _ { i } } D _ { + } ^ { k } Q _ { i } ^ { m - 1 } \left( y _ { i } \right) > 0 \quad \left( k = m - 1 - \alpha _ { i } , \cdots , m - 2 \right)
+> > > $$
+> > > 等价于
+> > > $$
+> > > \begin{array} { l } { ( - 1 ) ^ { k + m - \alpha _ { i } } D _ { + } ^ { k - 1 } Q _ { i } ^ { m - 1 } \left( y _ { i } \right) > 0 \quad \left( k = m - \alpha _ { i } , \cdots , m - 1 \right) } \\
+> > > { ( - 1 ) ^ { k + m - \alpha _ { i + 1 } } D _ { + } ^ { k - 1 } Q _ { i + 1 } ^ { m - 1 } \left( y _ { i + 1 } \right) > 0 \quad \left( k = m - 1 - \alpha _ { i + 1 } , \cdots , m - 1 \right) } \end{array}
+> > > $$
+> > > 由于
+> > > $$
+> > > \alpha _ { i } = \left\{ \begin{array} { l l } { 1 } & { y _ { i } < y _ { i + 1 } } \\ { \alpha _ { i + 1 } + 1 } & { y _ { i } = y _ { i + 1 } } \end{array} \right.
+> > > $$
+> > > 则
+> > > $$
+> > > ( - 1 ) ^ { k + m - \alpha _ { i } - 1 } D _ { + } ^ { k - 1 } Q _ { i + 1 } ^ { m - 1 } \left( y _ { i } \right) \geqslant 0 \quad \left( k = m - \alpha _ { i } , \cdots , m - 1 \right)
+> > > $$
+> > >
+> > > > 当 $y_i<y_{i+1}$ 时，上式为 0
+> > > >
+> > > > 当 $y_i=y_{i+1}$ 时，$\alpha_i=\alpha_{i+1}+1$ 
+> > >
+> > > 再由 **性质 2** 可得
+> > > $$
+> > > \begin{array} { c } { ( - 1 ) ^ { k + m - \alpha _ { i } } D _ { + } ^ { k } Q _ { i } ^ { m } \left( y _ { i } \right) = ( - 1 ) ^ { k + m - \alpha _ { i } } ( m - 1 ) \frac { D _ { + } ^ { k - 1 } Q _ { i } ^ { m - 1 } \left( y _ { i } \right) - D _ { + } ^ { k - 1 } Q _ { i + 1 } ^ { m - 1 } \left( y _ { i } \right) } { y _ { i + m } - y _ { i } } > 0 } \\ { \left( k = m - \alpha _ { i } , \cdots , m - 1 \right) } \end{array}
+> > > $$
+
+根据性质 1、2、3 可大概估计下样条的形状
+
+> **示例** 
+>
+> ![image-20191125193105672](assets/image-20191125193105672.jpg)
+
 **性质 4** 
 
 (1) 设 $y_l<y_{l+1}$，则在区间 $I_l\triangleq[y_l,y_{l+1}]$ 上，
@@ -502,9 +746,48 @@ $$
 $$
 (2) 如果 $l<r$，$y_{r-1}<y_r$，则 $\{Q_i^m(x)\}_{i=l-m+1}^{r-1}$ 在 $[y_l,y_r)$ 上是线性无关的
 
----
+> **证明** 
+>
+> (1)
+>
+> 因为 $Q_i^m(x)\Big|_{I_l}\in \mathcal{P}_m$ 且 $\{Q_i^m(x)\}_{i=l+1-m}^l$ 有 $m$ 个元素，故只需证它们在 $I_l$ 上线性无关
+>
+> 设 $\forall x \in I_l$，
+> $$
+> s(x)=\sum_{i=l+1-m}^lc_iQ_i^m(x)=0
+> $$
+> 若 $c_i$ 不全为 $0$，令 $c_p$ 是 $\{c_i\}$ 中第一个非零的系数（$l+1-m\le p\le p$）。令
+> $$
+> y _ { p } \leqslant y _ { p + 1 } \leqslant \cdots \leqslant y _ { l } = \overbrace { \tau _ { 1 } , \cdots , \tau _ { 1 } } ^ { l _ { 1 } } < \cdots < \overbrace { \tau _ { d } , \cdots , \tau _ { d } } ^ { l _ { d } }
+> $$
+> 有 $\sum_{i=1}^d l_i\le m$，且
+> $$
+> s ( x ) = \sum _ { i = p } ^ { l } c _ { i } Q _ { i } ^ { m } ( x ) = \sum _ { j = 1 } ^ { d } \sum _ { k = 1 } ^ { l _ { j } } \alpha _ { j k } \left( x - \tau _ { j } \right) _ { + } ^ { m - k }
+> $$
+> 其中 $\alpha_{1l_1}\neq 0$，令
+> $$
+> \widetilde{s}(x)=\sum_{j=1}^d\sum_{k=1}^{l_j}\alpha_{jk}(x-\tau_j)^{m-k}_+
+> $$
+> 当 $x<\tau_1$ 时，$\widetilde{s}(x)=0$；当 $x>\tau_d$ 时，$\widetilde{s}(x)$ 为一 $m$ 阶多项式；当 $x\in I_l$ 时，$\widetilde{s}(x)=s(x)=0$。故 $\widetilde{s}(x)$ 是一个具有局部支集的非平凡的样条。
+>
+> $\sum_{i=1}^d l_i\le m$ 且根据 **引理 8.1**，矛盾
+>
+> 故 $c_i$ 全为 $0$ 
+>
+> (2)
+>
+> 当 $x\in [y_l,y_{r})$ 时
+> $$
+> s(x)=\sum_{i=l+1-m}^{r-1} c_iQ_i^{m-1}(x)=0
+> $$
+>
+> 由 (1) 证明通过挪动区间易得 $c_i=0$ 
 
-定义
+定义规范 $B$ 样条
+$$
+N_i^m(x)\triangleq(y_{i+m}-y_i)Q_i^m(x)
+$$
+$m=1$ 时有
 $$
 N_i^m(x)\triangleq(y_{i+m}-y_i)Q_i^m(x)
 $$
