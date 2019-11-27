@@ -340,7 +340,7 @@ $$
 
 > **证明** 
 >
-> 由 **定理 9.3** 得
+> 由 **定理 9.3** 得 
 > $$
 > \begin{aligned}[]
 > [t_1,\dots,t_{r+1}](t-t_{r+1})f&=[t_1,\dots,t_r]f\cdot[t_r,t_{r+1}](t-t_{r+1})+[t_1,\dots,t_{r+1}]f\cdot[t_{r+1}](t-t_{r+1})\\
@@ -456,7 +456,7 @@ Q_i^m(x)=\left\{\begin{array}{ll}
 0,&\text{other}.
 \end{array}\right.
 $$
-(2) 若 $y_i=\dots=y_{i+m-1}<y_{i+m}$，则
+(2) 若 $y_i=\dots=y_{i+m-1}<y_{i+m}$，则有 
 $$
 Q_i^m(x)=\left\{\begin{array}{ll}
 \frac{(y_{i+m}-x)^{m-1}}{(y_{i+m}-y_i)^m},&y_i\le x < y_{i+m},\\
