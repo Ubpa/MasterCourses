@@ -798,6 +798,15 @@ N_i^1(x)=\left\{\begin{array}{ll}
 0, &\text{other}
 \end{array}\right.
 $$
+> **补充** 
+> $$
+> \begin{aligned}
+> D_+N_i^m(x)
+> &=(m-1)\left(Q_i^{m-1}(x)-Q_{i+1}^{m-1}(x)\right)\\
+> &=(m-1)\left(\frac{N^{m-1}_i(x)}{y_{i+m-1}-y_i}-\frac{N_{i+1}^{m-1}(x)}{y_{i+m}-y_{i+1}}\right)
+> \end{aligned}
+> $$
+
 **性质 5** 规范 B 样条形成**单位分解**，即对任意 $x\in[y_j,y_{j+1})$，都有
 $$
 \sum_{i=j+1-m}^j N_i^m(x)=1
