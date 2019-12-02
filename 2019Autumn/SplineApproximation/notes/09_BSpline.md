@@ -1024,10 +1024,45 @@ $$
 $$
 L(f)=\frac{f^{(m)}(\xi)}{m!}L(x^m)\quad(a\le \xi \le b)
 $$
+> **证明** 
+>
+> 由中值定理知
+> $$
+> L(f)=\int_a^b K(y)D^mf(y)\mathrm{d}y=f^{(m)}(\xi)\int_a^bK(y)\mathrm{d}y
+> $$
+> 又
+> $$
+> L(x^m)=m!\int_a^b K(x)\mathrm{d}x=m!\int_a^bK(y)\mathrm{d}y
+> $$
+> 则
+> $$
+> L(f)=\frac{f^{(m)}(\xi)}{m!}L(x^m)
+> $$
+
 **性质 8** B 样条的内积：设 $y_i<y_{i+m}$，$y_j<y_{j+n}$，则
 $$
 \int_{-\infty}^{+\infty}Q_i^m(x)Q_j^n(x)\mathrm{d}(x)=\frac{(-1)^m(m-1)!(n-1)!}{(m+n-1)!}[y_i,\dots,y_{i+m}]_x[y_j,\dots,y_{j+n}]_y(y-x)^{m+n-1}_+
 $$
+> **证明** 
+>
+> 性质 7(1) 取 $j=0$，则
+> $$
+> [y_i,\dots,y_{i+m}]f=\int_{y_i}^{y_{i+m}}\frac{Q_i^m(x)D^mf(x)}{(m-1)!}\mathrm{d}x
+> $$
+> 取
+> $$
+> f(x)=[y_j,\dots,y_{j+n}]_y(y-x)^{m+n-1}_+
+> $$
+> 则
+> $$
+> \begin{aligned}
+>  &[y_i,\dots,y_{i+m}]_x[y_j,\dots,y_n]_y(y-x)^{m+n-1}_+\\
+> =&\int_{y_i}^{y_{i+m}}\frac{Q_i^m(x)D^m_x[y_j,\dots,y_{j+n}]_y(y-x)^{m+n-1}_+}{(m-1)!}\mathrm{d}x\\
+> =&\frac{(-1)^m(m+n-1)!}{(m-1)!(n-1)!}\int_{-\infty}^{+\infty}Q_i^m(x)Q_j^n(x)\mathrm{d}(x)
+> \end{aligned}
+> $$
+> 由于 $Q_i^m(x)$ 的支集为 $(y_i,y_{i+m})$，所以上式的积分限可以代换为从 $-\infty$ 到 $+\infty$ 
+
 **性质 9** B 样条对节点的连续性依赖：设
 $$
 y_i\le \dots\le y_{i+m}=\overbrace{\tau_1,\dots,\tau_d}^{l_1},\dots,\overbrace{\tau_d,\dots,\tau_d}^{l_d}\ (\sum_{i=1}^d l_i=m+1)
@@ -1041,4 +1076,37 @@ $$
 J_i^k\triangleq\{\tau_j:l_j\ge m-k\}
 $$
 且收敛在不包含 $J_i^k$ 的任何闭集上是一致的
+
+### 09.2.3 扩充分割
+
+建立空间 $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$ 的一个具有局部支集的基底，空间维数为 $m+K$，其中 $K$ 为分割 $\Delta$ 的节点数（计算重节点）。在 $K$ 个节点上仅能定义 $K-m$ 个 B 样条，不能构成空间 $\mathcal{S}$ 的基底，因此必须加进 $2m$ 个点，但不能在区间 $(x_0,x_{K+1})$ 内部增加，否则就改变了空间 $\mathcal{S}$ 
+
+**定义 9.3** 对给定的 $a<x_1<\dots<x_k<b$ 和 $1\le m_i\le m\ (i=1,\dots,k)$，若 $y_1\le \cdots\le y_{2m+K}$ 满足
+$$
+y_1\le \cdots\le y_m\le a,\quad b\le y_{m+K+1}\le \dots\le y_{2m+K}\\
+y_{m+1}\le \dots \le y_{m+K}=\overbrace{x_1,\dots,x_1}^{m_1}<\cdots<\overbrace{x_k,\dots,x_k}^{m_k}
+$$
+则称 $\{y_i\}^{2m+K}_{i=1}$ 为空间 $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$ 的**扩充分割** 
+
+$\{y_i\}_{i=1}^{2m+K}$ 一种特殊的取法是
+$$
+y_1=\dots=y_m=a,\quad y_{m+K+1}=\dots=y_{2m+K}=b
+$$
+这样就在 $\{y_i\}_{i=1}^{2m+K}$ 上定义了 $m+K$ 个 B 样条 $\{B_i(x)\}_{i=1}^{m+K}$ 
+$$
+B_i(x)=(-1)^m(y_{i+m}-y_i)[y_i,\dots,y_{i+m}](x-\cdot)^{m-1}_+
+$$
+即为 $N_i^m(x)$ 
+
+当限制 $x\in [a,b]$ 时，$B_i(x)\in \mathcal{S}$，由于 $\{B_i(x)\}_{i=1}^{m+K}$ 的线性无关，故得到
+$$
+\mathcal{S}(\mathcal{P_m},\mathfrak{M},\Delta)=\text{span}\{B_i(x)\}_{i=1}^{m+K}
+$$
+即 $\{B_i(x)\}_{i=1}^{m+K}$ 构成空间 $\mathcal{S}$ 具有局部支集的基
+
+根据 B 样条的定义，它是**右连续**的，因而必须定义
+$$
+B_{m+K}(b)=\lim_{x\to b-0}B_{m+K}(x)
+$$
+当 $b$ 不是 $m$ 重点时，上述定义式左、右极限无区别，但当 $b$ 为 $m$ 重点时，必须取左极限，这是为了保证 $B_{m+K}\in \mathcal{S}$，否则由于右连续性，$B_{m+K}(b)=0$，这样在区间 $I_k=[x_k,b]$ 中，$B_{m+K}$ 就不是一个多项式了
 
