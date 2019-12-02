@@ -898,7 +898,7 @@ $$
 
 ---
 
-定义对称函数 $\text{symm}_j(t_1,\dots,t_p)$：
+定义**对称函数** $\text{symm}_j(t_1,\dots,t_p)$：
 $$
 \varphi(t)=\prod_{i=1}^p(t-t_i)=\sum_{j=0}^pt^{p-j}(-1)^j\text{symm}_j(t_1,\dots,t_p)
 $$
