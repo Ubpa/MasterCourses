@@ -251,3 +251,49 @@ $$
 
 ### 5.1.3 Konig 定理
 
+设 $G$ 是无环非空图，$S$ 是 $V(G)$ 的非空子集。若 $E(G)$ 中每条边都与 $S$ 中某点关联，则称 $S$ 为 $G$ 的**点覆盖** vertex covering
+
+如果 $G$ 中任何异于 $S$ 的点覆盖 $S^\prime$ 均有 $|S^\prime|\ge |S|$，则称 $S$ 为**最小点覆盖** minimum vertex covering
+
+点覆盖 $S$ 称为**极小的** minimal，若对任何 $x\in S$，$S\backslash\{x\}$ 都不是点覆盖
+
+$G$ 中最小点覆盖中的顶点数称为**点覆盖数** vertex covering number，记为 $\beta(G)$ 
+
+$G$ 中最大匹配中的边数称为**匹配数** matching number，记为 $\nu(G)$ 
+
+显然 $\nu(G)\le \beta(G)$ 
+
+**定理 5.1.3**（Konig 定理）对任何 2 部图 $G$ 有 $\nu(G)=\beta(G)$ 
+
+> **证明** 
+>
+> （Hall 定理）
+>
+> 设 $G$ 是 $2$ 部划分为 $\{X,Y\}$ 的 $2$ 部图，$Z$ 是 $G$ 的最小点覆盖，并令
+> $$
+> S=Z\cap X,\quad T=Z\cap Y,\quad S^\prime=X\backslash S,\quad T^\prime=Y\backslash T
+> $$
+> 由点覆盖的定义知 $S^\prime$ 与 $T^\prime$ 之间无边相连
+>
+> 考虑 $G$ 的 $2$ 部子图 $H=G[S\cup T^\prime]$ 
+>
+> 因为 $Z$ 是 $G$ 的最小点覆盖，所以对 $S$ 的任何子集 $R$ 均有 $|N_H(R)|\ge |R|$（否则 $T\cup(S\backslash R)\cup N_H(R)$ 是一个更小的点覆盖集，和 $Z$ 的最小矛盾）
+>
+> 由 Hall 定理知 $H$ 有存在饱和 $S$ 的匹配，记为 $M_1$ 
+>
+> 同样，$G[S^\prime\cup T]$ 中存在饱和 $T$ 的匹配，设为 $M_2$ 
+>
+> 由于 $M_1\cup M_2$ 是 $G$ 的匹配，而且 $M_1\cap M_2=\empty$，所以 $\beta(G)=|Z|=|S|+|T|=|M_1|+|M_2|\le \nu(G)$ 
+>
+> 又 $\nu(G)\le \beta(G)$，则 $\nu(G) = \beta(G)$ 
+
+**推论 5.1.3** 设 $G$ 是 $2$ 部划分为 $\{X,Y\}$ 的 $2$ 部简单图，$k\ge 1$。若 $|X|=|Y|=n$，且 $e(G)>(k-1)n$，则 $\nu(G)\ge k$ 
+
+> **证明** 
+>
+> （反证法）
+>
+> 若 $\beta(G)\le k-1$，则 $e(G)\le \beta(G)\Delta(G)=\beta(G)n\le (k-1)n$，矛盾，则 $\beta(G)\ge k$ 
+>
+> 由 **Konig 定理** 知 $\nu(G)=\beta(G)\ge k$ 
+
