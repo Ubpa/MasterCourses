@@ -148,7 +148,7 @@ $G=(V(G),E(G))$ 和 $H=(V(H),E(H))$ 是两个图。若 $V(H)\subseteq V(G)$ 且 
 
 若 $H\subseteq G$ 且 $V(H) = V(G)$，则称 H 为 G 的**支撑子图** spanning subgraph。若 $H\subseteq G$ 且 $H=G$，则称 H 为 G 的**真子图** proper subgraph，记为 $H\subset G$。
 
-$V'\subset V(G)$，$E'=\{(x,y)|x,y\in V',(x,y)\in E(G)\}$，则 $(V',E')$ 是 G 的导出子图，记为 $G[V']$。导出子图 $G[V\V']$ 记为 $G-V'$。若 $V'=\{x\}$，则简记为 $G-\{x\}$ 为 $G-x$。
+$V'\subset V(G)$，$E'=\{(x,y)|x,y\in V',(x,y)\in E(G)\}$，则 $(V',E')$ 是 G 的**导出子图**，记为 $G[V']$。导出子图 $G[V\backslash V']$ 记为 $G-V'$。若 $V'=\{x\}$，则简记为 $G-\{x\}$ 为 $G-x$。
 
 $E'\subset E(G)$，$V'=\{x|(x,y)\in E'\}$，记为 $G[E']$。$G-E'$ 表示删除 $E'$ 但不删点后得到的子图。
 

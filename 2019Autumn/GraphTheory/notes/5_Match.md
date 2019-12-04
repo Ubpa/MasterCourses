@@ -297,3 +297,103 @@ $G$ 中最大匹配中的边数称为**匹配数** matching number，记为 $\nu
 >
 > 由 **Konig 定理** 知 $\nu(G)=\beta(G)\ge k$ 
 
+## 5.2 独立集
+
+设 $D$ 是无环图，$S$ 是 $V(D)$ 的非空子集，若 $S$ 中任何两顶点在 $D$ 中均不相邻，则称 $S$ 为 $D$ 的**独立集** independent set
+
+$D$ 的独立集 $S$ 称为**最大的** maximum，如果对 $D$ 中任何异于 $S$ 的独立集 $S^\prime$ 均有 $|S^\prime|\le |S|$ 
+
+独立集 $S$ 称为**极大的** maximal，如果对任何 $x\in V\backslash S$，$S\cup\{x\}$ 都不是独立集
+
+> **示例** 
+>
+> ![image-20191203232110628](assets/image-20191203232110628.png)
+>
+> - 极大独立集 $S^\prime=\{x_0\}$ 
+> - 最大独立集 $S=\{x_1,x_3\}$ 
+
+$G$ 中最大独立集中的点数称为 $G$ 的**独立数** independent number，记为 $\alpha(G)$ 
+
+对于一般的图，确定 $\alpha(G)$ 是 NPC 问题
+
+设 $L$ 是 $E(G)$ 的非空子集。若 $G$ 的每个顶点都与 $L$ 中某条边关联，则称 $L$ 为 $G$ 的**边覆盖** edge covering
+
+$G$ 有边覆盖 $\Leftrightarrow$ $\delta(G)>0$ 
+
+最小边覆盖中的边数称为 $G$ 的**边覆盖数** edge covering number，记为 $\rho(G)$ 
+
+由定义，边覆盖 $L$ 的导出子图必为 $G$ 的一个支撑子图且 $\delta(L)>0$；因为一条边至多饱和两个顶点，所以 $\rho(G)\ge \frac{n}{2}$ 
+
+ 匹配数 $\nu(G) \le \frac{\nu}{2}$，则
+$$
+\nu(G)\le \rho(G)
+$$
+等号成立 $\Leftrightarrow$ $G$ 中存在完美匹配
+
+**定理 5.2.1** 设 $S\subseteq V(G)$。则 $S$ 是 $G$ 的独立集 $\Leftrightarrow$ $V(G)\backslash S$ 是 $G$ 的点覆盖
+
+> **证明** 
+>
+> $S$ 是独立集 $\Leftrightarrow$ $G$ 中每条边在 $S$ 中至多有一个端点 $\Leftrightarrow$ $G$ 的每条边至少有一端点在 $V\backslash S$ 中 $\Leftrightarrow$ $V\backslash S$ 是 $G$ 的点覆盖
+
+**推论 5.2.1.1** $S$ 是 $G$ 的极大独立集 $\Leftrightarrow$ $V(G)\backslash S$ 是 $G$ 的极小点覆盖
+
+**推论 5.2.1.2** $\alpha(G)+\beta(G)=n(G)$ 
+
+> **证明** 
+>
+> 由推论 5.2.1.1 立得
+
+**定理 5.2.2** 设 $G$ 是任意图，且 $\delta(G)>0$。则 $\nu+\rho=n(G)$ 
+
+> **证明** 
+>
+> 设 $M$ 是 $G$ 的最大匹配，$U$ 是 $M$ 非饱和点集，则 $G[U]$ 是空图
+>
+> 由于 $\delta(G)>0$，所以 $G$ 中存在 $|U|$ 条边的边集 $E^\prime$ 使得 $U\subseteq V(E^\prime)$ 
+>
+> 显然，$M\cup E^\prime$ 是 $G$ 的边覆盖，因而
+> $$
+> \rho\le |M\cup E^\prime| = \nu+(n-2\nu)=n-\nu
+> $$
+> 即得 $\nu+\rho\le n$ 
+>
+> 另一方面，设 $L$ 是 $G$ 的最小边覆盖
+>
+> 令 $H=G[L]$，则 $V(H)=V(G)$ 
+>
+> 设 $M$ 是 $H$ 的最大匹配，$U$ 为 $H$ 中 $M$ 非饱和点集
+>
+> 则 $H[U]$ 是空图，从而 $|L|-|M|=|L\backslash M|\ge U=n-2|M|$ ，即 $|L|+|M|\ge n$ 
+>
+> 又因为 $H$ 是 $G$ 的支撑子图，所以 $M$ 也是 $G$ 的匹配，故
+> $$
+> \nu+\rho=\nu+|L|\ge |M|+|L|\ge n
+> $$
+
+**定理 5.2.3**（Konig 定理）设 $G$ 是 $2$ 部图。若 $\delta(G)> 0$，则 $\alpha(G)=\rho(G)$ 
+
+> **证明** 
+>
+> 由 推论 5.2.1.2 和定理 5.2.2 有
+> $$
+> \alpha+\beta=\nu+\rho
+> $$
+> 由 定理 5.1.3 知 $\beta = \nu$，则 $\alpha=\rho$ 
+
+---
+
+虽然独立集的概念类似于匹配的概念，但却不存在与匹配理论相仿的独立集理论，特别是目前还不知道求图最大独立集的有效算法
+
+两个概念可以通过线图联系起来
+$$
+\nu(G)=\alpha(L(G))
+$$
+其中 $L(G)$ 是 $G$ 的线图
+
+**定理 5.2.4** 设 $G$ 是 $n(\ge 2)$ 阶简单无向图，且对 $G$ 中任何不相邻顶点 $x$ 和 $y$，均有 $d_G(x)+d_G(y)\ge n$（Ore 条件），则 $\alpha(G)\le \kappa(G)$ 
+
+**推论 5.2.4** 设 $G$ 是 $n(\ge 2)$ 阶简单无向图，$\delta(G)\ge \frac{n}{2}$，则 $\alpha(G)\le \kappa(G)$ 
+
+**定理 5.2.5** 设 $G$ 是 $n(\ge 3)$ 阶简单图。若 $\kappa(G)\ge \alpha(G)$，则 $G$ 是 Hamilton 图
+
