@@ -377,7 +377,7 @@ $$
 
 **定理 10.1** n 阶强连通有向图 D，若 $\delta^0(D) = \min\{\delta^+(D),\delta^-(D)\}\ge\frac{n}{2}$，则 D 是 Hamilton 图
 
-**定理 10.2** n 解强连通有向图 D，任何不相邻顶点 x 和 y 均有 $d_D(x)+d_D(y)\ge 2n -1$，则 D 是 Hamilton 图
+**定理 10.2** n 阶强连通有向图 D，任何不相邻顶点 x 和 y 均有 $d_D(x)+d_D(y)\ge 2n -1$，则 D 是 Hamilton 图
 
 **推论 1.7.3.4** 每个强连通竞赛图都是 Hamilton 图
 
