@@ -113,11 +113,16 @@ $$
 
 **定义 10.1** 将满足对角关系的、对称的、$n$ 仿射的多项式 $b(u_1,\dots,u_n)$ 称为多项式 $b(u)$ 的**开花** blossom，也称为**极形式** polar form
 
+> $b(u)=\sum_{i=0}^m c_iu^i$，则
+> $$
+> b(u_1,\dots,u_m)=\sum_{i=0}^m\frac{c_i}{\mathrm{C}_m^i}\sum_{1\le j_1<\cdots<j_i\le n}u_{j_1}\dots u_{j_i}
+> $$
+
 **定理 10.2** 对于任意 $n$ 次多项式 $b(u)$，存在唯一的、满足对角关系的、对称的、$n$ 仿射的多项式 $b(u_1,\dots,u_n)$，且
 $$
 b_i=b(\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)
 $$
-是 $b(u)$ 在 $[0,1]$ 上的 Bezier 系数（点），即
+是 $b(u)$ 在 $[0,1]$ 上的 **Bezier 系数（点）**，即
 $$
 b(u)=\sum_{i=0}^n b_iB^n_i(u)
 $$
@@ -125,7 +130,7 @@ $$
 $$
 B^n_i(u)\triangleq \mathrm{C}_n^iu^i(1-u)^{n-i}
 $$
-为 Bernstein 多项式
+为 **Bernstein 多项式** 
 
 ---
 
@@ -137,6 +142,8 @@ $$
 $$
 B^n_i(u)=\mathrm{C}_n^i\left(\frac{u-a}{b-a}\right)^i\left(\frac{b-u}{b-a}\right)^{n-i}=\mathrm{C}_n^it^i(1-t)^{n-i}
 $$
+
+其中 $t=\frac{u-a}{b-a}$ 
 
 ### 10.2.2 多项式开花的算法
 
@@ -159,6 +166,8 @@ $$
 b^n_n(u_1,\dots,u_n)=b(u_1,\dots,u_n)
 $$
 
+> 计算框架
+>
 > ![image-20191206004021567](assets/image-20191206004021567.jpg)
 >
 > ---
