@@ -1201,7 +1201,7 @@ D^j_+N^m(x)&=\nabla ^jN^{m-j}(x)=\sum_{k=0}^j(-1)^k\mathrm{C}_j^k N^{m-j}(x-k)
 \end{aligned}
 $$
 
-> $\nabla f(x)=f(x)-f(x-1)$ 
+> $\nabla$ 是向后差分算子，即 $\nabla f(x)=f(x)-f(x-1)$ 
 >
 > ---
 >

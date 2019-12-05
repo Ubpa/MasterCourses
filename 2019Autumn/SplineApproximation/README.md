@@ -11,6 +11,7 @@
 - [06. 最小平方逼近](notes/06_MinSquare.md) 
 - [08. 多项式样条的基本空间](notes/08_PolynomialSpline.md) 
 - [09. B 样条及其性质](notes/09_BSpline.md) 
+- [10. 样条函数的计算](notes/10_CalSpline.md) 
 
 ## 作业
 
