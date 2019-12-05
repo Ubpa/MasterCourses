@@ -35,9 +35,17 @@ s ( x ) = p ( x ) + \sum _ { i = 1 } ^ { k } \sum _ { j = 1 } ^ { m _ { i } } \a
 $$
 其中
 $$
-x _ { + } ^ { 0 } \triangleq \left\{ \begin{array} { l l } { 1 } & { x \geqslant 0 , \quad x _ { + } ^ { j } = x ^ { j } \cdot x _ { + } ^ { 0 } } \\ { 0 } & { x < 0 } \end{array} \right.
+x _ { + } ^ { 0 } \triangleq \left\{ \begin{array} { l l }
+{ 1 } & { x \geqslant 0  } \\
+{ 0 } & { x < 0 } \end{array} \right., \quad x _ { + } ^ { j } = x ^ { j } \cdot x _ { + } ^ { 0 }
 $$
 为**截断幂函数** 
+
+> 截断幂函数的性质
+>
+> - $x^m=x^m_++(-1)^m(-x)^m_+$ 
+> - $(x^m_+)^\prime=mx^{m-1}_+$ 
+> - $\int_a^b x^m_+\mathrm{d}x=\frac{1}{m+1}x^{m+1}_+\Big|^b_a$ 
 
 (2) 空间 $\mathcal{S}$ 的维数为
 $$

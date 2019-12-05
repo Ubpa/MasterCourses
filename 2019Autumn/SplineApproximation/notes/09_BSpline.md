@@ -246,7 +246,8 @@ $$
 $$
 其中 $\omega(t)=\prod_{i=1}^{r+1}(t-t_i)$ 
 
-> 由此可推出 $\left[ t _ { 1 } , \cdots , t _ { r + 1 } \right] f=[t_{\pi(1)},\dots,t_{\pi(r+1)}]f$，$\pi$ 是任意置换函数，即 $[t_1,\dots,t_{r+1}]$ 有**交换性** 
+> - 交换性：分母处与 $t$ 次序无关 $\left[ t _ { 1 } , \cdots , t _ { r + 1 } \right] f=[t_{\pi(1)},\dots,t_{\pi(r+1)}]f$，$\pi$ 是任意置换函数
+> - 系数：$[\alpha t_1,\dots,\alpha t_{r+1}]f = \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( \alpha t _ { i } - \alpha t _ { j } \right) } = \frac{1}{\alpha^r} \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( t _ { i } - t _ { j } \right) }$ 
 
 (2) 设 $t_1\le t_2\le \dots\le t_{r+1}=\overbrace{\tau_1,\dots,\tau_1}^{l_1}<\dots<\overbrace{\tau_d,\dots,\tau_d}^{l_d}$，则
 $$
@@ -390,7 +391,7 @@ $$
 $$
 性质：
 
-(1) $\Delta_h^r f(t)=\sum_{i=0}^r(-1)^{r-i}C_r^if(t+ih)$ 
+(1) $\Delta_h^r f(t)=\sum_{i=0}^r(-1)^{r-i}\mathrm{C}_r^if(t+ih)$ 
 
 (2) $\Delta_h^rx^i=r!h^r\delta_{ir}(i=0,\dots,r)$ 
 
@@ -1118,4 +1119,223 @@ $$
 B_{m+K}(b)=\lim_{x\to b-0}B_{m+K}(x)
 $$
 当 $b$ 不是 $m$ 重点时，上述定义式左、右极限无区别，但当 $b$ 为 $m$ 重点时，必须取左极限，这是为了保证 $B_{m+K}\in \mathcal{S}$，否则由于右连续性，$B_{m+K}(b)=0$，这样在区间 $I_k=[x_k,b]$ 中，$B_{m+K}$ 就不是一个多项式了
+
+## 9.3 等距节点对应的 B 样条
+
+### 9.3.1 定义
+
+等距节点是指 $y_{i+1}-y_i=h$ 对所有的 $i$ 成立
+
+（基本 B 样条）令
+$$
+\begin{aligned}
+Q^m(x)
+&\triangleq (-1)^m[0,\dots,m](x-\cdot)^{m-1}_+\\
+&=\frac{(-1)^m\Delta^m(x-\cdot)^{m-1}_+}{m!}\\
+&=\sum_{i=0}^m\frac{(-1)^i\mathrm{C}_m^i(x-i)^{m-1}_+}{m!}
+\end{aligned}
+$$
+
+> 第 2 个等号用了定理 9.8 (1)
+
+相应的规范 B 样条为
+$$
+N^m(x)=mQ^m(x)
+$$
+**定理 9.11** 设 $y_{i+j}=y_i+jh\ (j=0,\dots,m)$，则
+$$
+\begin{aligned}
+Q_i^m(x)&=\frac{1}{h}Q^m\left(\frac{x-y_i}{h}\right)\\
+N_i^m(x)&=\frac{1}{h}N^m\left(\frac{x-y_i}{h}\right)
+\end{aligned}
+$$
+
+> **证明** 
+> $$
+> \begin{aligned} Q _ { i } ^ { m } ( x ) & = ( - 1 ) ^ { m } \left[ y _ { i } , y _ { i } + h , \cdots , y _ { i } + m h \right] ( x - \cdot ) _ { + } ^ { m - 1 } \\ & = ( - 1 ) ^ { m } [ 0 , h , \cdots , m h ] \left( x - y _ { i } - \cdot \right) _ { + } ^ { m - 1 } \\ & = ( - 1 ) ^ { m } [ 0,1 , \cdots , m ] \left( x - y _ { i } - \cdot h \right) _ { + } ^ { m - 1 } \cdot \frac { 1 } { h ^ { m } } \\ & = ( - 1 ) ^ { m } [ 0,1 , \cdots , m ] \left( \frac { x - y _ { i } } { h } - \cdot \right) _ { + } ^ { m - 1 } \cdot \frac { 1 } { h } \\ & = \frac { 1 } { h } Q ^ { m } \left( \frac { x - y _ { i } } { h } \right) \end{aligned}
+> $$
+> 又
+> $$
+> N^m_i(x)=mhQ^m_i(x)=mQ^m\left(\frac{x-y_i}{h}\right)=N^m\left(\frac{x-y_i}{h}\right)
+> $$
+
+### 9.3.2 性质
+
+**性质 1** 
+$$
+\int_0^m N^m(x)\mathrm{d}x=1
+$$
+**性质 2** 
+$$
+\begin{aligned}
+N^m(x)&=xQ^{m-1}(x)+(m-x)Q^{m-1}(x-1)\\
+N^m(x)&=N^m(m-x)
+\end{aligned}
+$$
+
+> 第 2 条是对称性
+>
+> **证明** 
+>
+> （归纳法）
+>
+> - 当 $m=1$ 时显然成立
+> - 设 $m-1$ 时成立
+>
+> > $$
+> > \begin{aligned}
+> > N^m(m-x)
+> > &=(m-x)Q^{m-1}(m-x)+xQ^{m-1}(m-1-x)\\
+> > &=(m-x)Q^{m-1}(x-1)+xQ^{m-1}(x)\\
+> > &=N^m(x)
+> > \end{aligned}
+> > $$
+>
+> 综上，由归纳法知成立
+
+**性质 3** 
+$$
+\begin{aligned}
+D_+N^m(x)&=N^{m-1}(x)-N^{m-1}(x-1)\\
+D^j_+N^m(x)&=\nabla ^jN^{m-j}(x)=\sum_{k=0}^j(-1)^k\mathrm{C}_j^k N^{m-j}(x-k)
+\end{aligned}
+$$
+
+> $\nabla f(x)=f(x)-f(x-1)$ 
+>
+> ---
+>
+> **证明** 
+>
+> 定义平移算子 $E^{-1}$ 为
+> $$
+> E^{-1}f(x)\triangleq f(x-1)
+> $$
+> 则
+> $$
+> D_+N^m(x)=N^{m-1}(x)-N^{m-1}(x-1)=\nabla N^{m-1}(x)\triangleq(I-E^{-1})N^{m-1}(x)
+> $$
+> 所以
+> $$
+> D^j_+N^m(x)=\nabla^jN^{m-j}(x)=(I-E^{-1})^jN^{m-j}(x)=\sum_{k=0}^j(-1)^k\mathrm{C}_k^jN^{m-j}(x-k)
+> $$
+
+**性质 4** 
+$$
+\Delta ^mf(0)=\int_0^mN^m(x)D^mf(x)\mathrm{d}x
+$$
+
+> **证明** 
+> $$
+> \begin{aligned}
+> \Delta^mf(0)
+> &=m![0,\dots,m]f(\cdot)\\
+> &=m\int_0^m Q^m(x)D^mf(x)\mathrm{d} x\\
+> &=\int^m_0N^m(x)D^mf(x)\mathrm{d}x
+> \end{aligned}
+> $$
+>
+> > 第 1 个等号：$\Delta$ 定义
+> >
+> > 第 2 个等号：性质 7 (1)
+
+**性质 5** 
+$$
+N^m(x)=\left(N^1 \star N^{m-1}\right)(x)=\int_0^1 N^{m-1}(x-t)\mathrm{d}t\quad(m\ge 2)
+$$
+
+> **证明** 
+> $$
+> \begin{aligned}
+> \left(N^1 \star N^{m-1}\right)(x)
+> &=\int_\mathbb{R} N^1(t)N^{m-1}(x-t)\mathrm{d}t\\
+> &=\int _0^1 N^{m-1}(x-t)\mathrm{d}t\\
+> &=(-1)^{m-1}(m-1)[0,\dots,m-1]\int_0^1(x-t-\cdot)^{m-2}_+\mathrm{d}t\\
+> &=(-1)^{m-1}[0,\dots,m-1]\Big((x-1-\cdot)^{m-1}-(x-\cdot)^{m-1}\Big)\\
+> &=(-1)^{m-1}[1,\dots,m](x-\cdot)^{m-1}-[0,\dots,m-1](x-\cdot)^{m-1}\\
+> &=(-1)^{m-1}m[0,\dots,m](x-\cdot)^{m-1}\\
+> &=N^m(x)
+> \end{aligned}
+> $$
+>
+> ---
+>
+> **推论** 
+> $$
+> N^m(x)=\left(N^i\star N^{m-i}\right)(x)
+> $$
+
+**性质 6** B 样条的 Fourier 变换
+$$
+\begin{aligned}
+\hat{N}^m(\omega)
+&=\int_\mathbb{R}N^m(x)\mathrm{e}^{-\mathrm{i}\omega x}\mathrm{d}x\\
+&=\left(\hat{N}^1(\omega)\right)^m\\
+&=\left(\int_0^1 \mathrm{e}^{-\mathrm{i}\omega x}\mathrm{d}x\right)^m\\
+&=\left(\frac{1-\mathrm{e}^{-\mathrm{i}\omega}}{\mathrm{i}\omega}\right)^m
+\end{aligned}
+$$
+其中 $\mathrm{i} = \sqrt{-1}$ 
+
+> 卷积的 Fourier 变换就是变换的乘积
+
+**性质 7** 对每个连续函数 $f(x)$，都有
+$$
+\int_\mathbb{R}f(x)N^m(x)\mathrm{d}x=\int_0^1\dots\int_0^1f(x_1+\dots+x_m)\mathrm{d}x_1\dots\mathrm{d}x_m
+$$
+
+> **证明** 
+> $$
+> \begin{aligned} \int _ { - \infty } ^ { + \infty } f ( x ) N ^ { m } ( x ) \mathrm { d } x & = \int _ { 0 } ^ { \infty } f ( x ) \int _ { 0 } ^ { 1 } N ^ { m - 1 } \left( x - x _ { 1 } \right) \mathrm { d } x _ { 1 } \mathrm { d } x \\ & = \int _ { 0 } ^ { \infty } f ( x ) \int _ { 0 } ^ { 1 } \cdots \int _ { 0 } ^ { 1 } N ^ { 1 } \left( x - x _ { 1 } - \cdots - x _ { m - 1 } \right) \mathrm { d } x _ { 1 } \mathrm { d } x _ { 2 } \cdots \mathrm { d } x _ { m - 1 } \mathrm { d } x \\ & = \int _ { 0 } ^ { 1 } \cdots \int _ { 0 } ^ { 1 } \int _ { x _ { 1 } + x _ { 2 } + \cdots + x _ { m - 1 } } ^ { 1 + x _ { 1 } + \cdots + x _ { m - 1 } } f ( x ) \mathrm { d } x \mathrm { d } x _ { 1 } \cdots \mathrm { d } x _ { m - 1 } \\ & = \int _ { 0 } ^ { 1 } \cdots \int _ { 0 } ^ { 1 } f \left( x _ { 1 } + x _ { 2 } + \cdots + x _ { m } \right) \mathrm { d } x _ { 1 } \mathrm { d } x _ { 2 } \cdots \mathrm { d } x _ { m } \end{aligned}
+> $$
+
+---
+
+等距节点关于原点对称的 B 样条
+$$
+M^m(x)\triangleq (-1)^mm\left[-\frac{m}{2},-\frac{m}{2}+1,\dots,\frac{m}{2}\right]=N^m\left(x+\frac{m}{2}\right)
+$$
+关于原点对称
+$$
+M^m(x)= N^m\left(x+\frac{m}{2}\right)=N^m\left(m-x-\frac{m}{2}\right)=N^m\left(-x+\frac{m}{2}\right)=M^m(-x)
+$$
+**定理 9.12** 对所有的 $1\le i\le m-1$，有
+
+(1)
+$$
+M^m(x)=\left(M^i\star M^{m-i}\right)(x)=\int_{\mathbb{R}}M^i(t)M^{m-i}(x-t)\mathrm{d}t
+$$
+(2)
+$$
+M^m(x)=\frac{1}{2\pi}\int_\mathbb{R}\psi_m(\omega)e^{\mathrm{i}\omega x}\mathrm{d}\omega
+$$
+即 $\psi_m(\omega)$ 是 $M^m(x)$ 的 Fourier 变换
+
+> **证明** 
+>
+> (1)
+> $$
+> \begin{aligned}
+> \left(M^1\star M^{m-1}\right)(x)
+> &=\int_0^1M^1(t)M^{m-1}(x-t)\mathrm{d}t\\
+> &=\int_0^1N^1\left(t+\frac{1}{2}\right)N^{m-1}\left(x-t+\frac{m-1}{2}\right)\mathrm{d}t\\
+> &=\int_{-\frac{1}{2}}^{\frac{1}{2}}N^{m-1}\left(x-t+\frac{m-1}{2}\right)\mathrm{d}t\\
+> &=\int_0^1 N^{m-1}\left(x+\frac{m}{2}-t\right)\mathrm{d}t\\
+> &=N^{m}\left(x+\frac{m}{2}\right)\\
+> &=M^m(x)
+> \end{aligned}
+> $$
+> 再利用卷积的性质即可
+>
+> (2)
+> $$
+> \hat{M}^1(\omega)
+> =\int_\mathbb{R}M^1(x)\mathrm{e}^{-\sqrt{-1}\omega x}\mathrm{d}x
+> =\int_{-\frac{1}{2}}^{\frac{1}{2}}\mathrm{e}^{-\mathrm{i}\omega x}\mathrm{d}\omega
+> =\frac{\sin\frac{\omega}{2}}{\omega/2}
+> $$
+> 则
+> $$
+> \hat{M}^m(\omega)=\left(\hat{M}^1(\omega)\right)^m=\left(\frac{\sin\frac{\omega}{2}}{\omega/2}\right)^m=\psi_m(u)
+> $$
 
