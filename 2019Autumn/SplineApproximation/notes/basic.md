@@ -165,11 +165,55 @@ $$
 
 则切比雪夫多项式在 $[-1,1]$ 上带权 $\rho(x)=\frac{1}{\sqrt{1-x^2}}$ 正交
 
+## 导数
+
+$$
+\begin{aligned}
+T_n^\prime(x)&=\frac{n\sin (n\arccos x)}{\sqrt{1-x^2}}
+=\frac{n\sin (n\theta)}{\sin\theta}\\
+&=2^{n-1}\sum_{i=1}^n\prod_{j=1,j\neq i}^n (t-\xi_j)
+=\sum_{i=1}^n\frac{T_n(x)}{(x-\xi_i)}=n2^{n-1}\prod_{i=1}^{n-1}\left(x-\cos\frac{i}{n}\pi\right)\\
+T_n^\prime(\xi_i)&=\frac{(-1)^{i-1}n}{\sqrt{1-\xi_i^2}}
+=\prod_{j=1,j\neq i}^n (\xi_i-\xi_j)\\
+\end{aligned}
+$$
+
+> $$
+> \begin{aligned}
+> 2^{n-1}\sin \theta\prod_{i-1}^{n-1}\left(\cos\theta-\cos\frac{i}{n}\pi\right)
+> &=(-1)^{n-1}2^{2n-2}\sin\theta\prod_{i=1}^{n-1}\sin\left(\frac{\theta}{2}-\frac{i\pi}{2n}\right)\sin\left(\frac{\theta}{2}+\frac{i\pi}{2n}\right)\\
+> &=(-1)^{n-1}2^{2n-2}\sin\theta\prod_{i=1}^{n-1}\cos\left(\frac{\theta}{2}+\frac{i\pi}{2n}\right)\sin\left(\frac{\theta}{2}+\frac{i\pi}{2n}\right)\\
+> &=2^{n-1}\prod_{i=0}^{n-1}\sin\left(\theta+\frac{i\pi}{n}\right)\\
+> &=\sin(n\theta)
+> \end{aligned}
+> $$
+>
+> 第一个等号：和差化积公式
+>
+> 第二个等号：总共 2n-2 个项相乘，小的 $n-1$ 个项与后 $n-1$ 个项刚好逐项相差 $\frac{\pi}{2}$，然后用诱导公式
+>
+> 第三个等号：二倍角公式，并且把 $\sin\theta$ 放到 $\prod$ 中
+>
+> 第四个等号：参考 [n倍角公式的证明和应用](https://jingyan.baidu.com/article/a3f121e4b28373fc9052bb1c.html) 
+
+此外
+$$
+|T^\prime_n(x)|= n \left|\frac{\sin (n\theta)}{\sin\theta}\right|\le n^2
+$$
+且
+$$
+T_n^\prime(1)=n\lim_\limits{\theta\to0}\frac{\sin (n\theta)}{\sin\theta}=n^2
+$$
+
+$T_n^\prime(x)$ 零点为 $\cos\frac{\pi i}{m}$ 
+
 ## 最值
 
 $$
 \|T_n\|_{[-1,1]}=1
 $$
+
+
 
 最值点为
 $$
@@ -184,7 +228,7 @@ $$
 
 取
 $$
-n\arccos \xi_i=\frac{(2i+1)\pi}{2}\quad(i=0,1,\dots,n-1)
+n\arccos \xi_i=\frac{(2i-1)\pi}{2}\quad(i=1,\dots,n)
 $$
 即
 $$
@@ -197,28 +241,6 @@ $$
 > $x_0>x_1>\dots>x_{n-1}$ 
 >
 > 在 $[-1,1]$ 上共 n 个零点
-
-## 导数
-
-$$
-\begin{aligned}
-T_n^\prime(x)&=\frac{n\sin (n\arccos x)}{\sqrt{1-x^2}}
-=\frac{n\sin (n\theta)}{\sin\theta}\\
-&=2^{n-1}\sum_{i=1}^n\prod_{j=1,j\neq i}^n (t-\xi_j)
-=\sum_{i=1}^n\frac{T_n(x)}{(x-\xi_i)}\\
-T_n^\prime(\xi_i)&=\frac{(-1)^{i-1}n}{\sqrt{1-\xi_i^2}}
-=\prod_{j=1,j\neq i}^n (\xi_i-\xi_j)\\
-\end{aligned}
-$$
-
-此外
-$$
-|T^\prime_n(x)|= n \left|\frac{\sin (n\theta)}{\sin\theta}\right|\le n^2
-$$
-且
-$$
-T_n^\prime(1)=n\lim_\limits{\theta\to0}\frac{\sin (n\theta)}{\sin\theta}=n^2
-$$
 
 ## 极性
 
@@ -234,7 +256,7 @@ $$
 >
 > ---
 >
-> 证明
+> **证明** 
 >
 > 记 $[-1,1]$ 上与 0 的偏差最小且首项系数为 1 的 n 次多项式集合为 $\mathcal{P}_n^0$，$C_n=\frac{1}{2^{n-1}}$， $T_n^0=C_n T_n(x)$ 
 >
