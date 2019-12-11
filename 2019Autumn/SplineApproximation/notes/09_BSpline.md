@@ -1099,6 +1099,10 @@ $$
 
 建立空间 $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$ 的一个具有局部支集的基底，空间维数为 $m+K$，其中 $K$ 为分割 $\Delta$ 的节点数（计算重节点）。在 $K$ 个节点上仅能定义 $K-m$ 个 B 样条，不能构成空间 $\mathcal{S}$ 的基底，因此必须加进 $2m$ 个点，但不能在区间 $(x_0,x_{K+1})$ 内部增加，否则就改变了空间 $\mathcal{S}$ 
 
+> 一个 B 样条需要顺序的 $m+1$ 个节点，而 $\mathcal{S}$ 总共有 $K$ 个节点，因此可以定义 $K-(m+1)+1=K-m$ 个 B 样条
+>
+> 引进 $2m$ 个点后，节点数变为 $K+2m$，可以定义 $K+m$ 个 B 样条
+
 **定义 9.3** 对给定的 $a<x_1<\dots<x_k<b$ 和 $1\le m_i\le m\ (i=1,\dots,k)$，若 $y_1\le \cdots\le y_{2m+K}$ 满足
 $$
 y_1\le \cdots\le y_m\le a,\quad b\le y_{m+K+1}\le \dots\le y_{2m+K}\\
