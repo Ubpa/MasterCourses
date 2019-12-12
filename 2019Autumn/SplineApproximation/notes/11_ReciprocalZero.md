@@ -69,7 +69,7 @@ $$
 
 > **图例** 
 >
-> ![image-20191210150930251](assets/image-20191210150930251.png)
+> ![image-20191210150930251](assets/image-20191210150930251.jpg)
 
 $B^*_m(x)$ 是偶函数
 
@@ -268,7 +268,7 @@ $$
 >
 > 对于不同的节点，$N^2_j(x)$ 的图像如图 11.1 所示
 >
-> ![image-20191211165440132](assets/image-20191211165440132.png)
+> ![image-20191211165440132](assets/image-20191211165440132.jpg)
 >
 > 显然有
 > $$
@@ -396,3 +396,104 @@ $$
 $$
 \lambda_jN^m_i(x)=\delta_{ij}\quad(i,j=1,\dots,n)
 $$
+
+## 11.3 样条函数零点的性质
+
+设 $B[I]$ 表示定义在 $I$ 上的有界函数的全体
+
+若 $\zeta\in I$ 且 $f(\zeta)=0$，则称 $\zeta$ 为 $f$ 的零点
+
+设 $Z_I(f)$ 表示函数 $f$ 在集 $I$ 上的零点的数目
+
+> 若 $f$ 在 $I$ 的一个小区间上恒等于 0，则 $Z_I(f)=\infty$ 
+
+**定义 11.3** 设 $f\in B[I]$，称 $t_1<\dots<t_n\in I$ 是 $f$ 在 $I$ 上的**分离零点**，是指 $f(t_i)=0\ (i=1,\dots,n)$，且存在 $y_1,\dots,y_{n-1} \in I$ 满足 $f(y_i)\neq 0\ (i=1,\dots,n-1)$ 以及 $t_1<y_1<t_2<\dots<t_{n-1}<y_{n-1}<t_n$，记 $S^{\text{sep}}_I(f)$ 为 $f$ 在 $I$ 上分离零点的最大数目
+
+**定义 11.4** 设 $f\in C^r[I]$，$t\in I$，如果
+$$
+f(t)=Df(t)=\dots=D^{r-1}f(t)=0\neq D^rf(t)
+$$
+则称 $f$ 在 $t$ 有一个 $r$ 重零点。对于 $f\in C^r[I]$，可定义 $Z^r_I(f)$ 为 $f$ 在 $I$ 中零点的数目（零点的重数计算到 $r$ 重）。如果 $f\in C^\infty[I]$，可定义 $Z^*_I(f)$ 为 $f$ 在 $I$ 中零点的数目（计算零点的重数可到任意阶）
+
+### 11.3.1 扩充的 Rolle 定理和多项式的 Budan-Fourier 定理
+
+**定义 11.5** 如果 $f\in AC[I]$，则称 $c$ 是 $f$ 的一个左 Rolle 点，指 $f(c)=0$ 或者 $\forall \epsilon>0,\exist t\in(c,c+\epsilon),f(t)\cdot Df(t)>0$。类似地，称 $d$ 是 $f$ 的一个右 Rolle 点，指 $f(d)=0$ 或者 $\forall \epsilon>0,\exist t\in(d-\epsilon,d),f(t)\cdot Df(t)<0$ 
+
+其中 $AC[I]$ 是定义在 $I$ 上的所有**绝对连续函数**的集合
+
+> 绝对连续函数：$\forall \epsilon>0,\exist \delta>0,\forall n,\forall a\le \underline{t}_1\le \overline{t}_1\le \dots\le \underline{t}_n\le \overline{t}_n\le b$，只要 $\sum_{i=1}^n| \overline{t}_1-\underline{t}_1|<\delta$，就有 $\sum_{i=1}^n\left|f(\overline{t}_i)-f(\underline{t}_i)\right|<\epsilon$ 
+>
+> ---
+>
+> $C^1[I]\subseteq AC[I] \subseteq C[I]$ 
+
+**定理 11.7**（扩充的 Rolle 定理）设 $f\in AC[c,d]$，$c,d$ 分别为 $f$ 的左右 Rolle 点，则 $Df$ 在区间中至少有一次符号改变或一个零点。如果 $Df$ 在 $(c,d)$ 上是连续的，则它在这个区间上至少有一个零点
+
+**定义 11.6** 设 $v=(v_1,\dots,v_m)$ 是一个实向量，$v$ 的**强符号改变** strong sign changes 的数目 $S^-(v)\triangleq$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中的零舍去。类似地，$v$ 的弱符号改变 weak sign changes $S^+(v)$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中 $0$ 可以作为 $+1$ 或 $-1$ 
+
+显然有
+$$
+S^-(v)\le S+(v)
+$$
+
+> **示例** 
+> $$
+> S^-(3,-5,0,0,6)=2,\quad S^+(3,-5,0,0,6)=4
+> $$
+
+**定义 11.7** 设 $f$ 为定义在实直线 $\mathbb{R}$ 的子集 $I$ 上的有界实值函数，称
+$$
+S^-_I(f)\triangleq\sup_n\{S^-(f(t_1),\dots,f(t_n)):t_1<\dots<t_n\in I\}
+$$
+为函数 $f$ 在 $I$ 上的强符号改变数目。类似地，将
+$$
+S^+_I(f)\triangleq\sup_n\{S^+(f(t_1),\dots,f(t_n)):t_1<\dots<t_n\in I\}
+$$
+称为函数 $f$ 在 $I$ 上的弱符号改变数目
+
+由定义显然有
+$$
+S^-_I(f)\le S^+_I(f)
+$$
+
+> **示例** 
+>
+> ![image-20191212210839982](assets/image-20191212210839982.jpg)
+
+**定理 11.8**（Budan-Fourier 定理）
+
+(1) 设 $0\neq p\in \mathcal{P}_m$，则
+$$
+Z^*_{(a,b)}(p)\le S^-[p(a),Dp(a),\dots,D^{m-1}p(a)]-S^-[p(b),Dp(b),\dots,D^{m-1}p(b)]
+$$
+(2) 如果 $p$ 的确是 $m$ 阶多项式（即 $D^{m-1}p$ 为一非零常数），则
+$$
+Z^*_{(a,b)}(p)\le m-1-S^+[p(a),-Dp(a),\dots,(-1)^{m-1}D^{m-1}p(a)] - S^+[p(b),Dp(b),\dots,D^{m-1}p(b)]
+$$
+**推论 11.1**（多项式的 Descartes 法则）多项式在正半轴上的零点个数与其系数的符号改变之间满足如下关系
+$$
+Z^*_{(0,\infty)}\left(\sum_{i=1}^m c_it^{i-1}\right)\le S^-(c_1,\dots,c_m)
+$$
+对所有不全为 0 的 $c_i$ 成立
+
+> **证明** 
+>
+> 由 $c_i=\frac{D^{i-1}p(0)}{(i-1)!}(i=1,\dots,m)$，则
+> $$
+> S^-\left[p(0),Dp(0),\dots,D^{m-1}p(0)\right]=S^-(c_1,\dots,c_m)
+> $$
+>
+> 而
+> $$
+> S^-\left[p(+\infty),Dp(+\infty),\dots,D^{m-1}p(+\infty)\right]=0
+> $$
+>
+> > 若 $D^{m-1}p(+\infty)>0$ 则 $D^{m-2}p(+\infty)>0$，以此类推 $p^{m-3}p(+\infty),\dots,p(+\infty)>0$；若 $D^{m-1}p(+\infty)<0$，同理；若 $D^{m-1}p(+\infty)=0$，则对 $D^{m-2}p(+\infty)$ 作相同分析
+>
+> 故根据 **定理 11.8 (1)** 可知
+> $$
+> Z^*_{(0,\infty)}\left(\sum_{i=1}^m c_it^{i-1}\right)\le S^-(c_1,\dots,c_m)
+> $$
+
+### 11.3.2 样条函数的零点
+
