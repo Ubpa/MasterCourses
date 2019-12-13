@@ -307,7 +307,7 @@ $D$ 的独立集 $S$ 称为**最大的** maximum，如果对 $D$ 中任何异于
 
 > **示例** 
 >
-> ![image-20191203232110628](assets/image-20191203232110628.png)
+> ![image-20191203232110628](assets/image-20191203232110628.jpg)
 >
 > - 极大独立集 $S^\prime=\{x_0\}$ 
 > - 最大独立集 $S=\{x_1,x_3\}$ 
@@ -463,5 +463,81 @@ $(M,\overline{M})$ 交错路简称为 $M$ **交错路**，其中 $\overline{M}=E
 
 算法复杂度是 $O(ne^2)$，稍加修改可以获得求 2 部图的最大匹配算法
 
+## 5.5 货郎担问题
 
+一个货郎担着商品去他所在的区域内所有村镇进行推销，他应该怎样选择一条总路程最短的行走路线使每个村镇至少去一次，然后回到出发点，这个问题称为**货郎担问题** traveling salesman problem
+
+此问题与中国投递员问题相似，但却是 NPC 问题
+
+经过 $G$ 中每个顶点至少一次的闭链称为**货郎链** salesman route
+
+货郎担问题就是在给定连通加权无向图 $(G,\pmb{w})$ 中找出一条权最小的 Hamilton 圈或者找出一条最小权货郎链，前者称为**最优圈** optimal cycle，后者称为**最优链** optimal route
+
+> 最优圈不一定比最优链好
+>
+> > **示例** 
+> >
+> > ![image-20191212172645790](assets/image-20191212172645790.jpg)
+> >
+> > 最优圈为 $(x,y,z,x)$，权为 5
+> >
+> > 最优链为 $(x,y,x,z,x)$，权为 4
+
+一般的连通加权图中，并不一定存在最优圈，最优链总是存在
+
+---
+
+设 $(G,\pmb{w})$ 是连通加权图，若对 $G$ 的任何两个不同顶点 $x$ 和 $y$ 均有
+$$
+\pmb{w}(x,y)\le \pmb{w}(x,z)+\pmb{w}(z,y)\quad \forall z\in V(G)\backslash\{x,y\}
+$$
+其中 $\pmb{w}(x,y)$ 为 $x$ 和 $y$ 之间的（加权）距离，则称 $(G,\pmb{w})$ 满足**三角不等式** triangle inequality
+
+对于连通加权图 $(G,\pmb{w})$，构造加权完全图 $(K_n,\pmb{w}^\prime)$，其中 $V(K_n)=V(G)$，$K_n$ 中边 $xy$ 的权 $\pmb{w}^\prime(xy)$ 定义为 $G$ 中 $x$ 和 $y$ 的（加权）距离，$(K_n,\pmb{w}^\prime)$ 满足三角不等式，$\pmb{w}^\prime(xy)$ 对应 $G$ 中 $xy$ 最短路 $P$，有 $\pmb{w}^\prime=\pmb{w}(P)$ 
+
+> **示例** 
+>
+> ![image-20191212224918309](assets/image-20191212224918309.jpg)
+>
+> 右图就是构造出的 $(K_3,\pmb{w}^\prime)$ 
+
+**引理 5.5.1** 
+
+(i) 对于 $(K_n,\pmb{w}^\prime)$ 中任何 Hamilton 圈 $C$，$(G,\pmb{w})$ 中存在货郎链 $R$ 使得 $\pmb{w}(R)=\pmb{w}^\prime(C)$ 
+
+(ii) 对于 $(G,\pmb{w})$ 中最优链 $R$，$(K_n,\pmb{w}^\prime)$ 中存在 Hamilton 圈 $C$ 使得 $\pmb{w}(R)=\pmb{w}^\prime(C)$ 
+
+> **证明** 
+>
+> （构造）
+>
+> (i) 对于 $xy\in E(C)$，$xy$ 最短路 $P$ 使得 $\pmb{w}(P)=\pmb{w}^\prime(xy)$，则 $P\subseteq R$ 
+>
+> (ii) 从 $x$ 开始，沿着 $R$ 依次删去已经访问过的顶点，剩下的顶点按 $R$ 中原来的顺序就得到 $(K_n,\pmb{w}^\prime)$ 中 Hamilton 圈 $C$ 满足 $\pmb{w}^\prime(C)=\pmb{w}(R)$ 
+
+**定理 5.5.1** 连通加权图 $(G,\pmb{w})$ 中最优链对应 $(K_n,\pmb{w}^\prime)$ 中最优圈且权相等。反之，$(K_n,\pmb{w}^\prime)$ 中最优圈对应 $(G,\pmb{w})$ 中最优链且权相等
+
+---
+
+$K_n$ 有 $\frac{1}{2}(n-1)!$ 条不同的 Hamilton 圈，已证明属于 NPC 问题
+
+希望有**近似算法** approximation algorithm 获得近似解
+
+设 $L_0$ 是近似算法获得 Hamilton 圈的权值，而 $L$ 是最优圈的权值，比值 $L_0/L$ 称为该近似算法的**性能比** performance ratio，显然 $L_0/L\ge 1$ 
+
+一个近似算法称为 $\alpha$ 近似算法，如果 $L_0/L\le \alpha$ 
+
+**Christofides 近似算法** 
+
+1.求 $(G,\pmb{w})$ 的加权距离矩阵 $\pmb{w}^\prime$，并构造 $(K_n,\pmb{w}^\prime)$ 
+
+2.求 $(K_n,\pmb{w}^\prime)$ 中最小树 $T$ 
+
+3.找出 $T$ 中奇度点集 $V^\prime$ 并求出 $G^\prime=K_n[V^\prime]$ 中最小权完美匹配 $M$ 
+
+4.在 $G^*=T\oplus M$ 中求  回 $C_0=(x,y,z,\dots,x)$ 
+
+5.从 $x$ 开始，沿 $C_0$ 一次删去 $C_0$ 中重复出现的顶点（最后一个 $x$ 除外）后，剩余的顶点（不改变他们在 $C_0$ 中的顺序）形成 $K_n$ 中 Hamilton 圈 $C$，$C$ 即为所求的近似最优圈
+
+**定理 5.5.2** 对于满足三角不等式的 $(K_n,\pmb{w})$，Christofides 近似算法的性能比小于 $\frac{3}{2}$ 
 
