@@ -19,20 +19,38 @@ $$
 > \end{aligned}
 > $$
 >
-> 即
+> 故
 > $$
 > T_m(x)=2^{m-1}x^m+\dots\quad(m\ge 1)
 > $$
+>
+> > **证明** 
+> > $$
+> > \begin{aligned}\cos n\theta&= \cos\theta\cos(n-1)\theta-\sin\theta\sin(n-1)\theta\\&= 2\cos\theta\cos(n-1)\theta-(\cos\theta\cos(n-1)\theta+\sin\theta\sin(n-1)\theta)\\&= 2\cos\theta\cos(n-1)\theta-\cos(n-2)\theta\end{aligned}
+> > $$
+> > 则
+> > $$
+> > \begin{aligned}&T_m(x)\\=&\cos(m\arccos x)\\\xlongequal{x=\cos\theta}&\cos(m\theta)\\=&2\cos \theta\cos(m-1)\theta-\cos(m-2)\theta\\=&2xT_{m-1}(x)-T_{m-2}(x)\end{aligned}
+> > $$
 
 -  $T_m(-1)=(-1)^m$，$T_m(1)=1$，$T_m(-x)=(-1)^mT_m(x)$ 
 
 > 当 $m=2k\ (k\in N)$ 时，$T_m$ 是偶函数；否则，$T_m$ 是奇函数
 
 - $T^\prime_m(x)$ 的零点为 $\cos\frac{\pi i}{m}\ (i=1,\dots,m-1)$，$T_m(x)$ 在这些零点上取极值
-- $T_m(x)$ 满足微分方程
+- $T_m(x)$ 满足微分方程 $(1-x^2)T_m^{\prime\prime}(x)-xT_m^\prime(x)+m^2T_m(x)=0$ 
 
+> **证明** 
+>
+> 令 $x=\cos\theta$，两边对 $x$ 求导，得 $1=-\theta^\prime\sin\theta$，即 $\theta^\prime=-\frac{1}{\sin\theta}$ 
+>
+> 则
 > $$
-> (1-x^2)T_m^{\prime\prime}-xT_m^\prime(x)+m^2T_m(x)=0
+> \begin{aligned}T_m^\prime(x)&=(\cos m\theta)^\prime=-m\theta^\prime\sin m\theta=\frac{m\sin m\theta}{\sin \theta}\\T_m^{\prime\prime}(x)&=\frac{m^2\theta^\prime\cos m\theta\sin\theta-m\theta^\prime\cos\theta\sin m\theta}{\sin^2\theta}\\&=\frac{-m^2\cos m\theta+m\cos\theta\frac{\sin m\theta}{\sin\theta}}{1-\cos^2\theta}\\&=\frac{-m^2T_m(x)+xT_m^\prime(x)}{1-x^2}\end{aligned}
+> $$
+> 即
+> $$
+> (1-x^2)T_m^{\prime\prime}(x)-xT_m^\prime(x)+m^2T_m(x)
 > $$
 
 - 最佳一致逼近定理：一切首项系数为 1 的 $n$ 次多项式中，$\omega_n(x)=T_n(x)/2^{n-1}$ 对零的偏差最小。即对任意 $n$ 次首项系数为 1 的多项式 $p_n(x)$，都有
@@ -433,13 +451,82 @@ $$
 
 显然有
 $$
-S^-(v)\le S+(v)
+S^-(v)\le S^+(v)
 $$
 
 > **示例** 
 > $$
 > S^-(3,-5,0,0,6)=2,\quad S^+(3,-5,0,0,6)=4
 > $$
+
+由 定义 11.6 不难证明
+$$
+S^+(v_1,-v_2,\dots,(-1)^{r-1}v_r)+S^-(v_1,v_2,\dots,v_r)=r-1
+$$
+
+> **证明** 
+>
+> （归纳法）
+>
+> - 当 $r=1$ 时，显然成立
+>
+> - 假设 $r-1$ 时成立
+>
+> > - 当 $v_1,\dots,v_{r-1}=0$ 时
+> >
+> > > $$
+> > > \begin{aligned}S^+(0,\dots,0,(-1)^{r-1}v_r)&=r-1\\S^-(0,\dots,0,v_r)&=0\end{aligned}
+> > > $$
+> > >
+> > > 则
+> > > $$
+> > > S^+(v_1,-v_2,\dots,(-1)^{r-1}v_r)+S^-(v_1,v_2,\dots,v_r)=r-1
+> > > $$
+> > >
+> >
+> > - 否则，令 $i^*=\mathop{\arg\max}_\limits{i}\{v_i:v_i\neq 0,i=1,\dots,r-1\}$ 
+> >
+> > > - 当 $i=1$ 时
+> > >
+> > > > 当 $v_1v_r\ge 0$ 时
+> > > > $$
+> > > > \begin{aligned}
+> > > > S^+(v_1,\dots,(-1)^{r-1}v_r)&=r-1\\
+> > > > S^-(v_1,0,\dots,0,v_r)&=0
+> > > > \end{aligned}
+> > > > $$
+> > > > 当 $v_1v_r<0$ 时
+> > > > $$
+> > > > \begin{aligned}
+> > > > S^+(v_1,\dots,(-1)^{r-1}v_r)&=r-2\\
+> > > > S^-(v_1,0,\dots,0,v_r)&=1
+> > > > \end{aligned}
+> > > > $$
+> > > > 故
+> > > > $$
+> > > > S^+(v_1,-v_2,\dots,(-1)^{r-1}v_r)+S^-(v_1,v_2,\dots,v_r)=r-1
+> > > > $$
+> > >
+> > > - 当 $i>1$ 时
+> > >
+> > > > $$
+> > > > S^+(v_1,\dots,v_r)=S^+(v_1,\dots,v_i)+S^+(v_i,\dots,v_r)\\
+> > > > S^-(v_1,\dots,v_r)=S^-(v_1,\dots,v_i)+S^-(v_i,\dots,v_r)
+> > > > $$
+> > > >
+> > > > 由假设知
+> > > > $$
+> > > > \begin{aligned}
+> > > > S^+(v_1,\dots,v_i)+S^-(v_1,\dots,v_i)&=i-1\\
+> > > > S^+(v_1,\dots,v_i)+S^-(v_i,\dots,v_r)&=r-i
+> > > > \end{aligned}
+> > > > $$
+> > > > 故
+> > > > $$
+> > > > S^+(v_1,-v_2,\dots,(-1)^{r-1}v_r)+S^-(v_1,v_2,\dots,v_r)=r-1
+> > > > $$
+>
+> 综上，由归纳法知命题成立
 
 **定义 11.7** 设 $f$ 为定义在实直线 $\mathbb{R}$ 的子集 $I$ 上的有界实值函数，称
 $$
