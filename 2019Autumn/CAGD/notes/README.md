@@ -8,3 +8,5 @@
 - [06. 极形式 / Blossom](06_PolarForm.md) 
 - [07. 有理样条曲线](07_Rational.md) 
 - [08. 样条曲面](08_SplineSurface.md) 
+- [09. 曲线和曲面细分](09_Subdivision.md) 
+
