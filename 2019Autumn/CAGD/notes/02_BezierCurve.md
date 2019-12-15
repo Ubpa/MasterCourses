@@ -1,4 +1,4 @@
-# 02. Bezier Curves
+# 02. Bezier 曲线
 
 ## 2.1 曲线表示
 
@@ -52,7 +52,7 @@
 - 时间 $O(n^2)$，空间 $O(n)$ 
 - $\pmb{x}(0)=\pmb{b}_0,\pmb{x}(1)=\pmb{b}_n$，其他点只逼近
 - 凸包性：Bezier 曲线在 Bezier 多边形内部
-- Variation diminishing：直线与 Bezier 曲线的交点数少于 Bezier 多边形
+- 变差缩减性 Variation diminishing：直线与 Bezier 曲线的交点数少于 Bezier 多边形
 - Bezier 点的影响力：全局，伪局部
 - 仿射不变性：仿射变化后 Bezier 曲线和 Bezier 多边形不变
 - 对称性：$x(t)=[\pmb{b}_0,\dots,\pmb{b}_n]$ 与 $\pmb{x}'(t)=[\pmb{b}_n,\dots,\pmb{b}_0]$ 
@@ -69,20 +69,54 @@ $$
 
 其中 Bernstein 基是 $B_i^n(t)$ 
 
-> 示例
+> **示例** 
 >
 > ![1570781724407](assets/1570781724407.jpg)
 
 ### 2.3.1 Bernstein 基的性质
 
-- 递归计算：$B_i^n(t)=(1-t)B_i^{n-1}(t)+tB_{i-1}^{n-1}(t),B_0^0=1$ 
+设 $B_0^0=1$，$B^n_i(t)=0$（$i<0$ 或 $i>n$） 
+
+- 递推：$B_i^n(t)=(1-t)B_i^{n-1}(t)+tB_{i-1}^{n-1}(t)$ 
+- 导数：$\frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)=n[B_{i-1}^{n-1}(t)-B_i^{n-1}(t)]$ 
+- 最值：$B^n_i(t)$ 在 $t=\frac{i}{n}$ 处取最大值
 - 对称性：$B_i^n(t)=B_{n-i}^n(1-t)$ 
+- 规范：$\sum_{i=0}^n B^n_i(t)=1$ 
 - 非负
   - $B_i^n(t)\ge 0,t\in[0,1]$ 
   - $B^n_i(t)>0,0<t<1$ 
   - $B_0^n(0)=1,B_1^n(0)=\dots=B_n^n(0)=0$ 
   - $B_0^n(0)=\dots=B_{n-1}^n(0)=0,B_0^n(0)=1$ 
-- 导数：$\frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)=n[B_{i-1}^{n-1}(t)-B_i^{n-1}(t)]$ 
+
+> **证明** 
+>
+> - 递推
+>
+> > $$
+> > \begin{aligned}
+> > (1-t)B_i^{n-1}(t)+tB_{i-1}^{n-1}(t)
+> > &=\mathrm{C}_{n-1}^it^i(1-t)^{n-i}+\mathrm{C}_{n-1}^{i-1}t^i(1-t)^{n-i}\\
+> > &=\left(\mathrm{C}_{n-1}^i+\mathrm{C}_{n-1}^{i-1}\right) t^i(1-t)^{n-i}\\
+> > &=\mathrm{C}_n^i t^i(1-t)^{n-i}\\
+> > &=B^n_i(t)\\
+> > \end{aligned}
+> > $$
+>
+> - 导数
+>
+> > $$
+> > \begin{aligned}
+> > \frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)
+> > &=\mathrm{C}_n^i\frac{\mathbb{d}}{\mathbb{d}t}t^i(1-t)^{n-i}\\
+> > &=\mathrm{C}_n^i\left(it^{i-1}(1-t)^{n-i}-(n-i)t^{i}(1-t)^{n-1-i}\right)\\
+> > &=n\left(\mathrm{C}_{n-1}^{i-1}t^{i-1}(1-t)^{n-i}-\mathrm{C}_{n-1}^{i}(n-i)t^{i}(1-t)^{n-1-i}\right)\\
+> > &=n\left(B^{n-1}_{i-1}(t)-B^{n-1}_{i}(t)\right)\\
+> > \end{aligned}
+> > $$
+>
+> - 最值
+>
+> > 令 $\frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)=n[B_{i-1}^{n-1}(t)-B_i^{n-1}(t)]=0$ 可推得 $t=\frac{i}{n}$ 
 
 ### 2.3.2 Bezier 曲线的性质
 
@@ -120,7 +154,7 @@ $$
 \bar{\pmb{p}}_{i}=\frac{i}{n+1}\pmb{p}_{i-1}+\left(1-\frac{i}{n+1}\right)\pmb{p}_i,i=1,\dots,n\\
 $$
 
-> 示例
+> **示例** 
 >
 > ![1570786423038](assets/1570786423038.jpg)
 
@@ -191,3 +225,4 @@ V2\\
 V3\\
 \end{matrix}\right]
 $$
+

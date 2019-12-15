@@ -59,3 +59,193 @@ $$
 $$
 \pmb{c}=(M^\top M)^{-1}M^\top \pmb{y}
 $$
+
+# 2. Bezier 曲线
+
+## 2.1 Bernstein 基
+
+$$
+B^n_i(t)=\mathrm{C}_n^i x^i(1-x)^{n-i}
+$$
+
+> **示例** 
+>
+> ![1570781724407](assets/1570781724407.jpg)
+>
+> - 规范：$\sum_{i=0}^n B^n_i(t)=1$ 
+> - 对称性：$B_i^n(t)=B_{n-i}^n(1-t)$ 
+> - 非负
+>   - $B_i^n(t)\ge 0,t\in[0,1]$ 
+>   - $B^n_i(t)>0,0<t<1$ 
+>   - $B_0^n(0)=1,B_1^n(0)=\dots=B_n^n(0)=0$ 
+>   - $B_0^n(0)=\dots=B_{n-1}^n(0)=0,B_0^n(0)=1$ 
+
+- 递推：$B_i^n(t)=(1-t)B_i^{n-1}(t)+tB_{i-1}^{n-1}(t)$，设 $B_0^0=1$，$B^n_i(t)=0$（$i<0$ 或 $i>n$）
+- 导数：$\frac{\mathbb{d}}{\mathbb{d}t}B_i^n(t)=n[B_{i-1}^{n-1}(t)-B_i^{n-1}(t)]$ 
+- 最值点：$B^n_i(t)$ 在 $t=\frac{i}{n}$ 处取最大值
+- 升阶：$(1-t)B^n_i(t)=\left(1-\frac{i}{n+1}\right)B^{n+1}_i(t)$，$tB^n_i(t)=\frac{i+1}{n+1}B^{n+1}_{i+1}(t)$ 
+
+> **运算框架** 
+>
+> ![image-20191215232028823](assets/image-20191215232028823.png)
+
+## 2.2 Bezier 曲线
+
+$$
+\pmb{x}(t)=\sum_{i=0}^n B_i^n(t)\pmb{p}_i\\
+$$
+
+导数
+$$
+\pmb{x}^{(r)}(t)=c_r\sum_{i=0}^{n-r}B^{n-r}_i(t)\Delta^r\pmb{p}_i
+$$
+其中 $\Delta^r p_i = \sum_{j=0}^r\mathrm{C}_r^j(-1)^j\pmb{p}_{i+r-j}$，$c_r=\prod_\limits{i=1}^r(n-i+1)$ 
+
+端点
+$$
+\begin{aligned}
+\pmb{x}^{(r)}(0)&=\prod_{i=1}^r(n-i+1)\Delta^r\pmb{p}_0\\
+\pmb{x}^{(r)}(1)&=\prod_{i=1}^r(n-i+1)\Delta^r\pmb{p}_{n-r}\\
+\end{aligned}
+$$
+
+> **示例** 
+> $$
+> \begin{aligned}
+> \pmb{x}^\prime(t)&=n\sum_{i=0}^{n-1}B^{n-1}_i(t)\left(\pmb{p}_{i+1}-\pmb{p}_i\right)\\
+> \pmb{x}^{(2)}(t)&=n(n-1)\sum_{i=0}^{n-2}B^{n-2}_i(t)\left(\pmb{p}_{i+2}-2\pmb{p}_{i+1}+\pmb{p}_i\right)\\
+> \pmb{x}^{(3)}(t)&=n(n-1)(n-2)\sum_{i=0}^{n-3}B^{n-3}_i(t)\left(\pmb{p}_{i+3}-3\pmb{p}_{i+2}+3\pmb{p}_{i+1}-\pmb{p}_i\right)\\
+> \pmb{x}^\prime(0)&=n\left(\pmb{p}_{1}-\pmb{p}_0\right)\\
+> \pmb{x}^\prime(1)&=n\left(\pmb{p}_{n}-\pmb{p}_{n-1}\right)\\
+> \end{aligned}
+> $$
+
+## 2.3 曲线性质
+
+### 2.3.1 光滑性
+
+$b_i(t)$ 光滑
+
+### 2.3.2 伪局部性
+
+$b_i(t)$ 有局部支撑
+
+对于 Bezier 曲线，$\pmb{b}_i$ 影响最大处位于 $t=\frac{i}{n}$ 
+
+### 2.3.3 仿射无关性
+
+仿射变换 $f(x)=Ax+b$，曲线 $\pmb{x}(t)=\sum_{i=0}^nb_i(t)\pmb{p}_i$ 
+
+仿射不变性：$f(\pmb{x}(t))=\sum_{i=0}^nb_i(t)f(\pmb{p}_i)$，化简可得 $\sum_{i=0}^nb_i(t)=1$ 
+
+### 2.3.4 凸包性
+
+$\{\pmb{p}_i\}_{i=1}^n$ 的凸组合 $\sum_{i=1}^n\lambda_i\pmb{p}_i$，其中 $0\le \lambda_i\le 1$，且 $\sum_{i=1}^n\lambda_i=1$ 
+
+$\pmb{x}(t)=\sum_{i=0}^nb_i(t)\pmb{p}_i$ 是凸组合 $\Leftrightarrow$ $\sum_{i=0}^nb_i(t)=1,0\le b_i(t)\le 1$ 
+
+### 2.3.5 变差缩减性
+
+若 Bezier 曲线的特征多边形 $P_0P_1\dots P_n$ 是一个平面图形，则平面内任意直线与 $P(t)$ 的交点个数不多于该直线与其特征多边形的交点个数，这一性质叫**变差缩减性质**。此性质反映了 Bezier 曲线比其特征多边形的波动小，也就是说 Bezier 曲线比特征多边形的折线更光顺
+
+## 2.4 De Casteljau 算法
+
+输入：$\{\pmb{b}_i\}_{i=0}^n$ 
+
+输出：$\pmb{x}(t),t\in [0,1]$ 
+
+算法：
+$$
+\begin{array}{ll}
+\pmb{b}^0_i(t)=\pmb{b}_i\quad &i=0,\dots,n\\
+\pmb{b}^r_i(t)=(1-t)\pmb{b}^{r-1}_i(t)+t\pmb{b}^{r-1}_{i+1}(t) &r=1,\dots,n;i=0,\dots,n-r
+\end{array}
+$$
+则 $\pmb{b}^n_0(t)$ 就是 $\pmb{x}(t)$ 
+
+> **运算框架** 
+>
+> ![image-20191216020438929](assets/image-20191216020438929.png)
+
+## 2.5 升阶
+
+输入：$\{\pmb{b}_i\}_{i=0}^n$，相应 Bezier 曲线 $\pmb{x}(t)$ 
+
+输出：$\{\overline{\pmb{b}}_i\}_{i=0}^{n+1}$，相应 Bezier 曲线 $\overline{\pmb{x}}(t)$，满足 $\overline{\pmb{x}}(t)=\pmb{x}(t)$ 
+
+算法：
+$$
+\bar{\pmb{p}}_{i}=\frac{i}{n+1}\pmb{p}_{i-1}+\left(1-\frac{i}{n+1}\right)\pmb{p}_i\\
+$$
+$\pmb{p}_{-1},\pmb{p}_{n+1}$ 任意
+
+## 2.6 细分
+
+输入：$\{\pmb{b}_i\}_{i=0}^n$，相应 Bezier 曲线 $\pmb{x}(t)$ 
+
+输出：
+
+- $\pmb{b}_0^{[1]},\dots,\pmb{b}_n^{[1]}\to \pmb{x}^{[1]}(t)$ 
+- $\pmb{b}_0^{[2]},\dots,\pmb{b}_n^{[2]}\to \pmb{x}^{[2]}(t)$ 
+
+两条曲线合并可得到 $\pmb{x}=\pmb{x}^{[1]}\cup \pmb{x}^{[2]}$ 
+
+算法：
+
+用 De Casteljau 算法得到
+$$
+\begin{matrix}
+b^n_0\\
+b^{n-1}_0&b^{n-1}_1\\
+\dots\\
+b^0_0&b^0_1&\dots&b^0_n
+\end{matrix}
+$$
+
+
+则 $\pmb{b}^{[1]}_i = \pmb{b}_0^{i},\pmb{b}_i^{[2]}=\pmb{b}^{n-i}_i(i=0,\dots,n)$ 
+
+## 2.7 矩阵表示
+
+三次 Bezier 曲线 $\pmb{x}(t) = \sum_{i=0}^3B^n_i(t)\pmb{p}_i$ 
+$$
+\begin{aligned}
+B^3_0(t)&=(1-t)^3\\
+B^3_1(t)&=3t(1-t)^2\\
+B^3_2(t)&=3t^2(1-t)\\
+B^3_3(t)&=t^3\\
+\end{aligned}
+$$
+
+可写成矩阵形式
+$$
+\pmb{x}(t)=
+\left[\begin{matrix}
+t^3 & t^2 & t & 1
+\end{matrix}\right]
+\left(\begin{matrix}
+-1 &  3 & -3 &  1\\
+ 3 & -6 &  3 &  0\\
+-3 &  3 &  0 &  0\\
+ 1 &  0 &  0 &  0
+\end{matrix}\right)
+\left[\begin{matrix}
+\pmb{p}_0\\
+\pmb{p}_1\\
+\pmb{p}_2\\
+\pmb{p}_3\\
+\end{matrix}\right]
+$$
+切向量
+$$
+\pmb{x}^\prime(t)=
+\left[\begin{matrix}3t^2 & 2t & 1 & 0\end{matrix}\right]
+\left(\begin{matrix}
+-1 &  3 & -3 &  1\\
+3 & -6 &  3 &  0\\
+-3 &  3 &  0 &  0\\
+1 &  0 &  0 &  0
+\end{matrix}\right)
+\left[\begin{matrix}\pmb{p}_0\\\pmb{p}_1\\\pmb{p}_2\\\pmb{p}_3\\\end{matrix}\right]
+$$
+
