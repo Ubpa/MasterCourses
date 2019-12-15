@@ -12,7 +12,7 @@ $$
 $$
 或者换个记法，令 $\Lambda\triangleq \text{span}\{\lambda_i\}_{i=1}^n$，希望将 $x$ 分解为 $x=m+(x-m)$，其中 $m\in M$，$x-m\in \Lambda_\perp\triangleq\{y\in X:\lambda y = 0,\forall \lambda \in \Lambda\}$ 
 
-> P 就是一个将任意连续函数 x 转变成合适的插值函数 m 的算子
+> $P$ 就是一个将任意连续函数 $x$ 转变成合适的插值函数 $m$ 的算子
 >
 > $\lambda_i$ 可以视为点泛函来方便理解，称为**插值点** 
 >
@@ -65,7 +65,7 @@ $$
 $$
 解方程求出 $\{\alpha_j\}_{j=1}^n$ 即可确定 $Px$ 的表达式。
 
-> 方程简记为 $G\boldsymbol{\alpha}=\boldsymbol{b}$，其中$\boldsymbol{\alpha}=\left[\begin{matrix}\alpha_1 \\ \vdots \\ \alpha_n \end{matrix}\right]$，$\boldsymbol{b}=\left[\begin{matrix}\lambda_1x\\\vdots\\\lambda_n x\end{matrix}\right]$，则 $\boldsymbol{\alpha}=G^{-1}\boldsymbol{b}$ 
+> 方程简记为 $G\boldsymbol{\alpha}=\boldsymbol{b}$，其中 $G\triangleq (\lambda_i m_j)_{i,j=1}^n$，$\boldsymbol{\alpha}=\left[\begin{matrix}\alpha_1 \\ \vdots \\ \alpha_n \end{matrix}\right]$，$\boldsymbol{b}=\left[\begin{matrix}\lambda_1x\\\vdots\\\lambda_n x\end{matrix}\right]$，则 $\boldsymbol{\alpha}=G^{-1}\boldsymbol{b}$ 
 
 若恰好 $\lambda_i m_j=0(i\neq j)$，则 $\alpha_i=\lambda_ix/\lambda_i m_i$，但一般没这么恰好。但我们可以用**双正交化**过程，同时改变 $\lambda_i$ 和 $m_j$，从而得到 $\hat{\lambda}_i$ 和 $\hat{m}_j$，使之满足 $\hat\lambda_i \hat m_j=0(i\neq j)$。
 

@@ -2,7 +2,7 @@
 
 ## 1.1 逼近问题的提出
 
-设 X 是**赋范线性空间**，M 是 X 的**非空子集**，X 中的范数记为 $\|\cdot\|$。希望从 M 中选取元素逼近 X 中的元素，M 称为 X 的一个**逼近集**。
+设 X 是**赋范线性空间**，M 是 X 的**非空子集**，X 中的范数记为 $\|\cdot\|$。希望从 M 中选取元素逼近 X 中的元素，M 称为 X 的一个**逼近集** 
 
 ---
 
@@ -47,32 +47,20 @@ $$
 
 **问题典例** 
 
-$I$ 是列紧的距离空间
-
-> 设 $(X,\rho)$ 是度量空间，$A\subset X$，若 A 中的任何点列必有在 X 中收敛的子点列，则称 A 是（X 中的）致密集。若 X 自身是致密集，则称 X 是致密空间。
->
-> 称度量空间中的致密闭集为紧集 compact set。A 是紧集的充要条件是：A 中任意点列有收敛的子点列收敛于 A 中的一点。致密的度量空间又称为紧（度量）空间。
->
-> 任意序列：$\{x_n\}, x_n\in X$ 
->
-> 子列：$\{x_{n_i}\},n_i<n_{i+1}$ 
->
-> 收敛子列：$\lim_{i\to \infty} x_{n_i}=x^*\in X$ 
-
-常用的线性赋范空间
+$I$ 是列紧的距离空间，一般可认为 $[a,b]$，常用的线性赋范空间
 
 > 下边的都是线性函数空间，区别在于范数不一样，这也是赋范线性空间的关键
 
-- $L_2(I)$ [TODO]
-- $C(T)$ [TODO]
-- $L_1(T)$ [TODO]
+- $L_2(I)$：$\|f\|\triangleq\|f\|_2\triangleq\sqrt{\int_I|f(x)|^2\mathrm{d}x}$ ，相应问题是最小平方逼近
+- $C(I)$：$\|f\|\triangleq\|f\|_\infty\triangleq\sup_{x\in I}|f(x)|$，相应问题是一致逼近
+- $L_1(I)$：$\|f\|\triangleq \|f\|_1\triangleq \int_I|f(x)|\mathrm{d}x$，相应问题是最小平均逼近
 
 M 常取为 X 的真子空间
 
 - $\mathcal{P}_n=\left\{\sum_{i=0}^{n-1} a_i t^{i-1},a_i\in \mathbb{R}\right\}$ 
 - $\overset{\circ}{\mathcal{P}}_n\triangleq\left\{a_0,\sum_{i=1}^n(a_i\cos it+b_i\sin it),a_i,b_i\in\mathbb{R}\right\}$ 
-- $\mathcal{S}(\mathcal{P}_m,[TODO],\Delta)$ [TODO]
-- $R_{m,n}[TODO]$ [TODO]
+- $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)\triangleq \{S(t):S|_{I_i}=S_i(x)\in \mathcal{P}_m,S_i^{(j-1)}(t_i)=S^{(j-1)}_{i+1}(t_i)\ (i=1,\dots,k-1;j=1,\dots,m-m_i)\}$ 是 $m$ 阶的分割为 $\Delta$ 的重度向量为 $\mathfrak{M}=(m_0,\dots,m_k)$ 的多项式样条空间，其中 $\Delta\triangleq a=t_0<t_1<\dots,t_{k-1}<t_k=b$ 
+- $\mathcal{R}_{m,n}=\left\{\frac{p(x)}{q(x)}:p(x)\in \mathcal{P}_m,q(x)\in \mathcal{P}_n\right\}$ 表示阶为 $(m,n)$ 的有理函数的全体
 
 ## 1.2 最佳逼近元的存在唯一性
 
