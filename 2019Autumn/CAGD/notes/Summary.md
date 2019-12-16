@@ -356,12 +356,12 @@ $$
 
 根据控制点 $\{\pmb{k}_i\}_{i=0}^n$ 生成结序列 $\{t_i\}_{i=0}^n$ 
 
-$t_0=0$ 
+$t_0=0$，设 $d_i=\|\pmb{k}_i-\pmb{k}_{i-1}\|$ 
 
 - 等距：$t_{i}-t_{i-1}=\text{const}\ (i=1,\dots,n)$ 
-- Chordal：$t_{i}-t_{i-1}=\|\pmb{k}_{i}-\pmb{k}_{i-1}\|\ (i=1,\dots,n)$ 
-- Centripetal：$t_{i}-t_{i-1}=\sqrt{\|\pmb{k}_{i}-\pmb{k}_{i-1}\|}\ (i=1,\dots,n)$ 
-- Foley
+- Chordal：$t_{i}-t_{i-1}=d_i\ (i=1,\dots,n)$ 
+- Centripetal：$t_{i}-t_{i-1}=\sqrt{d_i}\ (i=1,\dots,n)$ 
+- Foley：$t_i-t_{i-1}=d_i\left(1+\frac{3}{2}\left(\frac{\hat{\alpha}_id_i}{d_i+d_{i+1}}+\frac{\hat{\alpha}_{i-1}d_{i-1}}{d_{i-1}+d_i}\right)\right)$，其中 $\hat{\alpha}_i=\min\left(\pi-\alpha_i,\frac{\pi}{2}\right)$，$\alpha_i=\text{angle}\left(\pmb{k}_{i-1},\pmb{k}_{i},\pmb{k}_{i+1}\right)$ 
 
 ## 4.2 连续性
 
@@ -375,8 +375,8 @@ $t_0=0$
 $\pmb{x}_1(t)$ 和 $\pmb{x}_2(t)$ 在 $\tau$ 处 $C^r$ 连续是指它们的从 $0^\text{th}$ 到 $r^\text{th}$ **导数向量**在 $\tau$ 相等
 
 > - $C^0$：位置连续
-> - $C^1$：接合处 junction 一阶导数（速度）连续
-> - $C^2$：结合处二阶导数（加速度）连续
+> - $C^1$：接合处一阶导数（速度）连续
+> - $C^2$：接合处一阶和二阶导数（加速度）连续
 >
 > ![1570881266929](assets/1570881266929.jpg)
 
@@ -456,4 +456,216 @@ $$
 - Bessel 端点条件：$\pmb{k}_0$ 处一阶导等于插值 $\left\{ \boldsymbol { k } _ { 0 } , \boldsymbol { k } _ { 1 } , \boldsymbol { k } _ { 2 } \right\}$ 的抛物线在 $\pmb{k}_0$ 处的一阶导，另一端也如此
 - 自然端点条件：$\begin{array} { l } { \ddot { \pmb{x} } \left( t _ { 0 } \right) = 0 \Leftrightarrow \pmb{b} _ { 1 } = \frac { \pmb{b} _ { 2 } + \pmb{b} _ { 0 } } { 2 } } \\ { \ddot { \pmb{x} } \left( t _ { n } \right) = 0 \Leftrightarrow \pmb{b} _ { 3 n - 1 } = \frac { \pmb{b} _ { 3 n - 2 } + \pmb{b} _ { 3 n } } { 2 } } \end{array}$ 
 - 闭合：$\begin{array} { l } { \dot { \pmb{x} } \left( t _ { 0 } \right) = \dot { \pmb{x} } \left( t _ { n } \right) } \\ { \ddot { \pmb{x} } \left( t _ { 0 } \right) = \ddot { \pmb{x} } \left( t _ { n } \right) } \end{array}$ 
+
+# 5. B 样条
+
+> 参考 [《样条函数与逼近论》9. B 样条及其性质 和 10. 样条函数的计算](../../SplineApproximation/notes) 
+>
+> B 样条 $\leftrightarrow$ Bernstein 基
+>
+> B 样条曲线 $\leftrightarrow$ Bezier 曲线
+>
+> B 样条曲线插值 $\leftrightarrow$ Bezier 样条
+
+## 5.1 基础
+
+**定义** 
+
+给定结序列 $\{t_i\}_{i=0}^{n+k}$，满足 $t_0<\dots<t_{n+k}$，则 
+$$
+\begin{aligned}
+N_{i,1}(t) &= \left\{\begin{matrix}
+1, &t_i \le t < t_{i+1} \\
+0, &\text{otherwise} \\
+\end{matrix}\right. \\
+N_{i,r}(t) &= \frac{t-t_i}{t_{i+r-1}-t_i}N_{i,r-1}(t)+\frac{t_{i+r}-t}{t_{i+r}-t_{i+1}}N_{i+1,r-1}(t) \quad (r=2,\dots,k;i=0,\dots,n+k-r)
+\end{aligned}
+$$
+**连续性** 
+
+$N_{i,r}(t)$ 由 $k$ 段 $k-1$ 次多项式拼成，则 $C^{k-2}$ 连续，总共有 $n+1$ 个 B 样条
+
+放宽条件 $t_0\le t_1\le \dots \le t_{n+k}$，可以连续重复多次，重复 m 次，则阶数下降 m 次，当重复 k 次及以上时，函数值视为 0，此时 $t_i=t_{i+1}=\dots=t_{i+k},N_{i,k}(t)=0$。重复 m 次，则在 $t_i$ 处 $C^{k-2-m}$ 连续
+
+> 重复 1 次是指 $t_i=t_{i+1}$，重复 m 次是指 $t_i=t_{i+1}=\dots=t_{i+m}$ 
+
+**规范性** 
+
+$\sum_{i=0}^n N_{i,k}(t)=1,t \in [t_{k-1},t_{n+1}]$ 
+
+> 每一段内会受到 k 个基函数的影响，首尾处小于 1
+
+## 5.2 B 样条曲线
+
+给定
+
+- 控制点：$\pmb{d}_0,\dots,\pmb{d}_n\in \mathbb{R}^3$，$n+1$ 个，$\pmb{d}_i$ 称为 de Boor points
+- 结向量：$T=(t_0,\dots,t_n,\dots,t_{n+k})$，$n+k+1$ 个，比控制点多 k 个
+
+> 因为 $N_{n,k}$ 需要 $t_n,t_{n+1},\dots,t_{n+k}$ 
+
+则 k 阶的 B-spline 曲线 $\pmb{x}(t)$ 定义为
+$$
+\pmb{x}(t)=\sum_{i=0}^n N_{i,k}(t)\pmb{d}_i\quad (t_{k-1}\le t\le t_{n+1})
+$$
+
+> **示例** 
+>
+> ![1571318743885](assets/1571318743885.jpg)
+
+当 $t_0=t_1=\dots=t_{k-1}$ 且 $t_{n+1}=t_{n+2}=\dots=t_{n+k}$ 时，相应的 B-spline 曲线 $\pmb{x}(t)$ 的性质
+
+- $t\in[t_{k-1},t_{n+1}]$，总共 $n-k+2$ 段
+- $\pmb{x}(t_{k-1})=\pmb{d}_0$，$\pmb{x}(t_{n+1})=\pmb{d}_n$ 
+- $\dot{\pmb{x}}(t_0)=\frac{k-1}{t_k-t_{k-1}}(\pmb{d}_1-\pmb{d}_0)$ 
+- 含 **n-k+2 段**多项式 **k-1 阶**的曲线，$C^{k-2}$ 连续
+- 重复 m 次，则 $C^{k-m-2}$ 连续
+- 移动 $\pmb{d}_i$ 只影响 $[t_i,t_{i+k}]$ 
+
+> **示例** 
+>
+> ![1571318743885](assets/1571318743885.jpg)
+
+## 5.3 De Boor 算法
+
+**输入** 
+
+- $\{\pmb{d}_0\}_{i=0}^n$ 
+- $\{t_i\}_{i=0}^{n+k}$，其中 $t_0=\dots=t_{k-1}<t_k<\dots<t_{n}<t_{n+1}=\dots=t_{n+k}$ 
+
+**输出** 
+
+k 阶 B-Spline 样条 $\pmb{x}(t)$ 
+
+**算法** 
+
+![1571320573794](assets/1571320573794.jpg)
+
+> **运算框架** 
+>
+> ![image-20191216215819923](assets/image-20191216215819923.png)
+
+## 5.4 3 次 B 样条曲线插值
+
+**输入** 
+
+- 插值点：$\{\pmb{k}_i\}_{i=0}^n$ 
+- 结：$\{s_i\}_{i=0}^n$ 
+
+**输出** 
+
+4 阶 3 次 B 样条曲线 $\pmb{x}(t) \quad(s_0\le t\le s_n)$，且满足 $\pmb{x}(s_i)=\pmb{k}_i$ 
+
+**方法** 
+
+- 3 次 $\Rightarrow k=4$ 
+- $n$ 段 $[t_i,t_{i+1})$ $\Rightarrow$ $n+3$ 个 de Boor 点 $\{\pmb{d}_i\}_{i=0}^{n+2}$，$n+7$ 个结 $\{t_i\}_{i=0}^{n+6}$，其中 $t_0=t_1=t_2=t_3,t_{n+3}=t_{n+4}=t_{n+5}=t_{n+6},t_{i+3}=s_i\ (i=0,\dots,n)$，即 $\begin{array}{c}
+  (t_0,&t_1,&t_2,&t_3,&t_4,&\dots,&t_{n+2},&t_{n+3},&t_{n+4},&t_{n+5},&t_{n+6}&)\\
+  (s_0,&s_0,&s_0,&s_0,&s_1,&\dots,&s_{n-1},&s_n,    &s_n,    &s_n,    &s_n    &)
+  \end{array}$ 
+
+则条件有
+$$
+\begin{aligned}
+\pmb{x} \left( s _ { 0 } \right) & =  \pmb{k} _ { 0 } = \pmb{d} _ { 0 } \\
+\pmb{x} \left( s _ { i } \right) & = \pmb{k} _ { i } = N _ { i , 4 } \left( s _ { i } \right) \pmb{d} _ { i } + N _ { i + 1,4 } \left( s _ { i } \right) \pmb{d} _ { i + 1 } + N _ { i + 2,4 } \left( s _ { i } \right) \pmb{d} _ { i + 2 } \quad (i=1,\dots,n-1)\\
+\pmb{x} \left( s _ { n } \right) & = \pmb{k} _ { n } = \pmb{d} _ { n + 2 } \end{aligned}
+$$
+有 $n+1$ 个条件，还缺两个端点条件
+
+- 自然边界条件
+
+$$
+\begin{aligned}
+\ddot { \pmb{x} } \left( s _ { 0 } \right) = 0 & \Leftrightarrow \frac { d _ { 2 } - d _ { 1 } } { s _ { 2 } - s _ { 0 } } = \frac { d _ { 1 } - d _ { 0 } } { s _ { 1 } - s _ { 0 } } \\
+\ddot { \pmb{x} } \left( s _ { n } \right) = 0 & \Leftrightarrow \frac { d _ { n + 2 } - d _ { n + 1 } } { s _ { n } - s _ { n - 1 } } = \frac { d _ { n + 1 } - d _ { n } } { s _ { n } - s _ { n - 2 } }
+\end{aligned}
+$$
+
+可得到一个三对角系统
+$$
+\left[\begin{matrix}
+1\\
+\alpha_0 & \beta_0 & \gamma_0\\
+ & \alpha_1 & \beta_1 & \gamma_1\\
+ & & & \cdot\\
+ & & & & \cdot\\
+ & & & & & \cdot\\
+ & & & &\alpha_{n-1} & \beta_{n-1} & \gamma_{n-1}\\
+ & & & & & \alpha_{n} & \beta_{n} & \gamma_{n}\\
+ & & & & & & & 1\\
+\end{matrix}\right]
+
+\left[\begin{matrix}
+\pmb{d}_0\\
+\pmb{d}_1\\
+\pmb{d}_2\\
+\cdot\\
+\cdot\\
+\cdot\\
+\pmb{d}_n\\
+\pmb{d}_{n+1}\\
+\pmb{d}_{n+2}
+\end{matrix}\right]
+
+=
+
+\left[\begin{matrix}
+\pmb{k}_0\\
+0\\
+\pmb{k}_1\\
+\cdot\\
+\cdot\\
+\cdot\\
+\pmb{k}_{n-1}\\
+0\\
+\pmb{k}_n\\
+\end{matrix}\right]
+$$
+其中
+$$
+\begin{aligned} \alpha _ { 0 } & = s _ { 2 } - s _ { 0 } \\ \beta _ { 0 } & = - \left( s _ { 2 } - s _ { 0 } \right) - \left( s _ { 1 } - s _ { 0 } \right) \\ \gamma _ { 0 } & = s _ { 1 } - s _ { 0 } \\\\
+\alpha _ { n } & = s _ { n } - s _ { n - 1 } \\ \beta _ { n } & = - \left( s _ { n } - s _ { n - 1 } \right) - \left( s _ { n } - s _ { n - 2 } \right) \\ \gamma _ { n } & = s _ { n } - s _ { n - 2 } \\\\
+\alpha _ { i } & = N_{i,4}(s_i) \\ \beta _ { i } & = N _ { i + 1,4 } \left( s _ { i } \right) \\ \gamma _ { i } & = N _ { i + 2,4 } \left( s _ { i } \right) \\ & \text { for } i = 1 , \ldots , n - 1 \end{aligned}
+$$
+使用 Thomas 算法，时间复杂度 $O(n)$ 
+
+> $$
+> \left[ \begin{array} { c c c c c } { b _ { 1 } } & { c _ { 1 } } & { } & { } & { 0 } \\ { a _ { 2 } } & { b _ { 2 } } & { c _ { 2 } } & { } & { } \\ { } & { a _ { 3 } } & { b _ { 3 } } & { . } & { } \\ { } & { } & { . } & { . } & { c _ { n - 1 } } \\ { 0 } & { } & { } & { a _ { n } } & { b _ { n } } \end{array} \right] \left[ \begin{array} { c } { x _ { 1 } } \\ { x _ { 2 } } \\ { . } \\ { . } \\ { x _ { n } } \end{array} \right] = \left[ \begin{array} { c } { d _ { 1 } } \\ { d _ { 2 } } \\ { . } \\ { . } \\ { d _ { n } } \end{array} \right]
+> $$
+>
+> 前向消除步骤
+>
+> ![1571323775348](assets/1571323775348.jpg)
+>
+> 后向替换步骤
+>
+> ![1571323794125](assets/1571323794125.jpg)
+
+## 5.5 Bezier 曲线转 B-splines
+
+给定
+
+- 控制点：$\pmb{k}_0,\dots,\pmb{k}_n$ 
+- 结序列：$t_0,\dots,t_n$ 
+- 2 个端点条件
+- $C^2$ 连续、插值条件
+
+从而得到 $\pmb{b}_0,\dots,\pmb{b}_{3n}$ 
+
+现想得到相同曲线的 B-spline 形式
+
+- 结向量 $T=(t_0,t_0,t_0,t_0,t_1,\dots,t_{n-1},t_n,t_n,t_n,t_n)$ 
+
+  > 总共 $n+7$ 个顶点，则有 $n+3$ 个 de Boor pionts，即 $\pmb{d}_0,\dots,\pmb{d}_{n+2}$ 
+
+- $\pmb{d}_0,\dots,\pmb{d}_{n+2}$ 满足
+  $$
+  \begin{aligned} \pmb{d} _ { 0 } & = \pmb{b} _ { 0 } \\ \pmb{d} _ { 1 } & = \pmb{b} _ { 1 } \\ \pmb{d} _ { i } & = \pmb{b} _ { 3 i - 4 } + \frac { \Delta _ { i - 1 } } { \Delta _ { i - 2 } } \left( \pmb{b} _ { 3 i - 4 } - \pmb{b} _ { 3 i - 5 } \right) \text { for } i = 2 , \ldots , n \\ \pmb{d} _ { n + 1 } & = \pmb{b} _ { 3 n - 1 } \\ \pmb{d} _ { n + 2 } & = \pmb{b} _ { 3 n } \end{aligned}
+  $$
+  其中 $\Delta_i= t_{i+1}-t_i,t=0,\dots,n-1$ 
+
+> **示例** 
+>
+> ![1571324448351](assets/1571324448351.jpg)
 

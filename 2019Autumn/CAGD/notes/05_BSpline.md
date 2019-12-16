@@ -53,7 +53,7 @@ $$
 >
 > - $i=0,1,\dots,n$，$k\in \mathbb{Z}^+$ 
 >
-> - $N_{i,k}(t)>0,t_i<t<t_{i+k}$，其中涉及了 $t_i,t_{i+1},\dots,t_{i+k}$，共 k+1 个，中间有 **k 段**，$[t_i,t_{i+k}]$ 称为 $N_{i,k}$ 的支撑区间 support interval
+> - $N_{i,k}(t)>0,t_i<t<t_{i+k}$，其中涉及了 $t_i,t_{i+1},\dots,t_{i+k}$，共 k+1 个，中间有 **k 段**，$[t_i,t_{i+k}]$ 称为 $N_{i,k}$ 的**支撑区间** support interval
 >
 > - $N_{i,k}(t)=0,t\in(-\infty,t_i]\cup[t_{i+k},\infty)$ 
 >
@@ -86,7 +86,7 @@ $\pmb{d}_i$ 称为 de Boor points
 
 > 这种定义并不能插值 $\pmb{d}_i$ 
 >
-> 示例
+> **示例** 
 >
 > ![1571318743885](assets/1571318743885.jpg)
 >
@@ -140,15 +140,18 @@ $$
 
 - 重复首尾结 $k-1=3$ 次，则总共 $n+2k-1=n+7$ 个结，对应 $n+7-k=n+3$ 个 de Boor points，结向量为
   $$
-  \begin{aligned} T & = \left( t _ { 0 } , t _ { 1 } , t _ { 2 } , t _ { 3 } , t _ { 4 } , \ldots , t _ { n + 2 } , t _ { n + 3 } , t _ { n + 4 } , t _ { n + 5 } , t _ { n + 6 } \right) \\ & = \left( s _ { 0 } , s _ { 0 } , s _ { 0 } , s _ { 0 } , s _ { 1 } , \ldots , s _ { n - 1 } , s _ { n } , s _ { n } , \quad s _ { n } , \quad s _ { n } \right) \end{aligned}
+  \begin{array}{c}
+  T=&(t_0,&t_1,&t_2,&t_3,&t_4,&\dots,&t_{n+2},&t_{n+3},&t_{n+4},&t_{n+5},&t_{n+6}&)\\
+  &(s_0,&s_0,&s_0,&s_0,&s_1,&\dots,&s_{n-1},&s_n,    &s_n,    &s_n,    &s_n    &)
+  \end{array}
   $$
   
 - 插值条件
   $$
   \begin{aligned}
-  & \pmb{x} \left( s _ { 0 } \right) =  \pmb{k} _ { 0 } = \pmb{d} _ { 0 } \\
-  & \pmb{x} \left( s _ { i } \right) = \pmb{k} _ { i } = N _ { i , 4 } \left( s _ { i } \right) \pmb{d} _ { i } + N _ { i + 1,4 } \left( s _ { i } \right) \pmb{d} _ { i + 1 } + N _ { i + 2,4 } \left( s _ { i } \right) \pmb{d} _ { i + 2 } \\
-  & \pmb{x} \left( s _ { n } \right) = \pmb{k} _ { n } = \pmb{d} _ { n + 2 } \end{aligned}
+  \pmb{x} \left( s _ { 0 } \right) & =  \pmb{k} _ { 0 } = \pmb{d} _ { 0 } \\
+  \pmb{x} \left( s _ { i } \right) & = \pmb{k} _ { i } = N _ { i , 4 } \left( s _ { i } \right) \pmb{d} _ { i } + N _ { i + 1,4 } \left( s _ { i } \right) \pmb{d} _ { i + 1 } + N _ { i + 2,4 } \left( s _ { i } \right) \pmb{d} _ { i + 2 } \\
+  \pmb{x} \left( s _ { n } \right) & = \pmb{k} _ { n } = \pmb{d} _ { n + 2 } \end{aligned}
   $$
 
   > 由于 $N_{i,4}$ 影响的范围是 $[t_i,t_{i+4}]$，而 $s_i=t_{i+3}$，所以会被 $N_{i,4},N_{i+1,4},N_{i+2,4},N_{i+3,4}$ 影响，因此 $\pmb{x}(s_i)$ 只涉及了相应的四项。
@@ -157,7 +160,10 @@ $$
 
 - 自然边界条件
   $$
-  \begin{aligned} \ddot { x } \left( s _ { 0 } \right) & = 0 \Leftrightarrow \frac { d _ { 2 } - d _ { 1 } } { s _ { 2 } - s _ { 0 } } = \frac { d _ { 1 } - d _ { 0 } } { s _ { 1 } - s _ { 0 } } \\ \ddot { x } \left( s _ { n } \right) = 0 & \Leftrightarrow \frac { d _ { n + 2 } - d _ { n + 1 } } { s _ { n } - s _ { n - 1 } } = \frac { d _ { n + 1 } - d _ { n } } { s _ { n } - s _ { n - 2 } } \end{aligned}
+  \begin{aligned}
+  \ddot { \pmb{x} } \left( s _ { 0 } \right) = 0 & \Leftrightarrow \frac { d _ { 2 } - d _ { 1 } } { s _ { 2 } - s _ { 0 } } = \frac { d _ { 1 } - d _ { 0 } } { s _ { 1 } - s _ { 0 } } \\
+  \ddot { \pmb{x} } \left( s _ { n } \right) = 0 & \Leftrightarrow \frac { d _ { n + 2 } - d _ { n + 1 } } { s _ { n } - s _ { n - 1 } } = \frac { d _ { n + 1 } - d _ { n } } { s _ { n } - s _ { n - 2 } }
+  \end{aligned}
   $$
 
 这样得到一个三对角系统
