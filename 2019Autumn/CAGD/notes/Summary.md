@@ -876,3 +876,305 @@ $$
 >
 > ![image-20191217011851453](assets/image-20191217011851453.png)
 
+# 7. 有理样条曲线
+
+## 7.1 二次曲线和圆锥曲线
+
+二次曲线是二次方程（任意维数）的零集
+$$
+\{\pmb{x}\in \mathbb{R}^d|\pmb{x}^\top M \pmb{x}+\pmb{b}^\top \pmb{x}+\pmb{c}=0\}
+$$
+圆锥曲线是 $d=2$ 时的二次曲线，一般方程为
+$$
+\begin{aligned}
+ax^2+bxy+cy^2+dx+ey+f&=0\\
+\pmb{x}^\top\left[\begin{matrix}
+a & \frac{b}{2}\\
+\frac{b}{2} & c
+\end{matrix}\right]
+\pmb{x}
++
+\left[\begin{matrix}
+d & e
+\end{matrix}\right]
+\pmb{x}
++f=0
+\end{aligned}
+$$
+记（$a>0$）
+$$
+M\triangleq \left[\begin{matrix}
+a & \frac{b}{2} \\
+\frac{b}{2} & c
+\end{matrix}\right]
+$$
+M 的特征值为
+$$
+\lambda_{1,2}=\frac{a+c \pm \sqrt{(a-c)^2+b^2}}{2}
+$$
+
+- 椭圆：$b^2<4ac$ 
+  - 圆：$b=0$，$a=c$ 
+- 抛物线：$b^2=4ac$ 
+- 双曲线：$b^2>4ac$ 
+
+## 7.2 抛物线投影
+
+给定一条空间二次曲线，将 $z$ 坐标设为齐次项 $\omega$，将曲线中心投影到平面 $\omega=1$ 上
+
+![image-20191101212505639](assets/image-20191101212505639.jpg)
+
+空间二次曲线为
+$$
+\pmb{f} ^ { ( h o m ) } ( t ) = \pmb{p} _ { 0 } + t \pmb{p} _ { 1 } + t ^ { 2 } \pmb{p} _ { 2 } = \left( \begin{array} { c } { \pmb{p} _ { 0 } \cdot x } \\ { \pmb{p} _ { 0 } \cdot y } \\ { \pmb{p} _ { 0 } \cdot \omega } \end{array} \right) + t \left( \begin{array} { c } { \pmb{p} _ { 1 } \cdot x } \\ { \pmb{p} _ { 1 } \cdot y } \\ { \pmb{p} _ { 1 } \cdot \omega } \end{array} \right) + t ^ { 2 } \left( \begin{array} { c } { \pmb{p} _ { 2 } \cdot x } \\ { \pmb{p} _ { 2 } \cdot y } \\ { \pmb{p} _ { 2 } \cdot \omega } \end{array} \right)
+$$
+
+投影曲线
+$$
+\pmb{f} ^ { ( e u c l ) } ( t ) = \frac { \left( \begin{array} { c } { \pmb{p} _ { 0 } \cdot x } \\ { \pmb{p} _ { 0 } \cdot y } \end{array} \right) + t \left( \begin{array} { c } { \pmb{p} _ { 1 } \cdot x } \\ { \pmb{p} _ { 1 } \cdot y } \end{array} \right) + t ^ { 2 } \left( \begin{array} { c } { \pmb{p} _ { 2 } \cdot x } \\ { \pmb{p} _ { 2 } \cdot y } \end{array} \right) } { \pmb{p} _ { 0 } \cdot \omega + t \pmb{p} _ { 1 } \cdot \omega + t ^ { 2 } \pmb{p} _ { 2 } \cdot \omega }
+$$
+
+### 7.2.1 抛物线
+
+对于
+$$
+y=x^2
+$$
+参数化为
+$$
+\left\{\begin{array}{l}
+x=t\\
+y=t^2
+\end{array}\right.
+$$
+则
+$$
+\pmb{p}_0=\left[\begin{matrix}
+0\\
+0\\
+1
+\end{matrix}\right],
+\pmb{p}_1=\left[\begin{matrix}
+1\\
+0\\
+0
+\end{matrix}\right],
+\pmb{p}_2=\left[\begin{matrix}
+0\\
+1\\
+0
+\end{matrix}\right]
+$$
+故
+$$
+\pmb{f} ^ { ( e u c l ) } ( t ) = \frac { \left( \begin{array} { c } { 0 } \\ { 0 } \end{array} \right) + t \left( \begin{array} { c } { 1 } \\ { 0 } \end{array} \right) + t ^ { 2 } \left( \begin{array} { c } { 0 } \\ { 1 } \end{array} \right) } { 1 + 0 t + 0 t ^ { 2 } }=\left( \begin{array} { c } { t } \\ { t^2 } \\ { 1 } \end{array} \right)
+$$
+
+### 7.2.2 圆
+
+对于
+$$
+x^2+y^2=1
+$$
+参数化为
+$$
+\left\{\begin{array}{l}
+x=\cos\varphi=\frac{1-\tan^2\frac{\varphi}{2}}{1+\tan^2\frac{\varphi}{2}}=\frac{1-t^2}{1+t^2}\\
+y=\sin\varphi=\frac{2\tan\frac{\varphi}{2}}{1+\tan^2\frac{\varphi}{2}}=\frac{2t}{1+t^2}\\
+\end{array}\right.
+$$
+其中 $t=\tan \frac{\varphi}{2}$ （$\varphi\in[0,\frac{\pi}{4}]$，$t\in[0,1]$）
+
+则
+$$
+\pmb{p}_0=\left[\begin{matrix}
+1\\
+0\\
+1
+\end{matrix}\right],
+\pmb{p}_1=\left[\begin{matrix}
+0\\
+2\\
+0
+\end{matrix}\right],
+\pmb{p}_2=\left[\begin{matrix}
+-1\\
+0\\
+1
+\end{matrix}\right]
+$$
+故
+$$
+\pmb{f} ^ { ( e u c l ) } ( t ) = \frac { \left( \begin{array} { c } { 1 } \\ { 0 } \end{array} \right) + t \left( \begin{array} { c } { 0 } \\ { 2 } \end{array} \right) + t ^ { 2 } \left( \begin{array} { c } { -1 } \\ { 0 } \end{array} \right) } { 1 + 0 t + 1 t ^ { 2 } }=\left( \begin{array} { c } { 1-t^2 } \\ { 2t } \\ { 1+t^2 } \end{array} \right)
+$$
+
+### 7.2.3 双曲线
+
+对于
+$$
+x^2-y^2=1
+$$
+参数化为
+$$
+\left\{\begin{array}{l}
+x=\frac{1}{\cos\varphi}=\frac{1+t^2}{1-t^2}\\
+y=\tan \varphi = \frac{2t}{1-t^2}
+\end{array}\right.
+$$
+其中 $t=\tan \frac{\varphi}{2}$（$\varphi\in[0,\frac{\pi}{4}]$，$t\in[0,1]$）
+
+则
+$$
+\pmb{p}_0=\left[\begin{matrix}
+1\\
+0\\
+1
+\end{matrix}\right],
+\pmb{p}_1=\left[\begin{matrix}
+0\\
+2\\
+0
+\end{matrix}\right],
+\pmb{p}_2=\left[\begin{matrix}
+1\\
+0\\
+-1
+\end{matrix}\right]
+$$
+故
+$$
+\pmb{f} ^ { ( e u c l ) } ( t ) = \frac { \left( \begin{array} { c } { 1 } \\ { 0 } \end{array} \right) + t \left( \begin{array} { c } { 0 } \\ { 2 } \end{array} \right) + t ^ { 2 } \left( \begin{array} { c } { 1 } \\ { 0 } \end{array} \right) } { 1 + 0 t - 1 t ^ { 2 } }=\left( \begin{array} { c } { 1+t^2 } \\ { 2t } \\ { 1-t^2 } \end{array} \right)
+$$
+
+## 7.3 有理 Bezier 曲线
+
+### 7.3.1 定义
+
+**齐次形式** 
+
+$\{\pmb{b}_i\in\mathbb{R}^{d+1}\}_{i=0}^n$，则
+$$
+\begin{aligned}
+\boldsymbol { f } ^ { ( h o m ) } ( t ) &= \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) \boldsymbol { b } _ { i }\\
+\boldsymbol { f } ^ { ( e u c l ) } ( t ) &= \frac { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) \left( \begin{array} { c } { b _ { i } ^ { ( 1 ) } } \\ { \vdots } \\ { b_ { i } ^ { ( d ) } } \end{array} \right) } { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) b _ { i } ^ { ( d + 1 ) } }
+\end{aligned}
+$$
+**权系数形式** 
+
+$\{\pmb{b}_i\in \mathbb{R}^{d}\}$，$\{w_i\}_{i=0}^n\ (\omega_i > 0)$，则
+$$
+\boldsymbol { f } ^ { ( e u c l ) } ( t ) = \frac { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) w_i\pmb{b}_i } { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) w_i }=\sum_{i=0}^nq_i(t)\pmb{b}_i
+$$
+相对于齐次形式，无法表达 $b_i^{(d+1)}=0$ 的点
+
+易得 $\sum_{i=0}^nq_i(t)=1$，则有仿射不变性、凸包性，$q_i(t)$ 可视为加权 Bezier 函数
+
+### 7.3.2 导数
+
+$$
+f ( t ) = \frac { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) w_i\pmb{b}_i } { \sum _ { i = 0 } ^ { n } B _ { i } ^ { n } ( t ) w_i }=\frac{p(t)}{w(t)}
+$$
+
+则
+$$
+f^\prime(t)=\frac{p^\prime(t)-f(t)w^\prime(t)}{w(t)}
+$$
+
+### 7.3.3 有理 de Casteljau 算法
+
+三种方法
+
+- 在 $d+1$ 维上计算，最后投影：$\boldsymbol { b } _ { i } ^ { ( r ) } ( t ) = ( 1 - t ) \boldsymbol { b } _ { i } ^ { ( r - 1 ) } ( t ) + t \boldsymbol { b } _ { i + 1 } ^ { ( r - 1 ) } ( t )$ 
+
+- 分别计算分子和分母，然后相除：类似于上一种
+
+- 每一个步骤相除
+  $$
+  \begin{aligned} \boldsymbol { b } _ { i } ^ { ( r ) } ( t ) = ( & 1 - t ) \frac { \omega _ { i } ^ { ( r - 1 ) } ( t ) } { \omega _ { i } ^ { ( r ) } ( t ) } \boldsymbol { b } _ { i } ^ { ( r - 1 ) } ( t ) + t \frac { \omega _ { i + 1 } ^ { ( r - 1 ) } ( t ) } { \omega _ { i } ^ { ( r ) } ( t ) } \boldsymbol { b } _ { i + 1 } ^ { ( r - 1 ) } ( t ) \\ & \text { with } \quad \omega _ { i } ^ { ( r ) } ( t ) = ( 1 - t ) \omega _ { i } ^ { ( r - 1 ) } ( t ) + t \omega _ { i + 1 } ^ { ( r - 1 ) } ( t ) \end{aligned}
+  $$
+
+  > 这种方法很傻其实，每次除了权重之后，下一次又乘了回去
+
+> 综合来看第一种最简单
+
+### 7.3.4 二次有理 Bezier 曲线
+
+#### 7.3.4.1 标准形式
+
+权重三个，绝对大小无关且参数化无关可消掉两个，故只剩一个
+
+取权重
+$$
+w_0=w_2=1,\ w_1=w
+$$
+则
+$$
+f ^ { ( e u c l ) } ( t )=\frac { B_0^{(2)}(t)\boldsymbol { p } _ { 0 } + B_1^{(2)}(t) \omega \boldsymbol { p } _ { 1 } + B_2^{(2)}(t) \boldsymbol { p } _ { 2 } } { B_0^{(2)}(t) + B_1^{(2)}(t) \omega + B_2^{(2)}(t) }
+$$
+
+- $\omega < 1$：椭圆曲线
+- $\omega=1$：抛物线
+- $\omega>1$：双曲线
+
+#### 7.3.4.2 对偶
+
+对偶段为 $t\in \mathbb{R}\backslash [0,1]$，则可用参数化
+$$
+\hat{t}=\frac{t}{2t-1}
+$$
+$t$ 从 $0$ 到 $\frac{1}{2}$ 时 $\hat t$ 从 $0$ 到 $-\infty$，$t$ 从 $\frac{1}{2}$ 到 $1$ 时 $\hat t$ 从 $+\infty$ 到 $1$ 
+
+代入标准形式可得
+$$
+\begin{aligned}
+\pmb{x}(\hat{t})&= \frac { ( 1 - \hat { t } ) ^ { 2 } \pmb{p} _ { 0 } + 2 \hat { t } ( 1 - \hat { t } ) \omega \pmb{p} _ { 1 } + \hat { t } ^ { 2 } \pmb{p} _ { 2 } } { ( 1 - \hat { t } ) ^ { 2 } + 2 \hat { t } ( 1 - \hat { t } ) \omega + \hat { t } ^ { 2 } }\\
+&= \frac { ( 1 - t ) ^ { 2 } \pmb{p} _ { 0 } - 2 t ( 1 - t ) \omega \pmb{p} _ { 1 } + t ^ { 2 } \pmb{p} _ { 2 } } { ( 1 - t ) ^ { 2 } - 2 t ( 1 - t ) \omega + t ^ { 2 } }\\
+&= \frac{B^2_0(t)\pmb{p}_0-B^2_1(t)\omega\pmb{p}_1+B^2_2(t)\pmb{p}_2}{B^2_0(t)-B^2_1(t)\omega+B^2_2(t)}
+\end{aligned}
+$$
+
+仅是 $\omega$ 取负
+
+考虑分母等于 $0$ 的情形 
+
+$$
+\omega(t)=(1-t)^2-2t(1-t)\omega+t^2
+$$
+
+这是一个抛物线，可推得
+
+- $\omega<1$：没有奇异点（零点），椭圆
+- $\omega=1$：一个奇异点，抛物线
+- $\omega>1$：两个奇异点，双曲线
+
+![image-20191102184245800](assets/image-20191102184245800.jpg)
+
+#### 7.3.4.3 圆
+
+控制点满足
+
+- $\|\pmb{b}_1-\pmb{b}_0\|=\|\pmb{b}_1-\pmb{b}_2\|$ 
+- $\text{dot}(\pmb{b_1}-\pmb{b_0},\pmb{b_2}-\pmb{b_0})=\text{dot}(\pmb{b_1}-\pmb{b_2},\pmb{b_0}-\pmb{b_2})=\cos\alpha$ 
+
+则 $\omega=\cos \alpha$ 
+
+![image-20191102185035624](assets/image-20191102185035624.jpg)
+
+### 7.3.5 Farin 点
+
+$$
+\begin{aligned}
+\overline{\pmb{f}_i}
+&=\frac{1}{2}(\overline{\pmb{b}_i}+\overline{\pmb{b}_{i+1}})\\
+\pmb{f}_i&=\frac{\omega_ib_i+\omega_{i+1}b_{i+1}}{\omega_i+\omega_{i+1}}
+\end{aligned}
+$$
+
+![image-20191102190352559](assets/image-20191102190352559.jpg)
+
+## 7.4 NURBS
+
+**N**on-**U**niform **R**ational **B**-**S**plines
+$$
+\boldsymbol { f } ( t ) = \frac { \sum _ { i = 0 } ^ { n } N _ { i,k } ( t ) \omega _ { i } \boldsymbol { p } _ { i } } { \sum _ { i = 0 } ^ { n } N _ { i,k } ( t ) \omega _ { i } }
+$$

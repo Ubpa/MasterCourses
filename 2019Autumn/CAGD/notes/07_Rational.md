@@ -126,9 +126,9 @@ $$
 > - 椭圆 $b^2<4ac$：$\lambda_2 > 0$ 
 > - 双曲线 $b^2>4ac$：$\lambda_2 < 0$ 
 
-### 07.1.3 抛物线投影
+### 07.1.3 二次曲线投影
 
-给定一条空间二次曲线，将 $z$ 坐标试为齐次项 $\omega$，将曲线中心投影到平面 $\omega=1$ 上
+给定一条空间二次曲线，将 $z$ 坐标设为齐次项 $\omega$，将曲线中心投影到平面 $\omega=1$ 上
 
 ![image-20191101212505639](assets/image-20191101212505639.jpg)
 
@@ -330,7 +330,7 @@ $$
 $$
 t=\frac{\tilde{t}}{\alpha(1-\tilde{t})+\tilde{t}}
 $$
-![image-20191102114922828](assets/image-20191102114922828.jpg)
+![image-20191217021638513](assets/image-20191217021638513.png)
 
 形状只与 $\alpha$ 有关
 
@@ -451,7 +451,7 @@ $$
 
 - $\omega<1$：没有奇异点（零点），椭圆
 - $\omega=1$：一个奇异点，抛物线
-- $\omega=2$：两个奇异点，双曲线
+- $\omega>1$：两个奇异点，双曲线
 
 ![image-20191102184245800](assets/image-20191102184245800.jpg)
 
@@ -508,12 +508,13 @@ $$
   \end{aligned}
   $$
 
-## 07.3 NURBS
+## 07.4 NURBS
 
-> Non-Uniform Rational B-Splines
+> **N**on-**U**niform **R**ational **B**-**S**plines
 
 $$
-\boldsymbol { f } ( t ) = \frac { \sum _ { i = 1 } ^ { n } N _ { i } ^ { ( d ) } ( t ) \omega _ { i } \boldsymbol { p } _ { i } } { \sum _ { i = 1 } ^ { n } N _ { i } ^ { ( d ) } ( t ) \omega _ { i } }
+\boldsymbol { f } ( t ) = \frac { \sum _ { i = 1 } ^ { n } N _ { i,k } ( t ) \omega _ { i } \boldsymbol { p } _ { i } } { \sum _ { i = 1 } ^ { n } N _ { i,k } ( t ) \omega _ { i } }
 $$
 
 类似于有理 Bezier 曲线
+
