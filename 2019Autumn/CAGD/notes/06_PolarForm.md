@@ -1,4 +1,4 @@
-# 06. 极形式 / Blossom
+# 06. 极形式和开花算法
 
 ## 06.1 回顾
 
@@ -173,10 +173,10 @@ $$
 1&t&t^2&t^3
 \end{matrix}\right)
 A_3\left(\begin{matrix}
-\pmb{p}_0^{(3)}\\
-\pmb{p}_1^{(3)}\\
-\pmb{p}_2^{(3)}\\
-\pmb{p}_3^{(3)}\\
+\pmb{b}_0^{(3)}\\
+\pmb{b}_1^{(3)}\\
+\pmb{b}_2^{(3)}\\
+\pmb{b}_3^{(3)}\\
 \end{matrix}\right)
 =
 \left(\begin{matrix}
@@ -189,22 +189,20 @@ A_3\left(\begin{matrix}
 0&0&0&0\\
 \end{matrix}\right)
 \left(\begin{matrix}
-\pmb{p}_0^{(2)}\\
-\pmb{p}_1^{(2)}\\
-\pmb{p}_2^{(2)}\\
+\pmb{b}_0^{(2)}\\
+\pmb{b}_1^{(2)}\\
+\pmb{b}_2^{(2)}\\
 0\\
 \end{matrix}\right)
 $$
 
-> 右边的第四列是什么不关键，重点是第 1、2、3 列和右边的第 4 行必须是 0
-
 则
 $$
 \left(\begin{matrix}
-\pmb{p}_0^{(3)}\\
-\pmb{p}_1^{(3)}\\
-\pmb{p}_2^{(3)}\\
-\pmb{p}_3^{(3)}\\
+\pmb{b}_0^{(3)}\\
+\pmb{b}_1^{(3)}\\
+\pmb{b}_2^{(3)}\\
+\pmb{b}_3^{(3)}\\
 \end{matrix}\right)
 =
 A_3^{-1}
@@ -215,9 +213,9 @@ A_3^{-1}
 0&0&0&0\\
 \end{matrix}\right)
 \left(\begin{matrix}
-\pmb{p}_0^{(2)}\\
-\pmb{p}_1^{(2)}\\
-\pmb{p}_2^{(2)}\\
+\pmb{b}_0^{(2)}\\
+\pmb{b}_1^{(2)}\\
+\pmb{b}_2^{(2)}\\
 0\\
 \end{matrix}\right)
 $$
@@ -240,7 +238,7 @@ f \left( x _ { 1 } , \ldots , \sum _ { k = 1 } ^ { n } \alpha _ { k } x _ { i } 
 $$
 其中 $\sum_{k=1}^n\alpha_k=1$ 
 
-> 示例
+> **示例** 
 >
 > 两点线性（仿射）插值 linear (affine) interpolation
 > $$
@@ -267,11 +265,11 @@ $$
 > Polar Forms / Blossom
 >
 
-n 次 degree 多项式 polynomial $F:\mathbb{R}\to\mathbb{R}$ 的极形式 polar form 或开花 blossom $f:\mathbb{R}^d\to\mathbb{R}$ 是一个满足以下性质的 d 维函数
+n 次多项式 polynomial $F:\mathbb{R}\to\mathbb{R}$ 的极形式 polar form 或开花 blossom $f:\mathbb{R}^n\to\mathbb{R}$ 是一个满足以下性质的 d 维函数
 
 - 对角性 diagonality：$f(t,\dots,t)=F(t)$ 
 - 对称性 symmetry：对任意置换 $\pi$，$f(t_1,\dots,t_d)=f(t_{\pi(1)},\dots,t_{\pi(d)})$ 
-- 多放射 multi-affine：$f(t_1,\dots,\sum_\limits{k=1}^n\alpha_kt_i^{(k)},\dots,t_d)=\sum_{k=1}^n\alpha_k f(t_1,\dots,t_i^{(k)},\dots,t_d)$ 
+- 多仿射 multi-affine：$f(t_1,\dots,\sum_\limits{k=1}^n\alpha_kt_i^{(k)},\dots,t_d)=\sum_{k=1}^n\alpha_k f(t_1,\dots,t_i^{(k)},\dots,t_d)$ 
 
 ### 06.2.4 性质
 
@@ -293,7 +291,7 @@ $$
 >
 > ---
 >
-> 两者都是只有 $n+1$ 个变量，即自由度为 $n+1$，只需提供四个采样点即可确定函数
+> 两者都是只有 $n+1$ 个变量，即自由度为 $n+1$，只需提供 n+1 个采样点即可确定函数
 
 ### 06.2.5 泛化
 
@@ -308,7 +306,7 @@ $$
 
 - 对角性 diagonality：$f(\pmb{t},\dots,\pmb{t})=F(\pmb{t})$ 
 - 对称性 symmetry：对任意置换 $\pi$，$f(\pmb{t}_1,\dots,\pmb{t}_d)=f(\pmb{t}_{\pi(1)},\dots,\pmb{t}_{\pi(d)})$ 
-- 多放射 multi-affine：$f(\pmb{t}_1,\dots,\sum_\limits{k=1}^n\alpha_k\pmb{t}_i^{(k)},\dots,\pmb{t}_d)=\sum_{k=1}^n\alpha_k f(\pmb{t}_1,\dots,\pmb{t}_i^{(k)},\dots,\pmb{t}_d)$ 
+- 多仿射 multi-affine：$f(\pmb{t}_1,\dots,\sum_\limits{k=1}^n\alpha_k\pmb{t}_i^{(k)},\dots,\pmb{t}_d)=\sum_{k=1}^n\alpha_k f(\pmb{t}_1,\dots,\pmb{t}_i^{(k)},\dots,\pmb{t}_d)$ 
 
 ### 06.2.6 向量参数
 
@@ -328,18 +326,22 @@ $$
 ### 06.2.7 导数
 
 $$
-\frac { \mathbb{d} ^ { k } } { \mathbb{d} t ^ { k } } F ( t ) = \frac { n ! } { ( n - k ) ! } f ( \underbrace { t , \ldots , t } _ { n - k }, \underbrace { \hat { 1 } , \ldots , \hat { 1 } } _ { k } )
+F^{(r)}(t) = c_r f ( \underbrace { t , \ldots , t } _ { n - r }, \underbrace { \hat { 1 } , \ldots , \hat { 1 } } _ { r } )
 $$
 
-> 示例
+其中 $c_r=\prod_{i=1}^r(n-i+1)$ 
+
+> **示例** 
 > $$
 > \begin{aligned}
+> F(t)&=c_0+c_1t+c_2t^2+c_3t^3\\
+> 
 > f \left( t _ { 1 } , t _ { 2 } , t _ { 3 } \right) &= c _ { 0 } + c _ { 1 } \frac { t _ { 1 } + t _ { 2 } + t _ { 3 } } { 3 } + c _ { 1 } \frac { t _ { 1 } t _ { 2 } + t _ { 1 } t _ { 3 } + t _ { 2 } t _ { 3 } } { 3 } + c _ { 3 } t _ { 1 } t _ { 2 } t _ { 3 }\\
 > 
 > F ^ { \prime } ( t )
-> &= \frac { 3 ! } { 2 ! }f(t,t,\hat{1})\\
-> &= \frac { 3 ! } { 2 ! } \left[f(t,t,1)-f(t,t,0)\right]\\
-> &= \frac { 3 ! } { 2 ! } \left[ \left( c _ { 0 } + c_1\frac { 1 + t + t } { 3 } + c _ { 2 } \frac { 1 t + t t + 1 t } { 3 } + c _ { 3 } 1 t t \right) - \left( c _ { 0 } + c_1\frac { 0 + t + t } { 3 } + c _ { 2 } \frac { t t } { 3 } \right) \right]\\
+> &= 3f(t,t,\hat{1})\\
+> &= 3 \left[f(t,t,1)-f(t,t,0)\right]\\
+> &= 3 \left[ \left( c _ { 0 } + c_1\frac { 1 + t + t } { 3 } + c _ { 2 } \frac { 1 t + t t + 1 t } { 3 } + c _ { 3 } 1 t t \right) - \left( c _ { 0 } + c_1\frac { 0 + t + t } { 3 } + c _ { 2 } \frac { t t } { 3 } \right) \right]\\
 > &= 3 \left( c _ { 1 } \frac { 1 } { 3 } + c _ { 2 } \frac { 2 t } { 3 } + c _ { 3 } t t \right)\\
 > &= 3 c _ { 3 } t ^ { 2 } + 2 c _ { 2 } t + c _ { 1 }
 > \end{aligned}
@@ -351,7 +353,7 @@ $$
 
 - $F$ 和 $G$ 在 $t$ 点 $C^k$ 连续
 - $\forall t_1,\dots,t_k, f(t,\dots,t,t_1,\dots,t_k)=g(t,\dots,t,t_1,\dots,t_k)$ 
-- $f ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_k ) = g ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_k )$
+- $f ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_k ) = g ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_k )$ 
 
 ### 06.2.9 升阶
 
@@ -398,7 +400,7 @@ $$
 #### 06.3.1.2 de Castlejau 算法
 
 - Bezier 点：$\pmb{p}_i^{(0)}(t)=f(\underbrace{0,\dots,0}_{d-i},\underbrace{1,\dots,1}_{i})$ 
-- 内部点：$\pmb{p}_i^{(j)}(t)=f(\underbrace{0,\dots,0}_{d-i-j},\underbrace{1,\dots,1}_{i},\underbrace{t,\dots,t}_{j})$ 
+- 内部点：$\pmb{p}_i^{(j)}(t)=f(\underbrace{0,\dots,0}_{n-i-j},\underbrace{1,\dots,1}_{i},\underbrace{t,\dots,t}_{j})$ 
 - 迭代计算：$\pmb{p}_i^{(j)}(t)=(1-t)\pmb{p}_i^{(j-1)}+t\pmb{p}_{i+1}^{(j-1)}(t)$ 
 
 > 示例
@@ -433,7 +435,7 @@ $$
 - $\pmb{p}(t)\mapsto \pmb{b}(t_1,\dots,t_n)$ 
 - 控制点 $\pmb{b}_i=\pmb{b}(\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)$，$i=0,\dots,n$ 
 
-> 示例
+> **示例** 
 >
 > $p(t)=1+2t+3t^2-t^3$ 
 >
@@ -468,7 +470,7 @@ $$
 #### 06.3.1.1 导数
 
 $$
-\frac { \mathbb{d} } { \mathbb{d} t } F ( t ) = d f ( t , \ldots , t , \hat { 1 } ) = d ( f ( t , \ldots , t , 1 ) - f ( t , \ldots , t , 0 ) )
+\frac { \mathbb{d} } { \mathbb{d} t } F ( t ) = n f ( t , \ldots , t , \hat { 1 } ) = n ( f ( t , \ldots , t , 1 ) - f ( t , \ldots , t , 0 ) )
 $$
 
 ![image-20191026203616107](assets/image-20191026203616107.jpg)
@@ -555,7 +557,7 @@ $$
 \pmb{x}(t)=\pmb{x}_0^{(k-1)}(t)=\underline{\pmb{x}}(\underbrace{t,\dots,t}_{k-1})
 $$
 
-> 一段示例
+> **示例** 
 >
 > $k=4$ 
 >

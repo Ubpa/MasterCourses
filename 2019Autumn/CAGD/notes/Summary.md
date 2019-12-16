@@ -521,6 +521,7 @@ $$
 - 含 **n-k+2 段**多项式 **k-1 阶**的曲线，$C^{k-2}$ 连续
 - 重复 m 次，则 $C^{k-m-2}$ 连续
 - 移动 $\pmb{d}_i$ 只影响 $[t_i,t_{i+k}]$ 
+- $n=k-1$ 且 $t_0=\dots=t_{k-1}=0,t_k=\dots=t_{2k-1}=1$ 时，B 样条为 Bezier 曲线（从[开花算法](#6.3 B 样条)易于理解）
 
 > **示例** 
 >
@@ -668,4 +669,210 @@ $$
 > **示例** 
 >
 > ![1571324448351](assets/1571324448351.jpg)
+
+# 6. 极形式和开花算法
+
+## 6.1 极形式
+
+### 6.1.1 一维
+
+n 次多项式 polynomial $F:\mathbb{R}\to\mathbb{R}$ 的极形式 polar form 或开花 blossom $f:\mathbb{R}^n\to\mathbb{R}$ 是一个满足以下性质的 d 维函数
+
+- 对角性 diagonality：$f(t,\dots,t)=F(t)$ 
+- 对称性 symmetry：对任意置换 $\pi$，$f(t_1,\dots,t_d)=f(t_{\pi(1)},\dots,t_{\pi(d)})$ 
+- 多仿射 multi-affine：$f(t_1,\dots,\sum_\limits{k=1}^n\alpha_kt_i^{(k)},\dots,t_d)=\sum_{k=1}^n\alpha_k f(t_1,\dots,t_i^{(k)},\dots,t_d)$，其中 $\sum_{k=1}^n\alpha_k=1$ 
+
+$$
+\begin{aligned}
+F(t)&=\sum_{i=0}^n c_i t^i\\
+f(t_1,\dots,t_n)&=\sum_{i=0}^n c_i 
+\frac{\sum_\limits{S\subseteq\{1,\dots,n\},|S|=i} \prod_\limits{j\in S}t_j}{\mathrm{C}_n^i}\\
+\end{aligned}
+$$
+
+> **示例** 
+>
+> - 0 次：$f=c_0$ 
+> - 1 次：$f(t_1)=c_0+c_1t_1$ 
+> - 2 次：$f(t_1,t_2)=c_0+c_1\frac{t_1+t_2}{2} + c_2t_1t_2$ 
+> - 3 次：$f(t_1,t_2,t_3)=c_0+c_1\frac{t_1+t_2+t_3}{3}+c_2\frac{t_1t_2+t_2t_3+t_1t_3}{3}+c_3t_1t_2t_3$ 
+>
+> ---
+>
+> 两者都是只有 $n+1$ 个变量，即自由度为 $n+1$，只需提供 n+1 个采样点即可确定函数
+
+### 6.1.2 多维
+
+$$
+\begin{aligned}F&:\mathbb{R}^m\to \mathbb{R}^n\\f&:\mathbb{R}^{d\times m}\to \mathbb{R}^n\end{aligned}
+$$
+
+满足性质
+
+- 对角性 diagonality：$f(\pmb{t},\dots,\pmb{t})=F(\pmb{t})$ 
+- 对称性 symmetry：对任意置换 $\pi$，$f(\pmb{t}_1,\dots,\pmb{t}_d)=f(\pmb{t}_{\pi(1)},\dots,\pmb{t}_{\pi(d)})$ 
+- 多仿射 multi-affine：$f(\pmb{t}_1,\dots,\sum_\limits{k=1}^n\alpha_k\pmb{t}_i^{(k)},\dots,\pmb{t}_d)=\sum_{k=1}^n\alpha_k f(\pmb{t}_1,\dots,\pmb{t}_i^{(k)},\dots,\pmb{t}_d)$，其中 $\sum_{k=1}^n\alpha_k=1$ 
+
+### 6.1.3 向量
+
+我们需要区分点 point 和向量 vectors（点的差值）
+
+使用“帽子”记号 $\hat{v}=p-q$ 来表示向量
+
+1 向量：$\hat{1}=1-0,\hat{\pmb{1}}=[1,\dots,1]^\top-\pmb{0}$ 
+
+极形式中向量的递归定义
+$$
+f(\underbrace{t_1,\dots,t_{n-k}}_{n-k},\underbrace{\hat{v}_1,\dots,\hat{v}_k}_k)=
+f(\underbrace{t_1,\dots,t_{n-k}}_{n-k},p_1,\underbrace{\hat{v}_2,\dots,\hat{v}_{k-1}}_{k-1})-f(\underbrace{t_1,\dots,t_{n-k}}_{n-k},q_1,\underbrace{\hat{v}_2,\dots,\hat{v}_{k-1}}_{k-1})
+$$
+其中 $\hat{v}_i=p_i-q_i(i=1,\dots,k)$ 
+
+### 6.1.4 导数
+
+$$
+F^{(r)}(t) = c_r f ( \underbrace { t , \ldots , t } _ { n - r }, \underbrace { \hat { 1 } , \ldots , \hat { 1 } } _ { r } )
+$$
+
+其中 $c_r=\prod_{i=1}^r(n-i+1)$ 
+
+### 6.1.5 连续
+
+下列等价
+
+- $F$ 和 $G$ 在 $t$ 点 $\mathrm{C}^k$ 连续
+- $\forall t_1,\dots,t_k, f(t,\dots,t,t_1,\dots,t_k)=g(t,\dots,t,t_1,\dots,t_k)$ 
+- $f ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_r ) = g ( t , \ldots , t , \underbrace{\hat { 1 } , \ldots , \hat { 1 }}_r )\quad(r=1,\dots,k)$ 
+
+### 6.1.6 升阶
+
+给定 d 次函数 $f(t_1,\dots,t_d)$，升阶得
+$$
+f ^ { ( + 1 ) } \left( t _ { 1 } , \ldots , t _ { d + 1 } \right) = \frac { 1 } { d + 1 } \sum _ { i = 1 } ^ { d + 1 } f \left( t _ { 1 } , \ldots , t _ { i - 1 } , t _ { i + 1 } , \ldots , t _ { d + 1 } \right)
+$$
+
+> 证明 $F^{(+1)}(t)=F(t)$ 
+> $$
+> \begin{aligned} \forall t : f ^ { ( + 1 ) } ( t , \ldots , t ) & = \left. \frac { 1 } { d + 1 } \sum _ { i = 1 } ^ { d + 1 } f \left( t _ { 1 } , \ldots , t _ { i - 1 } , t _ { i + 1 } , \ldots , t _ { d + 1 } \right) \right| _ { t _ { 1 } = \cdots t _ { d + 1 } = t } \\ & = \frac { 1 } { d + 1 } \sum _ { i = 1 } ^ { d + 1 } f ( t , \ldots , t ) \\ & = f ( t , \ldots , t ) \end{aligned}
+> $$
+
+## 6.2 Bezier
+
+### 6.2.1 极形式
+
+n 阶 Bezier 曲线 $\pmb{x}(t)=\sum_{i=0}^nB^n_i(t)\pmb{b}_i\ (0\le t\le 1)$，则极形式为
+$$
+f(t,\dots,t)=\sum_{i=0}^nB^n_i(t)f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)
+$$
+其中 $f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)=\pmb{b}_i$ 
+
+### 6.2.2 开花算法
+
+初始化：$\pmb{b}^{0}_i(t)=\pmb{b}_i=f (\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i),\ (i=0,\dots,n)$  
+
+迭代：$\pmb{b}^{r}_i(t)=(1-t)\pmb{b}^{r-1}_i(t)+t\pmb{b}^{r-1}_{i+1}(t)=f(\underbrace{0,\dots,0}_{n-i-r},\underbrace{1,\dots,1}_{i},\underbrace{t,\dots,t}_{r})\ (r=1,\dots,n;i=0,\dots,n-r)$ 
+
+> **运算框架** 
+>
+> ![image-20191217001943908](assets/image-20191217001943908.png)
+
+### 6.2.3 泛化
+
+$t\in [u,v]$，则 $\pmb{b}_i=f(\underbrace{u,\dots,u}_{d-i},\underbrace{v,\dots,v}_i)$ 
+
+### 6.2.4 求 Bezier 点
+
+给定 n 次多项式 $\pmb{p}(t)$，想要 Bezier 曲线的控制点 $\{\pmb{b}_i\}_{i=0}^n$ 
+
+解决方法
+
+- $\pmb{p}(t)\mapsto \pmb{b}(t_1,\dots,t_n)$ 
+- 控制点 $\pmb{b}_i=\pmb{b}(\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)$，$i=0,\dots,n$ 
+
+### 6.2.5 Bezier 样条
+
+控制点：$\{\pmb{k}_i\}_{i=0}^n$ 
+
+结序列：$\{t_i\}_{i=0}^n$ 
+
+求得 Bezier 点为 $\{\pmb{b}_i\}_{i=0}^{3n}$，有 $n$ 条 Bezier 曲线 $\{\pmb{x}_i(t)\}_{i=1}^n$，相应极形式为 $\{f_i(\tau_1,\tau_2,\tau_3)\}_{i=1}^n$，则
+$$
+\begin{array}{}
+f_1(t_0,t_0,t_0)=\pmb{b}_0,&f_1(t_0,t_0,t_1)=\pmb{b}_1,&f_1(t_0,t_1,t_1)=\pmb{b}_2,&f_1(t_1,t_1,t_1)=\pmb{b}_3\\
+f_2(t_1,t_1,t_1)=\pmb{b}_3,&f_2(t_1,t_1,t_2)=\pmb{b}_4,&f_2(t_1,t_2,t_2)=\pmb{b}_5,&f_2(t_2,t_2,t_2)=\pmb{b}_6\\
+\dots\\
+f_n(t_{n-1},t_{n-1},t_{n-1})=\pmb{b}_{3n-3},&f_n(t_{n-1},t_{n-1},t_n)=\pmb{b}_{3n-2},&f_n(t_{n-1},t_n,t_n)=\pmb{b}_{3n-1},&f_n(t_n,t_n,t_n)=\pmb{b}_{3n}\\
+\end{array}
+$$
+
+> **示例** 
+>
+> ![image-20191026203411697](assets/image-20191026203411697.jpg)
+
+### 6.2.6 导数
+
+$$
+\frac { \mathbb{d} } { \mathbb{d} t } F ( t ) = n f ( t , \ldots , t , \hat { 1 } ) = n ( f ( t , \ldots , t , 1 ) - f ( t , \ldots , t , 0 ) )
+$$
+
+![image-20191026203616107](assets/image-20191026203616107.jpg)
+
+### 6.2.7 细分
+
+![image-20191026203655630](assets/image-20191026203655630.jpg)
+
+在 [6.1.6 升阶](#6.1.6 升阶) 介绍了极形式的升阶，则对 Bezier 曲线极形式 $\pmb{b}(t_1,\dots,t_n)$ 升阶得到
+$$
+\pmb{b} ^ { ( + 1 ) } \left( t _ { 1 } , \ldots , t _ { n + 1 } \right) = \frac { 1 } { n + 1 } \sum _ { i = 1 } ^ { n + 1 } \pmb{b} \left( t _ { 1 } , \ldots , t _ { i - 1 } , t _ { i + 1 } , \ldots , t _ { n + 1 } \right)
+$$
+升阶后的曲线 $\pmb{b}^{(+1)}$ 的 $n+2$ 个控制点 $\pmb{b}^{(+1)}_0,\dots,\pmb{b}^{(+1)}_{n+1}$ 为
+
+- 当 $i=1,\dots,d$ 时
+  $$
+  \begin{aligned}
+  \pmb{b}_i^{(+1)}&=\pmb{b}^{(+1)}(\underbrace{0,\dots,0}_{n+1-i},\underbrace{1,\dots,1}_i)\\
+&=\frac{i}{n+1}\pmb{b}(\underbrace{0,\dots,0}_{n+1-i},\underbrace{1,\dots,1}_{i-1}) + \left(1-\frac{i}{n+1}\right)\pmb{b}(\underbrace{0,\dots,0}_{n-i},\underbrace{1,\dots,1}_i)\\
+  &=\frac{i}{n+1}\pmb{b}_{i-1} + \left(1-\frac{i}{n+1}\right)\pmb{b}_i\\\end{aligned}
+  $$
+  
+- 其他
+  $$
+  \begin{aligned}
+  \pmb{b}_0^{(+1)}&=\pmb{b}_0\\
+  \pmb{b}_{n+1}^{(+1)}&=\pmb{b}_n\\
+  \end{aligned}
+  $$
+
+  > 将 $\pmb{b}_{-1}$ 和 $\pmb{b}_{n+1}$ 视为 $\pmb{0}$ 的话可以并入上边的公式
+
+## 6.3 B 样条
+
+### 6.3.1 定义
+
+$\{\pmb{d}_i\}_{i=0}^n$，$\{t_i\}_{i=0}^{n+k}$，极形式 $\underline{\pmb{x}}(\tau_1,\dots,\tau_{k-1})$，范围 $[t_{k-1},t_{n+1}]$，则
+$$
+\pmb{d}_i=\underline{\pmb{x}}(t_{i+1},\dots,t_{i+k-1})
+$$
+每 $k$ 个点可决定一个 $\underline{\pmb{x}}$，总共有 $n-k+2$ 条 $k$ 阶 $k-1$ 次多形式函数曲线
+
+### 6.3.2 开花算法
+
+求 $\pmb{x}(t)$，确定出 $t$ 前后 $k-1$ 个结
+$$
+r_{k-1}\le\dots\le r_1\le t < s_1\le \dots \le s_{k-1}
+$$
+则中间节点为
+$$
+\pmb{x} _ { i } ^ { (r) } ( t ) = \underline { \pmb{x} } ( r _ { k-1-r-i } , \dots , r _ { 1 }, \underbrace{t , \ldots , t}_r , s _ { 1 } , \dots , s _ { i } )
+$$
+其中 $l=0,\dots,k-1$，$j=0,\dots,k-1-l$ 
+
+最终曲线是
+$$
+\pmb{x}(t)=\pmb{x}_0^{(k-1)}(t)=\underline{\pmb{x}}(\underbrace{t,\dots,t}_{k-1})
+$$
+
+> **运算框架** 
+>
+> ![image-20191217011851453](assets/image-20191217011851453.png)
 
