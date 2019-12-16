@@ -249,3 +249,80 @@ $$
 \left[\begin{matrix}\pmb{p}_0\\\pmb{p}_1\\\pmb{p}_2\\\pmb{p}_3\\\end{matrix}\right]
 $$
 
+# 3. 曲线微分几何
+
+## 3.1 参数曲线
+
+曲线 $c(t)$，速度向量 $c^\prime(t)$，速度 $|c^\prime(t)|$ 
+
+正则：$c^\prime(t)\neq 0$ 
+
+切向量：$\pmb{t}=\frac{c^\prime}{\|c^\prime\|}$ ![1569480907474](assets/1569480907474.jpg)
+
+法平面 N 过 $c$ 且垂直于 $c'$ ![1569481208928](assets/1569481208928.jpg)
+
+副法向 $\pmb{b}=\frac{c'\times c''}{\|c'\times c''\|}$，密切平面 T 过 $c$ 且垂直于副法向 $\pmb{b}$ ![1569481598504](assets/1569481598504.jpg)
+
+主法向 $\pmb{n}=\pmb{b}\times\pmb{t}$，从切平面 R 垂直于主法向 $\pmb{n}$ ![1569482371745](assets/1569482371745.jpg)
+
+曲率 $\kappa(t)=\frac{\|c'(t)\times c''(t)\|}{\|c'(t)\|^3}$ 
+
+平面正则曲线曲率 $\kappa ( t ) = \frac { \left| x ^ { \prime } y ^ { \prime \prime } - x ^ { \prime \prime } y ^ { \prime } \right| } { \left( x ^ { \prime 2 } + y ^ { \prime 2 } \right) ^ { \frac { 3 } { 2 } } }$，带符号曲率 $\kappa ( t ) = \frac { x ^ { \prime } y ^ { \prime \prime } - x ^ { \prime \prime } y ^ { \prime } } { \left( x ^ { \prime 2 } + y ^ { \prime 2 } \right) ^ { \frac { 3 } { 2 } } }$ 
+
+扰率 $\tau(t)=\frac{(c'\times c'')\cdot c'''}{\|c'\times c''\|^2}$ 
+
+## 3.2 弧长参数化曲线
+
+> $f(t)$，$\dot{f}=\frac{\mathrm{d}f}{\mathrm{d}t}$ 
+>
+> $f^\prime=\frac{\mathrm{d}f}{\mathrm{d}s}$ 
+
+从 $0$ 到 $t$ 的弧长 $s(t)=\int_0^t\|\dot{c}(\tau)\|\mathbb{d}\tau$，则 $\dot{s}=\|\dot{c}\|>0$ 
+
+弧长参数化曲线 $c(s)$ 有
+$$
+\left\|c^\prime\right\|
+=\left\|\frac{\mathbb{d} c}{\mathbb{d}s}\right\|
+=\left\|\frac{\mathbb{d} c/\mathbb{d} t}{\mathbb{d} s/\mathbb{d} t}\right\|
+=\left\|\frac{\dot{c}}{\dot{s}}\right\|=1
+$$
+$\|c^\prime\|=1,c^\prime\perp c^{\prime\prime}$ 
+
+主法向
+$$
+\pmb{n}=\frac{c''}{\|c''\|}
+$$
+曲率
+$$
+\kappa=\|c^{\prime\prime}\|
+$$
+
+## 3.3 Frenet 曲线
+
+Frenet 曲线 $c(s)$ 是一种弧长参数化曲线，要求 $c^\prime,\dots,c^{(n)}$ 线性无关
+
+Frenet 坐标系基向量 $\{e_i\}_{i=1}^n$ 可对 $\{c^{(i)}\}_{i=1}^n$ 正交化得到
+
+对于弧长参数化平面曲线
+$$
+e_1(s)=c^\prime(s)\\
+e_2(s)=R^{90^\circ}e_1(s)=\frac{c^{\prime\prime}(s)}{\|c^{\prime\prime}(s)\|}\\
+$$
+坐标系方程
+$$
+\left( \begin{array} { l } { e _ { 1 } ( s ) } \\ { e _ { 2 } ( s ) } \end{array} \right) ^ { \prime } = \left( \begin{array} { c c } { 0 } & { \kappa ( s ) } \\ { - \kappa ( s ) } & { 0 } \end{array} \right) \left( \begin{array} { l } { e _ { 1 } ( s ) } \\ { e _ { 2 } ( s ) } \end{array} \right)\\
+$$
+其中有符号曲率 $\kappa ( s ) = \left\langle e _ { 1 } ^ { \prime } ( s ) , e _ { 2 } ( s ) \right\rangle$ 
+
+密切圆半径 $\frac{1}{\kappa(s)}$，圆心 $c(s)+\frac{1}{\kappa(s)}e_2(s)$ 
+
+弧长函数的导数
+$$
+\frac{\mathrm{d}f}{\mathrm{d}s}=\frac{\mathrm{d}f/\mathrm{d}t}{\mathrm{d}s/\mathrm{d}t}=\frac{\dot{f}}{\|\dot{c}\|}
+$$
+则一般参数化平面曲线的 Frenet 坐标系
+$$
+e_1(s(t))=c^\prime(s(t))=\frac{\dot{c}(t)}{\|\dot{c}(t)\|}\\
+e_2(s(t))=R^{90^\circ}e_1(s(t))\\
+\kappa ( s(t) ) = \left\langle e _ { 1 } ^ { \prime } ( s(t) ) , e _ { 2 } ( s(t) ) \right\rangle=\frac{\left\langle \ddot{c}(t),R^{90^\circ}\dot{c}(t) \right\rangle}{\|\dot{c}(t)\|^3}
+$$

@@ -1,10 +1,10 @@
-# 04. 曲线微分几何
+# 3. 曲线微分几何
 
-## 参数曲线
+## 3.1 参数曲线
 
 曲线方程 $c(t)$，$t$ 常被视为时间
 
-像集称为轨迹（trace），不同参数化的曲线可以轨迹相同，轨迹中一点对应多个时间时称为自交（self-intersection）
+像集称为**轨迹**（trace），不同参数化的曲线可以轨迹相同，轨迹中一点对应多个时间时称为自交（self-intersection）
 
 ![1569479309382](assets/1569479309382.jpg)
 
@@ -19,7 +19,7 @@ $c'(t)$ 称为速度向量，$|c'(t)|$ 是速度
 >
 > 同一轨迹但不同参数化（$c(t)$ 不同），得到的速度向量 $c'(t)$ 也不一样，方向共线（切线方向，同向或反向），但大小有别
 
-正则（regular）参数化是指 $c'(t)\ne 0$（没有驻点）。曲线上正则点称为平凡点（ordinary point），非正则点称为奇异点（singular point）。
+**正则**（regular）参数化是指 $c'(t)\ne 0$（没有驻点）。曲线上正则点称为**平凡点**（ordinary point），非正则点称为**奇异点**（singular point）。
 
 > 同一轨迹，不同参数化正则性可以不同
 >
@@ -33,19 +33,19 @@ $$
 
 我们可以视正则曲线为正则参数化的集合（等价类），关注不同参数变换下的不变性。
 
-切线过 $c(t)$ 且与 $c'(t)$ 平行，$c'(t)$ 的单位向量称为切向量（tangent vector）
+切线过 $c(t)$ 且与 $c'(t)$ 平行，$c'(t)$ 的单位向量称为**切向量**（tangent vector）
 $$
 \pmb{t}=\frac{c'}{\|c'\|}
 $$
 ![1569480907474](assets/1569480907474.jpg)
 
-法平面（normal plane）过 $c$ 且垂直于 $c'$。
+**法平面**（normal plane）过 $c$ 且垂直于 $c'$。
 
 法平面上一点 $p$ 满足 $p-c\perp c'$，即 $(p-c)\cdot c' = 0$。
 
 ![1569481208928](assets/1569481208928.jpg)
 
-密切平面（osculating plane）过 $c$ 且垂直于复法向（binormal）$\pmb{b}$，为
+**密切平面**（osculating plane）过 $c$ 且垂直于**副法向**（binormal）$\pmb{b}$，为
 $$
 \pmb{b}=\frac{c'\times c''}{\|c'\times c''\|}
 $$
@@ -71,7 +71,7 @@ $$
 > $$
 > 密切平面是在 $p(t_0)$ 最契合曲线的平面。
 
-从切平面（rectifying plane）R 垂直于法平面和密切平面。
+**从切平面**（rectifying plane）R 垂直于法平面和密切平面。
 
 从切平面上一点 $p$ 满足
 $$
@@ -79,9 +79,9 @@ $$
 $$
 ![1569482371745](assets/1569482371745.jpg)
 
-从切平面的法向称为主法向（principal normal）$\pmb{n}=\pmb{b}\times\pmb{t}$。
+从切平面的法向称为**主法向**（principal normal）$\pmb{n}=\pmb{b}\times\pmb{t}$。
 
-曲率（curvature）衡量曲线的弯曲程度，定义为
+**曲率**（curvature）衡量曲线的弯曲程度，定义为
 $$
 \kappa(t)=\frac{\|c'(t)\times c''(t)\|}{\|c'(t)\|^3}
 $$
@@ -100,20 +100,20 @@ $$
 $$
 \kappa ( t ) = \frac { x ^ { \prime } y ^ { \prime \prime } - x ^ { \prime \prime } y ^ { \prime } } { \left( x ^ { \prime 2 } + y ^ { \prime 2 } \right) ^ { \frac { 3 } { 2 } } }
 $$
-扰率（torsion）衡量副法线的变化率，定义为
+**扰率**（torsion）衡量副法线的变化率，定义为
 $$
 \tau(t)=\frac{(c'\times c'')\cdot c'''}{\|c'\times c''\|^2}
 $$
 
 > 平面曲线和二次曲线的扰率为 0
 
-## 弧长参数化曲线
+## 3.2 弧长参数化曲线
 
 正则曲线（$\dot c\neq 0$）弧长定义为
 $$
 \text{length}_c=\int_a^b\|\dot{c}\|\mathbb{d}t
 $$
-其中 $\dot{c}=\mathbb{d}c/\mathbb{d}t$。
+其中 $\dot{c}=\mathbb{d}c/\mathbb{d}t$ 
 
 ![1569484074669](assets/1569484074669.jpg)
 
@@ -141,13 +141,27 @@ $$
 $$
 
 > 注意这里的 $c'$ 和 $c''$ 是对 $s$ 求导
+>
+> **证明** 
+> $$
+> \begin{aligned}
+> (c^\prime\times c^{\prime\prime})\times c^\prime
+> &=-c^\prime\times (c^\prime\times c^{\prime\prime})\\
+> &=c^{\prime\prime}(c^\prime \cdot c^\prime)-c^\prime(c^\prime\cdot c^{\prime\prime})\\
+> &=c^{\prime\prime}
+> \end{aligned}
+> $$
+> 则
+> $$
+> \pmb{n}=\pmb{b}\times\pmb{t}=\frac{(c^\prime\times c^{\prime\prime})\times c^\prime}{\|(c^\prime\times c^{\prime\prime})\times c^\prime\|}=\frac{c''}{\|c''\|}
+> $$
 
 弧长参数化曲线的曲率为
 $$
 \kappa=\|c''\|
 $$
 
-## Frenet 曲线
+## 3.3 Frenet 曲线
 
 Frenet 曲线 $c(s)$ 是一种在 $\mathbb{R}^n$ 上的弧长参数化曲线，要求 $c'(s),c''(s),\dots,c^{(n)}(s)$ 线性无关。
 
@@ -211,7 +225,7 @@ $$
 $$
 带符号曲率为 $\kappa(s)=\langle e_1'(s),e_2(s) \rangle$，扰率 $\tau(s)=\langle e_2'(s),e_3(s)\rangle$。
 
-## 总结
+## 3.4 总结
 
 正则曲线
 
