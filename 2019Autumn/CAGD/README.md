@@ -28,7 +28,8 @@
 - [06. 极形式和开花算法](notes/06_PolarForm.md) 
 - [07. 有理样条曲线](notes/07_Rational.md) 
 - [08. 样条曲面](notes/08_SplineSurface.md) 
-- [09. 曲线和曲面细分](notes/09_Subdivision.md) 
+- [09. 细分曲线和曲面](notes/09_Subdivision.md) 
+- [10.隐式曲面](notes/10_ImplicitSurface.md) 
 - [总结](notes/Summary.md) 
 
 ## 考试
