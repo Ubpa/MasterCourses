@@ -25,7 +25,7 @@
 - [03. 曲线微分几何](notes/03_DifferentialGeometryCurve.md) 
 - [04. Bezier 样条](notes/04_BezierSpline.md) 
 - [05. B 样条](notes/05_BSpline.md) 
-- [06. 极形式 / Blossom](notes/06_PolarForm.md) 
+- [06. 极形式和开花算法](notes/06_PolarForm.md) 
 - [07. 有理样条曲线](notes/07_Rational.md) 
 - [08. 样条曲面](notes/08_SplineSurface.md) 
 - [09. 曲线和曲面细分](notes/09_Subdivision.md) 

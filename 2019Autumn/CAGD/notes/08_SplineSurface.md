@@ -11,7 +11,7 @@
 - 两个参数 $(u,v)$ 
 - 分段双变量多项式
 - 将多片合成完整一片
-- 每片称为样条碎片 spline patch
+- 每片称为样条块 spline patch
 
 ![image-20191106162052349](assets/image-20191106162052349.jpg)
 
@@ -23,7 +23,7 @@
 
   - 类似于曲线
 
-  - 四边形碎片 quad patch
+  - 四边形块 quad patch
 
   - 度数各向异性 degree anisotropy
 
@@ -35,7 +35,7 @@
 
   - 度数各向同性 isotropic degree
 
-  - 三角形碎片 triangle patch
+  - 三角形块 triangle patch
 
   - 曲线的“自然”泛化
 
@@ -56,7 +56,7 @@ $$
 \pmb{B}^{(surf)}=\{b_i(u)b_j(v)\}_{i,j=1}^n
 $$
 
-> 示例
+> **示例** 
 >
 > ![image-20191106164005823](assets/image-20191106164005823.jpg)
 >
@@ -123,7 +123,7 @@ $$
 \begin{array} { l } { \pmb{x} ( u , v ) } \\ { = ( 1 - u ) ( 1 - v ) \boldsymbol { b } _ { 00 } ^ { 1 } + u ( 1 - v ) \boldsymbol { b } _ { 10 } ^ { 1 } + ( 1 - u ) v \boldsymbol { b } _ { 01 } ^ { 1 } + u v \boldsymbol { b } _ { 11 } ^ { 1 } } \\ { = \sum _ { i = 0 } ^ { 2 } \sum _ { j = 0 } ^ { 2 } B _ { i } ^ { 2 } ( u ) B _ { j } ^ { 2 } ( v ) \boldsymbol { b } _ { i , j } } \end{array}
 $$
 
-#### 8.1.2.2 Bezier 碎片
+#### 8.1.2.2 Bezier 块
 
 $$
 \boldsymbol { f } ( u , v ) = \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } B _ { i } ^ { ( d ) } ( u ) B _ { j } ^ { ( d ) } ( v ) \boldsymbol { p } _ { i , j }
@@ -191,28 +191,28 @@ $$
 
 ### 8.1.3 张量积 B 样条曲面
 
-**B 样条碎片** 
+**B 样条块** 
 
 给定
 
-- 阶数 $d$ 
+- 阶数 $k$ 
 
-- 结序列 $(u_1,\dots,u_n)$、$(v_1,\dots,v_m)$ 
+- 结序列 $(u_0,\dots,u_{n+k})$、$(v_0,\dots,v_{m+k})$ 
 
 - 控制点阵
   $$
-  \begin{array} { c c c } { d _ { 0,0 } } & { \dots } & { d _ { n - d + 1,0 } } \\ { \dots } & { } & { \dots } \\ { d _ { 0 , m - d + 1 } } & { \dots } & { d _ { n - d + 1 , m - d + 1 } } \end{array}
+  \begin{array} { c c c } { d _ { 0,0 } } & { \dots } & { d _ { n,0 } } \\ { \dots } & { } & { \dots } \\ { d _ { 0 , m } } & { \dots } & { d _ { n , m } } \end{array}
   $$
 
-则 B 样条碎片为
+则 B 样条块为
 $$
 \boldsymbol { f } ( u , v ) = \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \boldsymbol { p } _ { i , j }
 $$
-可以用 de Boor 算法计算该碎片（“曲线的曲线”思想），也可用 2D de Boor 算法，类似 2D de Casteljau 算法但权重不同
+可以用 de Boor 算法计算该块（“曲线的曲线”思想），也可用 2D de Boor 算法，类似 2D de Casteljau 算法但权重不同
 
-### 8.1.4 有理碎片
+### 8.1.4 有理块
 
-使用有理 Bezier/B 样条来创建碎片（rational Bezier patch / NURBS-patch）
+使用有理 Bezier/B 样条来创建块（rational Bezier patch / NURBS-patch）
 
 想法
 
@@ -221,13 +221,16 @@ $$
 
 欧式空间中 3D 曲面不是一个张量积曲面，齐次空间中 4D 曲面是张量积曲面
 
-**有理 Bezier 碎片** 
+**有理 Bezier 块** 
 $$
 \begin{aligned} \boldsymbol { f } ^ { ( h o m ) } ( u , v ) = & \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } B _ { i } ^ { ( d ) } ( u ) B _ { j } ^ { ( d ) } ( v ) \left( \begin{array} { c } { \omega _ { i , j } \boldsymbol { p } _ { i , j } } \\ { \omega _ { i , j } } \end{array} \right) \\ \boldsymbol { f } ^ { ( \text {Eucl} ) } ( u , v ) & = \frac { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } B _ { i } ^ { ( d ) } ( u ) B _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } \boldsymbol { p } _ { i , j } } { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } B _ { i } ^ { ( d ) } ( u ) B _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } } \end{aligned}
 $$
-**有理 B 样条碎片** 
+**有理 B 样条块** 
 $$
-\begin{aligned} \boldsymbol { f } ^ { ( \text {hom } ) } ( u , v ) = & \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \left( \begin{array} { c } { \omega _ { i , j } \boldsymbol { p } _ { i , j } } \\ { \omega _ { i , j } } \end{array} \right) \\ \boldsymbol { f } ^ { ( \text {Eucl} ) } ( u , v ) = & \frac { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } \boldsymbol { p } _ { i , j } } { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } } \end{aligned}
+\begin{aligned}
+\boldsymbol { f } ^ { ( \text {hom} ) } ( u , v ) = & \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \left( \begin{array} { c } { \omega _ { i , j } \boldsymbol { p } _ { i , j } } \\ { \omega _ { i , j } } \end{array} \right) \\
+\boldsymbol { f } ^ { ( \text {eucl} ) } ( u , v ) = & \frac { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } \boldsymbol { p } _ { i , j } } { \sum _ { i = 0 } ^ { d } \sum _ { j = 0 } ^ { d } N _ { i } ^ { ( d ) } ( u ) N _ { j } ^ { ( d ) } ( v ) \omega _ { i , j } }
+\end{aligned}
 $$
 **旋转曲面** 
 

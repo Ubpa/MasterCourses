@@ -132,7 +132,7 @@ $b_i(t)$ 有局部支撑
 
 对于 Bezier 曲线，$\pmb{b}_i$ 影响最大处位于 $t=\frac{i}{n}$ 
 
-### 2.3.3 仿射无关性
+### 2.3.3 仿射不变性
 
 仿射变换 $f(x)=Ax+b$，曲线 $\pmb{x}(t)=\sum_{i=0}^nb_i(t)\pmb{p}_i$ 
 
@@ -1178,3 +1178,145 @@ $$
 $$
 \boldsymbol { f } ( t ) = \frac { \sum _ { i = 0 } ^ { n } N _ { i,k } ( t ) \omega _ { i } \boldsymbol { p } _ { i } } { \sum _ { i = 0 } ^ { n } N _ { i,k } ( t ) \omega _ { i } }
 $$
+
+# 8. 样条曲面
+
+## 8.1 张量积曲面
+
+### 8.1.1 定义
+
+$B^{(\text{curv})}=\{b_i(t)\}_{i=0}^n$，$B^{(\text{surf})}=\{b_{ij}(u,v)=b_i(u)b_j(v)\}_{i,j=0}^n$，$\{\pmb{p}_{i,j}\}_{i,j=0}^n$，张量积曲面为
+$$
+\begin{aligned}
+\boldsymbol { f } ( u , v ) & = \sum _ { i = 0 } ^ { n } \sum _ { j = 0 } ^ { n } b _ { i } ( u ) b _ { j } ( v ) \boldsymbol { p } _ { i , j } \\
+& = \sum _ { i = 0 } ^ { n } b _ { i } ( u ) \sum _ { j = 0 } ^ { n } b _ { j } ( v ) \boldsymbol { p } _ { i , j } \\
+& = \sum _ { j = 0 } ^ { n } b _ { j } ( v ) \sum _ { i = 0 } ^ { n } b _ { i } ( u ) \boldsymbol { p } _ { i , j }
+\end{aligned}
+$$
+$\sum_{i=0}^n b_i(t)=1 \Rightarrow$ 仿射不变性、凸包性
+$$
+\begin{aligned}
+\frac { \partial ^ { r + s } } { \partial u ^ { r } \partial v ^ { s } } \sum _ { i = 0 } ^ { n } \sum _ { j = 0 } ^ { n } b _ { i } ( u ) b _ { j } ( v ) \boldsymbol { p } _ { i , j }
+& = \sum _ { i = 0 } ^ { n } \sum _ { j = 0 } ^ { n } b_i^{(r)}(u) b_j^{(s)}(v) \boldsymbol { p } _ { i , j }\\
+& = \sum _ { j = 0 } ^ { n } b_i^{(r)}(u) \sum _ { i = 0 } ^ { n } b_j^{(s)}(v) \boldsymbol { p } _ { i , j } \\
+& = \sum _ { i = 0 } ^ { n } b_i^{(r)}(u) \sum _ { j = 0 } ^ { n } b_j^{(s)}(v) \boldsymbol { p } _ { i , j }\\
+& = \frac { \mathrm{d} ^ { r } } { \mathrm{d} u ^ { r } } \sum_{i=0}^nb_i(u)\frac { \mathrm{d} ^ { s } } { \mathrm{d} v ^ { s } } \sum_{j=0}^nb_j(v) \pmb{p}_{i,j}
+\end{aligned}
+$$
+
+$$
+\pmb{n}(u,v)=\text{normalize}\left(\frac{\part \pmb{f}}{\part u} \times \frac{\part \pmb{f}}{\part v}\right)
+$$
+
+### 8.1.2 张量积 Bezier 曲面
+
+控制点阵 $\{\pmb{b}_{i,j}\}_{i,j=0}^{n,m}$，则张量积 Bezier 块为
+$$
+\boldsymbol { f } ( u , v ) = \sum _ { i = 0 } ^ { n } \sum _ { j = 0 } ^ { m } B _ { i } ^ { n } ( u ) B _ { j } ^ { m } ( v ) \boldsymbol { b } _ { i , j }
+$$
+
+$$
+\begin{aligned}
+\frac { \partial ^ { r + s } } { \partial u ^ { r } \partial v ^ { s } }\pmb{f}(u,v)
+&= \frac { \mathrm{d} ^ { r } } { \mathrm{d} u ^ { r } } \sum_{i=0}^n B^n_i(u)\frac { \mathrm{d} ^ { s } } { \mathrm{d} v ^ { s } } \sum_{j=0}^m B^m_j(v) \pmb{b}_{i,j}\\
+&= c_{n,r}c_{m,s}\sum_{i=0}^{n-r}B^{n-r}_i(u)\sum_{j=0}^{m-s}B^{m-s}_j(v)\Delta^r_i\Delta^s_j\pmb{b}_{i,j}\\
+&= c_{n,r}c_{m,s}\sum_{j=0}^{m-s}B^{m-s}_j(v)\sum_{i=0}^{n-r}B^{n-r}_i(u)\Delta^s_j\Delta^r_i\pmb{b}_{i,j}
+\end{aligned}
+$$
+
+其中 $\Delta^k_i f_i=\sum_{j=0}^k\mathrm{C}_k^j(-1)^jf_{i+k-j}$，$c_{n,k}=\prod_{i=1}^k(n-i+1)$ 
+
+边界导数
+$$
+\begin{aligned}
+\left.\frac{\part}{\part u}\pmb{f}(u,v)\right|_{u=0}&=n\sum_{j=0}^m B^m_j(v)(\pmb{b}_{1,j}-\pmb{b}_{0,j})\\
+\left.\frac{\part}{\part u}\pmb{f}(u,v)\right|_{u=1}&=n\sum_{j=0}^m B^m_j(v)(\pmb{b}_{n,j}-\pmb{b}_{n-1,j})\\
+\left.\frac{\part}{\part v}\pmb{f}(u,v)\right|_{v=0}&=m\sum_{j=0}^n B^n_j(v)(\pmb{b}_{i,1}-\pmb{b}_{i,0})\\
+\left.\frac{\part}{\part v}\pmb{f}(u,v)\right|_{v=1}&=m\sum_{j=0}^n B^n_j(v)(\pmb{b}_{i,n}-\pmb{b}_{i,n-1})\\
+\end{aligned}
+$$
+
+- $C^0$ 连续：块边界重合
+- $C^1$ 连续：边界差向量相等
+
+极形式 $f(u_1,\dots,u_n;v_1,\dots,v_m)$ 
+
+- 对角：$f(u,\dots,u;v,\dots,v)=\pmb{f}(u,v)$ 
+- 对称：$f(u_1,\dots,u_n;v_1,\dots,v_m)=f(u_{\pi(1)},\dots,u_{\pi(n)};v_{\mu(1)},\dots,v_{\mu(m)})$ 
+- 仿射：$\sum_k\alpha_k=1$ 
+
+$$
+\begin{aligned}
+f(u_1,\dots,\sum_k\alpha_ku_i^{(k)},\dots,u_d;v_1,\dots,v_n)&=\sum_k\alpha_k f(u_1,\dots,u_i^{(k)},\dots,u_d;v_1,\dots,v_n)\\
+f(u_1,\dots,u_n;v_1,\dots,\sum_k\alpha_kv_i^{(k)},\dots,v_d)&=\sum_k\alpha_k f(u_1,\dots,u_n;v_1,\dots,v_i^{(k)},\dots,v_d)\\
+\end{aligned}
+$$
+
+![image-20191106172140010](assets/image-20191106172140010.jpg)
+
+![image-20191106172202969](assets/image-20191106172202969.jpg)
+
+### 8.1.3 张量积 B 样条曲面
+
+$k$ 阶，结阵 $\{(u_i,v_j)\}_{i,j=0}^{n+k,m+k}$，控制点阵 $\{\pmb{d}_{i,j}\}_{i,j=0}^{n,m}$，则 B 样条曲面
+$$
+\pmb{f}(u,v)=\sum_{i=0}^n\sum_{j=0}^m N_{i,k}(u)N_{j,k}(v)\pmb{d}_{i,j}\quad(u_{k-1}\le u\le u_{n+1},v_{k-1}\le v\le v_{m+1})
+$$
+总共 $(n-k+2)(m-k+2)$ 块
+
+### 8.1.4 张量积有理样条曲面
+
+#### 8.1.4.1 有理 Bezier 样条曲面块
+
+控制点阵 $\{\pmb{b}_{i,j}\}_{i,j=0}^{n}$，权重阵 $\{w_{i,j}\}_{i,j=0}^{n}$，则有理 Bezier 样条曲面块
+$$
+\pmb{f}(u,v)=\frac{\sum_{i=0}^n\sum_{j=0}^n B^n_i(u)B^n_j(v)w_{i,j}\pmb{b}_{i,j}}{\sum_{i=0}^n\sum_{j=0}^n B^n_i(u)B^n_j(v)w_{i,j}}
+$$
+
+#### 8.1.4.2 有理 B 样条曲面
+
+$k$ 阶，结阵 $\{(u_i,v_j)\}_{i,j=0}^{n+k,m+k}$，控制点阵 $\{\pmb{d}_{i,j}\}_{i,j=0}^{n,m}$，权重阵 $\{w_{i,j}\}_{i,j=0}^{n,m}$，则有理 B 样条曲面
+$$
+\pmb{f}(u,v)=\frac{\sum_{i=0}^n\sum_{j=0}^m N_{i,k}(u)N_{j,k}(v)w_{i,j}\pmb{d}_{i,j}}{\sum_{i=0}^n\sum_{j=0}^m N_{i,k}(u)N_{j,k}(v)w_{i,j}}\quad(u_{k-1}\le u\le u_{n+1},v_{k-1}\le v\le v_{m+1})
+$$
+总共 $(n-k+2)(m-k+2)$ 块
+
+#### 8.1.4.3 旋转曲面
+
+考虑 $u$ 方向 $xy$ 平面的有理 Bezier 母线的绕 $v$ 轴的轴旋转曲面，控制点 $\{\pmb{b}_i\}_{i=0}^n$，权重 $\{w_i\}_{i=0}^n$，绕 $v$ 轴旋转可得 4 段二次有理曲线（$1/4$ 圆弧）
+
+![image-20191106183810744](assets/image-20191106183810744.jpg)
+
+## 8.2 全度曲面
+
+$$
+F ( \pmb{x} ) = \sum _ { i + j + k = d\\i,j,k\ge0 } \frac { d ! } { i ! j ! k ! } \alpha ^ { i } \beta ^ { j } \gamma ^ { k } \pmb{f} (\underbrace{a,\dots,a}_i,\underbrace{b,\dots,b}_j,\underbrace{c,\dots,c}_k)
+$$
+
+![image-20191106201607921](assets/image-20191106201607921.jpg)
+
+**连续性** 
+
+考虑 2D 情形
+
+![image-20191106214146127](assets/image-20191106214146127.jpg)
+
+- $C^0$ 
+  $$
+  \begin{aligned}
+  \pmb{f}(b,b) &= \pmb{g}(b,b)\\
+  \pmb{f}(b,c) &= \pmb{g}(b,c)\\
+  \pmb{f}(c,c) &= \pmb{g}(c,c)\\
+  \end{aligned}
+  $$
+
+- $C^1$ 
+  $$
+  \begin{aligned}
+  \pmb{f} ( a , b ) & = \pmb{g} ( a , b ) \\
+  \pmb{f} ( b , d ) & = \pmb{g} ( b , d ) \\
+  \pmb{f} ( a , c ) & = \pmb{g} ( a , c ) \\
+  \pmb{f} ( c , d ) & = \pmb{g} ( c , d ) 
+  \end{aligned}
+  $$
+
