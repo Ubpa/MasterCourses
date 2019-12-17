@@ -515,7 +515,7 @@ $$
 
 当 $t_0=t_1=\dots=t_{k-1}$ 且 $t_{n+1}=t_{n+2}=\dots=t_{n+k}$ 时，相应的 B-spline 曲线 $\pmb{x}(t)$ 的性质
 
-- $t\in[t_{k-1},t_{n+1}]$，总共 $n-k+2$ 段
+- $t\in[t_{k-1},t_{n+1}]$，总共 $n-k+2$ 段（因此 $n\ge k-1$）
 - $\pmb{x}(t_{k-1})=\pmb{d}_0$，$\pmb{x}(t_{n+1})=\pmb{d}_n$ 
 - $\dot{\pmb{x}}(t_0)=\frac{k-1}{t_k-t_{k-1}}(\pmb{d}_1-\pmb{d}_0)$ 
 - 含 **n-k+2 段**多项式 **k-1 阶**的曲线，$C^{k-2}$ 连续
@@ -1319,4 +1319,132 @@ $$
   \pmb{f} ( c , d ) & = \pmb{g} ( c , d ) 
   \end{aligned}
   $$
+
+# 9. 细分曲线和曲面
+
+## 9.1 细分曲线
+
+### 9.1.1 Corner Cutting Splines [Chaikin 1974]
+
+- 各边插入中点
+- 各边用中点替代
+
+> **示例** 
+>
+> ![image-20191127144816254](assets/image-20191127144816254.jpg)
+
+相当于：对每条边，插入 $\frac{1}{4}$ 和 $\frac{3}{4}$ 点，删去旧点
+$$
+\begin{aligned}
+Q_{2i}&=\frac{3}{4}P_i+\frac{1}{4}P_{i+1}\\
+Q_{2i+1}&=\frac{1}{4}P_i+\frac{3}{4}P_{i+1}
+\end{aligned}
+$$
+![image-20191127151101172](assets/image-20191127151101172.jpg)
+
+每次迭代点数加倍，写成矩阵的形式
+$$
+\left[\begin{matrix}
+\vdots\\
+p^{k+1}_{2i-2}\\
+p^{k+1}_{2i-2}\\
+p^{k+1}_{2i-2}\\
+p^{k+1}_{2i-2}\\
+p^{k+1}_{2i-2}\\
+p^{k+1}_{2i-2}\\
+\vdots
+\end{matrix}\right]_{2n\times 1}
+=\frac{1}{4}
+\left[\begin{matrix}
+\ddots\\
+ & 3 & 1 & 0 & 0\\
+ & 1 & 3 & 0 & 0\\
+ & 0 & 3 & 1 & 0\\
+ & 0 & 1 & 3 & 0\\
+ & 0 & 0 & 3 & 1\\
+ & 0 & 0 & 1 & 3\\
+ &   &   &   &   &\ddots\\
+\end{matrix}\right]_{2n\times n}
+\left[\begin{matrix}
+\vdots\\
+p^{k+1}_{i-1}\\
+p^{k+1}_{i}\\
+p^{k+1}_{i+1}\\
+p^{k+1}_{i+2}\\
+\vdots\\
+\end{matrix}\right]_{n\times 1}
+$$
+极限是 3 阶 2 次 $C^1$ 连续 B 样条
+
+核为 $h_i=\frac{1}{4}[\underbrace{0,\dots,0}_{2i},1,3,3,1,\underbrace{0,\dots,0}_{2n-2i-4}]$ 
+
+### 9.1.2 d 次 B 样条细分
+
+Lane-Riesenfeld subdivision 算法
+
+- 各边加中点
+- 将每条边用中点替代，重复 $d$ 次
+
+> **示例** 
+>
+> $d=2$ 
+>
+> ![image-20191127153832697](assets/image-20191127153832697.jpg)
+
+极限是 $d+1$ 阶 $d$ 次 $C^{d-1}$ 连续 B 样条
+
+核
+$$
+h_i=\frac{1}{2^{d+1}}[\underbrace{0,\dots,0}_{2i},\mathrm{C}_{d+2}^0,\dots,\mathrm{C}_{d+2}^{d+2},\underbrace{0,\dots,0}_{2n-2i-d-3}]
+$$
+
+### 9.1.3 谱收敛分析
+
+局部迭代矩阵 $M_L$ 
+$$
+\left( \begin{array} { c }
+{ x _ { -r } ^ { [ l + 1 ] } } \\
+\vdots\\
+{ x _ { -1 } ^ { [ l + 1 ] } } \\
+{ x ^ { [ l + 1 ] } } \\
+{ x _ { +1 } ^ { [ l + 1 ] } }\\
+\vdots\\
+{ x _ { +r } ^ { [ l + 1 ] } }
+\end{array} \right)
+= M_L
+\left( \begin{array} { c }
+{ x _ { -r } ^ { [ l ] } } \\
+\vdots\\
+{ x _ { -1 } ^ { [ l ] } } \\
+{ x ^ { [ l + 1 ] } } \\
+{ x _ { +1 } ^ { [ l ] } }\\
+\vdots\\
+{ x _ { +r } ^ { [ l ] } }
+\end{array} \right)
+$$
+收敛必要条件：1 是最大的特征值（绝对值）
+
+仿射不变性要求局部迭代矩阵行和为 1，这意味着 $\pmb{1}$ 向量必须是特征值 $1$ 的特征向量（$M_L$
+
+## 9.2 细分曲面
+
+### 9.2.1 张量积 B 样条细分曲面
+
+规则闭合四边形网格
+
+**划分** （删去旧顶点）
+
+![image-20191217150449722](assets/image-20191217150449722.png)
+
+**平均** 
+
+![image-20191217150504769](assets/image-20191217150504769.png)
+
+### 9.2.2 Catmull-Clark
+
+任意闭合四边形网格
+
+**划分**（删去旧顶点）
+
+![image-20191127213527531](assets/image-20191127213527531.jpg)
 
