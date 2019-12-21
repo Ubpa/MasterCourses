@@ -1,5 +1,7 @@
 # 4. 网络流与连通度
 
+## 4.1 网络流
+
 网络 network 是指具有两个不同的特定顶点 $x$ 和 $y$ 的加权连通图 $(D,\pmb{w})$，记为 $N=(D_{xy},\pmb{w})$，其中 $x$ 和 $y$ 分别称为发点 source 和发点 sink
 
 若 $\pmb{w}$ 为非负的容量函数 capacity function $\pmb{c}$，则称网络 $N=(D_{xy},\pmb{c})$ 为容量网络 capacity network，其中 $\pmb{c}$ 在边 $a$ 上的值 $\pmb{c}(a)$ 称为边 $a$ 的容量 capacity
@@ -26,17 +28,17 @@
 $$
 \text{val}\pmb{f}\triangleq\pmb{f}^+(x)-\pmb{f}^-(x)=\pmb{f}^-(y)-\pmb{f}^+(y)
 $$
-其中 $\text{val}\pmb{f}$ 称为流量
+其中 $\text{val}\pmb{f}$ 称为**流量**
 
-$N$ 中具有最大流量的 $(x,y)$ 流称为 $N$ 中的最大流 maximum flow
+$N$ 中具有最大流量的 $(x,y)$ 流称为 $N$ 中的**最大流** maximum flow
 
-$D$ 中形如 $(S,\overline{S})$ 的有向边集 $B$ 称为 $(x,y)$ 的截边集 cut edge set，其中 $x\in S$，$y\in\overline{S}$，则
+$D$ 中形如 $(S,\overline{S})$ 的有向边集 $B$ 称为 $(x,y)$ 的**截边集** cut edge set，其中 $x\in S$，$y\in\overline{S}$，则
 $$
 \text{cap} B \triangleq \pmb{c}(B)\triangleq \sum_{a\in B}\pmb{c}(a)
 $$
-称为 $B$ 的容量。
+称为 $B$ 的**容量** 
 
-具有最小容量的 $(x,y)$ 截边集称为最小截 minimum cut set
+具有最小容量的 $(x,y)$ 截边集称为**最小截** minimum cut set
 
 **定理 4.1**（最大流最小截定理）在任何容量网络 $N$ 中，最大流量等于最小截容量
 
@@ -244,15 +246,15 @@ $$
 
 > 强连通度就是最小分离集的大小
 
-若 $\kappa(D)\ge k$，则称 $D$ 为强 $k$ 连通图
+若 $\kappa(D)\ge k$，则称 $D$ 为**强 k​ 连通图** 
 
-> 这里竟然只是 $\ge$
+> 这里竟然只是 $\ge$ 
 >
 > $K_n^*$ 是强 $n-1$ 连通图
 >
 > 有向圈是强 $1$ 连通图
 
-点数为 $\kappa=\kappa(D)$ 的分离集称为 $\kappa$ 分离集
+点数为 $\kappa=\kappa(D)$ 的分离集称为 $\kappa$ **分离集** 
 
 $\kappa(D)$ 还可写为
 $$
@@ -274,13 +276,13 @@ $$
 \min\{|B|:B是D的截边集\},&\text{other}
 \end{array}\right.
 $$
-若 $\lambda(D)\ge k$，则称 $D$ 为 $k$ 强边连通图
+若 $\lambda(D)\ge k$，则称 $D$ 为 **k 强边连通图** 
 
 > $K_n^*$ 是 $(n-1)$ 强边连通图
 >
 > 有向圈是 $1$ 强边连通图
 
-边数为 $\lambda=\lambda(D)$ 的截边集称为 $\lambda$ 截边集
+边数为 $\lambda=\lambda(D)$ 的截边集称为 $\lambda$ **截边集** 
 
 $\lambda(D)$ 可表示为
 $$
@@ -345,11 +347,11 @@ $$
 $$
 \sigma_P(u)=\min\{\sigma(a):a\in E(P)\}
 $$
-若 $\sigma_P(u)=0$，则称 $P$ 是 $\pmb{f}$ 饱和路 saturated path
+若 $\sigma_P(u)=0$，则称 $P$ 是 $\pmb{f}$ **饱和路** saturated path
 
-若 $\sigma_P(u)>0$，则称 $P$ 是 $\pmb{f}$ 非饱和路 unsaturated path
+若 $\sigma_P(u)>0$，则称 $P$ 是 $\pmb{f}$ **非饱和路** unsaturated path
 
-$\pmb{f}$ 非饱和的 $(x,y)$ 路 $P$ 称为 $\pmb{f}$ 增广路 incrementing path，之所以称为增广路，是因为流 $\pmb{f}$ 的流量沿此路是可以增加的。事实上，由
+$\pmb{f}$ 非饱和的 $(x,y)$ 路 $P$ 称为 $\pmb{f}$ **增广路** incrementing path，之所以称为增广路，是因为流 $\pmb{f}$ 的流量沿此路是可以增加的。事实上，由
 $$
 \tilde{\pmb{f}}(a)=\left\{\begin{array}{ll}
 \pmb{f}(a)+\sigma_P(y),&a\in P^+\\
@@ -357,7 +359,7 @@ $$
 \pmb{f}(a),&\text{other}
 \end{array}\right.
 $$
-所定义的 $\widetilde{\pmb{f}}\in \mathcal{E}(D)$ 是 $N$ 中的 $(x,y)$ 流并且 $\text{val}\widetilde{\pmb{f}}=\text{val}\pmb{f}+\sigma_P(y)$，流 $\widetilde{\pmb{f}}$ 称为基于 $\pmb{f}$ 增广路 $P$ 的修正流 revised flow
+所定义的 $\widetilde{\pmb{f}}\in \mathcal{E}(D)$ 是 $N$ 中的 $(x,y)$ 流并且 $\text{val}\widetilde{\pmb{f}}=\text{val}\pmb{f}+\sigma_P(y)$，流 $\widetilde{\pmb{f}}$ 称为基于 $\pmb{f}$ 增广路 $P$ 的**修正流** revised flow
 
 > 示例
 >

@@ -216,11 +216,11 @@ x 和 y 称为端点，其余为内部点，边数为 W 的长度。
 
 ### 连通和强连通
 
-x y 间有路（不必是有向路）则称 x 和 y 连通。
+x y 间有路（不必是有向路）则称 x 和 y **连通**。
 
 连通关系是等价关系。
 
-$G[V_i]$（$1\le i \le \omega$）是 G 的连通分支，$\omega$ 称为 G 的连通分支数，记为 $\omega=\omega(G)$。
+$G[V_i]$（$1\le i \le \omega$）是 G 的连通分支，$\omega$ 称为 G 的**连通分支数**，记为 $\omega=\omega(G)$。
 
 若 $\omega(G)=1$，则 G 为连通图，否则为非连通图。
 
@@ -230,11 +230,11 @@ $G[V_i]$（$1\le i \le \omega$）是 G 的连通分支，$\omega$ 称为 G 的�
 
 若 $\vec{\omega}(D)=1$ 为强连通图，否则为非强连通图。
 
-若 $\omega(G-x)>\omega(G)$，则 x 为割点 cut vertex，反之称为连通点。
+若 $\omega(G-x)>\omega(G)$，则 x 为**割点** cut vertex，反之称为**连通点** 
 
-若 $\omega(G-e)>\omega(G)$，则 e 为割边 cut edge 或桥 bridge，反之称为连通边。
+若 $\omega(G-e)>\omega(G)$，则 e 为**割边** cut edge 或桥 bridge，反之称为**连通边** 
 
-不含割点的连通图称为块，G 中不含割点的极大连通图称为 G 的块
+不含割点的连通图称为**块**，G 中不含割点的极大连通图称为 **G 的块** 
 
 **定理 1.4.2**
 
@@ -350,9 +350,9 @@ x 到 y 的欧拉迹记为欧拉 $xy$ 迹（或欧拉 $(x,y)$ 迹
 
 ## 10. Hamilton 图
 
-包含 G 中每个顶点的圈称为 Hamilton 圈
+包含 G 中每个顶点的圈称为 **Hamilton 圈**
 
-含 Hamilton 圈的图称为 Hamilton 图（Hamiltonian graph）
+含 Hamilton 圈的图称为 **Hamilton 图**（Hamiltonian graph）
 
 > $K_n$ 和强连通竞赛图都是 Hamilton 图
 
@@ -540,7 +540,7 @@ $$
 
 n 阶非负方阵 A 称为本原的 primitive，如果存在正整数 k 使 $A^k$ 的每个元素都为正数（记为 $A^k>0$）
 
-使 $A^k>0$ 成立的最小 k 称为 A 的本原指数 primitive exponrnt，记为 $\gamma(A)$。
+使 $A^k>0$ 成立的最小 k 称为 A 的**本原指数** primitive exponrnt，记为 $\gamma(A)$。
 
 有向图 D 称为本原的，如果 D 的邻接矩阵 A 是本原的，$\gamma(A)$ 称为 D 的本原指数，记为 $\gamma(D)$。
 
