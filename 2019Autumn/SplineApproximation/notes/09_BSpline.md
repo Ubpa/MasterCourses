@@ -247,7 +247,7 @@ $$
 其中 $\omega(t)=\prod_{i=1}^{r+1}(t-t_i)$ 
 
 > - 交换性：分母处与 $t$ 次序无关 $\left[ t _ { 1 } , \cdots , t _ { r + 1 } \right] f=[t_{\pi(1)},\dots,t_{\pi(r+1)}]f$，$\pi$ 是任意置换函数
-> - 系数：$[\alpha t_1,\dots,\alpha t_{r+1}]f = \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( \alpha t _ { i } - \alpha t _ { j } \right) } = \frac{1}{\alpha^r} \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( t _ { i } - t _ { j } \right) }$ 
+> - 系数：$[\alpha t_1,\dots,\alpha t_{r+1}]f = \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( \alpha t _ { i } - \alpha t _ { j } \right) } = \frac{1}{\alpha^r} \sum _ { i = 1 } ^ { r + 1 } \frac { f \left( \alpha t _ { i } \right) } { \prod _ { j = 1 , j \neq i } ^ { r + 1 } \left( t _ { i } - t _ { j } \right) }=\frac{1}{\alpha^r}[t_1,\dots,t_{r+1}]f(\alpha\cdot)$ 
 
 (2) 设 $t_1\le t_2\le \dots\le t_{r+1}=\overbrace{\tau_1,\dots,\tau_1}^{l_1}<\dots<\overbrace{\tau_d,\dots,\tau_d}^{l_d}$，则
 $$
