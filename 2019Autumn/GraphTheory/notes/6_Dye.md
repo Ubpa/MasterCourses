@@ -22,7 +22,7 @@ $$
 
 > **示例** 
 >
-> ![image-20191213233510105](assets/image-20191213233510105.png)
+> ![image-20191213233510105](assets/image-20191213233510105.jpg)
 >
 > $C^5$ 和 Petersen 图点 3 色可染
 
@@ -107,11 +107,11 @@ $$
 >
 > **示例** 
 >
-> ![image-20191221172943557](assets/image-20191221172943557.png)
+> ![image-20191221172943557](assets/image-20191221172943557.jpg)
 >
 > 选取最上边的点为 $z$，左右两边分别为 $x,y$，进行标号再用贪婪算法即可
 >
-> ![image-20191221173049514](assets/image-20191221173049514.png)
+> ![image-20191221173049514](assets/image-20191221173049514.jpg)
 
 **定理 6.1.3**（五色定理）对于每个平面图 $G$，均有 $\chi(G)\le 5$ 
 
@@ -146,4 +146,66 @@ $$
 > 则 $D$ 是 $mn+1$ 阶竞赛图，且 $\chi(D)=mn+1$ 
 >
 > 令 $\pmb{f}\in\mathcal{V}(D)$ 使得 $\pmb{f}(a_i)=a_i\ (i=1,\dots,mn+1)$，由 **Theorem 2** 知该命题成立
+
+## 6.2 边染色
+
+无环非空图 $G$ 中 **边的 k 染色**（edge k-coloring）$\pi^\prime$ 是指用 k 中颜色 $1,\dots,k$ 给 $G$ 的边染色，使得相邻两条边所染颜色不同
+
+换句话说，$G$ 中边的 $k$ 染色是映射 $\pi^\prime:E(G)\to\{1,\dots,k\}$ 使得对每个 $i\ (i=1,\dots,k)$，$\pi^{\prime-1}(i)$ 是匹配或者空集
+
+若令
+$$
+E_i=\pi^{\prime-1}(i)=\{e\in E(G)|\pi^\prime(e)=i\}\quad (i=1,\dots,k)
+$$
+则记
+$$
+\pi^\prime=(E_1,\dots,E_k)
+$$
+
+> **示例** 
+>
+> ![image-20191221175939838](assets/image-20191221175939838.jpg)
+
+若 $G$ 中边存在一种 $k$ 染色，则称 $G$ 中**边 k 色可染** edge k-colorable
+$$
+\chi^\prime(G)=\min\{k|G中边 k 色可染\}
+$$
+称为 $G$ 的**边色数** edge chromatic number
+
+显然，$\chi^\prime(G)\ge \Delta(G)$ 
+
+可证 $\chi^\prime(G)=\chi(L(G))$ 
+
+**定理 6.2**（Vizing 定理）设 $G$ 是无环非空图（可以有重边），则
+$$
+\Delta(G)\le \chi^\prime(G)\le \Delta(G)+\mu(G)
+$$
+其中
+$$
+\mu(G)=\max\{\mu_G(x,y)|x,y\in V(G)\}
+$$
+特别地，若 $G$ 是非空简单图，则
+$$
+\Delta(G)\le \chi^\prime(G)\le \Delta(G)+1
+$$
+
+---
+
+使 $\chi^\prime(G)=\Delta(G)$ 的简单图 $G$ 称为**第一类图** 
+
+使 $\chi^\prime(G)=\Delta(G)+1$ 的简单图 $G$ 称为**第二类图** 
+
+> 2 部图和 $K_{2n}$ 是第一类图，而 $C_{2n+1}$ 和 $K_{2n+1}$ 是第二类图
+>
+> 确定哪类图是 NPC 问题
+>
+> 几乎都是第一类图
+>
+> 存在最大度为 $\Delta(\ge 2)$ 的第一类平面图
+>
+> 存在最大度为 $2,3,4,5$ 的第二类平面图
+>
+> 不存在最大度 $\ge 7$ 的第二类平面图（6还未知）
+
+
 
