@@ -13,9 +13,9 @@
 r 部完全平衡图：$T_r(n)$ 
 顶点度数：$d_G(x),\Delta(G),\delta(G),d_D^+(x),d_D^-(x),d_D(x),\Delta^+(D),\Delta^-(D),\delta^+(D),\delta^-(D)$ 
 子图：$H\subseteq G$ 
-导出子图：$G[V^\prime],G-V^\prime,G-x,G[E^\prime],G-E^\prime,G-e$   
+导出子图：$G[V^\prime],G-V^\prime,G-x,G[E^\prime],G-E^\prime,G-e$ 
 并图：$G_1\cup G_2,G_1+G_2,G_1\oplus G_2$ 
-邻集：$N_G(x),N_D^+(x),N_D^-(x)$  
+邻集：$N_G(x),N_D^+(x),N_D^-(x)$ 
 Turan 数：$\text{ex}(n,H)$ 
 链：$W=x_0e_1x_1\dots e_kx_k=x_0\dots x_k$ 
 连通分支数：$\omega(G)$ 
@@ -60,6 +60,7 @@ $(\Delta,d)-\text{Moore}$ 界：$M(\Delta,d)$
 匹配数：$\nu(G)$ 
 独立数：$\alpha(G)$ 
 边覆盖数：$\rho(G)$ 
-染色：$\pi,\pi^\prime$  
-色数：$\chi(G),\chi^\prime(G)$  
+染色：$\pi,\pi^\prime$ 
+色数：$\chi(G),\chi^\prime(G)$ 
+
 
