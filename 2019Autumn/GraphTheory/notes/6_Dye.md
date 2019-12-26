@@ -2,9 +2,9 @@
 
 ## 6.1 点染色
 
-简单无向图的一个**点 k 染色** vertex k-coloring $\pi$ 是指用 k 种颜色 $1,\dots,k$ 给 $G$ 的顶点染色使得相邻顶点染不同颜色
+简单无向图的一个**点 k 染色** vertex k-coloring $\pi$ 是指用 $k$ 种颜色 $1,\dots,k$ 给 $G$ 的顶点染色使得相邻顶点染不同颜色
 
-$G$ 中点 k 染色 $\pi$ 是映射
+$G$ 中点 $k$ 染色 $\pi$ 是映射
 $$
 \pi:V(G)\to\{1,\dots,k\}
 $$
@@ -93,11 +93,11 @@ $$
 >
 > $\forall z\in V(G),\exist x,y\in V(G),xy\notin E(G),xz,yz\in E(G)$ 
 >
-> 断言：$\exist z\in V(G),\exist x,y\in V(G),xy\notin E(G),xz,yz\in E(G),\omega(G-\{x,y\})=1$ 
+> 断言：$\exist z\in V(G),\exist x,y\in N_G(z),xy\notin E(G),\omega(G-\{x,y\})=1$ 
 >
-> > 若 $G$ 是 3-连通，则 $\forall z\in V(G),\exist x,y\in V(G),xy\notin E(G),xz,yz\in E(G),\omega(G-\{x,y\})=1$ 
+> > 若 $G$ 是 3-连通，则 $\forall z\in V(G),\exist x,y\in N_G(z),xy\notin E(G)$，有 $G-\{x,y\}$ 连通 
 > >
-> > 否则，存在 $z\in V(G)$，$G-z$ 不为 2 连通，再取非割点 $x,y\in V(G),xy\notin E(G),xz,yz\in E(G)$，则 $G-\{x,y\}$ 连通
+> > 否则，存在 $z\in V(G)$，$G-z$ 不为 2 连通，再取非割点 $x,y\in N_G(z),xy\notin E(G)$，则 $G-\{x,y\}$ 连通
 >
 > 取 $z$ 为根的 $G-\{x,y\}$ 支撑树 $T$，标号 $x_1=x,x_2=y$，然后给 $T$ 顶点逐层标号，由贪婪算法可得 $\Delta(G)$ 染色
 >
@@ -206,6 +206,5 @@ $$
 > 存在最大度为 $2,3,4,5$ 的第二类平面图
 >
 > 不存在最大度 $\ge 7$ 的第二类平面图（6还未知）
-
 
 
