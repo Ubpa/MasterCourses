@@ -2,15 +2,15 @@
 
 ## 5.1 匹配
 
-设 $G$ 是无环非空图，$M$ 是 $E(G)$ 的**非空**子集。若 $M$ 中任何两条**边**在 $G$ 中均**不相邻**，则称 $M$ 为 $D$ 的**匹配** matching
+设 $G$ 是无环非空图，$M$ 是 $E(G)$ 的非空子集。若 $M$ 中任何两条边在 $G$ 中均不相邻，则称 $M$ 为 $D$ 的**匹配** matching
 
-$G$ 中与 $M$ 中边关联的顶点称为 $M$ **饱和点** saturated vertex。反之，称为 $M$ **非饱和点** unsaturated vertex
+$G$ 中与 $M$ 中边关联的顶点称为 **M 饱和点** saturated vertex。反之，称为 **M 非饱和点** unsaturated vertex
 
-设 $X\subseteq V(D)$，若 $X$ 中每点都是 $M$ 饱和点，则称 $M$ **饱和** $X$ 
+设 $X\subseteq V(D)$，若 $X$ 中每点都是 $M$ 饱和点，则称 **M 饱和 X** 
 
 若 $M$ 饱和 $V(D)$，则称 $M$ 为 $D$ 的**完美匹配** perfect matching
 
-从子图观点看，匹配是图 $G$ 的 1-正则子图 1-regular subgraph，完美匹配是图 $G$ 的支撑 1-正则子图 spanning 1-regular subgraph
+从子图观点看，匹配是图 $G$ 的 **1-正则子图** 1-regular subgraph，完美匹配是图 $G$ 的**支撑 1-正则子图** spanning 1-regular subgraph
 
 若对 $D$ 的任何匹配 $M^\prime$ 均有 $|M^\prime|\le |M|$，则称 $M$ 为 $D$ 的**最大匹配** maximum matching
 
@@ -32,7 +32,7 @@ $G$ 中与 $M$ 中边关联的顶点称为 $M$ **饱和点** saturated vertex。
 $$
 |S|\le |N_G(S)|\quad \forall S\subseteq X
 $$
-称为 **Hall 条件** 
+称为 **Hall 条件**  
 
 > **证明** 
 >
@@ -101,7 +101,7 @@ $$
 > $$
 > 即 $|N_G(S)|\ge |S|$ 
 >
-> 由 Hall 定理知 $G$ 有饱和 $X$ 的匹配 $M$，由于 $|X|=|Y|$，所以 $M$ 是完美匹配
+> 由婚姻定理知 $G$ 有完美匹配
 
 **推论 5.1.1.3** 设 $G$ 是 $2$ 部划分为 $\{X,Y\}$ 的简单 $2$ 部图，而且 $|X|=|Y|=n$。若 $\delta(G)\ge \frac{n}{2}$，则 $G$ 有完美匹配
 
@@ -117,11 +117,11 @@ $$
 > $$
 > 矛盾，故 $|S|\le |N(S)|$ 
 >
-> 由 Hall 定理知 $G$ 有饱和 $X$ 的匹配 $M$，由于 $|X|=|Y|$，所以 $M$ 是完美匹配
+> 由婚姻定理知 $G$ 有完美匹配
 
 ### 5.1.2 一般图有完美匹配条件 - Tutte 定理
 
-**定理 5.1.2**（Tutte 定理）$G$ 有完美匹配 $\Leftrightarrow$ $o(G-S)\le |S|\quad \forall S \subset V(G)$，称为 Tutte 条件，其中 $o(G-S)$ 是 $G-S$ 的奇阶连通分支数目
+**定理 5.1.2**（Tutte 定理）$G$ 有完美匹配 $\Leftrightarrow$ $o(G-S)\le |S|\quad \forall S \subset V(G)$，称为 **Tutte 条件**，其中 $o(G-S)$ 是 $G-S$ 的奇阶连通分支数目
 
 > **证明** 
 >
@@ -135,7 +135,7 @@ $$
 >
 > - 充分性 $\Leftarrow$ 
 >
-> > 令 $S=\empty$，则 $o(G-S)=0$，所以 $n=|V(G)|$ 为偶数
+> > 令 $S=\empty$，则 $o(G-S)=0$，所以 $n=|V(G)|$ 为**偶数** 
 > >
 > > （归纳法）
 > >
@@ -293,7 +293,7 @@ $G$ 中最大匹配中的边数称为**匹配数** matching number，记为 $\nu
 >
 > （反证法）
 >
-> 若 $\beta(G)\le k-1$，则 $e(G)\le \beta(G)\Delta(G)=\beta(G)n\le (k-1)n$，矛盾，则 $\beta(G)\ge k$ 
+> 若 $\beta(G)\le k-1$，则 $e(G)\le \beta(G)\Delta(G)\le\beta(G)n\le (k-1)n$，矛盾，则 $\beta(G)\ge k$ 
 >
 > 由 **Konig 定理** 知 $\nu(G)=\beta(G)\ge k$ 
 
@@ -324,13 +324,13 @@ $G$ 有边覆盖 $\Leftrightarrow$ $\delta(G)>0$
 
 由定义，边覆盖 $L$ 的导出子图必为 $G$ 的一个支撑子图且 $\delta(L)>0$；因为一条边至多饱和两个顶点，所以 $\rho(G)\ge \frac{n}{2}$ 
 
- 匹配数 $\nu(G) \le \frac{\nu}{2}$，则
+ 匹配数 $\nu(G) \le \frac{n}{2}$，则
 $$
 \nu(G)\le \rho(G)
 $$
 等号成立 $\Leftrightarrow$ $G$ 中存在完美匹配
 
-**定理 5.2.1** 设 $S\subseteq V(G)$。则 $S$ 是 $G$ 的独立集 $\Leftrightarrow$ $V(G)\backslash S$ 是 $G$ 的点覆盖
+**定理 5.2.1** 设 $S\subseteq V(G)$。则 $S$ 是 $G$ 的独立集 $\Leftrightarrow$ $\overline{S}=V(G)\backslash S$ 是 $G$ 的点覆盖
 
 > **证明** 
 >
@@ -342,7 +342,7 @@ $$
 
 > **证明** 
 >
-> 由推论 5.2.1.1 立得
+> 由 **推论 5.2.1.1** 立得
 
 **定理 5.2.2** 设 $G$ 是任意图，且 $\delta(G)>0$。则 $\nu+\rho=n(G)$ 
 
@@ -390,6 +390,8 @@ $$
 \nu(G)=\alpha(L(G))
 $$
 其中 $L(G)$ 是 $G$ 的线图
+
+---
 
 **定理 5.2.4** 设 $G$ 是 $n(\ge 2)$ 阶简单无向图，且对 $G$ 中任何不相邻顶点 $x$ 和 $y$，均有 $d_G(x)+d_G(y)\ge n$（Ore 条件），则 $\alpha(G)\le \kappa(G)$ 
 
@@ -535,7 +537,7 @@ $K_n$ 有 $\frac{1}{2}(n-1)!$ 条不同的 Hamilton 圈，已证明属于 NPC �
 
 3.找出 $T$ 中奇度点集 $V^\prime$ 并求出 $G^\prime=K_n[V^\prime]$ 中最小权完美匹配 $M$ 
 
-4.在 $G^*=T\oplus M$ 中求  回 $C_0=(x,y,z,\dots,x)$ 
+4.在 $G^*=T\oplus M$ 中求 Euler 回 $C_0=(x,y,z,\dots,x)$ 
 
 5.从 $x$ 开始，沿 $C_0$ 一次删去 $C_0$ 中重复出现的顶点（最后一个 $x$ 除外）后，剩余的顶点（不改变他们在 $C_0$ 中的顺序）形成 $K_n$ 中 Hamilton 圈 $C$，$C$ 即为所求的近似最优圈
 
