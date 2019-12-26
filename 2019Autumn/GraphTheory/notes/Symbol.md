@@ -49,6 +49,9 @@ $(\Delta,d)-\text{Moore}$ 界：$M(\Delta,d)$
 容量网络：$(D,\pmb{c})$ 
 流量：$\text{val}\pmb{f}$ 
 容量：$\text{cap}B$ 
+
+---
+
 内部点不交的路最大条数：$\zeta_D(x,y)$ 
 局部点连通度：$\kappa_D(x,y)$ 
 边不交的路最大条数：$\eta_D(x,y)$ 
@@ -60,6 +63,9 @@ $(\Delta,d)-\text{Moore}$ 界：$M(\Delta,d)$
 匹配数：$\nu(G)$ 
 独立数：$\alpha(G)$ 
 边覆盖数：$\rho(G)$ 
+
+---
+
 染色：$\pi,\pi^\prime$ 
 色数：$\chi(G),\chi^\prime(G)$ 
 

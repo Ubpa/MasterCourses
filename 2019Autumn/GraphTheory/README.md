@@ -9,6 +9,8 @@
 - [5. 匹配与独立集](notes/5_Match.md) 
 - [6. 染色理论](notes/6_Dye.md) 
 - [符号](notes/Symbol.md) 
+- [易忘](notes/Forgettable.md) 
+- [算法](notes/Algorithm.md) 
 
 ## 作业
 
