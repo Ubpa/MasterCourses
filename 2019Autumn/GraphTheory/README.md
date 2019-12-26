@@ -8,6 +8,7 @@
 - [4. 网络流与连通度](notes/4_Network.md) 
 - [5. 匹配与独立集](notes/5_Match.md) 
 - [6. 染色理论](notes/6_Dye.md) 
+- [符号](notes/Symbol.md) 
 
 ## 作业
 
