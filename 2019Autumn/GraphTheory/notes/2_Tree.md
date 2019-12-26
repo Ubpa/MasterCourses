@@ -273,7 +273,7 @@ D 的所有割向量构成 $\mathcal{E}(D)$ 的子空间，称为 D 的**割空�
 > $$
 > 则 $E_D[S,\overline{S}]$ 是边割集，又 $\forall a\in E_D[S,\overline{S}],\pmb{g}(a)\neq 0$，则 $E_D[S,\overline{S}]\subseteq E(D_{\pmb{g}})$，即 $D_{\pmb{g}}$ 含键
 
-**定理 2.2.2** 设 B 和 C 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 的基矩阵，则 $\forall R\subseteq E(D)$，有
+**定理 2.2.2** 设 $B$ 和 $C$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 的基矩阵，则 $\forall R\subseteq E(D)$，有
 
 - $B|R$ 的各列线性无关 $\Leftrightarrow$ $D[R]$ 不含圈
 - $C|R$ 的各列线性无关 $\Leftrightarrow$ $D[R]$ 不含键
@@ -517,7 +517,7 @@ $ 是圈空间 $\mathcal{C}(D)$ 的基矩阵，F 是 D 的支撑林，$C_F$ 是 
 >
 > 由 P 的任意性知 K 是幺模矩阵
 
-**定理 2.3** B 和 C 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
+**定理 2.3** $B$ 和 $C$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
 $$
 \tau(D)=\det(BB^\top)=\det(CC^\top)
 $$
@@ -526,7 +526,7 @@ $$
 > \det(BB^\top)=\sum_{R\subseteq E(D)\\|R|=n-1}(\det(B|R))^2=\tau(D)
 > $$
 
-**推论 2.3.1** B 和 C 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
+**推论 2.3.1** $B$ 和 $C$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中幺模基矩阵，则
 $$
 \tau(D)=\left|
 \det
@@ -560,7 +560,7 @@ $$
 > \end{aligned}
 > $$
 
-**推论 2.3.2** D 是无环连通有向图，T 是支撑树，$B_T$ 和 $C_T$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中对应 T 的基矩阵，K 是从 D 的关联矩阵 M 中删去任意一行后得到的矩阵，则
+**推论 2.3.2** $D$ 是无环连通有向图，$T$ 是支撑树，$B_T$ 和 $C_T$ 分别是 $\mathcal{B}(D)$ 和 $\mathcal{C}(D)$ 中对应 $T$ 的基矩阵，$K$ 是从 $D$ 的关联矩阵 $M$ 中删去任意一行后得到的矩阵，则
 $$
 \tau(D)=\det (B_TB_T^\top)=\det(C_TC_T^\top)=\det(KK^\top)
 $$

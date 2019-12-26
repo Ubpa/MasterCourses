@@ -2,25 +2,18 @@
 
 ## 4.1 网络流
 
-网络 network 是指具有两个不同的特定顶点 $x$ 和 $y$ 的加权连通图 $(D,\pmb{w})$，记为 $N=(D_{xy},\pmb{w})$，其中 $x$ 和 $y$ 分别称为发点 source 和发点 sink
+**网络** network 是指具有两个不同的特定顶点 $x$ 和 $y$ 的加权连通图 $(D,\pmb{w})$，记为 $N=(D_{xy},\pmb{w})$，其中 $x$ 和 $y$ 分别称为**发点** source 和**发点** sink
 
-若 $\pmb{w}$ 为非负的容量函数 capacity function $\pmb{c}$，则称网络 $N=(D_{xy},\pmb{c})$ 为容量网络 capacity network，其中 $\pmb{c}$ 在边 $a$ 上的值 $\pmb{c}(a)$ 称为边 $a$ 的容量 capacity
+若 $\pmb{w}$ 为非负的**容量函数** capacity function $\pmb{c}$，则称网络 $N=(D_{xy},\pmb{c})$ 为**容量网络** capacity network，其中 $\pmb{c}$ 在边 $a$ 上的值 $\pmb{c}(a)$ 称为边 $a$ 的**容量** capacity
 
-若对任何 $a\in E(D)$，$\pmb{c}(a)$ 都是非负整数，则称 $N$ 为整容量网络 (integer capacity network)
+若对任何 $a\in E(D)$，$\pmb{c}(a)$ 都是非负整数，则称 $N$ 为**整容量网络** (integer capacity network)
 
 若 $\pmb{f}\in\mathcal{E}(D)$ 使得
 
 - $0\le \pmb{f}(a)\le \pmb{c}(a),\forall a\in E(D)$ 
 - $\pmb{f}^+(u)=\pmb{f}^-(u),\forall u \in V(D)\backslash\{x,y\}$ 
 
-则称 $\pmb{f}$ 是 $N$ 中从 $x$ 到 $y$ 的流 flow，简记 $(x,y)$ 流
-
-> 示例
->
-> ![image-20191112122951936](assets/image-20191112122951936.jpg)
->
-> - $\text{val}\pmb{f}=8$ 
-> - $\pmb{c}(B) = 8$，其中 $B$ 是粗边
+则称 $\pmb{f}$ 是 $N$ 中从 $x$ 到 $y$ 的**流** flow，简记 $(x,y)$ 流
 
 每个网络至少存在一个流，如零流 $\pmb{f}(a)=0$ 
 
@@ -28,11 +21,18 @@
 $$
 \text{val}\pmb{f}\triangleq\pmb{f}^+(x)-\pmb{f}^-(x)=\pmb{f}^-(y)-\pmb{f}^+(y)
 $$
-其中 $\text{val}\pmb{f}$ 称为**流量**
+其中 $\text{val}\pmb{f}$ 称为**流量** value of a flow
+
+> **示例** 
+>
+> ![image-20191112122951936](assets/image-20191112122951936.jpg)
+>
+> - $\text{val}\pmb{f}=8$ 
+> - $\pmb{c}(B) = 8$，其中 $B$ 是粗边
 
 $N$ 中具有最大流量的 $(x,y)$ 流称为 $N$ 中的**最大流** maximum flow
 
-$D$ 中形如 $(S,\overline{S})$ 的有向边集 $B$ 称为 $(x,y)$ 的**截边集** cut edge set，其中 $x\in S$，$y\in\overline{S}$，则
+$D$ 中形如 $(S,\overline{S})$ 的有向边集 $B$ 称为 $(x,y)$ **截边集** cut edge set，其中 $x\in S$，$y\in\overline{S}$，则
 $$
 \text{cap} B \triangleq \pmb{c}(B)\triangleq \sum_{a\in B}\pmb{c}(a)
 $$
@@ -77,7 +77,7 @@ $$
 > >
 > > ---
 > >
-> > 示例
+> > **示例** 
 > >
 > > ![image-20191112131154583](assets/image-20191112131154583.jpg)
 > >
@@ -118,7 +118,7 @@ $$
 >
 > 故令
 > $$
-> S^\prime=\{u\in V(D^*) : D^*存在 (x,u) 路\}
+> S^\prime=\{u\in V(D^*) | D^*存在 (x,u) 路\}
 > $$
 > 则 $x\in S^\prime$，$y\notin S^\prime$，故 $B=(S^\prime,\overline{S^\prime})$ 是 $D$ 中 $(x,y)$ 的截边集，且在 $D^\prime$ 中有
 > $$
@@ -144,13 +144,13 @@ $$
 
 ## 4.2 Menger 定理
 
-设 $x$ 和 $y$ 是图 $D$ 中两不同顶点，$P_i$ 和 $P_j$ 是 $D$ 中两条 $(x,y)$ 路，若 $V(P_i)\cap V(P_j)=\{x,y\}$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**内部点不交**的(internally vertex-disjoint) $(x,y)$ 路；若 $E(P_i)\cap E(P_j)=\empty$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**边不交**的 (edge disjoint) $(x,y)$ 路
+设 $x$ 和 $y$ 是图 $D$ 中两不同顶点，$P_i$ 和 $P_j$ 是 $D$ 中两条 $(x,y)$ 路，若 $V(P_i)\cap V(P_j)=\{x,y\}$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**内部点不交的**(internally vertex-disjoint) $(x,y)$ 路；若 $E(P_i)\cap E(P_j)=\empty$，则称 $P_i$ 和 $P_j$ 是 $D$ 中**边不交的** (edge disjoint) $(x,y)$ 路
 
 用 $\zeta_D(x,y)$ 和 $\eta_D(x,y)$ 分别表示 $D$ 中内部点不交和边不交的 $(x,y)$ 路的最大条数
 
 ### 4.2.1 边形式
 
-具有最小边数的 $(x,y)$ 截边集称为最小 $(x,y)$ 截边集 minimum cut-edge set。用 $\lambda_D(x,y)$ 表示最小 $(x,y)$ 截边集中的边数，称为 $D$ 的**局部边连通度** local edge-connectivity
+具有最小边数的 $(x,y)$ 截边集称为 **最小 (x,y) 截边集** minimum cut-edge set。用 $\lambda_D(x,y)$ 表示最小 $(x,y)$ 截边集中的边数，称为 $D$ 的**局部边连通度** local edge-connectivity
 
 由定义，有
 $$
@@ -233,7 +233,6 @@ $$
 
 > 这样 $d(D)\ge 2$，取 $x,y\in V(D)$ 使得 $d_D(x,y)=d(D)$，则 $V(D)\backslash \{x,y\}$，就是 $D$ 的一个分离集（分离了 $x$ 和 $y$）
 >
-> > 感觉不太准确，应该是不含子图 $K_n^*$ 
 
 定义 $D$ 的**强连通度**（strong connectivity）
 $$
@@ -260,9 +259,11 @@ $\kappa(D)$ 还可写为
 $$
 \kappa(D)=\left\{\begin{array}{ll}
 n-1,&D含 K_n^*\\
-\min\{\kappa(x,y):\forall x,y\in V(D),E_D(x,y)=\empty\},&\text{other}
+\min\{\kappa(x,y)|\forall x,y\in V(D),E_D(x,y)=\empty\},&\text{other}
 \end{array}\right.
 $$
+---
+
 设 $D$ 是强连通图，非空集 $B\subseteq E(D)$。若 $D-B$ 是非强连通的，则称 $B$ 为**截边集** cut-edge set
 
 非平凡强连通图必含截边集
@@ -311,7 +312,7 @@ $$
 
 **Proposition 3.2** 设 $G$ 是简单无向图，$V(G)=\{x_1,\dots,x_n\}$，$d_i=d_G(x_i)$ 且 $d_1\le \dots \le d_n$，$n\ge 2$，$1\le k\le n-1$，若存在 $i\le \lfloor\frac{1}{2}(n-k+1)\rfloor$，有
 $$
-d_i\le k+i-2 \Rightarrow d_{n-k+1}\ge n-i
+d_i\le k+i-2, d_{n-k+1}\ge n-i
 $$
 则 $\kappa(G)\ge k$ 
 
@@ -399,13 +400,13 @@ $$
 
 4.4 节只考虑了流量，没有考虑费用，我们要设计一个**输送量最大**且总的**运输费用最小**的运输方案。这样的运输方案称为**最优运输方案**。
 
-用一个被称为费用容量网络 $N=(D_{xy},\pmb{b},\pmb{c})$ 表示该交通系统，其中 $\pmb{b}\in \mathcal{E}(D)$ 表示单位流量费用函数，$\pmb{c}\in \mathcal{E}(D)$ 是容量函数
+用一个被称为**费用容量网络** $N=(D_{xy},\pmb{b},\pmb{c})$ 表示该交通系统，其中 $\pmb{b}\in \mathcal{E}(D)$ 表示**单位流量费用函数**，$\pmb{c}\in \mathcal{E}(D)$ 是容量函数
 
 设 $\pmb{f}$ 是 $N$ 中 $(x,y)$ 流，则
 $$
 \pmb{b}(\pmb{f})=\sum_{a\in E(D)}\pmb{f}(a)\pmb{b}(a)
 $$
-定义为 $\pmb{f}$ 的费用 cost
+定义为 $\pmb{f}$ 的**费用** cost
 
 若对 $N$ 中其流量等于 $\text{val}\pmb{f}$ 的任何一个 $(x,y)$ 流 $\pmb{f}^\prime$ 均有
 $$
@@ -413,7 +414,7 @@ $$
 $$
 则称 $\pmb{f}$ 为**最小费用流** 
 
-最优运输方案的设计就是在费用容量网络 $N=(D_{xy},\pmb{b},\pmb{c})$ 中求最大 $(x,y)$ 流 $\pmb{f}$ 且使费用 $\pmb{b}(\pmb{f})$ 最小。这样的流称为最小费用最大流 minimum cost maximum flow。
+最优运输方案的设计就是在费用容量网络 $N=(D_{xy},\pmb{b},\pmb{c})$ 中求最大 $(x,y)$ 流 $\pmb{f}$ 且使费用 $\pmb{b}(\pmb{f})$ 最小。这样的流称为**最小费用最大流** minimum cost maximum flow
 
 设 $N=(D_{xy},\pmb{b},\pmb{c})$ 为费用容量网络，$\pmb{f}$ 是 $N$ 中 $(x,y)$ 流。$C$ 是 $D$ 中有指定正向的圈。令
 $$
@@ -425,7 +426,7 @@ $$
 \sigma_{\pmb{f}}(C)&=\min\{\sigma_{\pmb{f}}(a):a\in E(C)\}
 \end{aligned}
 $$
-若 $D$ 中的圈 $C$ 存在定向使 $\sigma_{\pmb{f}}(C)>0$，则称 $C$ 为 $\pmb{f}$ 增广圈 increment cycle
+若 $D$ 中的圈 $C$ 存在定向使 $\sigma_{\pmb{f}}(C)>0$，则称 $C$ 为 $\pmb{f}$ **增广圈** increment cycle
 
 对于 $\pmb{f}$ 增广圈 $C$ 和任意 $\sigma(0<\sigma\le \sigma_{\pmb{f}})$，我们可以定义
 $$
@@ -437,7 +438,7 @@ $$
 $$
 容易验证，$\widetilde{\pmb{f}}_\sigma$ 是 $N$ 中 $(x,y)$ 流，而且 $\text{val}\widetilde{\pmb{f}}=\text{val}\pmb{f}$ 
 
-$\widetilde{\pmb{f}}_\sigma$ 称为基于 $\pmb{f}$ 增广圈 $C$ 关于 $\sigma$ 的修正流 revised flow
+$\widetilde{\pmb{f}}_\sigma$ 称为基于 $\pmb{f}$ 增广圈 $C$ 关于 $\sigma$ 的**修正流** revised flow
 
 设 $C$ 是 $\pmb{f}$ 的增广圈，则定义增广圈 $C$ 的费用为
 $$
@@ -475,7 +476,7 @@ $$
 
 ---
 
-> 示例
+> **示例** 
 >
 > ![image-20191123225615746](assets/image-20191123225615746.jpg)
 >
@@ -513,6 +514,8 @@ $$
 
 3.若第 2 步不能再执行时，则停止
 
+> 注意，这里是反着找的
+
 **定理 4.6.1** Edmonds-Johnson 算法终止时构造出的有向迹是 $D$ 中的一条 Euler 有向回
 
 ### 4.6.2 非欧拉图情形
@@ -537,7 +540,7 @@ X=\{x\in V(D):\rho(x)>0\},\quad Y=\{y\in V(D):\rho(y)<0\}
 $$
 
 
- 由于 $D$ 是非平衡图，所以由 **定理 1.6** 知，$X\neq \empty$，$Y\neq\empty$，且
+由于 $D$ 是非平衡图，所以由 **定理 1.6** 知，$X\neq \empty$，$Y\neq\empty$，且
 $$
 \sum_{x\in X}\rho(x)=-\sum_{y\in Y}\rho(y)
 $$
