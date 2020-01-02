@@ -140,7 +140,7 @@ $G^*$ 称为 $G$ 的**几何对偶图** geometric dual graph
 
 **定理 3.3.1** 设 $G^*$ 是平图 $G$ 的几何对偶图，$B\subseteq E(G)$，$B^*=\{e^*\in E(G^*)|e\in B\}$，则
 
-- $G[B]$ 是 $G$ 的圈 $\Leftrightarrow$ $B^*$ 是 $G^*$ 的键
+- $C$ 是 $G$ 的圈 $\Leftrightarrow$ $C^*$ 是 $G^*$ 的键
 - $B$ 是 $G$ 的键 $\Leftrightarrow$ $G^*[B^*]$ 是 $G^*$ 的圈
 
 **推论 3.3.3.1** 设 $T$ 是连通平图 $G$ 的支撑树，$E^*=\{e^*\in E(G^*)|e\in E(\overline{T})\}$，则 $T^*=G^*[E^*]$ 是 $G^*$ 的支撑树
