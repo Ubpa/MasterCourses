@@ -138,9 +138,9 @@ $$
 >
 > 这时考虑的问题就是最佳逼近
 
-本节中 $M\triangleq\text{span}\{m_i(t)\}_{i=1}^n\subset C(I)$ 是 $C(I)$ 的线性子空间，$\dim (M) = n$，其中 $\{m_i(t)\}_{i=1}^n$ 线性无关，称为广义多项式或一般线性形式。M 是存在性集。
+本节中 $M\triangleq\text{span}\{m_i(t)\}_{i=1}^n\subset C(I)$ 是 $C(I)$ 的线性子空间，$\dim (M) = n$，其中 $\{m_i(t)\}_{i=1}^n$ 线性无关，称为**广义多项式**或一般线性形式。M 是存在性集。
 
-$\forall t_i \in I$，用 $[t_i]:C(I)\mapsto \mathbb{R}$ 表示在 $t_i$ 点取值的泛函，即 $\forall f \in C(I), [t_i]f=f(t_i)$，$[t_i]$ 称为点泛函。
+$\forall t_i \in I$，用 $[t_i]:C(I)\mapsto \mathbb{R}$ 表示在 $t_i$ 点取值的泛函，即 $\forall f \in C(I), [t_i]f=f(t_i)$，$[t_i]$ 称为**点泛函**。
 
 > $C(I)$ 是赋范线性空间，其中的向量是函数，数值是实数，所以相应的协向量 / 泛函 functional 就是从函数到实数的映射。
 
@@ -206,7 +206,7 @@ m_1 & m_2 & \dots & m_n
 \end{pmatrix}
 \neq 0
 $$
-则称 $\{m_i(t)\}_{i=1}^n$ 满足 Haar 条件，并称其为 Haar 系统，也称为 Tchebycheff 系统或 T 系统。若 M 有一组基构成 T 系统，则称 M 为 Haar 空间或 T 空间
+则称 $\{m_i(t)\}_{i=1}^n$ 满足 **Haar 条件**，并称其为 **Haar 系统**，也称为 **Tchebycheff 系统**或 **T 系统**。若 $M$ 有一组基构成 T 系统，则称 M 为 **Haar 空间**或 **T 空间** 
 
 > $\mathcal{P}_n$ （$1,x,\dots,x^{n-1}$）是一个 Haar 空间
 >
@@ -216,9 +216,9 @@ $$
 
 **定理 2.6** 下列命题等价
 
-- M 是 Harr 空间
-- $\forall \tau \in I_0^n$，$\tau$ 对 M 是完全的
-- $\forall m \in M,Z_I(m)\le n-1,I=[a,b]$，其中 $Z_I(m)$ 表示 m 在 $I$ 上的零点数
+- $M$ 是 Harr 空间
+- $\forall \tau \in I_0^n$，$\tau$ 对 $M$ 是完全的
+- $\forall m \in M,Z_I(m)\le n-1,I=[a,b]$，其中 $Z_I(m)$ 表示 $m$ 在 $I$ 上的零点数
 - $\forall \tau \in I_0^n, M^* = \text{span}\{[t_i]|_M\}_{i=1}^n$ 
 
 > Haar 系统示例

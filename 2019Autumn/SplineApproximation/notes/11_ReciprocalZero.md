@@ -419,7 +419,7 @@ $$
 
 设 $B[I]$ 表示定义在 $I$ 上的有界函数的全体
 
-若 $\zeta\in I$ 且 $f(\zeta)=0$，则称 $\zeta$ 为 $f$ 的零点
+若 $\zeta\in I$ 且 $f(\zeta)=0$，则称 $\zeta$ 为 $f$ 的**零点** 
 
 设 $Z_I(f)$ 表示函数 $f$ 在集 $I$ 上的零点的数目
 
@@ -435,7 +435,7 @@ $$
 
 ### 11.3.1 扩充的 Rolle 定理和多项式的 Budan-Fourier 定理
 
-**定义 11.5** 如果 $f\in AC[I]$，则称 $c$ 是 $f$ 的一个左 Rolle 点，指 $f(c)=0$ 或者 $\forall \epsilon>0,\exist t\in(c,c+\epsilon),f(t)\cdot Df(t)>0$。类似地，称 $d$ 是 $f$ 的一个右 Rolle 点，指 $f(d)=0$ 或者 $\forall \epsilon>0,\exist t\in(d-\epsilon,d),f(t)\cdot Df(t)<0$ 
+**定义 11.5** 如果 $f\in AC[I]$，则称 $c$ 是 $f$ 的一个**左 Rolle 点**，指 $f(c)=0$ 或者 $\forall \epsilon>0,\exist t\in(c,c+\epsilon),f(t)\cdot Df(t)>0$。类似地，称 $d$ 是 $f$ 的一个**右 Rolle 点**，指 $f(d)=0$ 或者 $\forall \epsilon>0,\exist t\in(d-\epsilon,d),f(t)\cdot Df(t)<0$ 
 
 其中 $AC[I]$ 是定义在 $I$ 上的所有**绝对连续函数**的集合
 
@@ -447,7 +447,7 @@ $$
 
 **定理 11.7**（扩充的 Rolle 定理）设 $f\in AC[c,d]$，$c,d$ 分别为 $f$ 的左右 Rolle 点，则 $Df$ 在区间中至少有一次符号改变或一个零点。如果 $Df$ 在 $(c,d)$ 上是连续的，则它在这个区间上至少有一个零点
 
-**定义 11.6** 设 $v=(v_1,\dots,v_m)$ 是一个实向量，$v$ 的**强符号改变** strong sign changes 的数目 $S^-(v)\triangleq$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中的零舍去。类似地，$v$ 的弱符号改变 weak sign changes $S^+(v)$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中 $0$ 可以作为 $+1$ 或 $-1$ 
+**定义 11.6** 设 $v=(v_1,\dots,v_m)$ 是一个实向量，$v$ 的**强符号改变** strong sign changes 的数目 $S^-(v)\triangleq$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中的零舍去。类似地，$v$ 的**弱符号改变** weak sign changes $S^+(v)$ 定义为序列 $v_1,\dots,v_m$ 符号改变的最大数目，其中 $0$ 可以作为 $+1$ 或 $-1$ 
 
 显然有
 $$
@@ -555,7 +555,10 @@ Z^*_{(a,b)}(p)\le S^-[p(a),Dp(a),\dots,D^{m-1}p(a)]-S^-[p(b),Dp(b),\dots,D^{m-1}
 $$
 (2) 如果 $p$ 的确是 $m$ 阶多项式（即 $D^{m-1}p$ 为一非零常数），则
 $$
-Z^*_{(a,b)}(p)\le m-1-S^+[p(a),-Dp(a),\dots,(-1)^{m-1}D^{m-1}p(a)] - S^+[p(b),Dp(b),\dots,D^{m-1}p(b)]
+\begin{aligned}
+Z^*_{(a,b)}(p)\le&m-1-S^+[p(a),-Dp(a),\dots,(-1)^{m-1}D^{m-1}p(a)]\\
+&-S^+[p(b),Dp(b),\dots,D^{m-1}p(b)]
+\end{aligned}
 $$
 **推论 11.1**（多项式的 Descartes 法则）多项式在正半轴上的零点个数与其系数的符号改变之间满足如下关系
 $$
@@ -583,4 +586,86 @@ $$
 > $$
 
 ### 11.3.2 样条函数的零点
+
+**定义 11.8** 对给定样条函数 $s\in \mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$ 和某一实数 $t\in \mathbb{R}$，如果 $s$ 不在任何包含 $t$ 的区间上恒等于 0，且
+$$
+\begin{aligned}
+s(t-)=D_-s(t)=\dots=D^{l-1}_-s(t) = 0\neq D^l_-s(t)\\
+s(t+)=D_+s(t)=\dots=D^{r-1}_+s(t) = 0\neq D^r_+s(t)\\
+\end{aligned}
+$$
+则称 $s$ 在 $t$ 有一孤立零点，且重数
+$$
+z=\left\{\begin{array}{ll}
+\alpha+1 & \alpha 是偶数，且 s 在 t 点改变符号\\
+\alpha+1 & \alpha 是奇数，且 s 在 t 点不改变符号\\
+\alpha & \text{other}
+\end{array}\right.
+$$
+其中 $\alpha\triangleq \max(l,r)$ 
+
+> 函数 $f$ 在 $t$ 点改变符号，是指对充分小的 $\epsilon >0,f(t-\epsilon)f(t+\epsilon)<0$ 
+>
+> 如果 $s$ 在 $t$ 点有一个越过 $x$ 轴的跳跃（即 $r=l=0$，$s$ 在 $t$ 点改变符号），根据定义，$t$ 点应为 $s$ 的 1 重零点
+
+**定义 11.9** 若对 $-\infty< x<x_p$，$s(x)=0$，且对某些 $x_p<y<x_{p+1}$，有 $s(y)\neq 0$，以及 $s(x_p+)=D_+s(x_p)=\dots=D^{r-1}_+s(x_p)=0\neq D^r_+s(x_p)$，则称 $s$ 在 $x_p$ 有 $r$ 重零点
+
+类似地，若对 $x_q<x<+\infty$，$s(x)=0$，且对某些 $x_{q-1}<y<x_q$，有 $s(y)\neq 0$，以及 $s(x_q-)=D_-(s)(x_q)=\dots=D^{r-1}_-s(x_q)=0\neq D^r_-(x_q)$，则称 $s$ 在 $x_q$ 有 $r$ 重零点
+
+对于内部零区间，即 $s(x)=0(x\in (x_p,x_q))$，若
+$$
+\begin{aligned}
+s(x_p-)=D_-(s)(x_p)=\dots=D^{l-1}_-s(x_p)=0\neq D^l_-(x_p)\\
+s(x_q+)=D_+s(x_q)=\dots=D^{r-1}_+s(x_q)=0\neq D^r_+s(x_q)
+\end{aligned}
+$$
+则称 $s$ 有一 $z$ 重零点，其中
+$$
+z=\left\{\begin{array}{ll}
+\alpha+1 & \alpha为偶数，且 s 经过区间 (x_p,x_q) 改变符号\\
+\alpha+1 & \alpha为奇数，且 s 经过区间 (x_p,x_q) 不改变符号\\
+\alpha   & \text{other}
+\end{array}\right.
+$$
+其中 $\alpha\triangleq\max\{l,r\}$ 
+
+> 若样条函数 $s$ 在某一区间中恒等于 0，则该区间的端点或者是 $\pm \infty$，或者是样条节点
+>
+> 样条函数 $s$ 经过零区间 $(x_p,x_q)$ 改变符号，是指对任意 $\epsilon>0$，都存在 $x_p-\epsilon<t_1<x_p<x_q<t_2<x_q+\epsilon$，使得 $s(t_1)s(t_2)<0$ 
+
+**定义 11.10** 给定样条函数 $s\in \mathcal{S}$，设 $T_1,\dots,T_d$ 是样条 $s$ 重度分别为 $Z(T_1),\dots,Z(T_d)$ 的零点，则称
+$$
+Z(s)=\sum_{i=1}^d Z(T_i)
+$$
+为样条 $s$ 在 $\mathbb{R}$ 上的**零点数** 
+
+**定理 11.9** 设 $s\in \mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$，则 $D_+s(x)$ 对所有的 $x$ 存在，且 $D_+s$ 是一右连续函数，同时
+$$
+D_+s\in \mathcal{S}(\mathcal{P}_{m-1},\mathfrak{M}^\prime,\Delta)
+$$
+其中
+$$
+\mathfrak{M}^\prime=(m_1^\prime,\dots,m_k^\prime),\quad m_i^\prime=\min(m-1,m_i)
+$$
+**定理 11.10**（样条函数的 Rolle 定理）设 $s\in \mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$，且 $s$ 连续，则
+$$
+Z_{[a,b]}(D_+s)\ge  Z_{[a,b]}(s)-1
+$$
+**定理 11.11** 对所有的 $0\neq s\in \mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$，有
+$$
+Z(s)\le m+K-1
+$$
+**推论 11.2** 设 $y_1\le y_2\le \dots \le y_{n+m}(n>m)$，且 $y_i<y_{i+m}(i=1,\dots,n)$。设 $N^m_i(x)$ 是相应的 B 样条，则对在 $(y_1,y_{n+m})$ 的任何子区间中不恒为 0 的样条函数 $s=\sum_{i=1}^nc_iN^m_i(x)$，有
+$$
+Z_{(y_1,y_{n+m})}(s)\le n-1
+$$
+**定理 11.12**（Budan-Fourier）$\forall s\in\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$，设 $s(x)=p_i(x)\in \mathcal{P}_m (x\in [x_i,x_{i+1});i=0,1,\dots,k$，且只要有一多项式片是严格 $m$ 阶的，又设 $p_0$ 和 $p_k$ 分别是严格的 $d_0$ 阶和 $d_k$ 阶的，则
+$$
+\begin{aligned}
+Z_{(a,b)}(s)\le&m+K-1-S^+[s(a),-D_+s(a),\dots,(-1)^{d_0-1}D^{d_0-1}_+s(a)]\\
+&-S^+[s(b-),D_-s(b),\dots,D^{d_k-1}_-s(b)]
+\end{aligned}
+$$
+
+> $d_0,d_k?$ 
 
