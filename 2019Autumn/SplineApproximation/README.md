@@ -13,6 +13,7 @@
 - [09. B 样条及其性质](notes/09_BSpline.md) 
 - [10. 样条函数的计算](notes/10_CalSpline.md) 
 - [11. 对偶基和样条的零点](notes/11_ReciprocalZero.md) 
+- [12. 样条的插值与逼近](notes/12_SplineFit.md) 
 
 ## 作业
 
