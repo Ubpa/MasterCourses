@@ -248,8 +248,14 @@ $$
 
 - $\|\lambda\|=1$ 
 - $\|x-m^*\|=\lambda(x-m^*)$ 
-- $\lambda\in M^\perp$，其中 $M^\perp\triangleq\{\lambda\in X^*:\lambda(m0=0,\forall m \in M\}$ 
+- $\lambda\in M^\perp$，其中 $M^\perp\triangleq\{\lambda\in X^*:\lambda m=0,\forall m \in M\}$ 
 
+> $\lambda(x-m^*)=\lambda x$，$x\notin M \Rightarrow \lambda x\neq 0$ 
+>
+> $\lambda\in (M\oplus\text{span}\{x\})^*\backslash{0}$ 
+>
+> ---
+>
 > **示例** 
 >
 > $\lambda(\pmb{v})=\pmb{n}\cdot \pmb{v}$ 
