@@ -230,7 +230,7 @@ $$
 - $\omega_r(h)$ 单调增
 - $\omega_{r,f_1+f_2}(h)\le\omega_{r,f_1}(h)+\omega_{r,f_2}(h)$ 
 - $\omega_{r,f}(h) \le 2^j\omega_{r-j,f}(h)$，特别地，$\omega_{r,f}(h)\le 2^r \|f\|_\infty$ 
-- $\forall k \in \mathbb{Z}^+,\omega_r(kh)\le k^r\omega_{r}(h)$；$\forall \lambda>0,\omega_r(\lambda h)\le \lambda\omega_r(h)$ 
+- $\forall k \in \mathbb{Z}^+,\omega_r(kh)\le k^r\omega_{r}(h)$；$\forall \lambda>0,\omega_r(\lambda h)\le (\lambda+1)^r\omega_r(h)$ 
 - $\forall f \in C^{(j)}[a,b](0\le j\le r-1),\omega_{r,f}(h)\le h^j\omega_{r-j,f^{(j)}}(h)$；$\forall f\in C^{(r)}[a,b],\omega_{r,f}(h)\le h^r\|f^{(r)}\|_\infty$ 
 - 若 $\omega_{r,f}(h) > 0(h>0)$，则 $\lim_\limits{h\to 0}\frac{\omega_{r,f}(h)}{h^r}>0$ 
 - 若 $f \in C^{(r)}[a,b]$，则 $\lim_\limits{h\to 0}\frac{\omega_{r,f}(h)}{h^r}=0\Leftrightarrow f\in \mathcal{P}_r$ 
