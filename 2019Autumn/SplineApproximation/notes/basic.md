@@ -61,15 +61,17 @@ $\forall f\in V^*,\|f\|=\sup\{|f(x)|:\|x\|\le 1\}=\sup \left\{\frac{|f(x)|}{\|x\
 
 > 度量空间只要求 X 是一个集合，不要求其为线性空间
 
-# 致密
+# 致密 / 列紧
 
-> [百度文库 | 紧集与有限维赋范线性空间](https://wenku.baidu.com/view/fb5b41dbce2f0066f5332259.html)
+> [百度文库 | 紧集与有限维赋范线性空间](https://wenku.baidu.com/view/fb5b41dbce2f0066f5332259.html) 
+>
+> [百度百科 | 列紧集](https://baike.baidu.com/item/列紧集/18937173?fr=aladdin) 
 
-设 $(X,\rho)$ 是度量空间，$A\subseteq X$，若 A 中的**任何点列**必有在 X 中收敛的子点列，则称 A 是（X 中的）**致密集**。若 X 自身是致密集，则称 X 是**致密空间**。
+设 $(X,\rho)$ 是度量空间，$A\subseteq X$，若 A 中的**任何点列**必有在 A 中收敛的子点列，则称 A 是（X 中的）**致密集**。若 X 自身是致密集，则称 X 是**致密空间**。
 
 > $\forall \{a_n\},\exist\{a_{n_k}\}$，使得
 > $$
-> \lim_{k\to \infty}a_{n_k}=a\in X
+> \lim_{k\to \infty}a_{n_k}=a\in A
 > $$
 
 # 紧集
