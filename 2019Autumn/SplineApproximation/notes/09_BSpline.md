@@ -10,19 +10,11 @@ t_1\le t_2\le \dots\le t_{r+1}=
 $$
 和函数 $f$，将函数 $f$ 在点 $t_1,\dots,t_{r+1}$ 的 $r$ 次差商定义为
 $$
-\begin{aligned}[]
-[t_1,t_2]f&\triangleq\left\{\begin{array}{ll}
-\frac{f(t_2)-f(t_1)}{t_2-t_1},&t_1<t_2,\\
-f^\prime(t_1),&t_1=t_2.
-\end{array}\right.\\[]
-[t_1,\dots,t_{r+1}]f&\triangleq\left\{\begin{array}{ll}
+[t_1,\dots,t_{r+1}]f\triangleq\left\{\begin{array}{ll}
 \frac{[t_2,\dots,t_{r+1}]f-[t_1,\dots,t_r]f}{t_{r+1}-t_1},&t_1<t_{r+1},\\
 \frac{1}{r!}f^{(r)}(t_1),&t_1=t_{r+1}\\
 \end{array}\right.
-\end{aligned}
 $$
-
-> 差商是一个线性泛函，如果跟之前的**点泛函**联系起来，其实不需要第一条公式
 
 ---
 
