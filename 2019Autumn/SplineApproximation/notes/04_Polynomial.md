@@ -14,7 +14,7 @@ $$
 $$
 其中 $-1<t<1$ 
 
-> 证明
+> **证明** 
 >
 > 令 $t=\cos\theta$，$\theta\in (0,\pi)$，则 $p(t)=p(\cos\theta)\subset \overset{\circ}{\mathcal{P}}_n$，$\|p(\cos\theta)\|=\|p(t)\|_{[-1,1]}\le M$ 
 >
@@ -43,9 +43,9 @@ T_n(t)=\sum_{k=0}^nc_k e^{\sqrt{-1}kt}
 $$
 我们有
 $$
-\|T^\prime_n(t)\|\le n\|T_n(t)\|
+\|T^\prime_n\|\le n\|T_n\|
 $$
-> 证明
+> **证明** 
 >
 > 设 $\|T^\prime_n\|=|T_n^\prime(t_0)|$（即 $t_0=\mathop{\arg\max}_\limits{t}|T_n^\prime(t)|$），则存在实数 $\alpha$ 使得
 > $$
@@ -81,20 +81,20 @@ $$
 $$
 则
 $$
-\|p^\prime_n(z)\|\le n\|p_n\|
+\|p^\prime_n\|\le n\|p_n\|
 $$
 
-> 证明
+> **证明** 
 >
 > 在 $|z|=1$ 上考虑 $p_n$ 和 $p^\prime_n$，即 $z=e^{\sqrt{-1}t}(t\in \mathbb{R})$，此时
 > $$
-> p _ { n } ( z ) = \sum _ { k = 0 } ^ { n } a _ { k } z ^ { k } = \sum _ { k = 0 } ^ { n } a _ { k } \mathrm { e } ^ { \sqrt { - 1 k t } } \triangleq T _ { n } ( t )
+> p _ { n } ( z ) = \sum _ { k = 0 } ^ { n } a _ { k } z ^ { k } = \sum _ { k = 0 } ^ { n } a _ { k } \mathrm { e } ^ { \sqrt { - 1 } k t } \triangleq T _ { n } ( t )
 > $$
 > 是 n 次复系数三角多项式
 >
 > 由**最大模原理**得，对 $|z|=1$ 有
 > $$
-> \begin{aligned} \left| p _ { n } ^\prime ( z ) \right| & = \left| T _ { n } ^ { \prime } ( t ) \right| \leqslant n \left\| T _ { n } \right\| = n \max _ { | z | = 1 } \left| p _ { n } ( z ) \right| \\ & = n \max _ { | z | \leqslant 1 } \left| p _ { n } ( z ) \right| = n \left\| p _ { n } ( z ) \right\| \end{aligned}
+> \begin{aligned} \left| p _ { n } ^\prime ( z ) \right| & = \left| T _ { n } ^ { \prime } ( t ) \right| \leqslant n \left\| T _ { n } \right\| = n \max _ { | z | = 1 } \left| p _ { n } ( z ) \right| \\ & = n \max _ { | z | \leqslant 1 } \left| p _ { n } ( z ) \right| = n \left\| p _ { n } \right\| \end{aligned}
 > $$
 >
 > > 不等号用了推论 4.2
@@ -105,18 +105,18 @@ $$
 >
 > 再由最大模原理
 > $$
-> \|p^\prime_n\|=\max_{|z|\le1}|p_n^\prime(z)|=\max_{|z|=1}|p_n^\prime(z)|\le n \|p_n(z)\|
+> \|p^\prime_n\|=\max_{|z|\le1}|p_n^\prime(z)|=\max_{|z|=1}|p_n^\prime(z)|\le n \|p_n\|
 > $$
 >
 > > 第 2 个等号用了最大模原理
 > >
-> > 不等号用了上边的结论 $\left| p _ { n } ^\prime ( z ) \right| \le n \left\| p _ { n } ( z ) \right\|$ 
+> > 不等号用了上边的结论 $\left| p _ { n } ^\prime ( z ) \right| \le n \left\| p _ { n } \right\|$ 
 
 ### 4.1.2 Markov 不等式
 
 **定理 4.2** 设 $p\in \mathcal{P}_n$ 是 $[-1,1]$ 上 $n-1$ 次多项式，若 $\|\sqrt{1-t^2}p(t)\|\le M$，则 $\|p\|\le nM$ 
 
-> 证明
+> **证明** 
 >
 > $T_n(t)$ 零点 $\xi_i=\cos\frac{2i-1}{2n}\pi$ 
 >
@@ -173,7 +173,7 @@ $$
 
 **定理 4.3**（Markov 不等式）设 $p_n\in \mathcal{P}_{n+1}$，且在 $[-1,1]$ 中 $\|p_n\|\le M$，则 $\|p^\prime_n(t)\|\le n^2M$ 
 
-> 证明
+> **证明** 
 >
 > 由[推论 4.1](#4.1.1 Bernstein 不等式) 知
 > $$
@@ -203,9 +203,9 @@ $$
 $$
 \omega_f(h)\triangleq\sup_\limits{\rho(t_1,t_2)\le h}|f(t_1)-f(t_2)|
 $$
-是从 $[0,+\infty]$ 到 $[0,\infty]$ 的映射，称为函数 $f$ 的连续模，不致歧义时记为 $\omega(h)$ 
+是从 $[0,+\infty)$ 到 $[0,+\infty)$ 的映射，称为函数 $f$ 的连续模，不致歧义时记为 $\omega(h)$ 
 
-性质
+**性质** 
 
 - $\lim_\limits{h\to 0^+}\omega(h)=\omega(0)=0$ 
 - $\omega(h)$ 单调上升
@@ -221,11 +221,11 @@ $$
 
 **定义 4.2** 函数 $f$ 在区间 $I$ 上的 $r$ 阶平滑模定义为
 $$
-\omega_{I,f,r}(h)\triangleq\sup_\limits{0\le s\le h}\|\Delta_s^rf(t)\|_{\infty(I)}
+\omega_{I,r,f}(h)\triangleq\sup_\limits{0\le s\le h}\|\Delta_s^rf(t)\|_{\infty(I)}
 $$
 不致歧义时，记为 $\omega_r(h)$。$\omega_r(0)=0$ 
 
-性质
+**性质** 
 
 - $\omega_r(h)$ 单调增
 - $\omega_{r,f_1+f_2}(h)\le\omega_{r,f_1}(h)+\omega_{r,f_2}(h)$ 
