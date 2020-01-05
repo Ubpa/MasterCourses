@@ -85,9 +85,11 @@ $$
 & \hat m_i\perp \Lambda_{i-1}, \hat\lambda_i\perp M_{i-1}
 \end{aligned}
 $$
-> $\hat m_i=m_i-P_{i-1}m_i$ 就是基函数与其在低维空间上的满足线性插值条件的拟合函数的误差，因此这个误差函数满足 $\hat{m}_i\perp \Lambda_{i-1}$。
+> $\hat m_i=m_i-P_{i-1}m_i$ 就是基函数与其在低维空间上的满足线性插值条件的拟合函数的误差，因此这个误差函数满足 $\hat{m}_i\perp \Lambda_{i-1}$ 
 >
 > 插值空间上也有类似结论
+>
+> $P_{i-1}m_i$ 可用 定理 3.2 求解，$\lambda_iP_{i-1}$ 难以求解
 >
 > ---
 >
@@ -118,7 +120,16 @@ $$
 - $\hat\lambda_i \hat m_j = 0(i\neq j),\hat\lambda_i \hat m_i\neq 0$ 
 - $P_k x=\sum_{j=1}^k\frac{\hat \lambda_j x}{\hat \lambda_j \hat m_j} \hat m_j$ 
 
-TODO Newton 插值
+**Newton 插值** 
+
+$M_k=\text{span}\{m_i(t)=t^{i-1}\}_{i=1}^k$，$\Lambda_k=\text{span}\{\lambda_i=[t_i]\}_{i=1}^n$，$\tau_k=(t_i)_{i=1}^k\in I^k_{0,0}$，求 $P_kx$ 
+
+由 定理 3.2 知，$P_kx=\sum_{i=1}^{k}\frac{\widehat{\lambda}_ix}{\widehat{\lambda}_i\widehat{m}_i}\widehat{m}_i$ 
+
+可求得 $\widehat{m}_i(t)=\prod_{j=1}^{i-1}(t-t_j)$，$\frac{\widehat{\lambda}_i}{\widehat{\lambda}_i\widehat{m}_i}=[t_1,\dots,t_{i}]$，则
+$$
+P_kx=\sum_{i=1}^k\left(\prod_{j=1}^{i-1}(t-t_j)\right)[t_1,\dots,t_i]x(t)
+$$
 
 ## 3.2 线性插值的误差
 
@@ -128,7 +139,7 @@ TODO Newton 插值
 $$
 |\mu(I-P)x|\le d(\mu,\Lambda)\|I-P\|d(x,M)
 $$
-> 证明：
+> **证明** 
 >
 > 满足插值条件的 P 有 $\Lambda P X=\Lambda X\Leftrightarrow\Lambda P = \Lambda I\Leftrightarrow \Lambda(I-P)=0 \Leftrightarrow \forall \lambda \in \Lambda,\lambda(I-P)=0$ 
 >
@@ -148,7 +159,7 @@ $$
 \|x-Px\|\le \|I-P\| d(x,M)
 $$
 
-> 证明：
+> **证明** 
 >
 > $\forall m \in M$，有
 > $$
@@ -163,18 +174,18 @@ $$
 
 令 $\text{proj}(M) \triangleq \{P: P是从 X 到 M 的线性投影, \text{range} P = M\}$。
 
-**定义 3.2** 给定一个线性投影 $P$，若 $\|I-P\|=\inf\{\|I-Q\|:Q\in\text{proj}(M)\}$，则称 $P$ 是最优的；若 $\|P\|=\inf\{\|Q\|:Q\in \text{proj}(M)\}$，则称 $P$ 是极小的
+**定义 3.2** 给定一个线性投影 $P$，若 $\|I-P\|=\inf\{\|I-Q\|:Q\in\text{proj}(M)\}$，则称 $P$ 是**最优的** optimal；若 $\|P\|=\inf\{\|Q\|:Q\in \text{proj}(M)\}$，则称 $P$ 是**极小的** 
 
-**引理 3.1** 设 $M$ 是 $X$ 中的 $n$ 维子空间，$\{\lambda_i\}_{i=1}^m\subset X^*$，则 $\{\lambda_i\}_{i=1}^m$ 在 $M$ 上线性无关的充要条件是 $\exist \{m_j\}_{j=1}^m\subset M$ 使得 $(\lambda_i m_j)_{i,j=1}^n=I_n$。
+**引理 3.1** 设 $M$ 是 $X$ 中的 $n$ 维子空间，$\{\lambda_i\}_{i=1}^m\subset X^*$，则 $\{\lambda_i\}_{i=1}^m$ 在 $M$ 上线性无关的充要条件是 $\exist \{m_j\}_{j=1}^m\subset M$ 使得 $(\lambda_i m_j)_{i,j=1}^n=I_n$ 
 
 > $\{\lambda_i\}_{i=1}^m$ 在 $M\triangleq \text{span}\{m_i^\prime\}_{i=1}^n$ 上线性无关的充要条件是矩阵 $G\triangleq (\lambda_i m_j^\prime)_{i,j=1}^n$ 可逆，因为
 > $$
-> G = \left( \begin{array} { c } { \lambda _ { 1 } } \\ { \lambda _ { 2 } } \\ { \vdots } \\ { \lambda _ { n } } \end{array} \right) \left( m _ { 1 } ^ { \prime } , m _ { 2 } ^ { \prime } , \cdots , m _ { n } ^ { \prime } \right) = \lambda \left( m ^ { \prime } \right) ^ { \mathrm { T } }
+> G = \left( \begin{array} { c } { \lambda _ { 1 } } \\ { \lambda _ { 2 } } \\ { \vdots } \\ { \lambda _ { n } } \end{array} \right) \left( m _ { 1 } ^ { \prime } , m _ { 2 } ^ { \prime } , \cdots , m _ { n } ^ { \prime } \right) = \lambda \left( m ^ { \prime } \right) ^ \top
 > $$
 >
 > 可逆，取 $m=(G^{-1})^\top m^\prime$，则
 > $$
-> \lambda m ^ { \mathrm { T } } = \lambda \left( G ^ { - \mathrm { T } } m ^ { \prime } \right) ^ { \mathrm { T } } = \lambda \left( m ^ { \prime } \right) ^ { \mathrm { T } } G ^ { - 1 } = G \cdot G ^ { - 1 } = I _ { n }
+> \lambda m ^ \top = \lambda \left( (G ^ { - 1 })^\top m ^ { \prime } \right) ^ \top = \lambda \left( m ^ { \prime } \right) ^ \top G ^ { - 1 } = G \cdot G ^ { - 1 } = I _ { n }
 > $$
 
 **推论 3.2** 设 $M=\text{span}\{m_i\}_{i=1}^n$，则 $\exist\{\lambda_i\}_{i=1}^n\subset \Lambda$，使得 $\lambda_i m_j=\delta_{ij}$。
@@ -187,6 +198,8 @@ $$
 $$
 \|P\|=\sup_{m\in M}\inf_{\lambda \in \Lambda}\frac{\|\lambda\|\|m\|}{|\lambda m|}
 $$
+
+---
 
 令 $M\triangleq \text{span}\{m\}_{i=1}^n,\Lambda=\text{span}\{\lambda_i\}_{i=1}^n$，则
 $$
@@ -201,12 +214,12 @@ $$
 >
 > 那么
 > $$
-> c _ { \lambda } c _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } \leqslant \| P \| \leqslant C _ { \lambda } C _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| }
+> c _ { \lambda } c _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ \top \left( \lambda _ { i } m _ { j } \right) \alpha \right| } \leqslant \| P \| \leqslant C _ { \lambda } C _ { m } \sup_\alpha\inf_\beta \frac { \| \alpha \| _ { \infty } \| \beta \| _ { 1 } } { \left| \beta ^ \top \left( \lambda _ { i } m _ { j } \right) \alpha \right| }
 > $$
 > 注意到
 > $$
 > \begin{aligned}
-> \inf _ { \alpha } \sup _ { \beta } \left( \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \|\beta\|_1 }\cdot \frac{1}{\| \alpha \| _ { \infty }} \right)
+> \inf _ { \alpha } \sup _ { \beta } \left( \frac { \left| \beta ^ \top \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \|\beta\|_1 }\cdot \frac{1}{\| \alpha \| _ { \infty }} \right)
 > & = \inf _ { \alpha } \frac { \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty } } { \| \alpha \| _ { \infty } } \\
 > & = \inf _ { \alpha ^ { \prime } } \frac { \left\| \alpha ^ { \prime } \right\| _ { \infty } } { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \alpha ^ { \prime } \right\| _ { \infty } } \\
 > & = \frac { 1 } { \sup _ { \alpha ^ { \prime } } \frac { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \alpha ^ { \prime } \right\| _ { \infty } } { \left\| \alpha ^ { \prime } \right\| _ { \infty } } } = \frac { 1 } { \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } }
@@ -217,11 +230,11 @@ $$
 > >
 > > 若 $(\lambda_i m_j)\alpha$ 在第 k 个分量达到绝对值最大，那么通过取 $\beta_j=\delta_{kj}$ 可得
 > > $$
-> > \sup _ { \beta } \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \geqslant \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
+> > \sup _ { \beta } \frac { \left| \beta ^ \top \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \geqslant \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
 > > $$
 > > 另一方面
 > > $$
-> > \frac { \left| \beta ^ { \mathrm { T } } \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \leqslant \frac { \| \beta \| _ { 1 } \cdot \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty } } { \| \beta \| _ { 1 } } = \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
+> > \frac { \left| \beta ^ \top \left( \lambda _ { i } m _ { j } \right) \alpha \right| } { \| \beta \| _ { 1 } } \leqslant \frac { \| \beta \| _ { 1 } \cdot \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty } } { \| \beta \| _ { 1 } } = \left\| \left( \lambda _ { i } m _ { j } \right) \alpha \right\| _ { \infty }
 > > $$
 > > **后边的等号** 
 > >
@@ -238,7 +251,85 @@ $$
 c _ { \lambda } c _ { m } \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } \leqslant \| P \| \leqslant C _ { \lambda } C _ { m } \left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty }
 $$
 
+---
+
+设 $\tau=(t_i)_{i=1}^n\in I^n_{0,0},\Lambda\triangleq \text{span}\{\lambda_i=[t_i]\}_{i=1}^n,M\triangleq \text{span}\{m_i\}_{i=1}^n$，其中
+$$
+m_i(t)=l_i(t)=\prod_{j\neq i}^n\frac{t-t_j}{t_i-t_j}
+$$
+可得
+$$
+P_{M,\Lambda}=P_{n,\tau}=\|L_\tau (t)\|\ge 1
+$$
+
+
+其中 **Lebesgue 函数** $L_\tau (t)$ 为
+$$
+L_\tau (t)=\sum_{i=1}^n|l_i(t)|
+$$
+
+> **示例** 
+>
+> 取 $\tau=(-1,-0.6,-0.2,0.2,0.6,1)$，$L_\tau(t)$ 图像为
+>
+> ![image-20200105122616841](assets/image-20200105122616841.png)
+>
+> 取 Tchebycheff 点，$L_\tau(t)$ 图像为
+>
+> ![image-20200105130439657](assets/image-20200105130439657.png)
+
 ### 3.2.4 多项式插值节点的最优选择
+
+设 $I=[-1,1],n=2k+1,t_i=\frac{i}{k}\ (i=-k,\dots,k)$，可得
+$$
+\lim_{n\to\infty} \|L_\tau (t)\|^{\frac{1}{n}}=2
+$$
+则 $\|P\|\sim 2^n$ 
+
+> **验证** 
+>
+> ```matlab
+> plot(2:1000,Elem(@(n) power(max(Lebesgue(-1:(2/(n-1)):1,(-1:0.001:(-1+(2/(n-1))))')),1/n),2:1000))
+> ```
+>
+> ![image-20200105123732209](assets/image-20200105123732209.png)
+
+---
+
+设
+$$
+\text{sgn}\ l_j(t)=\alpha_{ij}\quad(t\in (t_i,t_{i+1}))
+$$
+则当 $t\in (t_i,t_{i+1})$ 时，
+$$
+L_\tau (t)=\sum_{j=1}^n\text{sgn}l_j(t)l_j(t)=\sum_{j=1}^n\alpha_{ij}l_j(t)\triangleq F_i(t)
+$$
+令
+$$
+\lambda_i=\|F_i\|_{[t_i,t_{i+1}]}=F_i(t_i^\prime)\quad(i=1,\dots,n-1)
+$$
+**引理 3.2** $F_i(t)$ 在 $(t_i,t_{i+1})$ 中仅有唯一的局部极大值
+
+**引理 3.3** $\frac{\part \lambda_i}{\part t_j}=-F^\prime_i(t_j)l_j(t^\prime_i)$ 
+
+**定理 3.6** 
+
+(1) 存在唯一的 $\tau^*$ 使
+$$
+\lambda_1(\tau^*)=\dots=\lambda_{n-1}(\tau^*)=\lambda^*
+$$
+(2) 当 $\tau\neq \tau^*$ 时，总有
+$$
+\min_i\lambda_i(\tau)<\lambda^*<\max_i\lambda_i(\tau)
+$$
+其中 $\tau^*$ 是非线性方程组
+$$
+\left\{\begin{array}{ll}
+F_i(t_i)=F_{i-1}(t_{i-1})&i=2,\dots,n-1\\
+F_i^\prime(t_i)=0&i=1,\dots,n-1
+\end{array}\right.
+$$
+的解
 
 > 设 $\Lambda\triangleq \text{span}\{\lambda_i\}_{i=1}^n$，$\lambda_i=[t_i]$，$\tau\in I_{0,0}^n$，$M=\text{span}\{m_i\}_{i=1}^n$，
 > $$
@@ -257,13 +348,34 @@ $$
 > $$
 > \begin{array} { l } { \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right\| = \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } l _ { i } ( t ) \right\| \leqslant \| \alpha \| _ { \infty } \left\| L _ { \tau } ( t ) \right\| _ { \infty } } \\ { \left\| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right\| = \sup _ { t } \left| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } ( t ) \right| \geqslant \max _ { i } \left| \sum _ { i = 1 } ^ { n } \alpha _ { i } m _ { i } \right| _ { t = t _ { i } } = \max _ { l } \left| \alpha _ { l } \right| = \| \alpha \| _ { \infty } } \end{array}
 > $$
-> 又 $\left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } = \left\| I _ { n } \right\| = 1$，则 $1 \leqslant \left\| P _ { n , r } \right\| \leqslant \left\| L _ { \tau } ( t ) \right\| _ { \infty }$，事实上可证明右侧等号成立，则 $1 \leqslant \left\| P _ { n , r } \right\| = \left\| L _ { \tau } ( t ) \right\| _ { \infty }$
+> 又 $\left\| \left( \lambda _ { i } m _ { j } \right) ^ { - 1 } \right\| _ { \infty } = \left\| I _ { n } \right\| = 1$，则 $1 \leqslant \left\| P _ { n , r } \right\| \leqslant \left\| L _ { \tau } ( t ) \right\| _ { \infty }$，事实上可证明右侧等号成立，则 $1 \leqslant \left\| P _ { n , r } \right\| = \left\| L _ { \tau } ( t ) \right\| _ { \infty }$ 
 
 $\tau^e$ 是 $[a,b]$ 上扩充的 Tchebycheff 点，有
 $$
 \|L_{n,\tau^e}\|\sim\frac{2}{\pi}\ln n+0.6
 $$
+其中
+$$
+t^e_i=\frac{1}{2}\left((a+b)+(a-b)\frac{\cos\left(\frac{2i-1}{2n}\pi\right)}{\cos\left(\frac{\pi}{2n}\right)}\right)\quad(i=1,\dots,n)
+$$
 虽然 $\lim_\limits{n \to \infty}\|P_{n,\tau^e}\|=\infty$，但因为阶为 $\ln n$，所以趋于无穷的速度不快。因而从逼近阶的角度，扩充的 Tchebycheff 插值节点 $\tau^e$ 可作为近似的最优插值节点
+
+> **验证** 
+>
+> ```matlab
+> N = 300;
+> y = zeros(1,N-1);
+> for n = 2:N
+> 	tau = Tchebycheff(-1,1,n);
+> 	delta = 1-tau(2);
+> 	t = tau(2) : delta/n : 1;
+> 	L = max(Lebesgue(tau, t'));
+> 	y(n-1) = exp(pi/2*(L-0.6))/n;
+> end
+> plot(2:N,y);
+> ```
+>
+> ![image-20200105131710301](assets/image-20200105131710301.png)
 
 ## 3.3 从 $\overset{\circ}{C}$ 到 $\overset{\circ}{\mathcal{P}}_n$ 的极小投影
 
@@ -303,5 +415,5 @@ $$
 $$
 \lim_\limits{n \to \infty} \|P_n-I\|=0
 $$
-（即对 $\forall x\in X$，$\|P_n-O\|\to 0$s 当且仅当 $\|P_n\|$ 一致有界，且 $\lim M_n=X$，其中 $\lim M_n\triangleq \{x\in X,d(x,M_n)\to 0\}$。
+（即对 $\forall x\in X$，$\|P_n-O\|\to 0$ 当且仅当 $\|P_n\|$ 一致有界，且 $\lim M_n=X$，其中 $\lim M_n\triangleq \{x\in X,d(x,M_n)\to 0\}$）
 
