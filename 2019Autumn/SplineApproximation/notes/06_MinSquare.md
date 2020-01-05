@@ -395,7 +395,7 @@ $$
 > p(t)=\sqrt{\frac{\Delta_k}{\Delta_{k-1}}}\varphi_k(t)
 > $$
 
-**定理 6.5** 设 $\{p_n(t)\}_{n=0}^\infty$ 是区间 $[a,b]$ 上关于权 $\rho(t)$ 的正交多项式系，$\deg(p_n(t))=n$，又设 $f\in C[a,b]$，且 $\left\langle f,p_i \right\rangle = 0\quad(i=0,\dots,n-1)$，则 $f$ 在 $(a,b)$ 中至少变号 $n$ 次或者恒等于 $0$。
+**定理 6.5** 设 $\{p_n(t)\}_{n=0}^\infty$ 是区间 $[a,b]$ 上关于权 $\rho(t)$ 的正交多项式系，$\deg(p_n(t))=n$，又设 $f\in C[a,b]$，且 $\left\langle f,p_i \right\rangle = 0\quad(i=0,\dots,n-1)$，则 $f$ 在 $(a,b)$ 中至少变号 $n$ 次或者恒等于 $0$ 
 
 > **证明** 
 >
@@ -435,7 +435,7 @@ $$
 $$
 p_n(t)=\sqrt{\frac{\Delta_n}{\Delta_{n-1}}}\varphi_n(t)
 $$
-**定理 6.7** 设 $\{p_n(t)\}_{n=0}^\infty$ 是首项系数为 1 的区间 $[a,b]$ 上的正交多项式系，则 $p_n(t)$ 和 $p_{n-1}(t)$ 的零点必互相交错。
+**定理 6.7** 设 $\{p_n(t)\}_{n=0}^\infty$ 是首项系数为 1 的区间 $[a,b]$ 上的正交多项式系，则 $p_n(t)$ 和 $p_{n-1}(t)$ 的零点必互相交错
 
 > 若设 $p_n$ 在 $[a,b]$ 上的 $n$ 个不同零点 $\lambda_{n,i}$ 满足
 > $$
