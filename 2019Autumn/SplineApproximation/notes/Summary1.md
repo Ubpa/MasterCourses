@@ -80,9 +80,9 @@ $$
 > $$
 > 其中 $\omega_{k+1}^\prime(x_i)=\prod_\limits{j=0\\j\neq i}^k(x_i-x_j)$ 
 
-# 09. B 样条及其性质
+# 9. B 样条及其性质
 
-## 09.1 差商及其主要性质
+## 9.1 差商及其主要性质
 
 **定义 9.1** 设给定节点
 $$
@@ -129,14 +129,14 @@ $$
 
 **推论 9.3** 下述性质成立
 
-(1) $[t_1,\dots,t_{r+1}]f=\frac{f^{(r)}(\zeta)}{r!}(t_1\le \zeta\le t_{r+1})$ 
+(1) $[t_1,\dots,t_{r+1}]f=\frac{f^{(r)}(\zeta)}{r!}\ (t_1\le \zeta\le t_{r+1})$ 
 
 (2) $[t_1,\dots,t_{r+1}]x^j=\rho_{j-r}(t_1,\dots,t_{r+1})$，其中
 $$
 \rho_l=\left\{\begin{array}{ll}
 0,&l<0\\
 1,&l=0\\
-\sum_\limits{1\le \alpha_i\le \dots\le \alpha_l\le r+1}t_{\alpha_1}\dots t_{\alpha_l},&l>0
+\sum_\limits{1\le \alpha_1\le \dots\le \alpha_l\le r+1}t_{\alpha_1}\dots t_{\alpha_l},&l>0
 \end{array}\right.
 $$
 $\rho_l(t_1,\dots,t_{r+1})(l>0)$ 是 $C_{r+l}^{l}=\frac{(r+l)!}{r!l!}$ 项求和，则 $\rho_{j-r}(t_1,\dots,t_{r+1})(j>r)$ 是 $C_{j}^{j-r}=\frac{j!}{r!(j-r)!}$ 项求和
@@ -169,7 +169,7 @@ $$
 
 **定理 9.4** 当 $\epsilon_i\to 0$ 时，如果 $\{t_{i,\epsilon_i}\}_{i=1}^{r+1}$ 趋于 $\{t_i\}_{i=1}^{r+1}$，则对光滑函数 $f$，有
 $$
-\lim_\limits{\begin{array}{cc}\epsilon_i\to0\\i=1,\dots,r+1\end{array}}[t_{1,\epsilon_1},\dots,t_{r+1}\epsilon_{r+1}]f=[t_1,\dots,t_{r+1}]f
+\lim_\limits{\begin{array}{cc}\epsilon_i\to0\\i=1,\dots,r+1\end{array}}[t_{1,\epsilon_1},\dots,t_{{r+1},\epsilon_{r+1}}]f=[t_1,\dots,t_{r+1}]f
 $$
 **定理 9.5** 设点列 $\{t_i\}_{i=1}^{r+1}$ 给定，固定 $1\le j\le r+1$，设 $t_j\neq t_i,i\neq j$ 时，对光滑函数 $f$，有
 $$
@@ -208,9 +208,9 @@ $$
 
 (4) $\Delta_h^rf(t)=\int_0^h\dots\int_0^h D^rf(t+s_1+\dots+s_r)\mathrm{d}s_1\dots\mathrm{d}s_r$ 
 
-## 09.2 B 样条的定义及其性质
+## 9.2 B 样条的定义及其性质
 
-### 09.2.1 B 样条的定义
+### 9.2.1 B 样条的定义
 
 **定义 9.2** 设 $\{y_i\}_{i=-\infty}^{+\infty}$ 是一不减的实数序列。对给定的整数 $i$ 和 $m>0$ 以及所有的实数 $x$，
 $$
@@ -254,7 +254,7 @@ Q_i^m(x)=\left\{\begin{array}{ll}
 \end{array}\right.
 $$
 
-### 09.2.2 B 样条的性质
+### 9.2.2 B 样条的性质
 
 **性质 1** B 样条函数满足如下递推关系：设 $m\ge 2$，$y_i<y_{i+m}$，则对所有的 $x\in \mathbb{R}$，都有
 $$
@@ -468,7 +468,7 @@ J_i^k\triangleq\{\tau_j:l_j\ge m-k\}
 $$
 且收敛在不包含 $J_i^k$ 的任何闭集上是一致的
 
-### 09.2.3 扩充分割
+### 9.2.3 扩充分割
 
 建立空间 $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)$ 的一个具有局部支集的基底，空间维数为 $m+K$，其中 $K$ 为分割 $\Delta$ 的节点数（计算重节点）。在 $K$ 个节点上仅能定义 $K-m$ 个 B 样条，不能构成空间 $\mathcal{S}$ 的基底，因此必须加进 $2m$ 个点，但不能在区间 $(x_0,x_{K+1})$ 内部增加，否则就改变了空间 $\mathcal{S}$ 
 

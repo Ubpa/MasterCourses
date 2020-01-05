@@ -188,5 +188,5 @@ $$
 
 **定理 10.4** 设 $s(u)=\sum_i c_iN^m_i(x)$，当 $u\in[y_j,y_{j+1})$ 时，$s(u)=s_j(u)$。设 $s_j(u_1,\dots,u_{m-1})$ 是 $s_j(u)$ 的开花，则
 $$
-s(u)=s_j(u,\dots,u)=\sum_{j-m+1}^j s_j(y_{i+1},\dots,y_{i+m-1})N^{m-1}_i(u)
+s(u)=s_j(u,\dots,u)=\sum_{i=j-m+1}^j s_j(y_{i+1},\dots,y_{i+m-1})N^{m-1}_i(u)
 $$

@@ -372,14 +372,12 @@ $$
 Ap=p
 $$
 
-> $\xi_i?$ 
->
 > **证明** 
 >
 > 断言：$\mu_ix^{r-1}=\xi_i^{(r)}\quad (i=1,\dots,n;r=1,\dots,m)$ 
 >
 > 则 $\forall p(x)=\sum_{r=1}^mc_rx^{r-1}\in \mathcal{P}_m$，有
-> $$
+>$$
 > \begin{aligned}
 > Ap
 > &=\sum_{r=1}^mc_rA(x^{r-1})\\

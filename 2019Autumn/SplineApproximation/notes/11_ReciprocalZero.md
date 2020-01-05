@@ -61,7 +61,7 @@ $$
 
 **定义 11.1** 设 $y_i=\cos\frac{m-i}{m}\pi\ (i=0,\dots,m)$，
 $$
-B^*_m(x)\triangleq (-1)^m m[y_0,\dots,y_{m}](x-\cdot)^{m-1}_+ 
+B^*_m(x)\triangleq (-1)^m m[y_0,\dots,y_{m}](x-\cdot)^{m-1}_+
 $$
 则称 $B^*_m(x)$ 为 $m$ 阶**完全 B 样条** 
 
@@ -260,13 +260,6 @@ $$
 > \lambda_j=[y_j]\quad(j=1,\dots,n)
 > $$
 >
-> 可验证 $\lambda_jN^1_i=N^1_i(y_j)=\delta_{ij}$，则 $\{\lambda_i\}_{i=1}^n$ 是对偶基，且 $\|\lambda_j\|=1$ 
->
-> > $$
-> > \|\lambda_j\|=\sup_{s\in\mathcal{S}} \frac{|\lambda_js|}{\|s\|_\infty}=\sup_{s\in\mathcal{S}} \frac{|N^1_j(y_j)|}{\|s\|_\infty}\le 1
-> > $$
-> >
-> > 且当 $s=N^1_j$ 时，$\frac{|s(y_j)|}{\|s\|_\infty}=1$，故 $\|\lambda_j\|=1$ 
 
 - 局部积分
 
@@ -274,7 +267,6 @@ $$
 > \lambda_js=\int_{y_j}^{y_{j+1}}\frac{s(t)}{y_{j+1}-y_j}\mathrm{d}t\quad(j=1,\dots,n)
 > $$
 >
-> 可验证 $\lambda_jN^1_i=N^1_i(y_j)=\delta_{ij}$，则 $\{\lambda_i\}_{i=1}^n$ 是对偶基，且 $\|\lambda_j\|=1$ 
 
 **m = 2** 
 
@@ -284,15 +276,6 @@ $$
 > \lambda _ { j } s \triangleq \left\{ \begin{array} { l l } { s \left( y _ { j + 1 } \right) } & { y _ { j } < y _ { j + 1 } < y _ { j + 2 } } \\ { s \left( y _ { j + 1 } + \right) } & { y _ { j } = y _ { j + 1 } < y _ { j + 2 } } \\ { s \left( y _ { j + 1 } - \right) } & { y _ { j } < y _ { j + 1 } = y _ { j + 2 } } \end{array} \right.
 > $$
 >
-> 对于不同的节点，$N^2_j(x)$ 的图像如图 11.1 所示
->
-> ![image-20191211165440132](assets/image-20191211165440132.jpg)
->
-> 显然有
-> $$
-> \lambda_jN^2_i(x)=\delta_{ij}
-> $$
-> 且 $\|\lambda_j\|=1$ 
 
 - 局部积分
 
@@ -315,14 +298,6 @@ $$
 > \frac{1+\epsilon}{\epsilon h_{j+1}} &y_{j+1}+(1-\epsilon) h_{j+1}\le t<y_{j+2}\\
 > 0 & \text{other}
 > \end{array}\right.
-> $$
-> 不难验证 $\lambda_j N^2_j(x)=\delta_{ij}$，且
-> $$
-> \left| \lambda _ { j } s \right| = \left| \int _ { y _ { j } } ^ { y _ { j + 2 } } s \cdot \varphi _ { j } ( t ) \mathrm { d } t \right| \leqslant \| s \| _ { \infty } \int _ { y _ { j } } ^ { y _ { j + 2 } } | \varphi ( t ) | \mathrm { d } t \leqslant ( 1 + 2 \varepsilon ) \| s \| _ { \infty }
-> $$
-> 因而
-> $$
-> \|\lambda_j\|\le 1+2\epsilon
 > $$
 
 **定理 11.4** 设 $y_i\le \dots\le y_{n+m}$，$y_i<y_{i+m}$，$\mathcal{S}\triangleq \text{span}\{N^m_i(x)\}_{i=1}^n$，则存在 $\{\lambda_i\}_{i=1}^n$ 满足
