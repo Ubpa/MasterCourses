@@ -17,7 +17,7 @@ $$
 >
 > 如何判断一个子代数是稠密的？
 
-**Weierstrass 定理** $\forall f\in C[a,b],\forall \epsilon > 0, \exist p \in \mathcal{P}, \|f-p\| < \epsilon$  
+**Weierstrass 定理** $\forall f\in C[a,b],\forall \epsilon > 0, \exist p \in \mathcal{P}, \|f-p\| < \epsilon$ 
 
 > $f(t)\in C[a,b]$ 当且仅当 $f(t)$ 可表示为在 $[a,b]$ 上一致收敛的函数项级数，其各项都是多项式
 >
@@ -160,7 +160,7 @@ $$
 \lambda=\sum_{i=1}^n\alpha_i[t_i],\quad \|\lambda\|_{C(I)}=\sum_{i=1}^n|\alpha_i|
 $$
 
-**定理 2.3**（$C(I)$ 中的表征定理）$\forall x \in X\backslash M,m^*\in M$，则 $m^*\in B_M(x)$ 当且仅当 $\exist \tau\in I^{n+1},\alpha\in \mathbb{R}^{n+1}$ 使得 $\lambda=\sum_{i=1}^{n+1}\alpha_i[t_i]$ 满足 $\|\lambda\|=1，\lambda\perp M,\lambda(x-m^*)=\|x-m^*\|$。
+**定理 2.3**（$C(I)$ 中的表征定理）$\forall x \in X\backslash M,m^*\in M$，则 $m^*\in B_M(x)$ 当且仅当 $\exist \tau\in I^{n+1},\alpha\in \mathbb{R}^{n+1}$ 使得 $\lambda=\sum_{i=1}^{n+1}\alpha_i[t_i]$ 满足 $\|\lambda\|=1，\lambda\perp M,\lambda(x-m^*)=\|x-m^*\|$ 
 
 > 定理 1.7，只要求后边三点，事实上 $\lambda^*=N^*\backslash\{0\}$，其中 $N\triangleq M\oplus \text{span}\{x\}$，结合引理 2.2即可得 $\lambda=\sum_{i=1}^{n+1}\alpha_i[t_i]$ 
 

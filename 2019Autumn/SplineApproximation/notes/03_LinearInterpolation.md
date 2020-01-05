@@ -26,7 +26,7 @@ $$
 
 关心有**唯一解**的线性插值问题，故引出如下定义
 
-**定义 3.1** 若 $\forall x \in X$，存在唯一的 $m\in M$，满足 $\Lambda x = \Lambda m$（即 $\forall \lambda \in \Lambda,\lambda x = \lambda m$），或者 $X=M\oplus \Lambda_\perp$，则称线性插值问题是**正确**的。
+**定义 3.1** 若 $\forall x \in X$，存在唯一的 $m\in M$，满足 $\Lambda x = \Lambda m$（即 $\forall \lambda \in \Lambda,\lambda x = \lambda m$），或者 $X=M\oplus \Lambda_\perp$，则称线性插值问题是**正确**的
 
 > $\Lambda x = \Lambda m \Leftrightarrow \Lambda e=0\Leftrightarrow e\in\Lambda_\perp$，即 m 满足插值条件，整句话就是说**满足插值条件的函数只有一个**。
 >
@@ -63,7 +63,7 @@ $M$ 和 $\Lambda$ 中随意取一组基 $\{m_i\}_{i=1}^n$，$\{\lambda_i\}_{i=1}
 $$
 \sum_{j=1}^n\alpha_j\lambda_i m_j=\lambda_ix\quad(i=1,2,\dots,n)
 $$
-解方程求出 $\{\alpha_j\}_{j=1}^n$ 即可确定 $Px$ 的表达式。
+解方程求出 $\{\alpha_j\}_{j=1}^n$ 即可确定 $Px$ 的表达式
 
 > 方程简记为 $G\boldsymbol{\alpha}=\boldsymbol{b}$，其中 $G\triangleq (\lambda_i m_j)_{i,j=1}^n$，$\boldsymbol{\alpha}=\left[\begin{matrix}\alpha_1 \\ \vdots \\ \alpha_n \end{matrix}\right]$，$\boldsymbol{b}=\left[\begin{matrix}\lambda_1x\\\vdots\\\lambda_n x\end{matrix}\right]$，则 $\boldsymbol{\alpha}=G^{-1}\boldsymbol{b}$ 
 
@@ -188,9 +188,9 @@ $$
 > \lambda m ^ \top = \lambda \left( (G ^ { - 1 })^\top m ^ { \prime } \right) ^ \top = \lambda \left( m ^ { \prime } \right) ^ \top G ^ { - 1 } = G \cdot G ^ { - 1 } = I _ { n }
 > $$
 
-**推论 3.2** 设 $M=\text{span}\{m_i\}_{i=1}^n$，则 $\exist\{\lambda_i\}_{i=1}^n\subset \Lambda$，使得 $\lambda_i m_j=\delta_{ij}$。
+**推论 3.2** 设 $M=\text{span}\{m_i\}_{i=1}^n$，则 $\exist\{\lambda_i\}_{i=1}^n\subset \Lambda$，使得 $\lambda_i m_j=\delta_{ij}$ 
 
-**定理 3.4** 设 $X$ 是可分的（即具有可数的稠密子集）赋范线性空间，$M\subset X$，$\dim(M)=n$，则存在从 $X$ 到 $M$ 的极小和最优的线性投影。
+**定理 3.4** 设 $X$ 是可分的（即具有可数的稠密子集）赋范线性空间，$M\subset X$，$\dim(M)=n$，则存在从 $X$ 到 $M$ 的极小和最优的线性投影
 
 ### 3.2.3 线性投影算子的范数
 

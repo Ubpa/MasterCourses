@@ -158,6 +158,7 @@ $$
 > $$
 > \int_0^\infty\frac{\sin^4 u}{u^{4-r}}\mathrm{d}u < +\infty
 > $$
+>
 > > $$
 > > \begin{aligned}
 > > \int_0^\infty\frac{\sin^4 u}{u^{4-r}}\mathrm{d}u&=\int_0^\epsilon\frac{\sin^4 u}{u^{4-r}}\mathrm{d}u+\int_\epsilon^\infty\frac{\sin^4 u}{u^{4-r}}\mathrm{d}u\\
@@ -174,7 +175,7 @@ $$
 > 注意到 $\lambda_n = O(n^3)$ 
 >
 > > 参考书中引理 5.2 (4) 的另一证法的 (5.1.3) 式和 (5.1.4) 式
-> 
+>
 > 从而有
 > $$
 > \int _ { 0 } ^ { \pi } t ^ { r } L _ { n } ( t ) \mathrm { d } t = \frac { c } { \lambda _ { n } } \int _ { 0 } ^ { \pi } t ^ { r } J _ { n } ( t ) \mathrm { d } t = c \frac { n ^ { 3 - r } } { n ^ { 3 } } = O \left( n ^ { - r } \right) \quad ( r = 0,1,2 )
@@ -188,6 +189,7 @@ $$
 $$
 d(f,\overset{\circ}{\mathcal{P}}_n)\le M\omega_2\left(f,\frac{1}{n}\right)
 $$
+
 > $$
 > \begin{aligned}
 > |f(t)-(L_nf)(t)|
@@ -248,33 +250,33 @@ $$
 > 定理 5.2 是定理 5.3 的特殊情况（$r=2$）
 >
 > 证
->   
->   定义
->   $$
+>
+> 定义
+> $$
 > (\Delta^0_{n,r}f)(t)\triangleq-\int_{-\pi}^\pi\sum_{k=1}^rC_k^r(-1)^kf(t+ks)L_{\lceil n/r \rceil,r}(s)\mathrm{d}s
->$$
-> 
->> 高阶差分公式为
+> $$
+>
+> > 高阶差分公式为
 > > $$
 > > \Delta_h^r f(t)=\sum_{i=0}^r(-1)^{r-i}C^i_rf(t+ih)
 > > $$
 > > 对比 $(\Delta_{n,r}^0 f)(t)$，有
->> $$
+> > $$
 > > \Delta_s^r f(t) = (-1)^{r}(f(t)-(\Delta_{n,r}^0f)(t))
 > > $$
 > > 因此
 > > $$
 > > |\Delta_s^r f(t)| = |f(t)-(\Delta_{n,r}^0f)(t)|
 > > $$
-> 
+>
 > 由引理 3 得 $(\Delta^0_{n,r}f)(t) \in \overset{\circ}{\mathcal{P}}_n$ 
-> 
+>
 > 则
 > $$
 > \begin{aligned} \left| f - I _ { n , r } f ( t ) \right| & = \left| \int _ { - \pi } ^ { \pi } \left( \Delta _ { s } ^ { r } f \right) ( t ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \right| \\
->& \leqslant \int _ { - \pi } ^ { \pi } \omega _ { r } ( f , | s | ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \\
+> & \leqslant \int _ { - \pi } ^ { \pi } \omega _ { r } ( f , | s | ) L _ { \lceil n/r \rceil , r } ( s ) \mathrm { d } s \\
 > & \leqslant \omega _ { r } \left( f , \frac { 1 } { \lceil n/r \rceil } \right) \int _ { - \pi } ^ { \pi } \left( \lceil n/r \rceil | s | + 1 \right) ^ { r } L _ { n ^ { \prime } , r } \mathrm { d } s \\
->& \leqslant C _ { r } \omega _ { r } \left( f , \frac { 1 } { n } \right) \end{aligned}
+> & \leqslant C _ { r } \omega _ { r } \left( f , \frac { 1 } { n } \right) \end{aligned}
 > $$
 
 ### 5.1.2 Bernstein 逆定理
@@ -286,7 +288,9 @@ $$
 
 > 将无规律的样本点转换成均匀点
 >
-> 证明
+> ---
+>
+> **证明** 
 >
 > 令 $u_{k-1}=u_k/2$，则
 > $$
@@ -311,7 +315,6 @@ $$
 > > 图示
 > >
 > > ![image-20191031111214552](assets/image-20191031111214552.jpg)
-> > 
 >
 > 当 $p>1$ 时
 > $$
@@ -335,6 +338,9 @@ $$
 $$
 \omega _ { p } ( f , h ) \leqslant M_p h ^ { p } \sum _ { 0 \leqslant n \leqslant h^{-1} } ( n + 1 ) ^ { p - 1 } d ( f , \overset{\circ} { \mathcal { P } } _ { n } )
 $$
+
+> **证明** 
+>
 > 令 $\|f-T_n\|_\infty=d(f,\overset{\circ}{\mathcal{P}}_n)\triangleq E_n(f)$ 
 >
 > > 即 $T_n=B_{\overset{\circ}{\mathcal{P}}_n}(f)$ 
@@ -406,10 +412,11 @@ $$
 > > $$
 > > h^p\le2^{-kp}<2^ph^p
 > > $$
-> > 
 
 **推论 5.2**（Bernstein）设 $0<\alpha <1$，则 $d(f,\overset{\circ}{\mathcal{P}}_n)=O(n^{-\alpha}) \Leftrightarrow \omega(f,h)=O(h^\alpha)$ 
 
+> **证明** 
+>
 > 必要性
 >
 > 由 [Jackson-Stechkin 定理](#5.1.1 Jackson 型定理) 知
@@ -427,6 +434,8 @@ $$
 
 **推论 5.3** $d(f,\overset{\circ}{\mathcal{P}}_n)=O(n^{-1}) \Leftrightarrow \omega_2(f,h)=O(h)$ 
 
+> **证明** 
+>
 > 必要性
 >
 > 由 [Jackson-Zygmund 定理](#5.1.1 Jackson 型定理) 知
@@ -457,6 +466,8 @@ $$
 d \left( f ^ { ( p ) } , \overset{\circ} { \mathcal { P } } _ { n } \right) \leqslant M _ { p } \sum _ { k = \left[ \frac { m } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f )
 $$
 
+> **证明** 
+>
 > 由定理 5.1 知，
 > $$
 > f=\lim_{r\to\infty}T_{2^rm}=T_m+\sum_{i=1}^\infty (T_{2^im}-T_{2^{i-1}m})
@@ -483,6 +494,8 @@ $$
 f\in \overset{\circ}{\text{Lip}}_\alpha^{(p)}\triangleq\{f\in \overset{\circ}{C}^{(p)} : f^{(p)}\in \text{Lip} \alpha\} \Leftrightarrow d(f,\overset{\circ}{\mathcal{P}}_n)=O\left(\frac{1}{n^{p+\alpha}}\right)
 $$
 
+> **证明** 
+>
 > 充分性
 >
 > 由 Jackson-Stechkin 定理，得
@@ -508,6 +521,72 @@ $$
 > \begin{aligned} d \left( f ^ { ( p ) } , \overset{\circ} { \mathcal { P } } _ { n } \right) & \leqslant M _ { p } ^ { \prime } \sum _ { k = \left[ \frac { n } { 2 } \right] } ^ { \infty } k ^ { p - 1 } E _ { k } ( f ) \leqslant M _ { p } ^ { \prime \prime } \sum _ { k = \left[ \frac { n } { 2 } \right] } ^ { \infty } k ^ { p - 1 } \cdot k ^ { - p - \alpha } \\ & \leqslant M _ { p } \int _ { \left[ \frac { n } { 2 } \right] } ^ { \infty } t ^ { - 1 - \alpha } \mathrm { d } t = O \left( n ^ { - \alpha } \right) \end{aligned}
 > \end{align}
 > $$
-> 
+>
 > 由推论 5.2 知 $\omega(f^{(p)},h)=O(h^\alpha)$，即 $f^{(p)} \in \text{Lip}\alpha$，即 $f\in \overset{\circ}{\text{Lip}}_\alpha^{(p)}$ 
+
+## 5.2 代数多项式的逼近阶
+
+### 5.2.1 Jackson 定理
+
+约定 $[a,b]=[-1,1],f\in C[-1,1]$ 
+
+**定理 5.7** 存在常数 $M$ 使得对任意 $f\in C[-1,1]$，都有
+$$
+d(f,\mathcal{P}_n)\le M\omega_f\left(\frac{1}{n}\right)
+$$
+
+>其实可证明
+>$$
+>d(f,\mathcal{P}_n)\le M\omega_{p,f}\left(\frac{1}{n}\right)
+>$$
+>
+
+### 5.2.2 Nikolsky-Timan 定理
+
+端点比中间逼近更好
+$$
+\Delta_n(t)\triangleq \max\left(\frac{\sqrt{1-t^2}}{n},\frac{1}{n^2}\right)
+$$
+**定理 5.8** [TODO]
+
+**定理 5.9**（Nikolsky-Timan 定理）存在常数 $M$，对任意 $f\in C[-1,1]$，都有多项式 $p_n(t)\in \mathcal{P}_{n+1}$，使得
+$$
+|f(t)-p_n(t)|\le M\omega(f,\Delta_n(t))\quad(t\in [-1,1];n=0,1,\dots)
+$$
+
+## 5.3 代数多项式的点态逆定理
+
+**定理 5.10** 设 $p_n(t)\in \mathcal{P}_{n+1}$ 且满足
+$$
+|p_n(t)|\le \Delta_n^r(t)\omega(\Delta_n(t))\quad (|t|\le 1;r=0,1,\dots)
+$$
+则存在常数 $M_r$ 满足
+$$
+|p_n^\prime(t)|\le M_r\Delta_n^{r-1}(t)\omega(\Delta_n(t))
+$$
+**定理 5.11** 设 $f\in C[-1,1]$，$p_n(t)\in \mathcal{P}_{n+1}(n=0,1,\dots)$，若
+$$
+|f(t)-p_n(t)|\le \omega(\Delta_n(t))\quad (|t|\le 1)
+$$
+则存在 $M$ 使得
+$$
+\omega_f(h)\le Mh\sum_{1\le n\le \frac{1}{h}}\omega_f\left(\frac{1}{n}\right)
+$$
+**定理 5.12** 若 $\omega$ 是使
+$$
+\sum_{n=1}^\infty\frac{1}{n}\omega\left(\frac{1}{n}\right)<\infty
+$$
+的连续模，且若对于 $f\in C[-1,1]$ 和 $n$ 次多项式 $p_n(x)(n=0,1,\dots)$，有
+$$
+|f(x)-p_n(x)|\le M\Delta_n^m(x)\omega(\Delta_n(x))\quad (|x|\le 1)
+$$
+则 $f$ 有连续导数 $f^{(1)},\dots,f^{(m)}$，且
+$$
+|f^{(m)}(x)-p_n^{(m)}(x)|\le M_m\sum_{k\ge \lfloor\Delta_n^{-1}(x)\rfloor}\frac{1}{k}\omega_f\left(\frac{1}{k}\right)
+$$
+**定理 5.13** 设 $0<\alpha<1,m=0,1,\dots$，且 $f\in C[-1,1]$，则存在多项式序列 $\{p_n(x)\}$ 满足
+$$
+|f(x)-p_n(x)|=O(\Delta_n^{m+\alpha})
+$$
+的充要条件为 $f^{(1)},\dots,f^{(m)}$ 存在，且 $f^{(m)}\in \text{Lip}(\alpha)$ 
 

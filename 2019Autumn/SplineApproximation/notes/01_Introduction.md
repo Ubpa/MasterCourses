@@ -58,7 +58,7 @@ $I$ 是列紧的距离空间，一般可认为 $[a,b]$，常用的线性赋范�
 $M$ 常取为 $X$ 的真子空间
 
 - $\mathcal{P}_n=\left\{\sum_{i=0}^{n-1} a_i t^{i-1},a_i\in \mathbb{R}\right\}$ 
-- $\overset{\circ}{\mathcal{P}}_n\triangleq\left\{a_0,\sum_{i=1}^n(a_i\cos it+b_i\sin it),a_i,b_i\in\mathbb{R}\right\}$ 
+- $\overset{\circ}{\mathcal{P}}_n\triangleq\left\{a_0+\sum_{i=1}^n(a_i\cos it+b_i\sin it),a_i,b_i\in\mathbb{R}\right\}$ 
 - $\mathcal{S}(\mathcal{P}_m,\mathfrak{M},\Delta)\triangleq \{S(t):S|_{I_i}=S_i(x)\in \mathcal{P}_m,S_i^{(j-1)}(t_i)=S^{(j-1)}_{i+1}(t_i)\ (i=1,\dots,k-1;j=1,\dots,m-m_i)\}$ 是 $m$ 阶的分割为 $\Delta$ 的重度向量为 $\mathfrak{M}=(m_0,\dots,m_k)$ 的多项式样条空间，其中 $\Delta\triangleq a=t_0<t_1<\dots,t_{k-1}<t_k=b$ 
 - $\mathcal{R}_{m,n}=\left\{\frac{p(x)}{q(x)}:p(x)\in \mathcal{P}_m,q(x)\in \mathcal{P}_n\right\}$ 表示阶为 $(m,n)$ 的有理函数的全体
 
