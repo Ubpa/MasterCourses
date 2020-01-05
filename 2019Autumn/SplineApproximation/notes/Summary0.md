@@ -511,7 +511,7 @@ $$
 $$
 \lim_\limits{n \to \infty} \|P_n-I\|=0
 $$
-（即对 $\forall x\in X$，$\|P_n-O\|\to 0$ 当且仅当 $\|P_n\|$ 一致有界，且 $\lim M_n=X$，其中 $\lim M_n\triangleq \{x\in X,d(x,M_n)\to 0\}$）
+（即对 $\forall x\in X$，$\|P_n-O\|\to 0$）当且仅当 $\|P_n\|$ 一致有界，且 $\lim M_n=X$，其中 $\lim M_n\triangleq \{x\in X,d(x,M_n)\to 0\}$
 
 # 4. 多项式的性质和平滑模
 
@@ -780,7 +780,7 @@ $$
 
 **定理 6.1** 设 $X$ 是 Hilbert 空间，$M\subset X$ 是闭线性子空间（闭凸集），则 $\forall x \in X$，$\#B_M(x)=1$ 
 
-**定理 6.2** 设 $X$ 是 Hilbert 空间，$M$ 是 $X$ 的子空间，$x\in X$，$m^*\in M$，则 $m^*\in \mathcal{B}_M(x)$ $\Leftrightarrow$ $(x-m^*)\perp M$ 
+**定理 6.2** 设 $X$ 是 Hilbert 空间，$M$ 是 $X$ 的子空间，$x\in X$，$m^*\in M$，则 $m^*\in \mathcal{B}_M(x) \Leftrightarrow (x-m^*)\perp M$ 
 
 **推论 6.1** $M$ 是闭的线性子空间 $\Rightarrow$ 距离投影算子 $P_M$ 是线性算子，且 $\|P_M\|=1$ 
 
