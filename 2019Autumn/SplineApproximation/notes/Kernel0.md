@@ -117,7 +117,7 @@ $$
 $$
 w(\varphi_1,\varphi_2,\dots,\varphi_r)=\det\left(\varphi_j^{(i-1)}\right)_{i,j=1}^r\neq 0
 $$
-则 $\text{span}\{\varphi_i\}_{i=1}^r$ 是 Haar 空间
+则 $\text{span}\{\varphi_i\}_{i=1}^n$ 是 Haar  空间
 
 ### 2.3.3 最佳逼近的交错定理
 
@@ -358,7 +358,7 @@ $\lim_\limits{n \to \infty} \|P_n-I\|=0\Leftrightarrow \|P_n\| 一致有界,\lim
 
 ### 4.1.2 Markov 不等式
 
-- $\forall p\in \mathcal{P}_n,\|p\|\le \|\sqrt{1-t^2}p(t)\|$ 
+- $\forall p\in \mathcal{P}_n,\|p\|\le n\|\sqrt{1-t^2}p(t)\|$ 
 - $\forall p_n\in \mathcal{P}_{n+1},\|p_n^\prime\|\le n^2\|p_n\|$ 
 
 ## 4.2 连续模
@@ -462,7 +462,7 @@ $$
 $$
 \psi _ { n } ( t ) = \left| \begin{array} { c c c c } { \left\langle \omega _ { 1 } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { 1 } , \omega _ { n - 1 } \right\rangle } & { \omega _ { 1 } } \\ { \left\langle \omega _ { 2 } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { 2 } , \omega _ { n - 1 } \right\rangle } & { \omega _ { 2 } } \\ { \vdots } & { } & { \vdots } & { \vdots } \\ { \left\langle \omega _ { n } , \omega _ { 1 } \right\rangle } & { \cdots } & { \left\langle \omega _ { n } , \omega _ { n - 1 } \right\rangle } & { \omega _ { n } } \end{array} \right|
 $$
-以及 $\Delta_0\triangleq 1$，$\Delta_m\triangleq G(\omega_1,\dots,\omega_n)\triangleq \det\left(\left\{\left\langle \omega_i,\omega_j \right\rangle\right\}_{i,j=1}^n\right)$，其中 $G$ 称为 $\omega_1,\dots,\omega_n$ 的 Gram 行列式，则
+以及 $\Delta_0\triangleq 1$，$\Delta_n\triangleq G(\omega_1,\dots,\omega_n)\triangleq \det\left(\left\{\left\langle \omega_i,\omega_j \right\rangle\right\}_{i,j=1}^n\right)$，其中 $G$ 称为 $\omega_1,\dots,\omega_n$ 的 Gram 行列式，则
 $$
 \varphi_k(t)=\frac{\psi_k(t)}{\sqrt{\Delta_k\Delta_{k-1}}}\quad(k\ge 1)
 $$
