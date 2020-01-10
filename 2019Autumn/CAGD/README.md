@@ -1,5 +1,10 @@
 # CAGD
 
+> - 课程编码：MA04414
+> - 学分：4
+> - 开课单位：001-数学学院
+> - 教师：陈仁杰
+
 ## 课程主页
 
 - [Autumn-Winter, 2019](http://staff.ustc.edu.cn/~renjiec/CAGD_2019S1/default.htm) 
