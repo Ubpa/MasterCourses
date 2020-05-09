@@ -2,11 +2,6 @@
 
 [TOC]
 
-> **TODO** 
->
-> [^Fritz-John]: Fritz-John
-> [^算法收敛性]: 算法收敛性
-
 ## 1.1 最优化基本概念
 
 ### 1.1.1 最优化
@@ -24,7 +19,7 @@
 
 **最优化** optimization 一般是指在某种条件下作出最好的决策。这种问题经常用下面的数学模型描述：
 
-- 在给定的**约束条件** constraint 下，找出一个**决策变量** decision variable 的值，使得被称为**目标函数** objective function 的表达愿望尺度的函数值达到最小或最大。
+在给定的**约束条件** constraint 下，找出一个**决策变量** decision variable 的值，使得被称为**目标函数** objective function 的表达愿望尺度的函数值达到最小或最大。
 
 ### 1.1.4 最优化模型
 
@@ -100,14 +95,20 @@ $$
 > \frac{\part^2 f}{\part x_n\part x_1} && \dots && \frac{\part^2 f}{\part x_n\part x_n}\\
 > \end{array}\right]
 > $$
+>
+> ---
+>
+> 从二维来理解，$\nabla f(\pmb{\bar{x}})=0$ 意味着周围是平的，$\nabla^2 f(\pmb{\bar{x}})\ge 0$ 意味着开口朝上
 
 **约束问题的最优性条件** 
+
+> 后边有解释
 
 Kuhn-Tucker 必要条件
 
 $\exist \lambda_i\ge 0(i\in \mathcal{I}_e),\mu_i(i\in\mathcal{E})$ 使得
 $$
-\nabla f(\pmb{\bar{x}})-\sum_{i\in\mathcal{I}_e}\lambda_i\nabla c_i(\pmb{\bar{x}})-\sum_{i\in \mathcal{E}}\mu_i\nabla c_i(\pmb{\bar{x}})=0
+\nabla f(\pmb{\bar{x}})-\sum_{i\in\mathcal{I}_e}\lambda_i c_i(\pmb{\bar{x}})-\sum_{i\in \mathcal{E}}\mu_i c_i(\pmb{\bar{x}})=0
 $$
 其中 $\mathcal{I}_e=\{i\in \mathcal{I} | c_i(\pmb{\bar{x}})=0\}$ 
 
@@ -143,20 +144,26 @@ $$
 - 连续变量
 - 离散变量（组合优化问题）
 
+非线性规划属于**连续型**最优化问题
+
 改下符号
 $$
 \begin{aligned}
 &\min & &f(\pmb{x})&\\
-&\text{s}.\text{t}. & &g_i(\pmb{x})=0,& &i=1,\dots,m&\\
-&& &h_j(\pmb{x})\ge 0,& &j=1,\dots,l&
+&\text{s}.\text{t}. & &g_i(\pmb{x})\ge0,& &i=1,\dots,m&\\
+&& &h_j(\pmb{x})= 0,& &j=1,\dots,l&
 \end{aligned}
 $$
+> $f,g,h$ 至少有一个是非线性的
+
 研究分两方面
 
 - 研究最优解的性质
 - 设计有效算法来求解
 
 ### 1.2.1 约束问题的最优性条件
+
+> 最优性条件：问题的最优解所满足的**必要或充分**条件
 
 **可行方向** 
 
@@ -172,7 +179,7 @@ $$
 $$
 f(\pmb{\bar{x}}+\lambda\pmb{d})<f(\pmb{\bar{x}}),\forall \lambda\in (0,\delta)
 $$
-则称 $\pmb{d}$ 是 $f(\pmb{x})$ $\pmb{\bar{x}}$ 处的下降方向
+则称 $\pmb{d}$ 是 $f(\pmb{x})$ 在 $\pmb{\bar{x}}$ 处的下降方向
 
 **下降方向集的子集** 
 
@@ -181,16 +188,22 @@ $$
 D(\pmb{\bar{x}},f)=\{\pmb{d}\ |\ \nabla f(\pmb{\bar{x}})^\top\pmb{d}<0\}
 $$
 
+> **证明** 
+> $$
+> f(\pmb{x})\approx f(\bar{\pmb{x}})+{\nabla f(\pmb{x})}^\top(\pmb{x}-\bar{\pmb{x}})\\
+> f(\pmb{x}+\lambda\pmb{d})-f(\bar{\pmb{x}})=\lambda{\nabla f(\pmb{x})}^\top\pmb{d}<0
+> $$
+
 ---
 
 必要条件
 $$
-F(\pmb{\bar{x}},\mathcal{S})\cap D(\pmb{\bar{x}},f)=0
+F(\pmb{\bar{x}},\mathcal{S})\cap D(\pmb{\bar{x}},f)=\empty
 $$
 
 ---
 
-记 $\mathcal{I}_e(\pmb{\bar{x}})=\{i\in\{1,\dots,m\}|g_i(\pmb{\bar{x}})=0\}$，
+记 $\mathcal{I}_e(\pmb{\bar{x}})=\{i\in\{1,\dots,m\}|g_i(\pmb{\bar{x}})=0\}$（起作用的不等式约束），
 $$
 \begin{aligned}
 &D_f=D(\pmb{\bar{x}},f)=\{\pmb{d}\ |\ \nabla f(\pmb{\bar{x}})^\top\pmb{d}<0\}\\
@@ -200,7 +213,7 @@ $$
 $$
 则必要条件为
 $$
-D_f\cap F_g \cap F_h=0
+D_f\cap F_g \cap F_h=\empty
 $$
 
 > 其他条件
@@ -209,6 +222,10 @@ $$
 > - $g_i(i\notin \mathcal{I}(\pmb{\bar{x}})$ 在 $\pmb{\bar{x}}$ 连续
 > - $h_j$ 在 $\pmb{\bar{x}}$ 连续可微
 > - $\{\nabla h_j(\pmb{\bar{x}})\}^l_{j=1}$ 线性无关
+>
+> ---
+>
+> $F_g \cap F_h$  是可行方向集（$g$ 不变负，$h$ 保持等式），则 $D_f\cap F_g \cap F_h$ 是可行下降集
 
 **Fritz-John 条件** 
 
@@ -226,7 +243,31 @@ $$
 >
 > ---
 >
-> 证明：[^Fritz-John] 
+> 证明
+>
+> ![image-20200509224703346](assets/01_Intro/image-20200509224703346.png)
+>
+> ![image-20200509230628286](assets/01_Intro/image-20200509230628286.png)
+>
+> ![image-20200509230704221](assets/01_Intro/image-20200509230704221.png)
+>
+> ![image-20200509230710755](assets/01_Intro/image-20200509230710755.png)
+>
+> > **即为结论** 
+>
+> ![image-20200509232226996](assets/01_Intro/image-20200509232226996.png)
+>
+> > $\mathcal{S}_1$ 是 (21) 式左侧，$\mathcal{S}_2$ 是 (21) 式右侧，无解就是交集为空
+>
+> ![image-20200509232420567](assets/01_Intro/image-20200509232420567.png)
+>
+> ![image-20200509233448483](assets/01_Intro/image-20200509233448483.png)
+>
+> > $0\ge\pmb{p}_1^\top\pmb{y}_1$，若 $\pmb{p}_1$ 含有负项，则让 $\pmb{y}_1$ 该项负无穷， 右边为正，矛盾
+>
+> ![image-20200509233621581](assets/01_Intro/image-20200509233621581.png)
+>
+> > 将 $\pmb{d}$ 代入不等式可得 $-\|A\pmb{p}_1+B\pmb{p}_2\|^2=\pmb{0}$ 
 
 **Kuhn-Tucker 条件** 
 
@@ -243,8 +284,21 @@ $$
 > - $g_i(i\in\mathcal{I}\backslash \mathcal{I}_e(\pmb{\bar{x}}))$ 在点 $\bar{\pmb{x}}$ 连续
 > - $h_j$ 在 $\pmb{\bar{x}}$ 连续可微
 > - $\{\nabla g_i(\pmb{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{h_j(\pmb{\bar{x}})\}^l_{j=1}$ 线性无关
+>
+> ---
+>
+> 由 **Fritz-John 条件** 可知，当 $\lambda_0=0$ 时，等式成立则意味着 $\{\nabla g_i(\pmb{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{h_j(\pmb{\bar{x}})\}^l_{j=1}$ 线性相关，矛盾，故 $\lambda_0\neq 0$，等式除以 $\lambda_0$ 即为 KT 条件
+>
+> ---
+>
+> 直观理解
+>
+> **可行方向位于约束法锥内**，法锥如下
+>
+> - **等式约束的法线空间** 
+> - **不等式约束的半空间** 
 
-定义 Lagrange 函数 $L(\pmb{x},\pmb{\lambda},\pmb{\mu})=f(\pmb{x})-\sum_{i=1}^mg_i(\pmb{x})-\sum_{j=1}^l \mu_jh_j(\pmb{x})$ 
+定义 Lagrange 函数 $L(\pmb{x},\pmb{\lambda},\pmb{\mu})=f(\pmb{x})-\sum_{i=1}^m\lambda_ig_i(\pmb{x})-\sum_{j=1}^l \mu_jh_j(\pmb{x})$ 
 
 若 $\pmb{\bar{x}}$ 是局部最优解，则 $\exist \pmb{\bar{\lambda}}\ge 0,\pmb{\bar{\mu}}$ 使得
 $$
@@ -263,17 +317,21 @@ $$
 \right.
 $$
 
+> $g$ 中非等式部分可取相应 $\lambda$ 为 0，从而化为 KT 条件
+
 ### 1.2.2 下降算法
 
 **算法映射** 
 
 算法 $\mathcal{A}$ 是定义在空间 $X$ 上的点到**集**的映射，即对每个点 $\pmb{x}^{(k)}\in X$，经算法 $\mathcal{A}$ 作用后产生一个点集 $\mathcal{A}(\pmb{x}^{(k)})\subset X$，任意选择一个点 $\pmb{x}^{(k+1)}\in \mathcal{A}(\pmb{x}^{(k)})$ 作为 $\pmb{x}^{(k)}$  的后续点
 
-**闭映射** 
+***闭映射** 
 
 设 $X$ 和 $Y$ 分别是空间 $\mathbb{E}^p$ 和 $\mathbb{E}^q$ 中的非空闭集，$\mathcal{A}:X\to Y$ 为点到集的映射。如果 $\pmb{x}^{(k)}\to \pmb{x},y^{(k)}\in \mathcal{A}(\pmb{x}^{(k)}),y^{(k)}\to y$ 蕴含着 $\pmb{y}\in \mathcal{A}(\pmb{x})$，则称映射 $\mathcal{A}$ 在 $\pmb{x}\in X$ 处是闭的
 
 **解集合** 
+
+> 全局最优解难求，所以退而求其次只求满足**必要条件**的点
 
 无约束优化问题可定义解集合为
 $$
@@ -292,15 +350,21 @@ $$
 
 则称 $\psi$ 是关于解集合 $\Omega$ 和算法 $\mathcal{A}$ 的下降函数
 
+> 解集之外，$\psi$ 可引导向算法**走入解集** 
+>
+> 解集之内，$\psi$ 保证算法**不离开解集** 
+
 **算法收敛性** 
+
+> 存在下降函数的算法是有效的
 
 设 $\Omega$ 为解集合，$\mathcal{A}$ 为 $X$ 上的算法映射。若以任意初始点 $\pmb{x}^{(0)}\in Y\subset X$ 出发，算法产生的序列的任一收敛子列的极限属于解集合，则称算法映射 $\mathcal{A}$ 在 $Y$ 上收敛于解集合 $\Omega$ 
 
 ![image-20200305152622024](assets/01_Intro/image-20200305152622024.png)
 
-> 证明：[^算法收敛性] 
+> 证明略（过于复杂）
 
-**使用收敛准则** 
+**实用收敛准则** 
 
 ![image-20200305152749574](assets/01_Intro/image-20200305152749574.png)
 
@@ -310,8 +374,6 @@ $$
 
 - $p=1$ 且 $0<\beta<1$ 则为线性收敛
 - $p>1$ 或 $p=1,\beta=0$ 则超线性收敛
-
-**计算复杂性** 
 
 **迭代方法** 
 
