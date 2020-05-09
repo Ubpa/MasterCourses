@@ -17,8 +17,8 @@ $$
 梯度类方法
 
 - 初始化：选取适当的初始点 $\pmb{x}^{(0)}\in \mathbb{R}^n$，令 $k=0$ 
-- 计算搜索方向：利用设当的正定对称矩阵 $H_k$ 计算搜索方向向量 $\pmb{d}^{(k)}=-H_k\nabla f(\pmb{x}^{(k)})$（如果 $\nabla f(\pmb{x}^{(k)})=\pmb{0}$ 或 $\|\nabla f(\pmb{x}^{(k)})\|\le \epsilon\quad (0\le \epsilon \ll 1)$，则结束计算）
-- 确定步长因子：解一维最优化问题 $\min_\limits{\alpha\ge 0}f(\pmb{x}^{(k)}+\alpha \pmb{d}^{(k)})$，求出步长 $\alpha=\alpha_k$，令 $\pmb{x}^{(k+1)}=\pmb{x}^{(k)}+\alpha_k\pmb{d}^{(k)}$，$k=k+1$  
+- 计算搜索方向：利用设当的**正定对称矩阵** $H_k$ 计算搜索方向向量 $\pmb{d}^{(k)}=-H_k\nabla f(\pmb{x}^{(k)})$（如果 $\nabla f(\pmb{x}^{(k)})=\pmb{0}$ 或 $\|\nabla f(\pmb{x}^{(k)})\|\le \epsilon\quad (0\le \epsilon \ll 1)$，则结束计算）
+- 确定步长因子：解一维最优化问题 $\min_\limits{\alpha\ge 0}f(\pmb{x}^{(k)}+\alpha \pmb{d}^{(k)})$，求出步长 $\alpha=\alpha_k$，令 $\pmb{x}^{(k+1)}=\pmb{x}^{(k)}+\alpha_k\pmb{d}^{(k)}$，$k=k+1$ 
 
 > 令 $\varphi(\alpha) = f(\pmb{x}^{(k)}+\alpha \pmb{d}^{(k)})$，则
 > $$
@@ -54,6 +54,8 @@ $$
 \pmb{d}^{(k)}=-G^{-1}_k\nabla f(\pmb{x}^{(k)})
 $$
 其中 $G_k=\nabla^2f(\pmb{x}^{(k)})$ 为 Hesse 矩阵
+
+> 将函数视为二次函数，最小值位于 $-\frac{b}{2a}$ 
 
 ### 2.1.2 确定步长因子
 
@@ -93,9 +95,9 @@ $$
 $$
 其中 $\sigma\in (\rho,1)$ 是另一个固定参数
 
-> $\varphi^\prime(0)$ 是负数，所以 $\varphi^\prime(\alpha)$ 要更接近 0 一些，不能太陡峭
+> $\varphi^\prime(0)$ 是负数，所以 $\varphi^\prime(\alpha)$ 的范围是接近 0 的负数到正数，不能太陡峭，比上界更陡峭
 >
-> 常被强化的双边条件取代
+> 常被强化的**双边条件**取代
 > $$
 > |\varphi^\prime(\alpha)|\le -\sigma\varphi^\prime(0)
 > $$
@@ -125,13 +127,15 @@ $$
 >
 > ----
 >
-> 搜索区间始终位于 $(\alpha_1,\alpha_2)$，算法的第 2、3 步会调整这个区间，使其越变越小
+> 搜索区间始终位于 $(a_1,a_2)$，算法的第 2、3 步会调整这个区间，使其越变越小
 >
-> 第二步， $\varphi_1$ 和 $\varphi_1^\prime$ 是主要参考样本，选取了样本点 $\alpha$，发现不满足要求的话，就利用 $\varphi_1,\varphi_1^\prime$ 和样本值 $\varphi(\alpha)$ 根据二次函数推算新样本点 $\hat{\alpha}$ 并更新区间右端 $\alpha_2=\alpha$，如此重复，直到找到结果。
+> 算 $\varphi(\alpha)$ 
 >
-> 第三步，测试第二步找到了样本点是否足够好，不够好的话，就来更新区间左端。$、varphi$ 比原 $\varphi_1$ 更好，因此这步  $\varphi,\varphi^\prime$ 成为了主要参考样本。
+> - 如果超出上限，取左导+**左值+右值**做二次估计，更新区间上限
+> - 如果低于下限，取左导+**中值+中导**做二次估计，更新区间下限
+> - 结束
 
-### 2.1.3 全局收敛
+### *2.1.3 全局收敛
 
 从任意初始点出发，如果某迭代算法产生的点列的极限（聚点），在适当假定下可保证恒为问题的最优解（或者稳定点），则称该迭代法具有**全局收敛性** global convergence
 
@@ -146,13 +150,12 @@ $$
 \cos\theta_k=-\frac{{\pmb{g}^{(k)}}^\top \cdot \pmb{d}^{(k)}}{\|\pmb{g}^{(k)}\|\|\pmb{d}^{(k)}\|}=-\frac{{\pmb{g}^{(k)}}^\top \pmb{s}^{(k)}}{\|\pmb{g}^{(k)}\|\|\pmb{s}^{(k)}\|}
 $$
 
-> 其中 $\pmb{g}^{(k)}=\nabla f(\pmb{x}^{(k)})$ 
+> 其中 $\pmb{g}^{(k)}=-\nabla f(\pmb{x}^{(k)})$ 
 
 **全局收敛性定理** 
 
 若满足
 
-- $\nabla f(\pmb{x})$ 存在且一致连续（在水平集 $L(\pmb{x}^{(0)})=\{\pmb{x}\ |\ f(\pmb{x})\le f(\pmb{x}^{0})\}$ 上）
 - $\theta_k\le \frac{\pi}{2}-\mu \quad \forall k$ 
 - 步长 $\alpha_k$ 由下列方法之一确定
   - 精确一维搜索
@@ -161,7 +164,35 @@ $$
 
 则 $\exist  k, \nabla f(\pmb{x}^{(k)})=\pmb{0}$，或者 $f(\pmb{x}^{(k)})\to-\infty$，或者 $\nabla f(\pmb{x}^{(k)})\to \pmb{0}$ 
 
-> 证明
+> 其他条件
+>
+> - $\nabla f(\pmb{x})$ 存在且一致连续（在水平集 $L(\pmb{x}^{(0)})=\{\pmb{x}\ |\ f(\pmb{x})\le f(\pmb{x}^{0})\}$ 上）
+>
+> ---
+>
+> 证明（Wolfe-Powell）
+>
+> 假设 $\pmb{g}^{(k)}\neq \pmb{0}$，$f(\pmb{x}^{(k)})$ 有下界
+>
+> > 从而需证 $\nabla f(\pmb{x}^{(k)})\to \pmb{0}$ 
+>
+> 故 $f(\pmb{x}^{(k)})-f(\pmb{x}^{(k+1)})\to 0$，由 $\varphi(\alpha)\le\varphi(0)+\rho\alpha\varphi^\prime(0)$ 得 $-\pmb{g}^{(k)}\pmb{s}^{(k)}\to 0$ 
+>
+> > $\varphi(\alpha) = f(\pmb{x}^{(k+1)})$，$\varphi(0) = f(\pmb{x}^{(k)})$，$\varphi^\prime(0)=-\pmb{g}^{(k)}\pmb{d}^{(k)}$，$\pmb{s}^{(k)}=\alpha \pmb{d}^{(k)}$（上文有推导）
+>
+> ![image-20200510025105009](assets/02_NonConstraint/image-20200510025105009.png)
+>
+> 则 $\|\pmb{s}^{(k)}\|\to 0$ 
+>
+> ![image-20200510025135414](assets/02_NonConstraint/image-20200510025135414.png)
+>
+> > $\pmb{g}^{(k+1)}=\pmb{g}^{(k)}+o(\pmb{1})$ 
+>
+> 而这与 $\varphi^\prime(\alpha)\ge \sigma\varphi^\prime(0)$ 矛盾，即与下式茅盾
+>
+> ![image-20200510031130622](assets/02_NonConstraint/image-20200510031130622.png)
+>
+> 故  $\pmb{g}^{(k)}\to \pmb{0}$ 
 
 ### 2.1.4 最速下降法
 
