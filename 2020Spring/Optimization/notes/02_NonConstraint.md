@@ -2,7 +2,7 @@
 
 > **TODO** 
 >
-> [^牛顿法收敛定理]: TODO 
+> [^TODO]: TODO
 
 [TOC]
 
@@ -150,7 +150,7 @@ $$
 \cos\theta_k=-\frac{{\pmb{g}^{(k)}}^\top \cdot \pmb{d}^{(k)}}{\|\pmb{g}^{(k)}\|\|\pmb{d}^{(k)}\|}=-\frac{{\pmb{g}^{(k)}}^\top \pmb{s}^{(k)}}{\|\pmb{g}^{(k)}\|\|\pmb{s}^{(k)}\|}
 $$
 
-> 其中 $\pmb{g}^{(k)}=-\nabla f(\pmb{x}^{(k)})$ 
+> 其中 $\pmb{g}^{(k)}=\nabla f(\pmb{x}^{(k)})$ 
 
 **全局收敛性定理** 
 
@@ -178,7 +178,7 @@ $$
 >
 > 故 $f(\pmb{x}^{(k)})-f(\pmb{x}^{(k+1)})\to 0$，由 $\varphi(\alpha)\le\varphi(0)+\rho\alpha\varphi^\prime(0)$ 得 $-\pmb{g}^{(k)}\pmb{s}^{(k)}\to 0$ 
 >
-> > $\varphi(\alpha) = f(\pmb{x}^{(k+1)})$，$\varphi(0) = f(\pmb{x}^{(k)})$，$\varphi^\prime(0)=-\pmb{g}^{(k)}\pmb{d}^{(k)}$，$\pmb{s}^{(k)}=\alpha \pmb{d}^{(k)}$（上文有推导）
+> > $\varphi(\alpha) = f(\pmb{x}^{(k+1)})$，$\varphi(0) = f(\pmb{x}^{(k)})$，$\varphi^\prime(0)=\pmb{g}^{(k)}\pmb{d}^{(k)}$，$\pmb{s}^{(k)}=\alpha \pmb{d}^{(k)}$（上文有推导）
 >
 > ![image-20200510025105009](assets/02_NonConstraint/image-20200510025105009.png)
 >
@@ -192,6 +192,8 @@ $$
 >
 > ![image-20200510031130622](assets/02_NonConstraint/image-20200510031130622.png)
 >
+> > $\pmb{g}^{(k)}\pmb{d}^{(k)}<0$ 
+>
 > 故  $\pmb{g}^{(k)}\to \pmb{0}$ 
 
 ### 2.1.4 最速下降法
@@ -204,7 +206,11 @@ $\pmb{d}^{(k)}=-\nabla f(\pmb{x}^{(k)})$
 
 ![image-20200310205530157](assets/02_NonConstraint/image-20200310205530157.png)
 
-## 2.2 牛顿法
+垂直 ${\pmb{g}^{(k+1)}}^\top\pmb{g}^{(k)}=0$ 
+
+> $\varphi^\prime(\alpha^{(k)})=\nabla f(\pmb{x}^{(k+1)})^\top\pmb{d}^{(k)}$ 
+
+### 2.1.5 牛顿法
 
 $$
 f(\pmb{x}^{(k)}+\pmb{s})\approx q^{(k)}(\pmb{s}) = f(\pmb{x}^{(k)})+{\pmb{g}^{(k)}}^\top \pmb{s}+\frac{1}{2}\pmb{s}^\top G_k \pmb{s}
@@ -216,7 +222,7 @@ $$
 $$
 \pmb{s}=-G_k^{-1}\pmb{g}^{(k)}
 $$
-称 $-G_k^{-1}\pmb{g}^{(k)}$ 为**牛顿方向**（Newtin Direction）
+称搜索方向 $-G_k^{-1}\pmb{g}^{(k)}$ 为**牛顿方向**（Newtin Direction）
 
 >  $f(\pmb{x})$ 二次可微实函数
 >
@@ -228,17 +234,21 @@ $$
 $$
 \pmb{x}^{(k+1)}=\pmb{x}^{(k)}-G^{-1}_k\pmb{g}^{(k)}
 $$
+> $\alpha_k=1$ 
+
 **牛顿法收敛定理** 
 
 ![image-20200310214012003](assets/02_NonConstraint/image-20200310214012003.png)
 
-> 证明：[^牛顿法收敛定理] 
+> 证明：[^TODO] 
 >
 > ---
 >
-> 如果初始点不再解附近，则未必收敛
+> 如果初始点不在解附近，则未必收敛
 
 **阻尼牛顿法** 
+
+> 用一维搜索确定步长
 
 ![image-20200310215109275](assets/02_NonConstraint/image-20200310215109275.png)
 
@@ -253,23 +263,37 @@ $$
 &-\pmb{g}^{(k)}, &\text{otherwise}
 \end{aligned}\right.
 $$
+> 如果正定且夹角不太大就用牛顿法，否则用
+
 **Levenberg,Marquardt,Goldfeld** 
 $$
 (G_k+\mu_k I)\pmb{d}^{(k)}=-\pmb{g}^{(k)}
 $$
+**负曲率方向** 
+
 设 $\pmb{x}$ 是不定点，若
 $$
 \pmb{d}^\top\nabla^2 f(\pmb{x})\pmb{d}<0
 $$
 则称 $\pmb{d}$ 为**负曲率方向** 
 
-## 2.3 逆牛顿法
+> 一阶导是梯度，二阶导是曲率
+>
+> 对应**负梯度**，**负曲率** 
 
-用一个矩阵 $H_k$ 近似 $G_k^{-1}$ 
+2.1.6 拟牛顿法
+
+> 用一个矩阵 $H_k$ 近似 $G_k^{-1}$ 
+
+目标函数二阶泰勒展开
 $$
 f(\pmb{x})\approx f(\pmb{x}^{(k+1)})+{\pmb{g}^{(k+1)}}^\top (\pmb{x}-\pmb{x}^{(k+1)})+\frac{1}{2}(\pmb{x}-\pmb{x}^{(k+1)})^\top G_k (\pmb{x}-\pmb{x}^{(k+1)})
 $$
-求导并令 $\pmb{x}=\pmb{x}^{(k)}$ 得
+梯度一阶展开
+$$
+\nabla f(\pmb{x})=\nabla f(\pmb{x}^{(k+1)})+\nabla^2 f(\pmb{x}^{(k+1)})(\pmb{x}-\pmb{x}^{(k+1)})
+$$
+令 $\pmb{x}=\pmb{x}^{(k)}$ 得
 $$
 \nabla f(\pmb{x}^{(k)})\approx\nabla f(\pmb{x}^{(k+1)})+G_{k+1} (\pmb{x}^{(k)}-\pmb{x}^{(k+1)})
 $$
@@ -277,6 +301,11 @@ $$
 $$
 G_{k+1}^{-1}\pmb{y}^{(k)}\approx \pmb{s}^{(k)}
 $$
+> 梯度变化近似于曲率与变化量的乘积
+> $$
+> \Delta f^\prime=f^{\prime\prime}\Delta x
+> $$
+
 因此我们迭代中找 $H_{k+1}$ 满足
 $$
 H_{k+1}\pmb{y}^{(k)}=\pmb{s}^{(k)}
@@ -285,7 +314,19 @@ $$
 
 ![image-20200310223300662](assets/02_NonConstraint/image-20200310223300662.png)
 
-**SR1 校正** 
+> ![image-20200510120405931](assets/02_NonConstraint/image-20200510120405931.png)
+
+以 $H_k$ 生成 $H_{k+1}$ 
+$$
+H_{k+1}=H_k+E_k
+$$
+其中 $E_k$ 是一个低秩的矩阵
+
+**对称秩1（SR1）校正** 
+
+> - 秩 1：$\pmb{u}\pmb{v}^\top$ 
+> - 对称：$\pmb{u}=\pmb{v}$ 
+
 $$
 H_{k+1}=H_k+a\pmb{u}\pmb{u}^\top
 $$
@@ -298,8 +339,100 @@ SR 1 校正性质
 - 针对二次函数具有遗传性：$H_k \pmb{y}^{(l)}=\pmb{s}^{(l)},l=0,1,\dots,k-1$ 
 - 具有二次终止性：不需要一维搜索，且 $H_n=[\nabla^2 f(\pmb{x}^*)]^{-1}$ 
 
-**SR 2 校正** 
+缺点
+
+- 不保证 $H_k$ 的正定性
+- 当 $(\pmb{s}^{(k)}-H_k\pmb{y}^{(k)})^\top\pmb{y}^{(k)}>0$ 时 $H_k$ 正定
+
+**对称秩2（SR2）校正** 
+
+> - 秩 2：$\pmb{u}_1\pmb{u}_2^\top+\pmb{v}_1\pmb{v}_2^\top$ 
+> - 对称：$\pmb{u}_1=\pmb{u}_2,\pmb{v}_1=\pmb{v}_2$  
+
 $$
 H_{k+1}=H_k+a\pmb{u}\pmb{u}^\top+b\pmb{v}\pmb{v}^\top
 $$
+
+![image-20200510134540891](assets/02_NonConstraint/image-20200510134540891.png)
+
+![image-20200510134704899](assets/02_NonConstraint/image-20200510134704899.png)
+
+称为 **DFP(Davidon-Fletcher-Powell) 校正公式**（典型）
+
+性质有
+
+![image-20200510134821259](assets/02_NonConstraint/image-20200510134821259.png)
+
+**（对偶的）拟牛顿（正割）条件** 
+$$
+B_{k+1}\pmb{s}^{(k)}=\pmb{y}^{(k)}
+$$
+类似 DFP 得到 **BFGS（Broyden-Fletcher-Goldfarb-Shanno）校正** 
+
+![image-20200510135632742](assets/02_NonConstraint/image-20200510135632742.png)
+
+> 将 DFP 的 H 换成 B，s 和 y 互换即可
+
+$$
+\begin{aligned}
+H_{k+1}^{(B F G S)}=& H_{k}+\left(1+\frac{{\mathbf{y}^{(k)}}^\top H_{k} \mathbf{y}^{(k)}}{{\mathbf{s}^{(k)}}^\top \mathbf{y}^{(k)}}\right) \frac{\mathbf{s}^{(k)} {\mathbf{s}^{(k)}}^\top}{\mathbf{s}^{(k) T} \mathbf{y}^{(k)}} \\
+&-\frac{H_{k} \mathbf{y}^{(k)} {\mathbf{s}^{(k)}}^\top+\mathbf{s}^{(k)} {\mathbf{y}^{(k)}}^\top {H_{k}}}{{\mathbf{s}^{(k)}}^\top \mathbf{y}^{(k)}}
+\end{aligned}
+$$
+
+类似地可得到
+
+![image-20200510142330287](assets/02_NonConstraint/image-20200510142330287.png)
+
+> ![image-20200510142755806](assets/02_NonConstraint/image-20200510142755806.png)
+
+**秩一校正的求逆公式** 
+
+![image-20200510142950627](assets/02_NonConstraint/image-20200510142950627.png)
+
+> 奇异矩阵是不可逆矩阵（非满秩）
+
+### 2.1.7 共轭方向
+
+![image-20200510150059246](assets/02_NonConstraint/image-20200510150059246.png)
+
+> 共轭是正交的推广，当 $G=I$ 时共轭即为正交
+
+![image-20200510150539307](assets/02_NonConstraint/image-20200510150539307.png)
+
+性质：精确一维搜索就有二次终止性
+
+![image-20200510150727241](assets/02_NonConstraint/image-20200510150727241.png)
+
+> 证明
+
+![image-20200510152120497](assets/02_NonConstraint/image-20200510152120497.png)
+
+> 推导
+>
+> ---
+>
+> 示例
+>
+> ![image-20200510152142453](assets/02_NonConstraint/image-20200510152142453.png)
+
+![image-20200510152201405](assets/02_NonConstraint/image-20200510152201405.png)
+
+推广
+
+![image-20200510152516433](assets/02_NonConstraint/image-20200510152516433.png)
+
+![image-20200510152550594](assets/02_NonConstraint/image-20200510152550594.png)
+
+**重启动** 
+
+![image-20200510152626583](assets/02_NonConstraint/image-20200510152626583.png)
+
+评价
+
+![image-20200510152707787](assets/02_NonConstraint/image-20200510152707787.png)
+
+![image-20200510152717221](assets/02_NonConstraint/image-20200510152717221.png)
+
+## 2.2 信赖域方法
 
