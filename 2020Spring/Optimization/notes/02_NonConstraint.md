@@ -436,3 +436,42 @@ $$
 
 ## 2.2 信赖域方法
 
+> Trust Region Method
+
+![image-20200510174715080](assets/02_NonConstraint/image-20200510174715080.png)
+
+![image-20200510174740168](assets/02_NonConstraint/image-20200510174740168.png)
+
+性质
+
+- 全局收敛性
+- 不要求 Hesse 矩阵正定
+
+![image-20200510174837302](assets/02_NonConstraint/image-20200510174837302.png)
+
+![image-20200510174958570](assets/02_NonConstraint/image-20200510174958570.png)
+
+![image-20200510175111714](assets/02_NonConstraint/image-20200510175111714.png)
+
+![image-20200510175141835](assets/02_NonConstraint/image-20200510175141835.png)
+
+![image-20200510175326448](assets/02_NonConstraint/image-20200510175326448.png)
+
+![image-20200510175527554](assets/02_NonConstraint/image-20200510175527554.png)
+
+关键一步是解决信頼域子问题
+
+**折线法** 
+
+![image-20200510175639892](assets/02_NonConstraint/image-20200510175639892.png)
+
+![image-20200510175721787](assets/02_NonConstraint/image-20200510175721787.png)
+
+![image-20200510175837467](assets/02_NonConstraint/image-20200510175837467.png)
+
+![image-20200510175850717](assets/02_NonConstraint/image-20200510175850717.png)
+
+![image-20200510175859719](assets/02_NonConstraint/image-20200510175859719.png)
+
+![image-20200510175935999](assets/02_NonConstraint/image-20200510175935999.png)
+
