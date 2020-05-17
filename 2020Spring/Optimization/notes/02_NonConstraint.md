@@ -116,7 +116,7 @@ $$
 
 3. 计算 $\varphi^\prime=\varphi^\prime(\alpha)=\nabla f(\pmb{x}^{(k)}+\alpha\pmb{d}^{(k)})^\top\pmb{d}^{(k)}$。若 $\varphi^\prime(\alpha)\ge \sigma\varphi^\prime(0)$，则输出 $\alpha_k=\alpha$，并停止搜索。否则，由 $\varphi,\varphi^\prime,\varphi_1$ 构造两点二次插值多项式 $p^{(2)}(t)$，并得其极小点
    $$
-   \hat{\alpha}=\alpha-\frac{a_1-\alpha}{\varphi_1^\prime-\varphi^\prime}
+   \hat{\alpha}=\alpha-\frac{(a_1-\alpha)\varphi^\prime}{\varphi_1^\prime-\varphi^\prime}
    $$
    于是置 $a_1=\alpha,\alpha=\hat\alpha,\varphi_1=\varphi,\varphi_1^\prime=\varphi^\prime$，返回第 2 步。
 
