@@ -307,9 +307,48 @@ $$
 
 ### 迭代
 
-![image-20200517173821799](assets/03_Constraint/image-20200517173821799.png)
+设 $\mathbf{x}^{(k)}$ 为当前迭代点（且是原问题的可行点）
 
-![image-20200517173833150](assets/03_Constraint/image-20200517173833150.png)
+当前等式约束 $\mathcal{E}_k$，问题
+$$
+(\mathrm{EQ1})\left\{\begin{array}{ll}
+\min & \frac{1}{2} \mathbf{s}^{T} G \mathbf{s}+(G\mathbf{x}^{(k)}+\mathbf{c})^{T} \mathbf{s} \\
+\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{s}=b_{i}, i \in \mathcal{E}_k
+\end{array}\right.
+$$
+
+> 其中 $\mathbf{s}=\mathbf{x}^{(k+1)}-\mathbf{x}^{(k)}$，则 $Q(\mathbf{x}^{(k+1)})-Q(\mathbf{x}^{(k)})=Q(\mathbf{x}^{(k)}+\mathbf{s})-Q(\mathbf{x}^{(k)})$ 即为 (EQ1) 的目标函数
+
+求得 (EQ1) 的解 $\mathbf{s}^{(k)}$，及其相应的 Lagrange 乘子 $\lambda_i^{(k)},i\in \mathcal{E}_k$ 
+
+> 当 $\mathbf{s}^{(k)}=\mathbf{0}$ 时，(EQ1) 目标函数值为 $0$，故 $Q(\mathbf{x}^{(k)}+\mathbf{s}^{(k)})-Q(\mathbf{x}^{(k)})\le 0$，下降
+>
+> Lagrange 乘子满足
+> $$
+> G\mathbf{s}^{(k)}+G\mathbf{x}^{(k)}+\mathbf{c}={A^T}^{(k)}\lambda
+> $$
+
+（a) 若 $\mathbf{s}^{(k)}\neq \mathbf{0}$，$\mathbf{x}^{(k)}$ 不可能是原问题的 K-T 点
+
+> $\mathbf{s}^{(k)}\neq \mathbf{0}$ 表示目标函数可下降，且一定程度的下降满足约束
+
+(b) 若 $\mathbf{s}^{(k)}=\mathbf{0}$，则 $\mathbf{x}^{(k)}$ 是问题
+$$
+(\mathrm{EQ} 2)\left\{\begin{array}{ll}
+\min & \frac{1}{2} \mathbf{x}^{T} G \mathbf{x}+\mathbf{c}^{T} \mathbf{x} \\
+\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{x}=b_{i}, i \in \mathcal{E}_{k}
+\end{array}\right.
+$$
+的 K-T 点，如果 $\lambda_i^{(k)}\ge 0,i\in I(\mathbf{x}^{(k)})$，则 $\mathbf{x}^{(k)}$ 也是原问题的 K-T 点
+
+(c) 否则，由 $\lambda_{i_q}^{(k)}=\min_{i\in I(\mathbf{x}^{(k)})}\lambda_i^{(k)}<0$ 确定 $i_q$，那么
+$$
+\text { (EQ3) }\left\{\begin{array}{ll}
+\min & \frac{1}{2} \mathbf{s}^{T} G \mathbf{s}+\left(G \mathbf{x}^{(k)}+\mathbf{c}\right)^{T} \mathbf{s} \\
+\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{s}=0, i \in \hat{\mathcal{E}}=\mathcal{E}_{k} \backslash\left\{i_{q}\right\}
+\end{array}\right.
+$$
+的解 $\hat{\mathbf{s}}$ 是原问题在 $\mathbf{x}^{(k)}$ 的可行方向，即 $\mathbf{a}_{i_q}^T\hat{\mathbf{s}}\ge 0$ 
 
 ### 积极集方法
 
