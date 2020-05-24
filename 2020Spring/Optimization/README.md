@@ -8,9 +8,9 @@
 >   - 5204: 1(8,9,10)
 >   - 5204: 4(6,7)
 
-## 课程主页
+录像：[https://rec.ustc.edu.cn/share/f10df9a0-5936-11ea-b023-8943f0a456dd](https://rec.ustc.edu.cn/share/f10df9a0-5936-11ea-b023-8943f0a456dd) 
 
-
+密码：h53a
 
 ## 作业
 
@@ -18,5 +18,5 @@
 
 ## 笔记
 
-- [01. 导论.md](notes/01_Intro.md) 
+- [01. 导论](notes/01_Intro.md) 
 

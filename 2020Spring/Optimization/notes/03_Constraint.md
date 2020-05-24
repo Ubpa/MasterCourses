@@ -1,8 +1,8 @@
-# 约束优化
+# 3. 约束优化
 
 > [TOC]
 
-## 二次规划
+## 3.1 二次规划
 
 ### 问题
 
@@ -354,3 +354,30 @@ $$
 
 ![image-20200517173908246](assets/03_Constraint/image-20200517173908246.png)
 
+## 3.2 非线性约束最优化
+
+$$
+\begin{array}{ll}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & \mathbf{c}(\mathbf{x})=\mathbf{0}
+\end{array}
+$$
+
+其中 $\mathbf{c}(\mathbf{x})=\left(c_{1}(\mathbf{x}), \cdots, c_{m}(\mathbf{x})\right)^{T}$ 
+
+记 $A(\mathbf{x})=[\nabla \mathbf{c}(\mathbf{x})]^{T}=\left(\nabla c_{1}(\mathbf{x}), \cdots, \nabla c_{m}(\mathbf{x})\right)^{T}$ 
+
+$\mathbf{x}$ 是 K-T 点当且仅当存在 $\lambda\in \mathbb{R}^m$ 使得
+$$
+\nabla f(\mathbf{x})-A(\mathbf{x})^T\lambda = \mathbf{0}
+$$
+且 $\mathbf{x}$ 是可行点，即 $\mathbf{c}(\mathbf{x})=\mathbf{0}$ 
+
+联立方程组
+$$
+\left\{\begin{array}{l}
+\nabla f(\mathbf{x})-A(\mathbf{x})^{T} \lambda=\mathbf{0} \\
+-\mathbf{c}(\mathbf{x})=\mathbf{0}
+\end{array}\right.
+$$
+可用 
