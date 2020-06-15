@@ -12,7 +12,14 @@
 
 密码：h53a
 
+## 课程录像
+
+链接：https://rec.ustc.edu.cn/share/f10df9a0-5936-11ea-b023-8943f0a456dd
+密码：h53a
+
 ## 作业
+
+递交系统：http://www.smartchair.org/OPTMIZATION2020/
 
 
 
