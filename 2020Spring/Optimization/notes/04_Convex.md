@@ -556,7 +556,7 @@ $$
 
 > KKT 条件为
 >
-> - 可微：${\nabla f(x)}^\top+\nabla^2 f(x)\delta_{x_{\text{nt}}}+wA=0$ 
+> - 可微：${\nabla f(x)}+\nabla^2 f(x)\delta_{x_{\text{nt}}}+A^\top w=0$ 
 > - 等式约束：$A\delta_{x_{\text{nt}}}=0$（$Ax=b$）
 
 另外，我们也可以用 $x+\delta_{x_{\text{nt}}}$ 和 $w$ 替换原问题 KKT 条件中的 $x^*$ 和 $\nu^*$，并对目标函数微分进行二阶泰勒近似
