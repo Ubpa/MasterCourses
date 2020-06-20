@@ -705,7 +705,7 @@ A x^{*}=b, \quad f_{i}\left(x^{*}\right) & \leqslant 0, \quad i=1, \ldots, m \\
 \lambda_{i}^{*} f_{i}\left(x^{*}\right) &=0, \quad i=1, \ldots, m
 \end{aligned}
 $$
-**屏障法** 
+##### 04.2.2.3.1 屏障法
 
 用示性函数将不等式约束放入目标函数中
 $$
@@ -865,73 +865,121 @@ $$
 - 若 $\bar{v}^*>0$，则不可行
 - 若 $\bar{v}^*=0$，则非严格可行
 
-修改的 KKT 条件可表示为 $r_t(x,\lambda,\nu)=0$，其中
+##### 04.2.2.3.2 原-对偶内点法
+
+修改的 KKT 条件可表示为 $r_t(\mathbf{x},\lambda,\nu)=0$，其中
 $$
-r_{t}(x, \lambda, \nu)=\left[\begin{array}{c}
-\nabla f_{0}(x)+J[f(x)]^{\top} \lambda+A^{\top} \nu \\
--\operatorname{diag}(\lambda) f(x)-(1 / t) \boldsymbol{1} \\
-A x-b
+r_{t}(\mathbf{x}, \lambda, \nu)=\left[\begin{array}{c}
+\nabla f_{0}(\mathbf{x})+J[\mathbf{f}(\mathbf{x})]^{\top} \lambda+A^{\top} \nu \\
+-\operatorname{diag}(\lambda) \mathbf{f}(\mathbf{x})-(1 / t) \boldsymbol{1} \\
+A \mathbf{x}-b
 \end{array}\right]
 $$
 并且 $t>0$ 
 
-这类 $f$ 和 $J[f]$ 分别为
+这里 $\mathbf{f}$ 和 $J[\mathbf{f}]$ 分别为
 $$
-f(x)=\left[\begin{array}{c}
-f_{1}(x) \\
+\mathbf{f}(\mathbf{x})=\left[\begin{array}{c}
+f_{1}(\mathbf{x}) \\
 \vdots \\
-f_{m}(x)
-\end{array}\right], \quad J[f(x)]=\left[\begin{array}{c}
-\nabla f_{1}(x)^{\top} \\
+f_{m}(\mathbf{x})
+\end{array}\right], \quad J[\mathbf{f}(\mathbf{x})]=\left[\begin{array}{c}
+\nabla f_{1}(\mathbf{x})^{\top} \\
 \vdots \\
-\nabla f_{m}(x)^{\top}
+\nabla f_{m}(\mathbf{x})^{\top}
 \end{array}\right]
 $$
-第一块 $r_{\text{dual}}=\nabla f_{0}(x)+J[f(x)]^{\top} \lambda+A^{\top} \nu$ 称为==对偶残差== dual residual
+第一块 $r_{\text{dual}}=\nabla f_{0}(\mathbf{x})+J[\mathbf{f}(\mathbf{x})]^{\top} \lambda+A^{\top} \nu$ 称为==对偶残差== dual residual
 
-第三块 $r_{\text{pri}}=Ax-b$ 称为==原残差== primal residual
+第三块 $r_{\text{pri}}=A\mathbf{x}-b$ 称为==原残差== primal residual
 
-第二块 $r_{\text{cent}}=-\operatorname{diag}(\lambda) f(x)-(1 / t) 1$ 称为==中心残差== centrality residual
+第二块 $r_{\text{cent}}=-\operatorname{diag}(\lambda) \mathbf{f}(\mathbf{x})-(1 / t) 1$ 称为==中心残差== centrality residual
 
-记当前点为 $y=(x,\lambda,\nu)$，牛顿步为 $\delta_y=(\delta_x,\delta_\lambda,\delta_\nu)$，牛顿步用于解方程 $r_t(x,\lambda,\nu)=0$，表示为
+> - $r_{\text{dual}}$ : $n \times 1$ 
+> - $r_{\text{cent}}$ : $m\times 1$ 
+> - $r_{\text{pri}}$ : $m\times 1$ 
+
+记当前点为 $y=(\mathbf{x},\lambda,\nu)$，牛顿步为 $\delta_y=(\delta_{\mathbf{x}},\delta_\lambda,\delta_\nu)$，牛顿步用于解方程 $r_t(x,\lambda,\nu)=0$，表示为
 $$
 r_t(y+\delta_y)\approx r_t(y)+J[r_t(y)]\delta_y=0
 $$
 写成矩阵形式为
 $$
 \left[\begin{array}{ccc}
-\nabla^{2} f_{0}(x)+\sum_{i=1}^{m} \lambda_{i} \nabla^{2} f_{i}(x) & J[f(x)]^{\top} & A^{\top} \\
--\operatorname{diag}(\lambda) J[f(x)] & -\operatorname{diag}(f(x)) & 0 \\
+\nabla^{2} f_{0}(\mathbf{x})+\sum_{i=1}^{m} \lambda_{i} \nabla^{2} f_{i}(\mathbf{x}) & J[\mathbf{f}(\mathbf{x})]^{\top} & A^{\top} \\
+-\operatorname{diag}(\lambda) J[\mathbf{f}(\mathbf{x})] & -\operatorname{diag}(\mathbf{f}(\mathbf{x})) & 0 \\
 A & 0 & 0
-\end{array}\right]\left[\begin{array}{c}
-\delta_{x} \\
+\end{array}\right]
+\left[\begin{array}{c}
+\delta_{\mathbf{x}} \\
 \delta_{\lambda} \\
 \delta_{\nu}
-\end{array}\right]=-\left[\begin{array}{c}
+\end{array}\right]
+=
+-
+\left[\begin{array}{c}
 r_{\text {dual }} \\
 r_{\text {cent }} \\
 r_{\text {pri }}
 \end{array}\right]
 $$
-原-对偶搜索方向 primal-dual search direction $\delta_{y_{\text{pd}}}=(\delta_{x_{\text{pd}}},\delta_{\lambda_{\text{pd}}},\delta_{\nu_{\text{pd}}})$ 是上边的解
+==原-对偶搜索方向== primal-dual search direction $\delta_{y_{\text{pd}}}=(\delta_{x_{\text{pd}}},\delta_{\lambda_{\text{pd}}},\delta_{\nu_{\text{pd}}})$ 是上边的解
 
-原-对偶内点法迭代的 $x^{(k)},\lambda^{(k)},\nu^{(k)}$ 不要求是可行的，我们没法计算对偶间隙，但我们可以定义==代理对偶间隙== surrogate duality gap
+原-对偶内点法迭代的 $\mathbf{x}^{(k)},\lambda^{(k)},\nu^{(k)}$ 不要求是可行的，我们没法计算对偶间隙，但我们可以定义==代理对偶间隙== surrogate duality gap
 $$
-\hat{\eta}(x,\lambda)=-f(x)^\top\lambda
+\hat{\eta}(\mathbf{x},\lambda)=-\mathbf{f}(\mathbf{x})^\top\lambda
 $$
-其中 $f(x)<0$，$\lambda\ge 0$ 
+其中 $\mathbf{f}(\mathbf{x})<\mathbf{0}$，$\lambda\ge 0$ 
 
-当 $x,\lambda,\nu$ 可行时，代理对偶间隙就是对偶间隙，另外
+当 $\mathbf{x},\lambda,\nu$ 可行时，代理对偶间隙就是对偶间隙，另外
 $$
 t=\frac{m}{\hat{\eta}}
 $$
-原-对偶内点法——算法
+**原-对偶内点法——算法** 
 
-给定 $x$ 满足 $f_1(x),\dots,f_m(x)<0$，$\lambda>0$，$\gamma>1$，$\epsilon_{\text{feas}}>0$，$\epsilon>0$，重复
+给定 $\mathbf{x}$ 满足 $f_1(\mathbf{x}),\dots,f_m(\mathbf{x})<0$，$\lambda>0$，$\gamma>1$，$\epsilon_{\text{feas}}>0$，$\epsilon>0$ 
 
-- $t:=\gamma m/\hat{\eta}$ 
-- 计算原-对偶搜索方向 $\delta_{y_{\text{pd}}}$ 
-- 线搜索确定步长 $\alpha$ 并更新 $y:=y+\alpha\delta_{y_{\text{pd}}}$ 
+重复
 
-直到 $\|r_{\text{pri}}\|\le \epsilon_{\text{feas}}$，$\|r_{\text{dual}}\|\le \epsilon_{\text{feas}}$，$\hat{\eta}\le \epsilon$ 
+1. $t:=\gamma m/\hat{\eta}$ 
+2. 计算原-对偶搜索方向 $\delta_{y_{\text{pd}}}$ 
+3. 线搜索确定步长 $\alpha$ 并更新 $y:=y+\alpha\delta_{y_{\text{pd}}}$ 
+
+直到 $\|r_{\text{pri}}\|_2 \le \epsilon_{\text{feas}}$，$\|r_{\text{dual}}\|_2 \le \epsilon_{\text{feas}}$，$\hat{\eta}\le \epsilon$ 
+
+第三步的线搜索是标准的回溯线搜索
+
+对于一个步长 $\alpha$，令
+$$
+y^+=
+\left[\begin{array}{c}
+x^+\\
+\lambda^+\\
+\nu^+
+\end{array}\right]
+=
+\left[\begin{array}{c}
+x\\
+\lambda\\
+\nu
+\end{array}\right]
++
+\alpha
+\left[\begin{array}{c}
+\delta_{\mathbf{x}_{\text{pd}}} \\
+\delta_{\lambda_{\text{pd}}} \\
+\delta_{\nu_{\text{pd}}}
+\end{array}\right]
+$$
+令
+$$
+\alpha^{\max}=\sup\{\alpha \in [0,1]|\lambda+\alpha\delta_\lambda\ge 0\}=\min\{1,\min\{-\lambda_i/\delta_{\lambda_i}|\delta_{\lambda_i}<0\}\}
+$$
+为最大的正步长
+
+回溯线搜索起始时令 $\alpha = 0.99\alpha^{\max}$，并且对 $\alpha$ 乘上 $\beta\in (0,1)$ 直到 $\mathbf{f}(\mathbf{x}^+)<0$，然后继续对 $\alpha$ 乘以 $\beta$ 直到  
+$$
+\|r_{t}(\mathbf{x}^{+}, \lambda^{+}, \nu^{+})\|_{2} \leqslant(1-\tau \alpha)\|r_{t}(\mathbf{x}, \lambda, \nu)\|_{2}
+$$
+这里 $\tau$ 一般取 $0.01$ 到 $0.1$ 
 
