@@ -462,15 +462,15 @@ $$
 类似地，在第 $k$ 次迭代里求解子问题
 $$
 \begin{array}{ll}
-\min & \frac{1}{2} \mathbf{d}^{T} W_{k} \mathbf{d}+(\mathbf{g}^{(k)})^\top \mathbf{d} \\
-\text { s.t. } & c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{T} \mathbf{d}=0, i \in \mathcal{E} \\
-& c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{T} \mathbf{d} \geq 0, i \in \mathcal{I}
+\min & \frac{1}{2} \mathbf{d}^{\top} W_{k} \mathbf{d}+(\mathbf{g}^{(k)})^\top \mathbf{d} \\
+\text { s.t. } & c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{\top} \mathbf{d}=0, i \in \mathcal{E} \\
+& c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{\top} \mathbf{d} \geq 0, i \in \mathcal{I}
 \end{array}
 $$
 记解为 $\mathbf{d}^{(k)}$，相应 Lagrange 乘子向量为 $\bar{\lambda}^{(k)}$，故有
 $$
 \left\{\begin{array}{l}
-W_{k} \mathbf{d}^{(k)}+\mathbf{g}^{(k)}=A\left(\mathbf{x}^{(k)}\right)^{T} \bar{\lambda}^{(k)} \\
+W_{k} \mathbf{d}^{(k)}+\mathbf{g}^{(k)}=A\left(\mathbf{x}^{(k)}\right)^{\top} \bar{\lambda}^{(k)} \\
 \bar{\lambda}_{i}^{(k)} \geq 0, i \in \mathcal{I} \\
 \mathbf{c}\left(\mathbf{x}^{(k)}\right)+A\left(\mathbf{x}^{(k)}\right) \mathbf{d}^{(k)}=0
 \end{array}\right.
@@ -586,7 +586,7 @@ $$
 $$
 \begin{array}{c}
 \nabla_{\mathbf{x}} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)=\nabla_{\mathbf{x}} L\left(\mathbf{x}^{*}, \lambda^{*}\right)=\mathbf{0} \\
-\nabla_{\mathbf{x} \mathbf{x}}^{2} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)=\nabla_{\mathbf{x} \mathbf{x}}^{2} L\left(\mathbf{x}^{*}, \lambda^{*}\right)+\sigma A\left(\mathbf{x}^{*}\right) A\left(\mathbf{x}^{*}\right)^{T}
+\nabla_{\mathbf{x} \mathbf{x}}^{2} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)=\nabla_{\mathbf{x} \mathbf{x}}^{2} L\left(\mathbf{x}^{*}, \lambda^{*}\right)+\sigma A\left(\mathbf{x}^{*}\right) A\left(\mathbf{x}^{*}\right)^{\top}
 \end{array}
 $$
 设在 $\mathbf{x}^*$ 处满足**二阶充分条件**，即 $\forall \mathbf{d} \text{ s.t. } A(\mathbf{x}^*)^\top \mathbf{d}=\mathbf{0},\mathbf{d}\neq \mathbf{0}$，有
@@ -601,7 +601,7 @@ $$
 
 我们事先不知道最优乘子向量 $\lambda^*$，因此用乘子 $\lambda$ 替代，得到==增广 Lagrange 罚函数== 
 $$
-P(\mathbf{x}, \lambda, \sigma)=f(\mathbf{x})-\lambda^{T} \mathbf{c}(\mathbf{x})+\frac{\sigma}{2}\|\mathbf{c}(\mathbf{x})\|_{2}^{2}
+P(\mathbf{x}, \lambda, \sigma)=f(\mathbf{x})-\lambda^{\top} \mathbf{c}(\mathbf{x})+\frac{\sigma}{2}\|\mathbf{c}(\mathbf{x})\|_{2}^{2}
 $$
 一般策略是，先给定充分大 的 $\sigma$ 和乘子向量的初始估计 $\lambda$，然后再迭代过程中修正 $\lambda$ 力图使之趋向最优乘子  $\lambda^*$ 
 
@@ -651,7 +651,7 @@ $$
 KKT 条件为
 $$
 \begin{aligned}
-\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{T} \mathbf{y}-A_{l}(\mathbf{x})^{T} \mathbf{z} &=0 \\
+\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{\top} \mathbf{y}-A_{l}(\mathbf{x})^{\top} \mathbf{z} &=0 \\
 S \mathbf{z}-\mu \mathbf{1} &=0 \\
 \mathbf{c}_{E}(\mathbf{x}) &=0 \\
 \mathbf{c}_{l}(\mathbf{x})-\mathbf{s} &=0
@@ -662,7 +662,7 @@ $$
 使用牛顿法，可得
 $$
 \left(\begin{array}{cccc} 
-\nabla_{\mathbf{x} \mathbf{x}}^{2} L & -A_{E}(\mathbf{x})^{T} & -A_{I}(\mathbf{x})^{T} & 0 \\
+\nabla_{\mathbf{x} \mathbf{x}}^{2} L & -A_{E}(\mathbf{x})^{\top} & -A_{I}(\mathbf{x})^{\top} & 0 \\
 0 & Z & 0 & S \\
 A_{E}(\mathbf{x}) & 0 & 0 & 0 \\
 A_{I}(\mathbf{x}) & -I & 0 & 0 \\
@@ -678,7 +678,7 @@ A_{I}(\mathbf{x}) & -I & 0 & 0 \\
 =
 
 - \left(\begin{array}{c}
-\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{T} \mathbf{y}-A_{I}(\mathbf{x})^{T} \mathbf{z} \\
+\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{\top} \mathbf{y}-A_{I}(\mathbf{x})^{\top} \mathbf{z} \\
 S \mathbf{z}-\mu \mathbf{1} \\
 \mathbf{c}_{E}(\mathbf{x}) \\
 \mathbf{c}_{I}(\mathbf{x})-\mathbf{s}
