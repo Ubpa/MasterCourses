@@ -9,9 +9,9 @@
 在变量的线性等式或不等式限制下求二次函数的极小点问题
 $$
 \begin{array}{ll}
-\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{T} G \mathbf{x}+\mathbf{c}^{T} \mathbf{x} \\
-\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{x}=b_{i}, i \in \mathcal{E}=\left\{1, \cdots, m_{e}\right\} \\
-& \mathbf{a}_{i}^{T} \mathbf{x} \geq b_{i}, i \in \mathcal{I}=\left\{m_{e}+1, \cdots, m\right\}
+\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{\top} G \mathbf{x}+\mathbf{c}^{\top} \mathbf{x} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{x}=b_{i}, i \in \mathcal{E}=\left\{1, \cdots, m_{e}\right\} \\
+& \mathbf{a}_{i}^{\top} \mathbf{x} \geq b_{i}, i \in \mathcal{I}=\left\{m_{e}+1, \cdots, m\right\}
 \end{array}
 $$
 假设 $G$ 是对称阵，$\mathbf{a}_i(i\in\mathcal{E})$ 是线性无关的
@@ -29,7 +29,7 @@ $$
 
 $$
 \begin{array}{ll}
-\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{T} G \mathbf{x}+\mathbf{c}^{T} \mathbf{x} \\
+\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{\top} G \mathbf{x}+\mathbf{c}^{\top} \mathbf{x} \\
 \text { s.t. } & A \mathbf{x}=\mathbf{b}
 \end{array}
 $$
@@ -67,13 +67,13 @@ $$
 
 代入目标函数得到无约束问题
 $$
-\min _{\mathbf{x}_{N} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{N}^{T} \hat{G}_{N} \mathbf{x}_{N}+\hat{\mathbf{c}}_{N}^{T} \mathbf{x}_{N}
+\min _{\mathbf{x}_{N} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{N}^{\top} \hat{G}_{N} \mathbf{x}_{N}+\hat{\mathbf{c}}_{N}^{\top} \mathbf{x}_{N}
 $$
 其中
 $$
 \begin{array}{c}
-\hat{G}_{N}=G_{N N}-G_{N B} A_{B}^{-1} A_{N}-A_{N}^{T} A_{B}^{-T} G_{B N}+A_{N}^{T} A_{B}^{-T} G_{B B} A_{B}^{-1} A_{N} \\
-\hat{\mathbf{c}}_{N}=\mathbf{c}_{N}-A_{N}^{T} A_{B}^{-T} \mathbf{c}_{B}+G_{N B} A_{B}^{-1} \mathbf{b}-A_{N}^{T} A_{B}^{-T} G_{B B} A_{B}^{-1} \mathbf{b}
+\hat{G}_{N}=G_{N N}-G_{N B} A_{B}^{-1} A_{N}-A_{N}^{\top} A_{B}^{-T} G_{B N}+A_{N}^{\top} A_{B}^{-T} G_{B B} A_{B}^{-1} A_{N} \\
+\hat{\mathbf{c}}_{N}=\mathbf{c}_{N}-A_{N}^{\top} A_{B}^{-T} \mathbf{c}_{B}+G_{N B} A_{B}^{-1} \mathbf{b}-A_{N}^{\top} A_{B}^{-T} G_{B B} A_{B}^{-1} \mathbf{b}
 \end{array}
 $$
 以及对应的分块形式为
@@ -105,14 +105,14 @@ A_{B}^{-1} A_{N} \\
 $$
 Lagrange 乘子为
 $$
-G \mathbf{x}^{*}+\mathbf{c}=A^{T} \lambda^{*} \Longrightarrow \lambda^{*}=A_{B}^{-T}\left(G_{B B} \mathbf{x}_{B}^{*}+G_{B N} \mathbf{x}_{N}^{*}+\mathbf{c}_{B}\right)
+G \mathbf{x}^{*}+\mathbf{c}=A^{\top} \lambda^{*} \Longrightarrow \lambda^{*}=A_{B}^{-T}\left(G_{B B} \mathbf{x}_{B}^{*}+G_{B N} \mathbf{x}_{N}^{*}+\mathbf{c}_{B}\right)
 $$
 
 > 在后边的二次规划算法中，需要用到 $\lambda$ 
 >
 > KT 条件为
 > $$
-> \nabla_{\mathbf{x}}L(\mathbf{x},\lambda)=\nabla f(\mathbf{x})-\sum_i \lambda_i \nabla_{\mathbf{x}}c_i(\mathbf{x})=G\mathbf{x}+\mathbf{c}-A^T \lambda
+> \nabla_{\mathbf{x}}L(\mathbf{x},\lambda)=\nabla f(\mathbf{x})-\sum_i \lambda_i \nabla_{\mathbf{x}}c_i(\mathbf{x})=G\mathbf{x}+\mathbf{c}-A^{\top} \lambda
 > $$
 
 如果 $\hat{G}_N$ 半正定，当 $(I-\hat{G}_N \hat{G}_N^+)\hat{\mathbf{c}}_N=\mathbf{0}$ 时，解为
@@ -131,7 +131,7 @@ $$
 >
 > ---
 >
-> 当 $\hat{G}_N$ 半正定时，$\hat{G}_N$ 有 $0$ 特征值，将 $0$ 特征值对应的特征向量代入，若 $\hat{\mathbf{c}}_{N}^{T} \mathbf{x}_{N}$ 不为 $0$，则问题可负无穷，无解。
+> 当 $\hat{G}_N$ 半正定时，$\hat{G}_N$ 有 $0$ 特征值，将 $0$ 特征值对应的特征向量代入，若 $\hat{\mathbf{c}}_{N}^{\top} \mathbf{x}_{N}$ 不为 $0$，则问题可负无穷，无解。
 >
 > 而 $0$ 特征值对应的特征向量有形式 $\left(I-\hat{G}_{N}^{+} \hat{G}_{N}\right) \tilde{\mathbf{y}}$，故要求 $(I-\hat{G}_N \hat{G}_N^+)\hat{\mathbf{c}}_N=\mathbf{0}$ 
 
@@ -171,26 +171,26 @@ $$
 
 代入目标函数，有
 $$
-\min _{\mathbf{x}_{\mathbf{Z}} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{Z}^{T}\left(Z^{T} G Z\right) \mathbf{x}_{Z}+\left[Z^{T} G Y(A Y)^{-1} \mathbf{b}+Z^{T} \mathbf{c}\right]^{T} \mathbf{x}_{Z}
+\min _{\mathbf{x}_{\mathbf{Z}} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{Z}^{\top}\left(Z^{\top} G Z\right) \mathbf{x}_{Z}+\left[Z^{\top} G Y(A Y)^{-1} \mathbf{b}+Z^{\top} \mathbf{c}\right]^{\top} \mathbf{x}_{Z}
 $$
-假设 $Z^TGZ$ 正定，有
+假设 $Z^{\top}GZ$ 正定，有
 $$
-\mathbf{x}_{Z}^{*}=-\left(Z^{T} G Z\right)^{-1} Z^{T}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
+\mathbf{x}_{Z}^{*}=-\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
 $$
 从而
 $$
-\mathbf{x}^{*}=Y(A Y)^{-1}-Z\left(Z^{T} G Z\right)^{-1} Z^{T}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
+\mathbf{x}^{*}=Y(A Y)^{-1}-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
 $$
 相应 Lagrange 乘子为
 $$
-\lambda^{*}=(A Y)^{-T} Y^{T}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
+\lambda^{*}=(A Y)^{-T} Y^{\top}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
 $$
 
 > $Y$ 是任意取的，如果取得 $AY = I$，则问题将变得简单许多
 > $$
 > \begin{align}
-> \mathbf{x}^{*}&=Y-Z\left(Z^{T} G Z\right)^{-1} Z^{T}\left[G Y \mathbf{b}+\mathbf{c}\right]\\
-> \lambda^{*}&=Y^{T}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
+> \mathbf{x}^{*}&=Y-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y \mathbf{b}+\mathbf{c}\right]\\
+> \lambda^{*}&=Y^{\top}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
 > \end{align}
 > $$
 
@@ -199,14 +199,14 @@ $$
 (K-T) 点为如下方程组的解
 $$
 \left\{\begin{array}{l}
-G \mathbf{x}+\mathbf{c}=A^{T} \lambda \\
+G \mathbf{x}+\mathbf{c}=A^{\top} \lambda \\
 A \mathbf{x}=\mathbf{b}
 \end{array}\right.
 $$
 写成矩阵形式
 $$
 \left(\begin{array}{cc}
-G & -A^{T} \\
+G & -A^{\top} \\
 -A & 0
 \end{array}\right)\left(\begin{array}{l}
 \mathbf{x} \\
@@ -217,58 +217,58 @@ G & -A^{T} \\
 \end{array}\right)
 $$
 假设 $\left(\begin{array}{cc}
-G & -A^{T} \\
+G & -A^{\top} \\
 -A & 0
 \end{array}\right)$ 可逆，则存在 $U \in \mathbb{R}^{n \times n}, V \in \mathbb{R}^{m \times m}, W \in \mathbb{R}^{m \times n}$ 使得
 $$
 \left(\begin{array}{cc}
-G & -A^{T} \\
+G & -A^{\top} \\
 -A & 0
 \end{array}\right)^{-1}=\left(\begin{array}{cc}
-U & W^{T} \\
+U & W^{\top} \\
 W & V
 \end{array}\right)
 $$
 则，唯一解为
 $$
 \left\{\begin{array}{l}
-\mathbf{x}^{*}=-U \mathbf{c}-W^{T} \mathbf{b} \\
+\mathbf{x}^{*}=-U \mathbf{c}-W^{\top} \mathbf{b} \\
 \lambda^{*}=-W \mathbf{c}-V \mathbf{b}
 \end{array}\right.
 $$
 若 $G$ 可逆，$A$ 行满秩，则 $AG^{-1}A$ 可逆，有
 $$
 \left\{\begin{array}{l}
-U=G^{-1}-G^{-1} A^{T}\left(A G^{-1} A^{T}\right)^{-1} A G^{-1}, \\
-V=-\left(A G^{-1} A^{T}\right)^{-1} \\
-W=-\left(A G^{-1} A^{T}\right)^{-1} A G^{-1}
+U=G^{-1}-G^{-1} A^{\top}\left(A G^{-1} A^{\top}\right)^{-1} A G^{-1}, \\
+V=-\left(A G^{-1} A^{\top}\right)^{-1} \\
+W=-\left(A G^{-1} A^{\top}\right)^{-1} A G^{-1}
 \end{array}\right.
 $$
 求解公式
 $$
 \left\{\begin{array}{l}
-\mathbf{x}^{*}=-G^{-1} \mathbf{c}+G^{-1} A^{T}\left(A G^{-1} A^{T}\right)^{-1}\left(A G^{-1} \mathbf{c}+\mathbf{b}\right) \\
-\lambda^{*}=\left(A G^{-1} A^{T}\right)^{-1}\left(A G^{-1} \mathbf{c}+\mathbf{b}\right)
+\mathbf{x}^{*}=-G^{-1} \mathbf{c}+G^{-1} A^{\top}\left(A G^{-1} A^{\top}\right)^{-1}\left(A G^{-1} \mathbf{c}+\mathbf{b}\right) \\
+\lambda^{*}=\left(A G^{-1} A^{\top}\right)^{-1}\left(A G^{-1} \mathbf{c}+\mathbf{b}\right)
 \end{array}\right.
 $$
-若取 $Y,Z$ 满足 $A Y=I_{m \times m}, A Z=0$，另若 $Z^TGZ$ 可逆，则 $\left(\begin{array}{cc}
-G & -A^{T} \\
+若取 $Y,Z$ 满足 $A Y=I_{m \times m}, A Z=0$，另若 $Z^{\top}GZ$ 可逆，则 $\left(\begin{array}{cc}
+G & -A^{\top} \\
 -A & 0
 \end{array}\right)$ 可逆，有
 $$
 \left\{\begin{array}{l}
-U=Z\left(Z^{T} G Z\right)^{-1} Z^{T} \\
-V=-Y^{T} G P^{T} Y \\
-W=-Y^{T} P
+U=Z\left(Z^{\top} G Z\right)^{-1} Z^{\top} \\
+V=-Y^{\top} G P^{\top} Y \\
+W=-Y^{\top} P
 \end{array}\right.
 $$
-其中 $P=I-GU=I-GZ\left(Z^{T} G Z\right)^{-1} Z^{T}$ 
+其中 $P=I-GU=I-GZ\left(Z^{\top} G Z\right)^{-1} Z^{\top}$ 
 
 如何取 $Y,Z$ 满足 $A Y=I_{m \times m}, A Z=0$？
 
-对 $A^T$ 进行 QR 分解
+对 $A^{\top}$ 进行 QR 分解
 $$
-A^{T}=Q\left(\begin{array}{l}
+A^{\top}=Q\left(\begin{array}{l}
 R \\
 0
 \end{array}\right)=\left(Q_{1}, Q_{2}\right)\left(\begin{array}{l}
@@ -282,14 +282,14 @@ $$
 
 即
 $$
-A=\left(R^{T}, 0\right)\left(\begin{array}{c}
-Q_{1}^{T} \\
-Q_{2}^{T}
+A=\left(R^{\top}, 0\right)\left(\begin{array}{c}
+Q_{1}^{\top} \\
+Q_{2}^{\top}
 \end{array}\right)
 $$
 于是令 $Y=Q_1R^{-T}$，$Z=Q_2$，有
 $$
-A Y=R^{T} Q_{1}^{T} Q_{1} R^{-T}=I_{m \times m}, \quad A Z=R^{T} Q_{1}^{T} Q_{2}=0_{m \times(n-m)}
+A Y=R^{\top} Q_{1}^{\top} Q_{1} R^{-T}=I_{m \times m}, \quad A Z=R^{\top} Q_{1}^{\top} Q_{2}=0_{m \times(n-m)}
 $$
 
 ### 积极集基本定理
@@ -297,8 +297,8 @@ $$
 设 $\mathbf{x}^*$ 是原问题的局部极小点，则 $\mathbf{x}^*$ 也必是等式约束问题
 $$
 (\mathrm{EQ})\left\{\begin{array}{ll}
-\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{T} G \mathbf{x}+\mathbf{c}^{T} \mathbf{x} \\
-\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{x}=b_{i}, i \in \mathcal{E} \cup \mathcal{I}_e\left(\mathbf{x}^{*}\right)
+\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{\top} G \mathbf{x}+\mathbf{c}^{\top} \mathbf{x} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{x}=b_{i}, i \in \mathcal{E} \cup \mathcal{I}_e\left(\mathbf{x}^{*}\right)
 \end{array}\right.
 $$
 的局部极小点。
@@ -312,8 +312,8 @@ $$
 当前等式约束 $\mathcal{E}_k$，问题
 $$
 (\mathrm{EQ1})\left\{\begin{array}{ll}
-\min & \frac{1}{2} \mathbf{s}^{T} G \mathbf{s}+(G\mathbf{x}^{(k)}+\mathbf{c})^{T} \mathbf{s} \\
-\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{s}=b_{i}, i \in \mathcal{E}_k
+\min & \frac{1}{2} \mathbf{s}^{\top} G \mathbf{s}+(G\mathbf{x}^{(k)}+\mathbf{c})^{\top} \mathbf{s} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{s}=b_{i}, i \in \mathcal{E}_k
 \end{array}\right.
 $$
 
@@ -325,7 +325,7 @@ $$
 >
 > Lagrange 乘子满足
 > $$
-> G\mathbf{s}^{(k)}+G\mathbf{x}^{(k)}+\mathbf{c}={A^T}^{(k)}\lambda
+> G\mathbf{s}^{(k)}+G\mathbf{x}^{(k)}+\mathbf{c}={A^{\top}}^{(k)}\lambda
 > $$
 
 （a) 若 $\mathbf{s}^{(k)}\neq \mathbf{0}$，$\mathbf{x}^{(k)}$ 不可能是原问题的 K-T 点
@@ -335,8 +335,8 @@ $$
 (b) 若 $\mathbf{s}^{(k)}=\mathbf{0}$，则 $\mathbf{x}^{(k)}$ 是问题
 $$
 (\mathrm{EQ} 2)\left\{\begin{array}{ll}
-\min & \frac{1}{2} \mathbf{x}^{T} G \mathbf{x}+\mathbf{c}^{T} \mathbf{x} \\
-\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{x}=b_{i}, i \in \mathcal{E}_{k}
+\min & \frac{1}{2} \mathbf{x}^{\top} G \mathbf{x}+\mathbf{c}^{\top} \mathbf{x} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{x}=b_{i}, i \in \mathcal{E}_{k}
 \end{array}\right.
 $$
 的 K-T 点，如果 $\lambda_i^{(k)}\ge 0,i\in I(\mathbf{x}^{(k)})$，则 $\mathbf{x}^{(k)}$ 也是原问题的 K-T 点
@@ -344,17 +344,19 @@ $$
 (c) 否则，由 $\lambda_{i_q}^{(k)}=\min_{i\in I(\mathbf{x}^{(k)})}\lambda_i^{(k)}<0$ 确定 $i_q$，那么
 $$
 \text { (EQ3) }\left\{\begin{array}{ll}
-\min & \frac{1}{2} \mathbf{s}^{T} G \mathbf{s}+\left(G \mathbf{x}^{(k)}+\mathbf{c}\right)^{T} \mathbf{s} \\
-\text { s.t. } & \mathbf{a}_{i}^{T} \mathbf{s}=0, i \in \hat{\mathcal{E}}=\mathcal{E}_{k} \backslash\left\{i_{q}\right\}
+\min & \frac{1}{2} \mathbf{s}^{\top} G \mathbf{s}+\left(G \mathbf{x}^{(k)}+\mathbf{c}\right)^{\top} \mathbf{s} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{s}=0, i \in \hat{\mathcal{E}}=\mathcal{E}_{k} \backslash\left\{i_{q}\right\}
 \end{array}\right.
 $$
-的解 $\hat{\mathbf{s}}$ 是原问题在 $\mathbf{x}^{(k)}$ 的可行方向，即 $\mathbf{a}_{i_q}^T\hat{\mathbf{s}}\ge 0$ 
+的解 $\hat{\mathbf{s}}$ 是原问题在 $\mathbf{x}^{(k)}$ 的可行方向，即 $\mathbf{a}_{i_q}^{\top}\hat{\mathbf{s}}\ge 0$ 
 
 ### 积极集方法
 
 ![image-20200517173908246](assets/03_Constraint/image-20200517173908246.png)
 
 ## 3.2 非线性约束最优化
+
+### 3.2.1 等式约束
 
 $$
 \begin{array}{ll}
@@ -363,21 +365,345 @@ $$
 \end{array}
 $$
 
-其中 $\mathbf{c}(\mathbf{x})=\left(c_{1}(\mathbf{x}), \cdots, c_{m}(\mathbf{x})\right)^{T}$ 
+其中 $\mathbf{x}\in \mathbb{R}^n$， $\mathbf{c}(\mathbf{x})=\left(c_{1}(\mathbf{x}), \cdots, c_{m}(\mathbf{x})\right)^{\top}$ 
 
-记 $A(\mathbf{x})=[\nabla \mathbf{c}(\mathbf{x})]^{T}=\left(\nabla c_{1}(\mathbf{x}), \cdots, \nabla c_{m}(\mathbf{x})\right)^{T}$ 
+记 $A(\mathbf{x})=[\nabla \mathbf{c}(\mathbf{x})]^{\top}=\left(\nabla c_{1}(\mathbf{x}), \cdots, \nabla c_{m}(\mathbf{x})\right)^{\top}$ 
+
+> $A(\mathbf{x})$ 是 $m\times n $ 的函数矩阵
 
 $\mathbf{x}$ 是 K-T 点当且仅当存在 $\lambda\in \mathbb{R}^m$ 使得
 $$
-\nabla f(\mathbf{x})-A(\mathbf{x})^T\lambda = \mathbf{0}
+\nabla f(\mathbf{x})-A(\mathbf{x})^\top\lambda = \mathbf{0}
 $$
 且 $\mathbf{x}$ 是可行点，即 $\mathbf{c}(\mathbf{x})=\mathbf{0}$ 
 
 联立方程组
 $$
 \left\{\begin{array}{l}
-\nabla f(\mathbf{x})-A(\mathbf{x})^{T} \lambda=\mathbf{0} \\
+\nabla f(\mathbf{x})-A(\mathbf{x})^{\top} \lambda=\mathbf{0} \\
 -\mathbf{c}(\mathbf{x})=\mathbf{0}
 \end{array}\right.
 $$
-可用 
+可用 Newton-Raphson 迭代法求解
+
+记 $\mathbf{x}$ 和 $\lambda$ 的计算增量分别为 $\delta_{\mathbf{x}}$ 和 $\delta_\lambda$，则 Newton-Raphson 迭代满足
+$$
+\left(\begin{array}{cc}
+W(\mathbf{x}, \lambda) & -A(\mathbf{x})^{\top} \\
+-A(\mathbf{x}) & 0
+\end{array}\right)\left(\begin{array}{c}
+\delta_{\mathbf{x}} \\
+\delta_{\lambda}
+\end{array}\right)=-\left(\begin{array}{c}
+\nabla f(\mathbf{x})-A(\mathbf{x})^{\top} \lambda \\
+-\mathbf{c}(\mathbf{x})
+\end{array}\right)
+$$
+
+其中 $W(\mathbf{x}, \lambda)=\nabla^{2} f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i} \nabla^{2} c_{i}(\mathbf{x})$ 
+
+上述方法称为 ==Lagrange-Newton 迭代法==，实质上是用 Newton-Raphson 迭代求 Lagrange 函数 $L(\mathbf{x},\lambda)$ 的稳定点
+
+> Newton-Raphson 迭代就是牛顿法（$x^{(k+1)}=x^{(k)}-\frac{f(x^{(k)})}{f^\prime(x^{(k)})}$）
+
+定义价值函数
+$$
+\psi(\mathbf{x},\lambda)=\|\nabla f(\mathbf{x})-A(\mathbf{x})^\top \lambda\|^2 + \|c(\mathbf{x})\|^2
+$$
+$\psi(\mathbf{x},\lambda)$ 是关于 Lagrange-Newton 法的下降函数，即满足
+$$
+\nabla \psi(\mathbf{x},\lambda)^\top \left(\begin{array}{c} \delta _{\mathbf{x}}\\ \delta_\lambda \end{array}\right) = -2\psi(\mathbf{x},\lambda)\le 0
+$$
+![image-20200620184622215](assets/03_Constraint/image-20200620184622215.png)
+
+![image-20200620184647957](assets/03_Constraint/image-20200620184647957.png)
+
+Lagrange-Newton 法的一大重要贡献是，在其基础上发展出了==逐步二次规范方法== Sequential Quadratic Programming Methods
+
+Newton-Raphson 迭代可写成
+$$
+\left\{\begin{array}{l}
+W(\mathbf{x}, \lambda) \delta_{\mathbf{x}}+\nabla f(\mathbf{x})=A(\mathbf{x})^{\top}\left(\lambda+\delta_{\lambda}\right) \\
+\mathbf{c}(\mathbf{x})+A(\mathbf{x}) \delta_{\mathbf{x}}=\mathbf{0}
+\end{array}\right.
+$$
+$\delta_{\mathbf{x}^{(k)}}$ 即为下列二次规划问题
+$$
+\begin{array}{ll}
+\min & \frac{1}{2} \mathbf{d}^{\top} W\left(\mathbf{x}^{(k)}, \lambda^{(k)}\right) \mathbf{d}+\nabla f\left(\mathbf{x}^{(k)}\right)^{\top} \mathbf{d} \\
+\text { s.t. } & \mathbf{c}\left(\mathbf{x}^{(k)}\right)+A\left(\mathbf{x}^{(k)}\right) \mathbf{d}=0
+\end{array}
+$$
+的 K-T 点
+
+Lagrange-Newton 法可理解为逐步求解上述等式约束二次规划的方法
+
+设 $\mathbf{d}^{(k)}$ 是二次规划问题的最优解，那么可迭代更新
+$$
+\mathbf{x}^{(k+1)}=\mathbf{x}^{(k)}+\alpha_k\mathbf{d}^{(k)}
+$$
+设 $\bar{\lambda}^{(k)}$ 是二次规划问题的 Lagrange 乘子向量，那么
+$$
+\lambda^{(k+1)}=\lambda^{(k)} + \alpha_k (\bar{\lambda}^{(k)}-\lambda^{({k})})
+$$
+
+### 3.2.2 一般
+
+$$
+\begin{array}{ll}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & c_{i}(\mathbf{x})=0, i \in \mathcal{E}=\left\{1, \cdots, m_{e}\right\} \\
+& c_{i}(\mathbf{x}) \geq 0, i \in \mathcal{I}=\left\{m_{e}+1, \cdots, m\right\}
+\end{array}
+$$
+
+#### 3.2.2.1 逐步二次规划法
+
+类似地，在第 $k$ 次迭代里求解子问题
+$$
+\begin{array}{ll}
+\min & \frac{1}{2} \mathbf{d}^{T} W_{k} \mathbf{d}+(\mathbf{g}^{(k)})^\top \mathbf{d} \\
+\text { s.t. } & c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{T} \mathbf{d}=0, i \in \mathcal{E} \\
+& c_{i}\left(\mathbf{x}^{(k)}\right)+\mathbf{a}_{i}\left(\mathbf{x}^{(k)}\right)^{T} \mathbf{d} \geq 0, i \in \mathcal{I}
+\end{array}
+$$
+记解为 $\mathbf{d}^{(k)}$，相应 Lagrange 乘子向量为 $\bar{\lambda}^{(k)}$，故有
+$$
+\left\{\begin{array}{l}
+W_{k} \mathbf{d}^{(k)}+\mathbf{g}^{(k)}=A\left(\mathbf{x}^{(k)}\right)^{T} \bar{\lambda}^{(k)} \\
+\bar{\lambda}_{i}^{(k)} \geq 0, i \in \mathcal{I} \\
+\mathbf{c}\left(\mathbf{x}^{(k)}\right)+A\left(\mathbf{x}^{(k)}\right) \mathbf{d}^{(k)}=0
+\end{array}\right.
+$$
+Hann 逐步二次规划方法
+
+![image-20200620195730598](assets/03_Constraint/image-20200620195730598.png)
+
+![image-20200620195745839](assets/03_Constraint/image-20200620195745839.png)
+
+#### 3.2.2.2 罚函数法
+
+==罚函数==是指利用目标函数 $f(\mathbf{x})$ 和约束方程 $\mathbf{c}(\mathbf{x})$ 所构造的具有罚性质的函数
+$$
+P(\mathbf{x})=P(f(\mathbf{x}),\mathbf{c}(\mathbf{x}))
+$$
+所谓“==罚性质==”，即要求对问题的可行点 $\mathbf{x}\in\mathcal{S}$ 均有 $P(\mathbf{x})=f(\mathbf{x})$，而当约束条件破坏时有 $P(\mathbf{x})>f(\mathbf{x})$ 
+
+为了描述约束条件被破坏的程度，定义 $\mathbf{c}(\mathbf{x})_-$ 如下
+$$
+\left\{\begin{array}{ll}
+c_{i}(\mathbf{x})_{-}=c_{i}(\mathbf{x}), & i \in \mathcal{E} \\
+c_{i}(\mathbf{x})_{-}=\min \left\{0, c_{i}(\mathbf{x})\right\}, & i \in \mathcal{I}
+\end{array}\right.
+$$
+罚函数一般可取为目标函数与“==罚项==”之和，即
+$$
+P(\mathbf{x})=f(\mathbf{x})+\phi(\mathbf{c}(\mathbf{x})_-)
+$$
+罚项 $\phi(\mathbf{c}(\mathbf{x})_-)$ 满足
+$$
+\phi(\mathbf{0})=0, \lim_\limits{\|\mathbf{c}\|\to\infty}=\phi(\mathbf{c})=+\infty
+$$
+
+> 如 Courant 罚函数
+> $$
+> P_\sigma(\mathbf{x}) = f(\mathbf{x})+\sigma\|\mathbf{c}(\mathbf{x})_-\|_2^2
+> $$
+> 其中 $\sigma >0$ 是罚因子
+
+考虑简单罚函数
+$$
+P_\sigma(\mathbf{x}) = f(\mathbf{x})+\sigma\|\mathbf{c}(\mathbf{x})_-\|_2^2
+$$
+设 $\mathbf{x}(\sigma)$ 是无约束问题 $\min_\limits{\mathbf{x}} P_\sigma(\mathbf{x})$ 的最优解，则有如下引理
+
+引理：若 $\mathbf{x}(\sigma)$ 同时是原问题的可行点，则 $\mathbf{x}(\sigma)$ 也是原问题的最优解
+
+![image-20200620201013849](assets/03_Constraint/image-20200620201013849.png)
+
+易得如下三个引理
+
+- 设 $\sigma_{k+1}>\sigma_k>0$，则有 $P_{\sigma_k}(\mathbf{x}(\sigma_k))\le P_{\sigma_{k+1}}(\mathbf{x}(\sigma_{k+1}))$，$\|\mathbf{c}(\mathbf{x}(\sigma_k))_-\|\ge \|\mathbf{c}(\mathbf{x}(\sigma_{k+1}))_-\|$，$f(\mathbf{x}(\sigma_k))\le f(\mathbf{x}(\sigma_{k+1}))$ 
+- 设 $\bar{\mathbf{x}}$ 是原问题的最优解，则 $\forall \sigma_k>0$，有 $f(\bar{\mathbf{x}})\ge P_{\sigma_k}(\mathbf{x}(\sigma_k))\ge f(\mathbf{x}(\sigma_k))$ 
+- 令 $\delta =\|\mathbf{c}(\mathbf{x}(\sigma))_-\|$，则 $\mathbf{x}(\sigma)$ 也是约束问题 $\begin{array}{l}\min & f(\mathbf{x})\\\text{s.t.}&\|\mathbf{c}(\mathbf{x})_-\|\le \delta \end{array}$ 的最优解
+
+**罚函数法收敛定理 1** 
+
+设罚函数法中的 $\epsilon$ 满足
+$$
+\epsilon > \min_{\mathbf{x}}\|\mathbf{c}(\mathbf{x})_-\|
+$$
+则算法必有限终止
+
+> 当问题有可行解时，$\min_{\mathbf{x}}\|\mathbf{c}(\mathbf{x})_-\|=0$ 
+
+定理表明，如果原问题存在可行点，则 $\forall \epsilon > 0$，算法将有限终止于问题
+$$
+\begin{array}{l}
+\min & f(\mathbf{x})\\
+\text{s.t.}&\|\mathbf{c}(\mathbf{x})_-\|\le \delta
+\end{array}
+$$
+的解，且 $\delta \le \epsilon$ 
+
+**罚函数法收敛定理 2** 
+
+如果算法不有限终止，则必有 $\min_\limits{\mathbf{x}}\|\mathbf{c}(\mathbf{x})_-\|\ge \epsilon$，且 $\lim_\limits{k\to\infty}\|\mathbf{c}(\mathbf{x}(\sigma_k))_-\|=\min_\limits{\mathbf{x}}\|\mathbf{c}(\mathbf{x})_-\|$，此时 $\{\mathbf{x}(\sigma_k)\}$ 的任何聚点都是问题
+$$
+\begin{array}{ll}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & \left\|\mathbf{c}(\mathbf{x})_{-}\right\|=\min _\limits{\mathbf{y} \in \mathbb{R}^{n}}\left\|\mathbf{c}(\mathbf{y})_{-}\right\|
+\end{array}
+$$
+的解
+
+#### 3.2.2.3 乘子罚函数法
+
+> 为了叙述简单，仅考虑等式约束问题
+
+$$
+\begin{array}{ll}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & \mathbf{c}(\mathbf{x})=\mathbf{0}
+\end{array}
+$$
+
+其中 $\mathbf{c}(\mathbf{x})=(c_1(\mathbf{x}),\dots,c_{m_e}(\mathbf{x}))^\top$ 
+
+设 $\mathbf{x}^*$ 是最优解，且 $\lambda^*$ 是相应的 Lagrange 乘子，由 Kuhn-Tucher 定理知，$\mathbf{x}^*$ 必是 Lagrange 函数
+$$
+L(\mathbf{x},\lambda^*)=f(\mathbf{x})-(\lambda^*)^\top \mathbf{c}(\mathbf{x})
+$$
+的稳定点
+
+考虑==乘子罚函数==（也称==增广 Lagrange 函数==）
+$$
+P(\mathbf{x}, \lambda, \sigma)=L(\mathbf{x}, \lambda)+\frac{\sigma}{2}\|\mathbf{c}(\mathbf{x})\|_{2}^{2}
+$$
+由于增广 Lagrange 函数的性态，只要取足够大的罚因子 $\sigma$ 而不必趋向无穷大，就可通过极小化 $P(\mathbf{x},\lambda,\sigma)$ 求得原问题的最优解
+
+设 $A(\mathbf{x})=(\nabla \mathbf{c}(\mathbf{x}))^\top$，由于 $\mathbf{c}(\mathbf{x}^*)=\mathbf{0}$，有
+$$
+\begin{array}{c}
+\nabla_{\mathbf{x}} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)=\nabla_{\mathbf{x}} L\left(\mathbf{x}^{*}, \lambda^{*}\right)=\mathbf{0} \\
+\nabla_{\mathbf{x} \mathbf{x}}^{2} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)=\nabla_{\mathbf{x} \mathbf{x}}^{2} L\left(\mathbf{x}^{*}, \lambda^{*}\right)+\sigma A\left(\mathbf{x}^{*}\right) A\left(\mathbf{x}^{*}\right)^{T}
+\end{array}
+$$
+设在 $\mathbf{x}^*$ 处满足**二阶充分条件**，即 $\forall \mathbf{d} \text{ s.t. } A(\mathbf{x}^*)^\top \mathbf{d}=\mathbf{0},\mathbf{d}\neq \mathbf{0}$，有
+$$
+\mathbf{d}^\top\nabla_{\mathbf{x} \mathbf{x}}^{2} L(\mathbf{x}^*,\lambda^*)\mathbf{d}>0
+$$
+则对于充分大的 $\sigma$，可证 $\nabla_{\mathbf{x} \mathbf{x}}^{2} P\left(\mathbf{x}^{*}, \lambda^{*}, \sigma\right)$ 是正定阵
+
+![image-20200620204402750](assets/03_Constraint/image-20200620204402750.png)
+
+![image-20200620204410734](assets/03_Constraint/image-20200620204410734.png)
+
+我们事先不知道最优乘子向量 $\lambda^*$，因此用乘子 $\lambda$ 替代，得到==增广 Lagrange 罚函数== 
+$$
+P(\mathbf{x}, \lambda, \sigma)=f(\mathbf{x})-\lambda^{T} \mathbf{c}(\mathbf{x})+\frac{\sigma}{2}\|\mathbf{c}(\mathbf{x})\|_{2}^{2}
+$$
+一般策略是，先给定充分大 的 $\sigma$ 和乘子向量的初始估计 $\lambda$，然后再迭代过程中修正 $\lambda$ 力图使之趋向最优乘子  $\lambda^*$ 
+
+![image-20200620204622797](assets/03_Constraint/image-20200620204622797.png)
+
+#### 3.2.2.4 障碍函数
+
+在迭代中总是从内点出发，并通过引入障碍函数使之保持在可行域内部进行搜索，适用于**不等式约束**的非线性最优化问题
+$$
+\begin{array}{ll}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & g_{i}(\mathbf{x}) \geq 0, i=1, \cdots, m
+\end{array}
+$$
+将==可行域内部==记作 $\operatorname{int} \mathcal{S}$，其中 $\mathcal{S}=\{\mathbf{x}|g_i(\mathbf{x})\ge 0,i=1,\dots,m\}$ 
+
+保持迭代点含于可行域内部的方法是定义如下障碍函数
+$$
+B(\mathbf{x},\theta)=f(\mathbf{x})+\theta\psi(\mathbf{x})
+$$
+其中==障碍因子== $\theta$ 是很小的正数，$\psi(\mathbf{x})$ 是连续函数，当 $\mathbf{x}$ 趋于可行域边界时，$\psi(\mathbf{x})\to +\infty$ 
+
+两种重要的障碍形式
+$$
+\psi(\mathbf{x})=\sum_{i=1}^m\frac{1}{g_i(\mathbf{x})},\psi(\mathbf{x})=-\sum_{i=1}^m\log g_i(\mathbf{x})
+$$
+这样当 $\mathbf{x}$ 趋向可行域边界时，函数 $B(\mathbf{x},\theta)\to +\infty$，否则，由于 $\theta$ 很小，函数 $B(\mathbf{x},\theta)$ 的取值近似于 $f(\mathbf{x})$ 
+
+![image-20200620205359982](assets/03_Constraint/image-20200620205359982.png)
+
+![image-20200620205417864](assets/03_Constraint/image-20200620205417864.png)
+
+#### 3.2.2.5 内点法
+
+$$
+\begin{array}{cl}
+\min & f(\mathbf{x}) \\
+\text { s.t. } & \mathbf{c}_{E}(\mathbf{x})=0 \\
+& \mathbf{c}_{I}(\mathbf{x}) \geq 0 \\
+\min & f(\mathbf{x}) \\
+\text { s.t. } & \mathbf{c}_{E}(\mathbf{x})=0 \\
+& \mathbf{c}_{I}(\mathbf{x})-\mathbf{s}=0 \\
+& \mathbf{s} \geq 0
+\end{array}
+$$
+
+KKT 条件为
+$$
+\begin{aligned}
+\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{T} \mathbf{y}-A_{l}(\mathbf{x})^{T} \mathbf{z} &=0 \\
+S \mathbf{z}-\mu \mathbf{1} &=0 \\
+\mathbf{c}_{E}(\mathbf{x}) &=0 \\
+\mathbf{c}_{l}(\mathbf{x})-\mathbf{s} &=0
+\end{aligned}
+$$
+其中 $\mu = 0$，且 $\mathbf{s}\ge 0$，$\mathbf{z}\ge 0$，$A_E(\mathbf{x})$ 和 $A_I(\mathbf{x})$ 是 $\mathbf{c}_E(\mathbf{x})$ 和 $\mathbf{c}_I(\mathbf{x})$ 的 Jacobian 矩阵，$\mathbf{y}$ 和 $\mathbf{z}$ 是它们的 Lagrange 乘子，$S$ 和 $Z$ 是 $\mathbf{s}$ 和 $\mathbf{z}$ 的对角阵，$\mathbf{1} =(1,\dots,1)^\top$ 
+
+使用牛顿法，可得
+$$
+\left(\begin{array}{cccc} 
+\nabla_{\mathbf{x} \mathbf{x}}^{2} L & -A_{E}(\mathbf{x})^{T} & -A_{I}(\mathbf{x})^{T} & 0 \\
+0 & Z & 0 & S \\
+A_{E}(\mathbf{x}) & 0 & 0 & 0 \\
+A_{I}(\mathbf{x}) & -I & 0 & 0 \\
+\end{array}\right)
+
+\left(\begin{array}{c}
+\mathbf{p}_{\mathbf{x}} \\
+\mathbf{p}_{\mathbf{s}} \\
+\mathbf{p}_{\mathbf{y}} \\
+\mathbf{p}_{\mathbf{z}}
+\end{array}\right)
+
+=
+
+- \left(\begin{array}{c}
+\nabla f(\mathbf{x})-A_{E}(\mathbf{x})^{T} \mathbf{y}-A_{I}(\mathbf{x})^{T} \mathbf{z} \\
+S \mathbf{z}-\mu \mathbf{1} \\
+\mathbf{c}_{E}(\mathbf{x}) \\
+\mathbf{c}_{I}(\mathbf{x})-\mathbf{s}
+\end{array}\right)
+$$
+其中 $L(\mathbf{x},\mathbf{s},\mathbf{y},\mathbf{z})=f(\mathbf{x})-\mathbf{y}^\top \mathbf{c}_E(\mathbf{x})-\mathbf{z}^\top(\mathbf{c}_I(\mathbf{x})-\mathbf{s})$ 
+
+该系统成为==原-对偶系统== primal-dual system
+
+当 $\mathbf{p}=(\mathbf{p}_\mathbf{x},\mathbf{p}_\mathbf{s},\mathbf{p}_\mathbf{y},\mathbf{p}_\mathbf{z})$ 确定好后，可以计算新的迭代 $(\mathbf{x}^+,\mathbf{s}^+,\mathbf{y}^+,\mathbf{z}^+)$ 为
+$$
+\begin{aligned}
+\mathbf{x}^+=\mathbf{x}+\alpha_{\mathbf{s}}^{\text{max}}\mathbf{p}_{\mathbf{x}}\\
+\mathbf{s}^+=\mathbf{s}+\alpha_{\mathbf{s}}^{\text{max}}\mathbf{p}_{\mathbf{s}}\\
+\mathbf{y}^+=\mathbf{y}+\alpha_{\mathbf{z}}^{\text{max}}\mathbf{p}_{\mathbf{y}}\\
+\mathbf{z}^+=\mathbf{z}+\alpha_{\mathbf{z}}^{\text{max}}\mathbf{p}_{\mathbf{z}}\\
+\end{aligned}
+$$
+其中
+$$
+\begin{array}{l}
+\alpha_{s}^{\max }=\max \left\{\alpha \in(0,1]: \mathbf{s}+\alpha \mathbf{p}_{s} \geq(1-\tau) \mathbf{s}\right\} \\
+\alpha_{z}^{\max }=\max \left\{\alpha \in(0,1]: \mathbf{z}+\alpha \mathbf{p}_{z} \geq(1-\tau) \mathbf{z}\right\}
+\end{array}
+$$
+其中 $\tau\in (0,1)$（经典值为 ），上述条件称为 the fraction to the boundary rule，用于防止 $\mathbf{s}$ 和 $\mathbf{z}$ 太快达到它们的下界 $\mathbf{0}$ 
+
+ 
