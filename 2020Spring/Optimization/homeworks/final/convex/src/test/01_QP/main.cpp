@@ -53,6 +53,8 @@ int main() {
 			<< "- lambda" << endl << pdipm.Get_lambda() << endl
 			<< "- nu" << endl << pdipm.Get_nu() << endl
 			<< "- residule : " << pdipm.Get_residule() << endl;
+
+		i++;
 	}
 
 	cout << "[ result ]" << endl
