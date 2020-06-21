@@ -897,7 +897,7 @@ $$
 
 > - $r_{\text{dual}}$ : $n \times 1$ 
 > - $r_{\text{cent}}$ : $m\times 1$ 
-> - $r_{\text{pri}}$ : $m\times 1$ 
+> - $r_{\text{pri}}$ : $p\times 1$ 
 
 记当前点为 $y=(\mathbf{x},\lambda,\nu)$，牛顿步为 $\delta_y=(\delta_{\mathbf{x}},\delta_\lambda,\delta_\nu)$，牛顿步用于解方程 $r_t(x,\lambda,\nu)=0$，表示为
 $$
