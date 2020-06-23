@@ -221,7 +221,7 @@ $$
 
 > discrete curvature
 
-平均曲率
+平均曲率（空间上曲面上某一点任意两个相互垂直的正交曲率的平均值）
 $$
 \Delta \mathbf{x}=-2H\mathbf{n}
 $$
@@ -229,7 +229,7 @@ $$
 $$
 H_i=\frac{1}{2}\|\Delta \mathbf{x}\|
 $$
-高斯曲率
+高斯曲率（空间上曲面上某一点任意两个相互垂直的正交曲率的乘积）
 $$
 K_i=\frac{1}{A_i}\left(2\pi -\sum_{j\in\Omega(i)}\theta_j\right)
 $$
