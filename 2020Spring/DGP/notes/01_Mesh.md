@@ -99,9 +99,15 @@ $$
 
 $N_F\approx 2N_V$，$N_E\approx 3N_V$ 
 
-**重心坐标** 
+**重心坐标** barycentric coordinate
+$$
+g=\alpha h_i+\beta g_j+\gamma g_k\\\alpha+\beta+\gamma = 1\\\alpha,\beta,\gamma \ge 0\\\alpha = \frac{s_i}{s_i+s_j+s_k}
+$$
+![image-20200623163452970](assets/01_Mesh/image-20200623163452970.png)
 
-TODO
+> $s_i$ 是图中的绿色三角形面积
+
+插值
 
 #### 01.1.6.2 四面体网格
 
