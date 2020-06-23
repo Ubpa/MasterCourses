@@ -45,7 +45,7 @@ A\mathbf{x}-b
 $$
 并且 $t>0$ 
 
-第一块 $P\mathbf{x}+q+G^\top \lambda + A^\top \nu$ 称为==对偶残差== dual residual
+第一块 $r_{\text{dual}}=P\mathbf{x}+q+G^\top \lambda + A^\top \nu$ 称为==对偶残差== dual residual
 
 第三块 $r_{\text{pri}}=A\mathbf{x}-b$ 称为==原残差== primal residual
 
@@ -100,7 +100,6 @@ r_{\text {pri }}
 \end{array}\right]
 $$
 
-
 ==原-对偶搜索方向== primal-dual search direction $\delta_{y_{\text{pd}}}=(\delta_{x_{\text{pd}}},\delta_{\lambda_{\text{pd}}},\delta_{\nu_{\text{pd}}})$ 是上边的解
 
 原-对偶内点法迭代的 $\mathbf{x}^{(k)},\lambda^{(k)},\nu^{(k)}$ 不要求是可行的，我们没法计算对偶间隙，但我们可以定义==代理对偶间隙== surrogate duality gap
@@ -115,7 +114,7 @@ t=\frac{m}{\hat{\eta}}
 $$
 **原-对偶内点法——算法** 
 
-给定 $\mathbf{x}$ 满足 $f_1(\mathbf{x}),\dots,f_m(\mathbf{x})<0$，$\lambda>0$，$\gamma>1$，$\epsilon_{\text{feas}}>0$，$\epsilon>0$ 
+给定 $\mathbf{x}$ 满足 $\mathbf{f}(\mathbf{x})<\mathbf{0}$，$\lambda>0$，$\gamma>1$，$\epsilon_{\text{feas}}>0$，$\epsilon>0$ 
 
 重复
 
@@ -131,7 +130,7 @@ $$
 $$
 y^+=
 \left[\begin{array}{c}
-G\mathbf{x}-h^+\\
+\mathbf{x}^+\\
 \lambda^+\\
 \nu^+
 \end{array}\right]
@@ -161,7 +160,7 @@ $$
 $$
 这里 $\tau$ 一般取 $0.01$ 到 $0.1$ 
 
-> 算法步骤中要求起始点满足 $f_1(\mathbf{x}),\dots,f_m(\mathbf{x})<0$，即要求
+> 算法步骤中要求起始点满足 $\mathbf{f}(\mathbf{x})<\mathbf{0}$，即要求
 > $$
 > G\mathbf{x} < \mathbf{h}
 > $$
@@ -171,13 +170,13 @@ $$
 > $$
 > 由于 $G$ 不是方阵，我们可以用其伪逆 $G^+$，解得的 $\mathbf{x}$ 为解空间中模最小的那个
 > $$
-> \mathbf{x}=G^+(\mathbf{h}+\mathbf{1})
+> \mathbf{x}=G^+(\mathbf{h}-\mathbf{1})
 > $$
 > 伪逆可通过 SVD 分解求得
 
 ## 3. 程序使用指南
 
-- 使用 CMake 搭建项目（勾选 `Ubpa_BuildConvexTest`）
+- 使用 CMake 搭建项目（勾选 `Ubpa_BuildConvexTest`）（另外 bin 目录下有编译好的 exe）
 
 - 在 VS2019 中
 

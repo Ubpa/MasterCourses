@@ -27,7 +27,7 @@ $$
 增广 Lagrange 罚函数为
 $$
 \begin{aligned}
-L(\mathbf{x},\mathbf{y},\mathbf{z},\lambda_y,\lambda_z+\rho)
+L(\mathbf{x},\mathbf{y},\mathbf{z},\lambda_y,\lambda_z,\rho)
 =& \mu \|\mathbf{z}\|_p + \|\mathbf{y}\|_q\\
 &+ \lambda_{\mathbf{z}}^\top(\mathbf{x}-\mathbf{z}) + \lambda_{\mathbf{y}}^\top(A\mathbf{x}-\mathbf{y})\\
 &+\frac{\rho}{2}(\|\mathbf{x}-\mathbf{z}\|_2^2+\|A\mathbf{x}-\mathbf{y}-\mathbf{b}\|_2^2)
@@ -48,7 +48,7 @@ $$
 >
 > **① 求 $\mathbf{x}^{k+1}$** 
 > $$
-> \mathbf{x}^{(k+1)}=(I+A^\top A)^{-1}(\mathbf{z}^k-\mathbf{u}_{\mathbf{z}}+A^\top(\mathbf{y}^k+\mathbf{b}-\mathbf{u}_{\mathbf{y}}))
+> \mathbf{x}^{k+1}=(I+A^\top A)^{-1}(\mathbf{z}^k-\mathbf{u}_{\mathbf{z}}+A^\top(\mathbf{y}^k+\mathbf{b}-\mathbf{u}_{\mathbf{y}}))
 > $$
 > **② 求 $\mathbf{y}^{k+1}$** 
 >
@@ -90,7 +90,7 @@ $$
 
 ## 3. 程序使用指南
 
-- 使用 CMake 搭建项目（勾选 `Ubpa_BuildSparseTest`）
+- 使用 CMake 搭建项目（勾选 `Ubpa_BuildSparseTest`）（另外 bin 目录下有编译好的 exe）
 
 - 在 VS2019 中
 
