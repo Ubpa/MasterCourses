@@ -1,5 +1,5 @@
 //***************************************************************************************
-// DeferApp.cpp by Frank Luna (C) 2015 All Rights Reserved.
+// HW02App.cpp by Frank Luna (C) 2015 All Rights Reserved.
 //***************************************************************************************
 
 
@@ -7,6 +7,19 @@
 #include "../common/MathHelper.h"
 #include <UDX12/UploadBuffer.h>
 #include "../common/GeometryGenerator.h"
+#include "../trimesh/TriMesh.h"
+
+namespace Ubpa {
+	template<>
+	struct ImplTraits<DirectX::XMFLOAT4>
+		: Array1DTraits<float, 4> {};
+	template<>
+	struct ImplTraits<DirectX::XMFLOAT3>
+		: Array1DTraits<float, 3> {};
+	template<>
+	struct ImplTraits<DirectX::XMFLOAT2>
+		: Array1DTraits<float, 2> {};
+}
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
@@ -88,13 +101,13 @@ struct RenderItem
     int BaseVertexLocation = 0;
 };
 
-class DeferApp : public D3DApp
+class HW02App : public D3DApp
 {
 public:
-    DeferApp(HINSTANCE hInstance);
-    DeferApp(const DeferApp& rhs) = delete;
-    DeferApp& operator=(const DeferApp& rhs) = delete;
-    ~DeferApp();
+    HW02App(HINSTANCE hInstance);
+    HW02App(const HW02App& rhs) = delete;
+    HW02App& operator=(const HW02App& rhs) = delete;
+    ~HW02App();
 
     virtual bool Initialize()override;
 
@@ -155,6 +168,8 @@ private:
 
     POINT mLastMousePos;
 
+	std::unordered_map<std::string, std::unique_ptr<Ubpa::TriMesh>> trimeshes;
+
 	// frame graph
 	//Ubpa::DX12::FG::RsrcMngr fgRsrcMngr;
 	Ubpa::DX12::FG::Executor fgExecutor;
@@ -172,7 +187,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 
     try
     {
-        DeferApp theApp(hInstance);
+        HW02App theApp(hInstance);
         if(!theApp.Initialize())
             return 0;
 
@@ -188,18 +203,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 
 }
 
-DeferApp::DeferApp(HINSTANCE hInstance)
+HW02App::HW02App(HINSTANCE hInstance)
     : D3DApp(hInstance)
 {
 }
 
-DeferApp::~DeferApp()
+HW02App::~HW02App()
 {
     if(!uDevice.IsNull())
         FlushCommandQueue();
 }
 
-bool DeferApp::Initialize()
+bool HW02App::Initialize()
 {
     if(!D3DApp::Initialize())
         return false;
@@ -241,7 +256,7 @@ bool DeferApp::Initialize()
     return true;
 }
  
-void DeferApp::OnResize()
+void HW02App::OnResize()
 {
     D3DApp::OnResize();
 
@@ -256,7 +271,7 @@ void DeferApp::OnResize()
 		frsrc->DelayUpdateResource("FrameGraphRsrcMngr", clearFGRsrcMngr);
 }
 
-void DeferApp::Update(const GameTimer& gt)
+void HW02App::Update(const GameTimer& gt)
 {
     OnKeyboardInput(gt);
 	UpdateCamera(gt);
@@ -275,7 +290,7 @@ void DeferApp::Update(const GameTimer& gt)
 	UpdateMainPassCB(gt);
 }
 
-void DeferApp::Draw(const GameTimer& gt)
+void HW02App::Draw(const GameTimer& gt)
 {
 	auto cmdListAlloc = mCurrFrameResource->GetResource<ID3D12CommandAllocator>("CommandAllocator");
 
@@ -468,7 +483,7 @@ void DeferApp::Draw(const GameTimer& gt)
 	mCurrFrameResource->Signal(uCmdQueue.raw.Get(), ++mCurrentFence);
 }
 
-void DeferApp::OnMouseDown(WPARAM btnState, int x, int y)
+void HW02App::OnMouseDown(WPARAM btnState, int x, int y)
 {
     mLastMousePos.x = x;
     mLastMousePos.y = y;
@@ -476,12 +491,12 @@ void DeferApp::OnMouseDown(WPARAM btnState, int x, int y)
     SetCapture(mhMainWnd);
 }
 
-void DeferApp::OnMouseUp(WPARAM btnState, int x, int y)
+void HW02App::OnMouseUp(WPARAM btnState, int x, int y)
 {
     ReleaseCapture();
 }
 
-void DeferApp::OnMouseMove(WPARAM btnState, int x, int y)
+void HW02App::OnMouseMove(WPARAM btnState, int x, int y)
 {
     if((btnState & MK_LBUTTON) != 0)
     {
@@ -506,18 +521,18 @@ void DeferApp::OnMouseMove(WPARAM btnState, int x, int y)
         mRadius += dx - dy;
 
         // Restrict the radius.
-        mRadius = MathHelper::Clamp(mRadius, 5.0f, 150.0f);
+        mRadius = MathHelper::Clamp(mRadius, 2.0f, 150.0f);
     }
 
     mLastMousePos.x = x;
     mLastMousePos.y = y;
 }
  
-void DeferApp::OnKeyboardInput(const GameTimer& gt)
+void HW02App::OnKeyboardInput(const GameTimer& gt)
 {
 }
  
-void DeferApp::UpdateCamera(const GameTimer& gt)
+void HW02App::UpdateCamera(const GameTimer& gt)
 {
 	// Convert Spherical to Cartesian coordinates.
 	mEyePos.x = mRadius*sinf(mPhi)*cosf(mTheta);
@@ -533,12 +548,12 @@ void DeferApp::UpdateCamera(const GameTimer& gt)
 	XMStoreFloat4x4(&mView, view);
 }
 
-void DeferApp::AnimateMaterials(const GameTimer& gt)
+void HW02App::AnimateMaterials(const GameTimer& gt)
 {
 	
 }
 
-void DeferApp::UpdateObjectCBs(const GameTimer& gt)
+void HW02App::UpdateObjectCBs(const GameTimer& gt)
 {
 	auto currObjectCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<ObjectConstants>>("ArrayUploadBuffer<ObjectConstants>");
@@ -563,7 +578,7 @@ void DeferApp::UpdateObjectCBs(const GameTimer& gt)
 	}
 }
 
-void DeferApp::UpdateMaterialCBs(const GameTimer& gt)
+void HW02App::UpdateMaterialCBs(const GameTimer& gt)
 {
 	auto currMaterialCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<MaterialConstants>>("ArrayUploadBuffer<MaterialConstants>");
@@ -590,7 +605,7 @@ void DeferApp::UpdateMaterialCBs(const GameTimer& gt)
 	}
 }
 
-void DeferApp::UpdateMainPassCB(const GameTimer& gt)
+void HW02App::UpdateMainPassCB(const GameTimer& gt)
 {
 	XMMATRIX view = XMLoadFloat4x4(&mView);
 	XMMATRIX proj = XMLoadFloat4x4(&mProj);
@@ -626,7 +641,7 @@ void DeferApp::UpdateMainPassCB(const GameTimer& gt)
 	currPassCB->Set(0, mMainPassCB);
 }
 
-void DeferApp::LoadTextures()
+void HW02App::LoadTextures()
 {
 	std::array<std::wstring_view, 3> ironTextures{
 		L"../data/textures/iron/albedo.dds",
@@ -640,7 +655,7 @@ void DeferApp::LoadTextures()
 		ironTextures.data(), ironTextures.size());
 }
 
-void DeferApp::BuildRootSignature()
+void HW02App::BuildRootSignature()
 {
 	{ // geometry
 		CD3DX12_DESCRIPTOR_RANGE texTable;
@@ -708,11 +723,11 @@ void DeferApp::BuildRootSignature()
 	}
 }
 
-void DeferApp::BuildDescriptorHeaps()
+void HW02App::BuildDescriptorHeaps()
 {
 }
 
-void DeferApp::BuildShadersAndInputLayout()
+void HW02App::BuildShadersAndInputLayout()
 {
 	Ubpa::DXRenderer::Instance().RegisterShaderByteCode("standardVS",
 		L"..\\data\\shaders\\Default.hlsl", nullptr, "VS", "vs_5_0");
@@ -739,7 +754,7 @@ void DeferApp::BuildShadersAndInputLayout()
     };
 }
 
-void DeferApp::BuildShapeGeometry()
+void HW02App::BuildShapeGeometry()
 {
     GeometryGenerator geoGen;
 	GeometryGenerator::MeshData box = geoGen.CreateBox(1.0f, 1.0f, 1.0f, 3);
@@ -770,9 +785,39 @@ void DeferApp::BuildShapeGeometry()
 			vertices.data(), (UINT)vertices.size(), sizeof(Vertex),
 			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R16_UINT)
 		.submeshGeometries["box"] = boxSubmesh;
+
+	// =================================================================================
+
+	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/small_bunny.obj");
+	vertices.resize(bunny->VertexNumber());
+	indices.resize(3 * bunny->TriangleNumber());
+	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
+		vertices[i].Pos = bunny->positions[i].as<XMFLOAT3>();
+		vertices[i].Normal = bunny->normals[i].as<XMFLOAT3>();
+		vertices[i].TexC = bunny->texcoords[i].as<XMFLOAT2>();
+	}
+	for (size_t i = 0; i < bunny->TriangleNumber(); i++) {
+		indices[3 * i + 0] = bunny->indices[i][0];
+		indices[3 * i + 1] = bunny->indices[i][1];
+		indices[3 * i + 2] = bunny->indices[i][2];
+	}
+
+	Ubpa::DX12::SubmeshGeometry bunnySubmesh;
+	bunnySubmesh.IndexCount = bunny->indices.size() * 3;
+	bunnySubmesh.StartIndexLocation = 0;
+	bunnySubmesh.BaseVertexLocation = 0;
+	Ubpa::DXRenderer::Instance()
+		.RegisterStaticMeshGeometry(
+			Ubpa::DXRenderer::Instance().GetUpload(), "bunnyGeo",
+			vertices.data(), (UINT)vertices.size(), sizeof(Vertex),
+			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R16_UINT)
+		.submeshGeometries["bunny"] = bunnySubmesh;
+
+	trimeshes.emplace("bunny", std::move(bunny));
+
 }
 
-void DeferApp::BuildPSOs()
+void HW02App::BuildPSOs()
 {
 	auto screenPsoDesc = Ubpa::DX12::Desc::PSO::Basic(
 		Ubpa::DXRenderer::Instance().GetRootSignature("screen"),
@@ -806,7 +851,7 @@ void DeferApp::BuildPSOs()
 	Ubpa::DXRenderer::Instance().RegisterPSO("defer lighting", &deferLightingPsoDesc);
 }
 
-void DeferApp::BuildFrameResources()
+void HW02App::BuildFrameResources()
 {
     for(int i = 0; i < gNumFrameResources; ++i)
     {
@@ -838,7 +883,7 @@ void DeferApp::BuildFrameResources()
     }
 }
 
-void DeferApp::BuildMaterials()
+void HW02App::BuildMaterials()
 {
 	auto woodCrate = std::make_unique<Material>();
 	woodCrate->Name = "iron";
@@ -851,9 +896,9 @@ void DeferApp::BuildMaterials()
 	mMaterials["woodCrate"] = std::move(woodCrate);
 }
 
-void DeferApp::BuildRenderItems()
+void HW02App::BuildRenderItems()
 {
-	auto boxRitem = std::make_unique<RenderItem>();
+	/*auto boxRitem = std::make_unique<RenderItem>();
 	boxRitem->ObjCBIndex = 0;
 	boxRitem->Mat = mMaterials["woodCrate"].get();
 	boxRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("boxGeo");
@@ -861,14 +906,26 @@ void DeferApp::BuildRenderItems()
 	boxRitem->IndexCount = boxRitem->Geo->submeshGeometries["box"].IndexCount;
 	boxRitem->StartIndexLocation = boxRitem->Geo->submeshGeometries["box"].StartIndexLocation;
 	boxRitem->BaseVertexLocation = boxRitem->Geo->submeshGeometries["box"].BaseVertexLocation;
-	mAllRitems.push_back(std::move(boxRitem));
+	mAllRitems.push_back(std::move(boxRitem));*/
+
+	// ===========================
+
+	auto bunnyRitem = std::make_unique<RenderItem>();
+	bunnyRitem->ObjCBIndex = 0;
+	bunnyRitem->Mat = mMaterials["woodCrate"].get();
+	bunnyRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("bunnyGeo");
+	bunnyRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	bunnyRitem->IndexCount = bunnyRitem->Geo->submeshGeometries["bunny"].IndexCount;
+	bunnyRitem->StartIndexLocation = bunnyRitem->Geo->submeshGeometries["bunny"].StartIndexLocation;
+	bunnyRitem->BaseVertexLocation = bunnyRitem->Geo->submeshGeometries["bunny"].BaseVertexLocation;
+	mAllRitems.push_back(std::move(bunnyRitem));
 
 	// All the render items are opaque.
 	for(auto& e : mAllRitems)
 		mOpaqueRitems.push_back(e.get());
 }
 
-void DeferApp::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
+void HW02App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
 {
     UINT objCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(ObjectConstants));
     UINT matCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(MaterialConstants));
@@ -900,7 +957,7 @@ void DeferApp::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::ve
     }
 }
 
-std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> DeferApp::GetStaticSamplers()
+std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW02App::GetStaticSamplers()
 {
 	// Applications usually only need a handful of samplers.  So just define them all up front
 	// and keep them available as part of the root signature.  
