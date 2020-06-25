@@ -447,3 +447,19 @@ bool TriMesh::Save(const std::string& path) {
 
 	return true;
 }
+
+void TriMesh::ScaleToUnit() {
+	bboxf3 b;
+	for (const auto& pos : positions)
+		b.combine_to_self(pos);
+
+	auto c2o = -b.center().as<vecf3>();
+	auto s = std::sqrt(3.f) / b.diagonal().norm();
+
+	for (auto& pos : positions) {
+		pos += c2o;
+		pos[0] *= s;
+		pos[1] *= s;
+		pos[2] *= s;
+	}
+}

@@ -20,3 +20,4 @@ resources/
 bin/
 lib/
 build/
+_deps/

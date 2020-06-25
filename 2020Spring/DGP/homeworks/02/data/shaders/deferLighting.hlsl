@@ -169,8 +169,8 @@ float4 PS(VertexOut pin) : SV_Target
 		float3 specular = fr * D * G / (4 * max(dot(L, N)*dot(V, N), EPSILON));
 		
 		float3 brdf = diffuse + specular;
-		Lo += brdf * 10 * gLights[i].Strength * max(cos_theta, 0);
+		//Lo += brdf * 10 * gLights[i].Strength * max(cos_theta, 0);
 	}
 	
-    return float4(Lo, 1.0f);
+    return float4(albedo, 1.0f);
 }

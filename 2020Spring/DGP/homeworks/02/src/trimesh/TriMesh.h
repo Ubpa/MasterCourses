@@ -50,6 +50,8 @@ namespace Ubpa {
 		size_t VertexNumber() const noexcept { return positions.size(); }
 		size_t TriangleNumber() const noexcept { return indices.size(); }
 
+		void ScaleToUnit();
+
 		void Clear();
 
 		void GenNormals();
