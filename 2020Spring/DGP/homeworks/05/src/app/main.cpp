@@ -7,35 +7,20 @@
 #include "../common/MathHelper.h"
 #include <UDX12/UploadBuffer.h>
 #include "../common/GeometryGenerator.h"
-#include "../trimesh/TriMesh.h"
-#include <UHEMesh/HEMesh.h>
+#include "util.h"
 
-struct V : Ubpa::TVertex<Ubpa::HEMeshTriats_EmptyEP<V>> {
-	Ubpa::pointf3 pos;
-	Ubpa::pointf3 n;
-
-	float average_curvature;
-	float abs_average_curvature;
-	float gauss_curvature;
-};
-
-namespace Ubpa {
-	template<>
-	struct ImplTraits<DirectX::XMFLOAT4>
-		: Array1DTraits<float, 4> {};
-	template<>
-	struct ImplTraits<DirectX::XMFLOAT3>
-		: Array1DTraits<float, 3> {};
-	template<>
-	struct ImplTraits<DirectX::XMFLOAT2>
-		: Array1DTraits<float, 2> {};
-}
+#include <Eigen/Sparse>
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
 const int gNumFrameResources = 3;
+
+struct V : Ubpa::TVertex<Ubpa::HEMeshTriats_EmptyEP<V>> {
+	Ubpa::pointf3 pos;
+	Ubpa::pointf2 uv;
+};
 
 struct ObjectConstants
 {
@@ -74,11 +59,6 @@ struct Vertex
 	DirectX::XMFLOAT3 Pos;
 	DirectX::XMFLOAT3 Normal;
 	DirectX::XMFLOAT2 TexC;
-
-	// float average_curvature;
-	// float abs_average_curvature;
-	// float gauss_curvature;
-	DirectX::XMFLOAT3 data;
 };
 
 // Lightweight structure stores parameters to draw a shape.  This will
@@ -765,56 +745,30 @@ void HW02App::BuildShadersAndInputLayout()
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
         { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
     };
 }
 
 void HW02App::BuildShapeGeometry()
 {
-	std::vector<Vertex> vertices;
-	std::vector<std::uint16_t> indices;
-
-    /*GeometryGenerator geoGen;
-	GeometryGenerator::MeshData box = geoGen.CreateBox(1.0f, 1.0f, 1.0f, 3);
- 
-	Ubpa::DX12::SubmeshGeometry boxSubmesh;
-	boxSubmesh.IndexCount = (UINT)box.Indices32.size();
-	boxSubmesh.StartIndexLocation = 0;
-	boxSubmesh.BaseVertexLocation = 0;
- 
-	vertices.resize(box.Vertices.size());
-
-	for(size_t i = 0; i < box.Vertices.size(); ++i)
-	{
-		vertices[i].Pos = box.Vertices[i].Position;
-		vertices[i].Normal = box.Vertices[i].Normal;
-		vertices[i].TexC = box.Vertices[i].TexC;
-	}
-
-	indices = box.GetIndices16();
-
-    const UINT vbByteSize = (UINT)vertices.size() * sizeof(Vertex);
-    const UINT ibByteSize = (UINT)indices.size()  * sizeof(std::uint16_t);
-
-	Ubpa::DXRenderer::Instance()
-		.RegisterStaticMeshGeometry(
-			Ubpa::DXRenderer::Instance().GetUpload(), "boxGeo",
-			vertices.data(), (UINT)vertices.size(), sizeof(Vertex),
-			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R16_UINT)
-		.submeshGeometries["box"] = boxSubmesh;*/
-
-	// =================================================================================
+	std::vector<Vertex> orig_vertices;
+	std::vector<Vertex> param_vertices;
+	std::vector<std::uint32_t> indices;
 
 	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Bunny_head.obj");
+
+	bunny->CombineSamePositionVertex();
 	bunny->ScaleToUnit();
 
-	vertices.resize(bunny->VertexNumber());
+	orig_vertices.resize(bunny->VertexNumber());
+	param_vertices.resize(bunny->VertexNumber());
 	indices.resize(3 * bunny->TriangleNumber());
 	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
-		vertices[i].Pos = bunny->positions[i].as<XMFLOAT3>();
-		vertices[i].Normal = bunny->normals[i].as<XMFLOAT3>();
-		vertices[i].TexC = bunny->texcoords[i].as<XMFLOAT2>();
+		orig_vertices[i].Pos = bunny->positions[i].as<XMFLOAT3>();
+
+		orig_vertices[i].Normal = bunny->normals[i].as<XMFLOAT3>();
+
+		orig_vertices[i].TexC = bunny->texcoords[i].as<XMFLOAT2>();
 	}
 	for (size_t i = 0; i < bunny->TriangleNumber(); i++) {
 		indices[3 * i + 0] = bunny->indices[i][0];
@@ -822,104 +776,80 @@ void HW02App::BuildShapeGeometry()
 		indices[3 * i + 2] = bunny->indices[i][2];
 	}
 
-	// =====
-
 	Ubpa::HEMesh<Ubpa::HEMeshTriats_EmptyEP<V>> hemesh(std::vector<size_t>{indices.begin(), indices.end()}, 3);
-	for (size_t i = 0; i < hemesh.NumVertices(); i++) {
-		hemesh.Vertices().at(i)->pos[0] = vertices[i].Pos.x;
-		hemesh.Vertices().at(i)->pos[1] = vertices[i].Pos.y;
-		hemesh.Vertices().at(i)->pos[2] = vertices[i].Pos.z;
-		hemesh.Vertices().at(i)->n[0] = vertices[i].Normal.x;
-		hemesh.Vertices().at(i)->n[1] = vertices[i].Normal.y;
-		hemesh.Vertices().at(i)->n[2] = vertices[i].Normal.z;
+	assert(hemesh.IsValid() && hemesh.IsTriMesh() && hemesh.NumBoundaries() == 1);
+
+	for (size_t i = 0; i < orig_vertices.size(); i++)
+		hemesh.Vertices().at(i)->pos = reinterpret_cast<Ubpa::pointf3&>(orig_vertices[i].Pos);
+
+	auto boundary = hemesh.Boundaries().front();
+	float boundaryLength = 0.f;
+	for (auto he : boundary) {
+		auto p0 = he->Origin()->pos;
+		auto p1 = he->End()->pos;
+		boundaryLength += p0.distance(p1);
+	}
+
+	// set boundary to square
+	// (0, 0) -> (1, 0) -> (1, 1) -> (0, 1) -> (0, 0)
+	float accumulateLength = 0.f;
+	for (auto he : boundary) {
+		float t = accumulateLength / boundaryLength;
+		float s = t * 4 - static_cast<int>(t * 4);
+
+		if (t < 0.25f)
+			he->Origin()->uv = { s, 0 };
+		else if (t < 0.50f)
+			he->Origin()->uv = { 1, s };
+		else if (t < 0.75f)
+			he->Origin()->uv = { 1 - s, 1 };
+		else /* if (t < 1.00f)*/
+			he->Origin()->uv = { 0, 1 - s };
+
+		auto p0 = he->Origin()->pos;
+		auto p1 = he->End()->pos;
+		accumulateLength += p0.distance(p1);
+	}
+
+	size_t N = orig_vertices.size();
+	Eigen::SparseMatrix<float> A(N, N);
+	Eigen::MatrixXf b(N, 2);
+	std::vector<Eigen::Triplet<float>> triplets;
+	for (auto v : hemesh.Vertices()) {
+		auto vIdx = hemesh.Index(v);
+		if (v->IsBoundary()) {
+			b(vIdx, 0) = v->uv[0];
+			b(vIdx, 1) = v->uv[1];
+			triplets.emplace_back(vIdx, vIdx, 1.f);
+		}
+		else {
+			for (auto u : v->AdjVertices()) {
+				b(vIdx, 0) = 0.f;
+				b(vIdx, 1) = 0.f;
+				triplets.emplace_back(vIdx, hemesh.Index(u), 1.f);
+			}
+			triplets.emplace_back(vIdx, vIdx, -static_cast<int>(v->Degree()));
+		}
+	}
+	A.setFromTriplets(triplets.begin(), triplets.end());
+	Eigen::BiCGSTAB<Eigen::SparseMatrix<float>> solver(A);
+	Eigen::MatrixXf X = solver.solve(b);
+	for (size_t i = 0; i < N; i++)
+		OutputDebugString(((std::to_wstring(X(i, 0)) + L", " + std::to_wstring(X(i, 1)) + L"\n").c_str()));
+	for (auto v : hemesh.Vertices()) {
+		auto idx = hemesh.Index(v);
+		v->uv[0] = X(idx, 0);
+		v->uv[1] = X(idx, 1);
 	}
 	
-	for (auto vi : hemesh.Vertices()) {
-		auto adjVs = vi->AdjVertices();
-		size_t N = adjVs.size();
-
-		Ubpa::vecf3 sum_wdiff{ 0,0,0 };
-		float sum_area{ 0.f };
-		float sum_theta{ 0.f };
-
-		for (size_t j = 0; j < N; j++) {
-			auto vj = adjVs[j];
-			auto vj_pre = adjVs[j == 0 ? N - 1 : j - 1];
-			auto vj_next = adjVs[(j + 1) % N];
-
-			auto vector_pre_j = vj->pos - vj_pre->pos;
-			auto vector_pre_i = vi->pos - vj_pre->pos;
-			if(vector_pre_j.norm() == 0 || vector_pre_i.norm() == 0)
-				continue;
-			float cos_theta_pre = vector_pre_j.cos_theta(vector_pre_i);
-			float sin_theta_pre = std::sqrt(1.f - Ubpa::pow2(cos_theta_pre));
-			float cot_theta_pre = cos_theta_pre / sin_theta_pre;
-
-			auto vector_next_j = vj->pos - vj_next->pos;
-			auto vector_next_i = vi->pos - vj_next->pos;
-			if (vector_next_j.norm() == 0 || vector_next_i.norm() == 0)
-				continue;
-			float cos_theta_next = vector_next_j.cos_theta(vector_next_i);
-			float sin_theta_next = std::sqrt(1.f - Ubpa::pow2(cos_theta_next));
-			float cot_theta_next = cos_theta_next / sin_theta_next;
-
-			auto vector_vi_vj = vj->pos - vi->pos;
-
-			sum_wdiff += (cot_theta_pre + cot_theta_next) * vector_vi_vj;
-
-			auto vector_vi_vj_next = vj_next->pos - vi->pos;
-
-			sum_area += 0.5f * vector_vi_vj_next.cross(vector_vi_vj).norm();
-
-			sum_theta += std::acos(vector_vi_vj.cos_theta(vector_vi_vj_next));
-		}
-		auto Laplace_coord_vi = sum_wdiff / (2.f * sum_area);
-
-		vi->average_curvature = (Laplace_coord_vi.dot(vi->n.as<Ubpa::vecf3>()) > 0 ? -1.f : 1.f) * Laplace_coord_vi.norm() / 2;
-		vi->abs_average_curvature = std::abs(vi->average_curvature);
-		vi->gauss_curvature = (2.f * Ubpa::PI<float> - sum_theta) / sum_area;
-	}
-
-	float min_average_curvature = std::numeric_limits<float>::max();
-	float min_abs_average_curvature = std::numeric_limits<float>::max();
-	float min_gauss_curvature = std::numeric_limits<float>::max();
-	float max_average_curvature = -std::numeric_limits<float>::max();
-	float max_abs_average_curvature = -std::numeric_limits<float>::max();
-	float max_gauss_curvature = -std::numeric_limits<float>::max();
 	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
-		if(hemesh.Vertices().at(i)->IsBoundary())
-			continue;
+		param_vertices[i].Pos.x = hemesh.Vertices().at(i)->uv[0];
+		param_vertices[i].Pos.y = 0.f;
+		param_vertices[i].Pos.z = hemesh.Vertices().at(i)->uv[1];
 
-		if (hemesh.Vertices().at(i)->average_curvature < min_average_curvature)
-			min_average_curvature = hemesh.Vertices().at(i)->average_curvature;
-		if (hemesh.Vertices().at(i)->average_curvature > max_average_curvature)
-			max_average_curvature = hemesh.Vertices().at(i)->average_curvature;
+		param_vertices[i].Normal = { 0.f,1.f,0.f };
 
-		if (hemesh.Vertices().at(i)->abs_average_curvature < min_abs_average_curvature)
-			min_abs_average_curvature = hemesh.Vertices().at(i)->abs_average_curvature;
-		if (hemesh.Vertices().at(i)->abs_average_curvature > max_abs_average_curvature)
-			max_abs_average_curvature = hemesh.Vertices().at(i)->abs_average_curvature;
-
-		if (hemesh.Vertices().at(i)->gauss_curvature < min_gauss_curvature)
-			min_gauss_curvature = hemesh.Vertices().at(i)->gauss_curvature;
-		if (hemesh.Vertices().at(i)->gauss_curvature > max_gauss_curvature)
-			max_gauss_curvature = hemesh.Vertices().at(i)->gauss_curvature;
-	}
-
-	OutputDebugString((L"min_average_curvature : " + std::to_wstring(min_average_curvature) + L"\n").c_str());
-	OutputDebugString((L"max_average_curvature : " + std::to_wstring(max_average_curvature) + L"\n").c_str());
-	OutputDebugString((L"min_abs_average_curvature : " + std::to_wstring(min_abs_average_curvature) + L"\n").c_str());
-	OutputDebugString((L"max_abs_average_curvature : " + std::to_wstring(max_abs_average_curvature) + L"\n").c_str());
-	OutputDebugString((L"min_gauss_curvature : " + std::to_wstring(min_gauss_curvature) + L"\n").c_str());
-	OutputDebugString((L"max_gauss_curvature : " + std::to_wstring(max_gauss_curvature) + L"\n").c_str());
-
-	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
-		vertices[i].data.x = 0.5f + hemesh.Vertices().at(i)->average_curvature
-			/ (2 * std::max(std::abs(max_average_curvature), std::abs(min_average_curvature)));
-		vertices[i].data.y = (hemesh.Vertices().at(i)->abs_average_curvature - min_abs_average_curvature)
-			/ (max_abs_average_curvature - min_abs_average_curvature);
-		vertices[i].data.z = (hemesh.Vertices().at(i)->gauss_curvature - min_gauss_curvature)
-			/ (max_gauss_curvature - min_gauss_curvature);
+		param_vertices[i].TexC = hemesh.Vertices().at(i)->uv.as<XMFLOAT2>();
 	}
 
 	Ubpa::DX12::SubmeshGeometry bunnySubmesh;
@@ -928,9 +858,15 @@ void HW02App::BuildShapeGeometry()
 	bunnySubmesh.BaseVertexLocation = 0;
 	Ubpa::DXRenderer::Instance()
 		.RegisterStaticMeshGeometry(
-			Ubpa::DXRenderer::Instance().GetUpload(), "bunnyGeo",
-			vertices.data(), (UINT)vertices.size(), sizeof(Vertex),
-			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R16_UINT)
+			Ubpa::DXRenderer::Instance().GetUpload(), "orig_bunnyGeo",
+			orig_vertices.data(), (UINT)orig_vertices.size(), sizeof(Vertex),
+			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R32_UINT)
+		.submeshGeometries["bunny"] = bunnySubmesh;
+	Ubpa::DXRenderer::Instance()
+		.RegisterStaticMeshGeometry(
+			Ubpa::DXRenderer::Instance().GetUpload(), "param_bunnyGeo",
+			param_vertices.data(), (UINT)param_vertices.size(), sizeof(Vertex),
+			indices.data(), (UINT)indices.size(), DXGI_FORMAT_R32_UINT)
 		.submeshGeometries["bunny"] = bunnySubmesh;
 
 	trimeshes.emplace("bunny", std::move(bunny));
@@ -957,6 +893,7 @@ void HW02App::BuildPSOs()
 		DXGI_FORMAT_R32G32B32A32_FLOAT,
 		mDepthStencilFormat
 	);
+	geometryPsoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_WIREFRAME;
 	Ubpa::DXRenderer::Instance().RegisterPSO("geometry", &geometryPsoDesc);
 
 	auto deferLightingPsoDesc = Ubpa::DX12::Desc::PSO::Basic(
@@ -1004,40 +941,40 @@ void HW02App::BuildFrameResources()
 
 void HW02App::BuildMaterials()
 {
-	auto woodCrate = std::make_unique<Material>();
-	woodCrate->Name = "iron";
-	woodCrate->MatCBIndex = 0;
-	woodCrate->DiffuseSrvGpuHandle = Ubpa::DXRenderer::Instance().GetTextureSrvGpuHandle("iron");
-	woodCrate->DiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	woodCrate->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
-	woodCrate->Roughness = 0.2f;
+	auto iron = std::make_unique<Material>();
+	iron->Name = "iron";
+	iron->MatCBIndex = 0;
+	iron->DiffuseSrvGpuHandle = Ubpa::DXRenderer::Instance().GetTextureSrvGpuHandle("iron");
+	iron->DiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	iron->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
+	iron->Roughness = 0.2f;
 
-	mMaterials["woodCrate"] = std::move(woodCrate);
+	mMaterials["iron"] = std::move(iron);
 }
 
 void HW02App::BuildRenderItems()
 {
-	/*auto boxRitem = std::make_unique<RenderItem>();
-	boxRitem->ObjCBIndex = 0;
-	boxRitem->Mat = mMaterials["woodCrate"].get();
-	boxRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("boxGeo");
-	boxRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	boxRitem->IndexCount = boxRitem->Geo->submeshGeometries["box"].IndexCount;
-	boxRitem->StartIndexLocation = boxRitem->Geo->submeshGeometries["box"].StartIndexLocation;
-	boxRitem->BaseVertexLocation = boxRitem->Geo->submeshGeometries["box"].BaseVertexLocation;
-	mAllRitems.push_back(std::move(boxRitem));*/
+	auto orig_bunnyRitem = std::make_unique<RenderItem>();
+	orig_bunnyRitem->World = Ubpa::transformf(Ubpa::pointf3{ 1,0,0 }).as<XMFLOAT4X4>();
+	orig_bunnyRitem->ObjCBIndex = 0;
+	orig_bunnyRitem->Mat = mMaterials["iron"].get();
+	orig_bunnyRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("orig_bunnyGeo");
+	orig_bunnyRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	orig_bunnyRitem->IndexCount = orig_bunnyRitem->Geo->submeshGeometries["bunny"].IndexCount;
+	orig_bunnyRitem->StartIndexLocation = orig_bunnyRitem->Geo->submeshGeometries["bunny"].StartIndexLocation;
+	orig_bunnyRitem->BaseVertexLocation = orig_bunnyRitem->Geo->submeshGeometries["bunny"].BaseVertexLocation;
+	mAllRitems.push_back(std::move(orig_bunnyRitem));
 
-	// ===========================
-
-	auto bunnyRitem = std::make_unique<RenderItem>();
-	bunnyRitem->ObjCBIndex = 0;
-	bunnyRitem->Mat = mMaterials["woodCrate"].get();
-	bunnyRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("bunnyGeo");
-	bunnyRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	bunnyRitem->IndexCount = bunnyRitem->Geo->submeshGeometries["bunny"].IndexCount;
-	bunnyRitem->StartIndexLocation = bunnyRitem->Geo->submeshGeometries["bunny"].StartIndexLocation;
-	bunnyRitem->BaseVertexLocation = bunnyRitem->Geo->submeshGeometries["bunny"].BaseVertexLocation;
-	mAllRitems.push_back(std::move(bunnyRitem));
+	auto param_bunnyRitem = std::make_unique<RenderItem>();
+	param_bunnyRitem->World = Ubpa::transformf(Ubpa::pointf3{ -1,0,0 }).as<XMFLOAT4X4>();
+	param_bunnyRitem->ObjCBIndex = 1;
+	param_bunnyRitem->Mat = mMaterials["iron"].get();
+	param_bunnyRitem->Geo = &Ubpa::DXRenderer::Instance().GetMeshGeometry("param_bunnyGeo");
+	param_bunnyRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	param_bunnyRitem->IndexCount = param_bunnyRitem->Geo->submeshGeometries["bunny"].IndexCount;
+	param_bunnyRitem->StartIndexLocation = param_bunnyRitem->Geo->submeshGeometries["bunny"].StartIndexLocation;
+	param_bunnyRitem->BaseVertexLocation = param_bunnyRitem->Geo->submeshGeometries["bunny"].BaseVertexLocation;
+	mAllRitems.push_back(std::move(param_bunnyRitem));
 
 	// All the render items are opaque.
 	for(auto& e : mAllRitems)

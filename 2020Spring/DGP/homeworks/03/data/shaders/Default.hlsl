@@ -20,10 +20,7 @@
 // Include structures and functions for lighting.
 #include "LightingUtil.hlsl"
 
-Texture2D    gAlbedoMap    : register(t0);
-Texture2D    gRoughnessMap : register(t1);
-Texture2D    gMetalnessMap : register(t2);
-
+Texture2D    gDiffuseMap : register(t0);
 SamplerState gsamLinear  : register(s0);
 
 
@@ -72,12 +69,7 @@ struct VertexIn
 {
 	float3 PosL    : POSITION;
     float3 NormalL : NORMAL;
-	float2 TexC    : TEXCOORD0;
-	
-	// float average_curvature;
-	// float abs_average_curvature;
-	// float gauss_curvature;
-	float3 data    : TEXCOORD1;
+	float2 TexC    : TEXCOORD;
 };
 
 struct VertexOut
@@ -85,8 +77,7 @@ struct VertexOut
 	float4 PosH    : SV_POSITION;
     float3 PosW    : POSITION;
     float3 NormalW : NORMAL;
-	float2 TexC    : TEXCOORD0;
-	float3 data    : TEXCOORD1;
+	float2 TexC    : TEXCOORD;
 };
 
 VertexOut VS(VertexIn vin)
@@ -106,48 +97,35 @@ VertexOut VS(VertexIn vin)
 	// Output vertex attributes for interpolation across triangle.
     float4 texC = mul(float4(vin.TexC, 0.0f, 1.0f), gTexTransform);
     vout.TexC = mul(texC, gMatTransform).xy;
-	
-	vout.data = vin.data;
 
     return vout;
 }
 
-struct PixelOut
+float4 PS(VertexOut pin) : SV_Target
 {
-	float4 gbuffer0    : SV_Target0;
-	float4 gbuffer1    : SV_Target1;
-	float4 gbuffer2    : SV_Target2;
-};
+    float4 diffuseAlbedo = gDiffuseMap.Sample(gsamLinear, pin.TexC) * gDiffuseAlbedo;
 
-static const float3 colorbar[11] =
-{
-    float3(0.00f, 0.00f, 0.64f),
-    float3(0.00f, 0.16f, 1.00f),
-    float3(0.00f, 0.69f, 1.00f),
-    float3(0.05f, 0.96f, 0.92f),
-    float3(0.49f, 1.00f, 0.48f),
-    float3(0.71f, 1.00f, 0.26f),
-    float3(0.92f, 1.00f, 0.05f),
-    float3(1.00f, 0.77f, 0.00f),
-    float3(0.94f, 0.03f, 0.00f),
-    float3(0.64f, 0.00f, 0.00f),
-    float3(0.20f, 0.00f, 0.00f)
-};
+    // Interpolating normal can unnormalize it, so renormalize it.
+    pin.NormalW = normalize(pin.NormalW);
 
-PixelOut PS(VertexOut pin)
-{
-	PixelOut pout;
-	
-	uint z = (uint)(10.f * pin.data.y);
-	float3 color = lerp(colorbar[z], colorbar[z+1], 10.f * pin.data.y - z);
-	
-    float3 albedo = color; //float3(pin.data.z, pin.data.z, pin.data.z);// * gAlbedoMap.Sample(gsamLinear, pin.TexC).xyz;
-    float roughness = 0.5f;//gRoughnessMap.Sample(gsamLinear, pin.TexC).x;
-    float metalness = 0.f;//gMetalnessMap.Sample(gsamLinear, pin.TexC).x;
-	
-	pout.gbuffer0 = float4(albedo, roughness);
-	pout.gbuffer1 = float4(normalize(pin.NormalW), metalness);
-	pout.gbuffer2 = float4(pin.PosW, 0.0f);
-	
-	return pout;
+    // Vector from point being lit to eye. 
+    float3 toEyeW = normalize(gEyePosW - pin.PosW);
+
+    // Light terms.
+    float4 ambient = gAmbientLight*diffuseAlbedo;
+
+    const float shininess = 1.0f - gRoughness;
+    Material mat = { diffuseAlbedo, gFresnelR0, shininess };
+    float3 shadowFactor = 1.0f;
+    float4 directLight = ComputeLighting(gLights, mat, pin.PosW,
+        pin.NormalW, toEyeW, shadowFactor);
+
+    float4 litColor = ambient + directLight;
+
+    // Common convention to take alpha from diffuse material.
+    litColor.a = diffuseAlbedo.a;
+
+    return litColor;
 }
+
+
