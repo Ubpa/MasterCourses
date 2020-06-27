@@ -1,7 +1,3 @@
-//***************************************************************************************
-// HW02App.cpp by Frank Luna (C) 2015 All Rights Reserved.
-//***************************************************************************************
-
 
 #include "../common/d3dApp.h"
 #include "../common/MathHelper.h"
@@ -17,7 +13,7 @@ using namespace DirectX::PackedVector;
 
 const int gNumFrameResources = 3;
 
-struct V : Ubpa::TVertex<Ubpa::HEMeshTriats_EmptyEP<V>> {
+struct V : Ubpa::TVertex<Ubpa::HEMeshTriats_EmptyEPH<V>> {
 	Ubpa::pointf3 pos;
 	Ubpa::pointf2 uv;
 };
@@ -67,10 +63,10 @@ struct RenderItem
 {
 	RenderItem() = default;
 
-    // World matrix of the shape that describes the object's local space
-    // relative to the world space, which defines the position, orientation,
-    // and scale of the object in the world.
-    XMFLOAT4X4 World = MathHelper::Identity4x4();
+	// World matrix of the shape that describes the object's local space
+	// relative to the world space, which defines the position, orientation,
+	// and scale of the object in the world.
+	XMFLOAT4X4 World = MathHelper::Identity4x4();
 
 	XMFLOAT4X4 TexTransform = MathHelper::Identity4x4();
 
@@ -87,35 +83,35 @@ struct RenderItem
 	Ubpa::DX12::MeshGeometry* Geo = nullptr;
 	//std::string Geo;
 
-    // Primitive topology.
-    D3D12_PRIMITIVE_TOPOLOGY PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+	// Primitive topology.
+	D3D12_PRIMITIVE_TOPOLOGY PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 
-    // DrawIndexedInstanced parameters.
-    UINT IndexCount = 0;
-    UINT StartIndexLocation = 0;
-    int BaseVertexLocation = 0;
+	// DrawIndexedInstanced parameters.
+	UINT IndexCount = 0;
+	UINT StartIndexLocation = 0;
+	int BaseVertexLocation = 0;
 };
 
-class HW04App : public D3DApp
+class HW07App : public D3DApp
 {
 public:
-    HW04App(HINSTANCE hInstance);
-    HW04App(const HW04App& rhs) = delete;
-    HW04App& operator=(const HW04App& rhs) = delete;
-    ~HW04App();
+	HW07App(HINSTANCE hInstance);
+	HW07App(const HW07App& rhs) = delete;
+	HW07App& operator=(const HW07App& rhs) = delete;
+	~HW07App();
 
-    virtual bool Initialize()override;
+	virtual bool Initialize()override;
 
 private:
-    virtual void OnResize()override;
-    virtual void Update(const GameTimer& gt)override;
-    virtual void Draw(const GameTimer& gt)override;
+	virtual void OnResize()override;
+	virtual void Update(const GameTimer& gt)override;
+	virtual void Draw(const GameTimer& gt)override;
 
-    virtual void OnMouseDown(WPARAM btnState, int x, int y)override;
-    virtual void OnMouseUp(WPARAM btnState, int x, int y)override;
-    virtual void OnMouseMove(WPARAM btnState, int x, int y)override;
+	virtual void OnMouseDown(WPARAM btnState, int x, int y)override;
+	virtual void OnMouseUp(WPARAM btnState, int x, int y)override;
+	virtual void OnMouseMove(WPARAM btnState, int x, int y)override;
 
-    void OnKeyboardInput(const GameTimer& gt);
+	void OnKeyboardInput(const GameTimer& gt);
 	void UpdateCamera(const GameTimer& gt);
 	void AnimateMaterials(const GameTimer& gt);
 	void UpdateObjectCBs(const GameTimer& gt);
@@ -123,15 +119,15 @@ private:
 	void UpdateMainPassCB(const GameTimer& gt);
 
 	void LoadTextures();
-    void BuildRootSignature();
+	void BuildRootSignature();
 	void BuildDescriptorHeaps();
-    void BuildShadersAndInputLayout();
-    void BuildShapeGeometry();
-    void BuildPSOs();
-    void BuildFrameResources();
-    void BuildMaterials();
-    void BuildRenderItems();
-    void DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems);
+	void BuildShadersAndInputLayout();
+	void BuildShapeGeometry();
+	void BuildPSOs();
+	void BuildFrameResources();
+	void BuildMaterials();
+	void BuildRenderItems();
+	void DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems);
 
 	std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> GetStaticSamplers();
 
@@ -139,29 +135,29 @@ private:
 
 	std::vector<std::unique_ptr<Ubpa::DX12::FrameResource>> mFrameResources;
 	Ubpa::DX12::FrameResource* mCurrFrameResource = nullptr;
-    int mCurrFrameResourceIndex = 0;
+	int mCurrFrameResourceIndex = 0;
 
 	std::unordered_map<std::string, std::unique_ptr<Material>> mMaterials;
 
-    std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
- 
+	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
+
 	// List of all the render items.
 	std::vector<std::unique_ptr<RenderItem>> mAllRitems;
 
 	// Render items divided by PSO.
 	std::vector<RenderItem*> mOpaqueRitems;
 
-    PassConstants mMainPassCB;
+	PassConstants mMainPassCB;
 
 	XMFLOAT3 mEyePos = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT4X4 mView = MathHelper::Identity4x4();
 	XMFLOAT4X4 mProj = MathHelper::Identity4x4();
 
-	float mTheta = 1.3f*XM_PI;
-	float mPhi = 0.4f*XM_PI;
+	float mTheta = 1.3f * XM_PI;
+	float mPhi = 0.4f * XM_PI;
 	float mRadius = 2.5f;
 
-    POINT mLastMousePos;
+	POINT mLastMousePos;
 
 	std::unordered_map<std::string, std::unique_ptr<Ubpa::TriMesh>> trimeshes;
 
@@ -173,46 +169,46 @@ private:
 };
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
-    PSTR cmdLine, int showCmd)
+	PSTR cmdLine, int showCmd)
 {
-    // Enable run-time memory check for debug builds.
+	// Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-    try
-    {
-        HW04App theApp(hInstance);
-        if(!theApp.Initialize())
-            return 0;
+	try
+	{
+		HW07App theApp(hInstance);
+		if (!theApp.Initialize())
+			return 0;
 
-        int rst = theApp.Run();
+		int rst = theApp.Run();
 		Ubpa::DXRenderer::Instance().Release();
 		return rst;
-    }
-    catch(Ubpa::DX12::Util::Exception& e)
-    {
-        MessageBox(nullptr, e.ToString().c_str(), L"HR Failed", MB_OK);
-        return 0;
-    }
+	}
+	catch (Ubpa::DX12::Util::Exception& e)
+	{
+		MessageBox(nullptr, e.ToString().c_str(), L"HR Failed", MB_OK);
+		return 0;
+	}
 
 }
 
-HW04App::HW04App(HINSTANCE hInstance)
-    : D3DApp(hInstance)
+HW07App::HW07App(HINSTANCE hInstance)
+	: D3DApp(hInstance)
 {
 }
 
-HW04App::~HW04App()
+HW07App::~HW07App()
 {
-    if(!uDevice.IsNull())
-        FlushCommandQueue();
+	if (!uDevice.IsNull())
+		FlushCommandQueue();
 }
 
-bool HW04App::Initialize()
+bool HW07App::Initialize()
 {
-    if(!D3DApp::Initialize())
-        return false;
+	if (!D3DApp::Initialize())
+		return false;
 
 	Ubpa::DXRenderer::Instance().Init(uDevice.raw.Get());
 
@@ -220,44 +216,44 @@ bool HW04App::Initialize()
 
 	//fgRsrcMngr.Init(uGCmdList, uDevice);
 
-    // Reset the command list to prep for initialization commands.
-    ThrowIfFailed(uGCmdList->Reset(mDirectCmdListAlloc.Get(), nullptr));
+	// Reset the command list to prep for initialization commands.
+	ThrowIfFailed(uGCmdList->Reset(mDirectCmdListAlloc.Get(), nullptr));
 
-    // Get the increment size of a descriptor in this heap type.  This is hardware specific, 
+	// Get the increment size of a descriptor in this heap type.  This is hardware specific, 
 	// so we have to query this information.
-    //mCbvSrvDescriptorSize = uDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	//mCbvSrvDescriptorSize = uDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	Ubpa::DXRenderer::Instance().GetUpload().Begin();
- 
-	LoadTextures();
-    BuildRootSignature();
-	BuildDescriptorHeaps();
-    BuildShadersAndInputLayout();
-    BuildShapeGeometry();
-	BuildMaterials();
-    BuildRenderItems();
-    BuildFrameResources();
-    BuildPSOs();
 
-    // Execute the initialization commands.
-    ThrowIfFailed(uGCmdList->Close());
+	LoadTextures();
+	BuildRootSignature();
+	BuildDescriptorHeaps();
+	BuildShadersAndInputLayout();
+	BuildShapeGeometry();
+	BuildMaterials();
+	BuildRenderItems();
+	BuildFrameResources();
+	BuildPSOs();
+
+	// Execute the initialization commands.
+	ThrowIfFailed(uGCmdList->Close());
 	uCmdQueue.Execute(uGCmdList.raw.Get());
 
 	Ubpa::DXRenderer::Instance().GetUpload().End(uCmdQueue.raw.Get());
 
-    // Wait until initialization is complete.
-    FlushCommandQueue();
+	// Wait until initialization is complete.
+	FlushCommandQueue();
 
-    return true;
+	return true;
 }
- 
-void HW04App::OnResize()
-{
-    D3DApp::OnResize();
 
-    // The window resized, so update the aspect ratio and recompute the projection matrix.
-    XMMATRIX P = XMMatrixPerspectiveFovLH(0.25f*MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
-    XMStoreFloat4x4(&mProj, P);
+void HW07App::OnResize()
+{
+	D3DApp::OnResize();
+
+	// The window resized, so update the aspect ratio and recompute the projection matrix.
+	XMMATRIX P = XMMatrixPerspectiveFovLH(0.25f * MathHelper::Pi, AspectRatio(), 1.0f, 1000.0f);
+	XMStoreFloat4x4(&mProj, P);
 
 	auto clearFGRsrcMngr = [](void* rsrcMngr) {
 		reinterpret_cast<Ubpa::DX12::FG::RsrcMngr*>(rsrcMngr)->Clear();
@@ -266,17 +262,17 @@ void HW04App::OnResize()
 		frsrc->DelayUpdateResource("FrameGraphRsrcMngr", clearFGRsrcMngr);
 }
 
-void HW04App::Update(const GameTimer& gt)
+void HW07App::Update(const GameTimer& gt)
 {
-    OnKeyboardInput(gt);
+	OnKeyboardInput(gt);
 	UpdateCamera(gt);
 
-    // Cycle through the circular frame resource array.
-    mCurrFrameResourceIndex = (mCurrFrameResourceIndex + 1) % gNumFrameResources;
-    mCurrFrameResource = mFrameResources[mCurrFrameResourceIndex].get();
+	// Cycle through the circular frame resource array.
+	mCurrFrameResourceIndex = (mCurrFrameResourceIndex + 1) % gNumFrameResources;
+	mCurrFrameResource = mFrameResources[mCurrFrameResourceIndex].get();
 
-    // Has the GPU finished processing the commands of the current frame resource?
-    // If not, wait until the GPU has completed commands up to this fence point.
+	// Has the GPU finished processing the commands of the current frame resource?
+	// If not, wait until the GPU has completed commands up to this fence point.
 	mCurrFrameResource->Wait();
 
 	AnimateMaterials(gt);
@@ -285,16 +281,16 @@ void HW04App::Update(const GameTimer& gt)
 	UpdateMainPassCB(gt);
 }
 
-void HW04App::Draw(const GameTimer& gt)
+void HW07App::Draw(const GameTimer& gt)
 {
 	auto cmdListAlloc = mCurrFrameResource->GetResource<ID3D12CommandAllocator>("CommandAllocator");
 
-    // Reuse the memory associated with command recording.
-    // We can only reset when the associated command lists have finished execution on the GPU.
-    ThrowIfFailed(cmdListAlloc->Reset());
+	// Reuse the memory associated with command recording.
+	// We can only reset when the associated command lists have finished execution on the GPU.
+	ThrowIfFailed(cmdListAlloc->Reset());
 
-    // A command list can be reset after it has been added to the command queue via ExecuteCommandList.
-    // Reusing the command list reuses memory.
+	// A command list can be reset after it has been added to the command queue via ExecuteCommandList.
+	// Reusing the command list reuses memory.
 	ThrowIfFailed(uGCmdList->Reset(cmdListAlloc, nullptr));
 	uGCmdList.SetDescriptorHeaps(Ubpa::DX12::DescriptorHeapMngr::Instance().GetCSUGpuDH()->GetDescriptorHeap());
 
@@ -340,7 +336,7 @@ void HW04App::Draw(const GameTimer& gt)
 			{gbuffer1,Ubpa::DX12::Desc::SRV::Tex2D(DXGI_FORMAT_R32G32B32A32_FLOAT)},
 			{gbuffer2,Ubpa::DX12::Desc::SRV::Tex2D(DXGI_FORMAT_R32G32B32A32_FLOAT)} })
 
-		.RegisterImportedRsrc(backbuffer, { CurrentBackBuffer(), D3D12_RESOURCE_STATE_PRESENT })
+			.RegisterImportedRsrc(backbuffer, { CurrentBackBuffer(), D3D12_RESOURCE_STATE_PRESENT })
 		.RegisterImportedRsrc(depthstencil, { mDepthStencilBuffer.Get(), D3D12_RESOURCE_STATE_DEPTH_WRITE })
 
 		.RegisterPassRsrcs(gbPass, gbuffer0, D3D12_RESOURCE_STATE_RENDER_TARGET,
@@ -465,74 +461,74 @@ void HW04App::Draw(const GameTimer& gt)
 	auto [success, crst] = fgCompiler.Compile(fg);
 	fgExecutor.Execute(crst, *fgRsrcMngr);
 
-    // Done recording commands.
-    ThrowIfFailed(uGCmdList->Close());
+	// Done recording commands.
+	ThrowIfFailed(uGCmdList->Close());
 
-    // Add the command list to the queue for execution.
+	// Add the command list to the queue for execution.
 	uCmdQueue.Execute(uGCmdList.raw.Get());
 
-    // Swap the back and front buffers
-    ThrowIfFailed(mSwapChain->Present(0, 0));
+	// Swap the back and front buffers
+	ThrowIfFailed(mSwapChain->Present(0, 0));
 	mCurrBackBuffer = (mCurrBackBuffer + 1) % SwapChainBufferCount;
 
 	mCurrFrameResource->Signal(uCmdQueue.raw.Get(), ++mCurrentFence);
 }
 
-void HW04App::OnMouseDown(WPARAM btnState, int x, int y)
+void HW07App::OnMouseDown(WPARAM btnState, int x, int y)
 {
-    mLastMousePos.x = x;
-    mLastMousePos.y = y;
+	mLastMousePos.x = x;
+	mLastMousePos.y = y;
 
-    SetCapture(mhMainWnd);
+	SetCapture(mhMainWnd);
 }
 
-void HW04App::OnMouseUp(WPARAM btnState, int x, int y)
+void HW07App::OnMouseUp(WPARAM btnState, int x, int y)
 {
-    ReleaseCapture();
+	ReleaseCapture();
 }
 
-void HW04App::OnMouseMove(WPARAM btnState, int x, int y)
+void HW07App::OnMouseMove(WPARAM btnState, int x, int y)
 {
-    if((btnState & MK_LBUTTON) != 0)
-    {
-        // Make each pixel correspond to a quarter of a degree.
-        float dx = XMConvertToRadians(0.25f*static_cast<float>(x - mLastMousePos.x));
-        float dy = XMConvertToRadians(0.25f*static_cast<float>(y - mLastMousePos.y));
+	if ((btnState & MK_LBUTTON) != 0)
+	{
+		// Make each pixel correspond to a quarter of a degree.
+		float dx = XMConvertToRadians(0.25f * static_cast<float>(x - mLastMousePos.x));
+		float dy = XMConvertToRadians(0.25f * static_cast<float>(y - mLastMousePos.y));
 
-        // Update angles based on input to orbit camera around box.
-        mTheta += dx;
-        mPhi += dy;
+		// Update angles based on input to orbit camera around box.
+		mTheta += dx;
+		mPhi += dy;
 
-        // Restrict the angle mPhi.
-        mPhi = MathHelper::Clamp(mPhi, 0.1f, MathHelper::Pi - 0.1f);
-    }
-    else if((btnState & MK_RBUTTON) != 0)
-    {
-        // Make each pixel correspond to 0.2 unit in the scene.
-        float dx = 0.05f*static_cast<float>(x - mLastMousePos.x);
-        float dy = 0.05f*static_cast<float>(y - mLastMousePos.y);
+		// Restrict the angle mPhi.
+		mPhi = MathHelper::Clamp(mPhi, 0.1f, MathHelper::Pi - 0.1f);
+	}
+	else if ((btnState & MK_RBUTTON) != 0)
+	{
+		// Make each pixel correspond to 0.2 unit in the scene.
+		float dx = 0.05f * static_cast<float>(x - mLastMousePos.x);
+		float dy = 0.05f * static_cast<float>(y - mLastMousePos.y);
 
-        // Update the camera radius based on input.
-        mRadius += dx - dy;
+		// Update the camera radius based on input.
+		mRadius += dx - dy;
 
-        // Restrict the radius.
-        mRadius = MathHelper::Clamp(mRadius, 2.0f, 150.0f);
-    }
+		// Restrict the radius.
+		mRadius = MathHelper::Clamp(mRadius, 2.0f, 150.0f);
+	}
 
-    mLastMousePos.x = x;
-    mLastMousePos.y = y;
+	mLastMousePos.x = x;
+	mLastMousePos.y = y;
 }
- 
-void HW04App::OnKeyboardInput(const GameTimer& gt)
+
+void HW07App::OnKeyboardInput(const GameTimer& gt)
 {
 }
- 
-void HW04App::UpdateCamera(const GameTimer& gt)
+
+void HW07App::UpdateCamera(const GameTimer& gt)
 {
 	// Convert Spherical to Cartesian coordinates.
-	mEyePos.x = mRadius*sinf(mPhi)*cosf(mTheta);
-	mEyePos.z = mRadius*sinf(mPhi)*sinf(mTheta);
-	mEyePos.y = mRadius*cosf(mPhi);
+	mEyePos.x = mRadius * sinf(mPhi) * cosf(mTheta);
+	mEyePos.z = mRadius * sinf(mPhi) * sinf(mTheta);
+	mEyePos.y = mRadius * cosf(mPhi);
 
 	// Build the view matrix.
 	XMVECTOR pos = XMVectorSet(mEyePos.x, mEyePos.y, mEyePos.z, 1.0f);
@@ -543,20 +539,20 @@ void HW04App::UpdateCamera(const GameTimer& gt)
 	XMStoreFloat4x4(&mView, view);
 }
 
-void HW04App::AnimateMaterials(const GameTimer& gt)
+void HW07App::AnimateMaterials(const GameTimer& gt)
 {
-	
+
 }
 
-void HW04App::UpdateObjectCBs(const GameTimer& gt)
+void HW07App::UpdateObjectCBs(const GameTimer& gt)
 {
 	auto currObjectCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<ObjectConstants>>("ArrayUploadBuffer<ObjectConstants>");
-	for(auto& e : mAllRitems)
+	for (auto& e : mAllRitems)
 	{
 		// Only update the cbuffer data if the constants have changed.  
 		// This needs to be tracked per frame resource.
-		if(e->NumFramesDirty > 0)
+		if (e->NumFramesDirty > 0)
 		{
 			XMMATRIX world = XMLoadFloat4x4(&e->World);
 			XMMATRIX texTransform = XMLoadFloat4x4(&e->TexTransform);
@@ -573,16 +569,16 @@ void HW04App::UpdateObjectCBs(const GameTimer& gt)
 	}
 }
 
-void HW04App::UpdateMaterialCBs(const GameTimer& gt)
+void HW07App::UpdateMaterialCBs(const GameTimer& gt)
 {
 	auto currMaterialCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<MaterialConstants>>("ArrayUploadBuffer<MaterialConstants>");
-	for(auto& e : mMaterials)
+	for (auto& e : mMaterials)
 	{
 		// Only update the cbuffer data if the constants have changed.  If the cbuffer
 		// data changes, it needs to be updated for each FrameResource.
 		Material* mat = e.second.get();
-		if(mat->NumFramesDirty > 0)
+		if (mat->NumFramesDirty > 0)
 		{
 			XMMATRIX matTransform = XMLoadFloat4x4(&mat->MatTransform);
 
@@ -600,7 +596,7 @@ void HW04App::UpdateMaterialCBs(const GameTimer& gt)
 	}
 }
 
-void HW04App::UpdateMainPassCB(const GameTimer& gt)
+void HW07App::UpdateMainPassCB(const GameTimer& gt)
 {
 	XMMATRIX view = XMLoadFloat4x4(&mView);
 	XMMATRIX proj = XMLoadFloat4x4(&mProj);
@@ -636,7 +632,7 @@ void HW04App::UpdateMainPassCB(const GameTimer& gt)
 	currPassCB->Set(0, mMainPassCB);
 }
 
-void HW04App::LoadTextures()
+void HW07App::LoadTextures()
 {
 	std::array<std::wstring_view, 3> ironTextures{
 		L"../data/textures/iron/albedo.dds",
@@ -650,7 +646,7 @@ void HW04App::LoadTextures()
 		ironTextures.data(), ironTextures.size());
 }
 
-void HW04App::BuildRootSignature()
+void HW07App::BuildRootSignature()
 {
 	{ // geometry
 		CD3DX12_DESCRIPTOR_RANGE texTable;
@@ -718,11 +714,11 @@ void HW04App::BuildRootSignature()
 	}
 }
 
-void HW04App::BuildDescriptorHeaps()
+void HW07App::BuildDescriptorHeaps()
 {
 }
 
-void HW04App::BuildShadersAndInputLayout()
+void HW07App::BuildShadersAndInputLayout()
 {
 	Ubpa::DXRenderer::Instance().RegisterShaderByteCode("standardVS",
 		L"..\\data\\shaders\\Default.hlsl", nullptr, "VS", "vs_5_0");
@@ -740,22 +736,22 @@ void HW04App::BuildShadersAndInputLayout()
 		L"..\\data\\shaders\\deferLighting.hlsl", nullptr, "VS", "vs_5_0");
 	Ubpa::DXRenderer::Instance().RegisterShaderByteCode("deferLightingPS",
 		L"..\\data\\shaders\\deferLighting.hlsl", nullptr, "PS", "ps_5_0");
-	
-    mInputLayout =
-    {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+
+	mInputLayout =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
-    };
+	};
 }
 
-void HW04App::BuildShapeGeometry()
+void HW07App::BuildShapeGeometry()
 {
 	std::vector<Vertex> orig_vertices;
 	std::vector<Vertex> param_vertices;
 	std::vector<std::uint32_t> indices;
 
-	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Bunny_head.obj");
+	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Balls.obj");
 
 	bunny->CombineSamePositionVertex();
 	bunny->ScaleToUnit();
@@ -776,7 +772,7 @@ void HW04App::BuildShapeGeometry()
 		indices[3 * i + 2] = bunny->indices[i][2];
 	}
 
-	Ubpa::HEMesh<Ubpa::HEMeshTriats_EmptyEP<V>> hemesh(std::vector<size_t>{indices.begin(), indices.end()}, 3);
+	Ubpa::HEMesh<Ubpa::HEMeshTriats_EmptyEPH<V>> hemesh(std::vector<size_t>{indices.begin(), indices.end()}, 3);
 	assert(hemesh.IsValid() && hemesh.IsTriMesh() && hemesh.NumBoundaries() == 1);
 
 	for (size_t i = 0; i < orig_vertices.size(); i++)
@@ -823,12 +819,44 @@ void HW04App::BuildShapeGeometry()
 			triplets.emplace_back(vIdx, vIdx, 1.f);
 		}
 		else {
-			for (auto u : v->AdjVertices()) {
+			// uniform
+			/*for (auto u : v->AdjVertices()) {
 				b(vIdx, 0) = 0.f;
 				b(vIdx, 1) = 0.f;
 				triplets.emplace_back(vIdx, hemesh.Index(u), 1.f);
 			}
-			triplets.emplace_back(vIdx, vIdx, -static_cast<int>(v->Degree()));
+			triplets.emplace_back(vIdx, vIdx, -static_cast<int>(v->Degree()));*/
+
+			// mean value coordinates
+			auto adjVs = v->AdjVertices();
+			size_t M = adjVs.size();
+			std::vector<float> tan_half_alpha(M);
+			std::vector<float> weight(M);
+			std::vector<float> phi(M);
+			auto p0 = v->pos;
+			for (size_t i = 0; i < M; i++) {
+				auto p1 = adjVs[i]->pos;
+				auto p2 = adjVs[(i + 1) % M]->pos;
+				auto p0_p1 = p1 - p0;
+				auto p0_p2 = p2 - p0;
+				float cos_alpha = p0_p1.cos_theta(p0_p2);
+				tan_half_alpha[i] = std::sqrt(std::max(0.f, (1 - cos_alpha) / (1 + cos_alpha)));
+			}
+			for (size_t i = 0; i < M; i++) {
+				size_t pre = i == 0 ? M - 1 : i - 1;
+				weight[i] = (tan_half_alpha[pre] + tan_half_alpha[i]) / (adjVs[i]->pos - p0).norm();
+			}
+			float sumWeight = 0.f;
+			for (size_t i = 0; i < M; i++)
+				sumWeight += weight[i];
+			for (size_t i = 0; i < M; i++)
+				phi[i] = weight[i] / sumWeight;
+
+			b(vIdx, 0) = 0.f;
+			b(vIdx, 1) = 0.f;
+			for (size_t i = 0; i < M; i++)
+				triplets.emplace_back(vIdx, hemesh.Index(adjVs[i]), phi[i]);
+			triplets.emplace_back(vIdx, vIdx, -1.f);
 		}
 	}
 	A.setFromTriplets(triplets.begin(), triplets.end());
@@ -841,7 +869,7 @@ void HW04App::BuildShapeGeometry()
 		v->uv[0] = X(idx, 0);
 		v->uv[1] = X(idx, 1);
 	}
-	
+
 	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
 		param_vertices[i].Pos.x = hemesh.Vertices().at(i)->uv[0];
 		param_vertices[i].Pos.y = 0.f;
@@ -872,7 +900,7 @@ void HW04App::BuildShapeGeometry()
 	trimeshes.emplace("bunny", std::move(bunny));
 }
 
-void HW04App::BuildPSOs()
+void HW07App::BuildPSOs()
 {
 	auto screenPsoDesc = Ubpa::DX12::Desc::PSO::Basic(
 		Ubpa::DXRenderer::Instance().GetRootSignature("screen"),
@@ -907,10 +935,10 @@ void HW04App::BuildPSOs()
 	Ubpa::DXRenderer::Instance().RegisterPSO("defer lighting", &deferLightingPsoDesc);
 }
 
-void HW04App::BuildFrameResources()
+void HW07App::BuildFrameResources()
 {
-    for(int i = 0; i < gNumFrameResources; ++i)
-    {
+	for (int i = 0; i < gNumFrameResources; ++i)
+	{
 		auto fr = std::make_unique<Ubpa::DX12::FrameResource>(mFence.Get());
 
 		ID3D12CommandAllocator* allocator;
@@ -920,7 +948,7 @@ void HW04App::BuildFrameResources()
 
 		fr->RegisterResource("CommandAllocator", allocator, [](void* allocator) {
 			reinterpret_cast<ID3D12CommandAllocator*>(allocator)->Release();
-		});
+			});
 
 		fr->RegisterResource("gbPass constants",
 			new Ubpa::DX12::ArrayUploadBuffer<PassConstants>{ uDevice.raw.Get(), 1, true });
@@ -936,10 +964,10 @@ void HW04App::BuildFrameResources()
 		fr->RegisterResource("FrameGraphRsrcMngr", fgRsrcMngr);
 
 		mFrameResources.emplace_back(std::move(fr));
-    }
+	}
 }
 
-void HW04App::BuildMaterials()
+void HW07App::BuildMaterials()
 {
 	auto iron = std::make_unique<Material>();
 	iron->Name = "iron";
@@ -952,7 +980,7 @@ void HW04App::BuildMaterials()
 	mMaterials["iron"] = std::move(iron);
 }
 
-void HW04App::BuildRenderItems()
+void HW07App::BuildRenderItems()
 {
 	auto orig_bunnyRitem = std::make_unique<RenderItem>();
 	orig_bunnyRitem->World = Ubpa::transformf(Ubpa::pointf3{ 1,0,0 }).as<XMFLOAT4X4>();
@@ -977,15 +1005,15 @@ void HW04App::BuildRenderItems()
 	mAllRitems.push_back(std::move(param_bunnyRitem));
 
 	// All the render items are opaque.
-	for(auto& e : mAllRitems)
+	for (auto& e : mAllRitems)
 		mOpaqueRitems.push_back(e.get());
 }
 
-void HW04App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
+void HW07App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
 {
-    UINT objCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(ObjectConstants));
-    UINT matCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(MaterialConstants));
- 
+	UINT objCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(ObjectConstants));
+	UINT matCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(MaterialConstants));
+
 	auto objectCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<ObjectConstants>>("ArrayUploadBuffer<ObjectConstants>")
 		->GetResource();
@@ -993,27 +1021,27 @@ void HW04App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vec
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<MaterialConstants>>("ArrayUploadBuffer<MaterialConstants>")
 		->GetResource();
 
-    // For each render item...
-    for(size_t i = 0; i < ritems.size(); ++i)
-    {
-        auto ri = ritems[i];
+	// For each render item...
+	for (size_t i = 0; i < ritems.size(); ++i)
+	{
+		auto ri = ritems[i];
 
-        cmdList->IASetVertexBuffers(0, 1, &ri->Geo->VertexBufferView());
-        cmdList->IASetIndexBuffer(&ri->Geo->IndexBufferView());
-        cmdList->IASetPrimitiveTopology(ri->PrimitiveType);
+		cmdList->IASetVertexBuffers(0, 1, &ri->Geo->VertexBufferView());
+		cmdList->IASetIndexBuffer(&ri->Geo->IndexBufferView());
+		cmdList->IASetPrimitiveTopology(ri->PrimitiveType);
 
-        D3D12_GPU_VIRTUAL_ADDRESS objCBAddress = objectCB->GetGPUVirtualAddress() + ri->ObjCBIndex*objCBByteSize;
-		D3D12_GPU_VIRTUAL_ADDRESS matCBAddress = matCB->GetGPUVirtualAddress() + ri->Mat->MatCBIndex*matCBByteSize;
+		D3D12_GPU_VIRTUAL_ADDRESS objCBAddress = objectCB->GetGPUVirtualAddress() + ri->ObjCBIndex * objCBByteSize;
+		D3D12_GPU_VIRTUAL_ADDRESS matCBAddress = matCB->GetGPUVirtualAddress() + ri->Mat->MatCBIndex * matCBByteSize;
 
 		cmdList->SetGraphicsRootDescriptorTable(0, ri->Mat->DiffuseSrvGpuHandle);
-        cmdList->SetGraphicsRootConstantBufferView(1, objCBAddress);
-        cmdList->SetGraphicsRootConstantBufferView(3, matCBAddress);
+		cmdList->SetGraphicsRootConstantBufferView(1, objCBAddress);
+		cmdList->SetGraphicsRootConstantBufferView(3, matCBAddress);
 
-        cmdList->DrawIndexedInstanced(ri->IndexCount, 1, ri->StartIndexLocation, ri->BaseVertexLocation, 0);
-    }
+		cmdList->DrawIndexedInstanced(ri->IndexCount, 1, ri->StartIndexLocation, ri->BaseVertexLocation, 0);
+	}
 }
 
-std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW04App::GetStaticSamplers()
+std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW07App::GetStaticSamplers()
 {
 	// Applications usually only need a handful of samplers.  So just define them all up front
 	// and keep them available as part of the root signature.  
@@ -1064,9 +1092,9 @@ std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW04App::GetStaticSamplers()
 		0.0f,                              // mipLODBias
 		8);                                // maxAnisotropy
 
-	return { 
+	return {
 		pointWrap, pointClamp,
-		linearWrap, linearClamp, 
+		linearWrap, linearClamp,
 		anisotropicWrap, anisotropicClamp };
 }
 
