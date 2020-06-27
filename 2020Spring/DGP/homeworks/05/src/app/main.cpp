@@ -1,5 +1,5 @@
 //***************************************************************************************
-// HW02App.cpp by Frank Luna (C) 2015 All Rights Reserved.
+// HW05App.cpp by Frank Luna (C) 2015 All Rights Reserved.
 //***************************************************************************************
 
 
@@ -10,6 +10,8 @@
 #include "util.h"
 
 #include <Eigen/Sparse>
+#include <Eigen/SparseLU>
+#include <Eigen/Dense>
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
@@ -17,10 +19,114 @@ using namespace DirectX::PackedVector;
 
 const int gNumFrameResources = 3;
 
-struct V : Ubpa::TVertex<Ubpa::HEMeshTriats_EmptyEP<V>> {
-	Ubpa::pointf3 pos;
-	Ubpa::pointf2 uv;
+struct V;
+struct F;
+struct H;
+using Traits_VFH = Ubpa::HEMeshTriats_EmptyE<V, F, H>;
+
+struct V : Ubpa::TVertex<Traits_VFH> {
+	Ubpa::pointf3 p;
+	Ubpa::pointf2 u;
 };
+
+struct F : Ubpa::TPolygon<Traits_VFH> {
+	Ubpa::normalf n;
+	Ubpa::matf2 L;
+	float area;
+
+	void UpdateL();
+};
+
+struct H : Ubpa::THalfEdge<Traits_VFH> {
+	Ubpa::pointf2 q; // origin
+	float cot_theta{ 0.f }; // cotangent of opposite angle
+};
+
+float ComputeEnergy(const Ubpa::HEMesh<Traits_VFH>& mesh) {
+	float energy = 0.f;
+	for (auto tri : mesh.Polygons()) {
+		for (auto he : tri->AdjHalfEdges()) {
+			auto v0 = he->Origin();
+			auto v1 = he->End();
+
+			const auto& q0 = he->q;
+			const auto& q1 = he->Next()->q;
+
+			const auto& u0 = v0->u;
+			const auto& u1 = v1->u;
+
+			float cot_theta = he->cot_theta;
+
+			energy += cot_theta * ((u0 - u1) - tri->L * (q0 - q1)).norm2();
+		}
+	}
+	energy /= 2.f;
+	return energy;
+}
+
+void F::UpdateL() {
+	auto he01 = HalfEdge();
+	auto he12 = he01->Next();
+	auto he20 = he12->Next();
+
+	auto v0 = he01->Origin();
+	auto v1 = he12->Origin();
+	auto v2 = he20->Origin();
+
+	const auto& q0 = he01->q;
+	const auto& q1 = he12->q;
+	const auto& q2 = he20->q;
+
+	const auto& u0 = v0->u;
+	const auto& u1 = v1->u;
+	const auto& u2 = v2->u;
+
+	float y1_y2 = q1[1] - q2[1];
+	float y2_y0 = q2[1] - q0[1];
+	float y0_y1 = q0[1] - q1[1];
+
+	float x2_x1 = q2[0] - q1[0];
+	float x0_x2 = q0[0] - q2[0];
+	float x1_x0 = q1[0] - q0[0];
+
+	Ubpa::matf2 J;
+	float inv_two_area = 1 / (2 * area);
+	J(0, 0) = inv_two_area * (y1_y2 * u0[0] + y2_y0 * u1[0] + y0_y1 * u2[0]);
+	J(0, 1) = inv_two_area * (y1_y2 * u0[1] + y2_y0 * u1[1] + y0_y1 * u2[1]);
+	J(1, 0) = inv_two_area * (x2_x1 * u0[0] + x0_x2 * u1[0] + x1_x0 * u2[0]);
+	J(1, 1) = inv_two_area * (x2_x1 * u0[1] + x0_x2 * u1[1] + x1_x0 * u2[1]);
+
+	// ========================
+
+	auto u0_u1 = u0 - u1;
+	auto u1_u2 = u1 - u2;
+	auto u2_u0 = u2 - u0;
+	auto q0_q1 = q0 - q1;
+	auto q1_q2 = q1 - q2;
+	auto q2_q0 = q2 - q0;
+	float cot_theta_0 = he01->cot_theta;
+	float cot_theta_1 = he12->cot_theta;
+	float cot_theta_2 = he20->cot_theta;
+
+	Ubpa::matf2 St{ 0,0,0,0 };
+	St(0, 0) = cot_theta_0 * u0_u1[0] * q0_q1[0]
+		+ cot_theta_1 * u1_u2[0] * q1_q2[0]
+		+ cot_theta_2 * u2_u0[0] * q2_q0[0];
+	St(0, 1) = cot_theta_0 * u0_u1[0] * q0_q1[1]
+		+ cot_theta_1 * u1_u2[0] * q1_q2[1]
+		+ cot_theta_2 * u2_u0[0] * q2_q0[1];
+	St(1, 0) = cot_theta_0 * u0_u1[1] * q0_q1[0]
+		+ cot_theta_1 * u1_u2[1] * q1_q2[0]
+		+ cot_theta_2 * u2_u0[1] * q2_q0[0];
+	St(1, 1) = cot_theta_0 * u0_u1[1] * q0_q1[1]
+		+ cot_theta_1 * u1_u2[1] * q1_q2[1]
+		+ cot_theta_2 * u2_u0[1] * q2_q0[1];
+
+
+	//auto [U, S, V] = J.signed_SVD();
+	auto [U, S, V] = St.signed_SVD();
+	L = U * V.transpose();
+}
 
 struct ObjectConstants
 {
@@ -96,13 +202,13 @@ struct RenderItem
     int BaseVertexLocation = 0;
 };
 
-class HW02App : public D3DApp
+class HW05App : public D3DApp
 {
 public:
-    HW02App(HINSTANCE hInstance);
-    HW02App(const HW02App& rhs) = delete;
-    HW02App& operator=(const HW02App& rhs) = delete;
-    ~HW02App();
+    HW05App(HINSTANCE hInstance);
+    HW05App(const HW05App& rhs) = delete;
+    HW05App& operator=(const HW05App& rhs) = delete;
+    ~HW05App();
 
     virtual bool Initialize()override;
 
@@ -182,7 +288,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 
     try
     {
-        HW02App theApp(hInstance);
+        HW05App theApp(hInstance);
         if(!theApp.Initialize())
             return 0;
 
@@ -198,18 +304,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 
 }
 
-HW02App::HW02App(HINSTANCE hInstance)
+HW05App::HW05App(HINSTANCE hInstance)
     : D3DApp(hInstance)
 {
 }
 
-HW02App::~HW02App()
+HW05App::~HW05App()
 {
     if(!uDevice.IsNull())
         FlushCommandQueue();
 }
 
-bool HW02App::Initialize()
+bool HW05App::Initialize()
 {
     if(!D3DApp::Initialize())
         return false;
@@ -251,7 +357,7 @@ bool HW02App::Initialize()
     return true;
 }
  
-void HW02App::OnResize()
+void HW05App::OnResize()
 {
     D3DApp::OnResize();
 
@@ -266,7 +372,7 @@ void HW02App::OnResize()
 		frsrc->DelayUpdateResource("FrameGraphRsrcMngr", clearFGRsrcMngr);
 }
 
-void HW02App::Update(const GameTimer& gt)
+void HW05App::Update(const GameTimer& gt)
 {
     OnKeyboardInput(gt);
 	UpdateCamera(gt);
@@ -285,7 +391,7 @@ void HW02App::Update(const GameTimer& gt)
 	UpdateMainPassCB(gt);
 }
 
-void HW02App::Draw(const GameTimer& gt)
+void HW05App::Draw(const GameTimer& gt)
 {
 	auto cmdListAlloc = mCurrFrameResource->GetResource<ID3D12CommandAllocator>("CommandAllocator");
 
@@ -478,7 +584,7 @@ void HW02App::Draw(const GameTimer& gt)
 	mCurrFrameResource->Signal(uCmdQueue.raw.Get(), ++mCurrentFence);
 }
 
-void HW02App::OnMouseDown(WPARAM btnState, int x, int y)
+void HW05App::OnMouseDown(WPARAM btnState, int x, int y)
 {
     mLastMousePos.x = x;
     mLastMousePos.y = y;
@@ -486,12 +592,12 @@ void HW02App::OnMouseDown(WPARAM btnState, int x, int y)
     SetCapture(mhMainWnd);
 }
 
-void HW02App::OnMouseUp(WPARAM btnState, int x, int y)
+void HW05App::OnMouseUp(WPARAM btnState, int x, int y)
 {
     ReleaseCapture();
 }
 
-void HW02App::OnMouseMove(WPARAM btnState, int x, int y)
+void HW05App::OnMouseMove(WPARAM btnState, int x, int y)
 {
     if((btnState & MK_LBUTTON) != 0)
     {
@@ -523,11 +629,11 @@ void HW02App::OnMouseMove(WPARAM btnState, int x, int y)
     mLastMousePos.y = y;
 }
  
-void HW02App::OnKeyboardInput(const GameTimer& gt)
+void HW05App::OnKeyboardInput(const GameTimer& gt)
 {
 }
  
-void HW02App::UpdateCamera(const GameTimer& gt)
+void HW05App::UpdateCamera(const GameTimer& gt)
 {
 	// Convert Spherical to Cartesian coordinates.
 	mEyePos.x = mRadius*sinf(mPhi)*cosf(mTheta);
@@ -543,12 +649,12 @@ void HW02App::UpdateCamera(const GameTimer& gt)
 	XMStoreFloat4x4(&mView, view);
 }
 
-void HW02App::AnimateMaterials(const GameTimer& gt)
+void HW05App::AnimateMaterials(const GameTimer& gt)
 {
 	
 }
 
-void HW02App::UpdateObjectCBs(const GameTimer& gt)
+void HW05App::UpdateObjectCBs(const GameTimer& gt)
 {
 	auto currObjectCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<ObjectConstants>>("ArrayUploadBuffer<ObjectConstants>");
@@ -573,7 +679,7 @@ void HW02App::UpdateObjectCBs(const GameTimer& gt)
 	}
 }
 
-void HW02App::UpdateMaterialCBs(const GameTimer& gt)
+void HW05App::UpdateMaterialCBs(const GameTimer& gt)
 {
 	auto currMaterialCB = mCurrFrameResource
 		->GetResource<Ubpa::DX12::ArrayUploadBuffer<MaterialConstants>>("ArrayUploadBuffer<MaterialConstants>");
@@ -600,7 +706,7 @@ void HW02App::UpdateMaterialCBs(const GameTimer& gt)
 	}
 }
 
-void HW02App::UpdateMainPassCB(const GameTimer& gt)
+void HW05App::UpdateMainPassCB(const GameTimer& gt)
 {
 	XMMATRIX view = XMLoadFloat4x4(&mView);
 	XMMATRIX proj = XMLoadFloat4x4(&mProj);
@@ -636,7 +742,7 @@ void HW02App::UpdateMainPassCB(const GameTimer& gt)
 	currPassCB->Set(0, mMainPassCB);
 }
 
-void HW02App::LoadTextures()
+void HW05App::LoadTextures()
 {
 	std::array<std::wstring_view, 3> ironTextures{
 		L"../data/textures/iron/albedo.dds",
@@ -650,7 +756,7 @@ void HW02App::LoadTextures()
 		ironTextures.data(), ironTextures.size());
 }
 
-void HW02App::BuildRootSignature()
+void HW05App::BuildRootSignature()
 {
 	{ // geometry
 		CD3DX12_DESCRIPTOR_RANGE texTable;
@@ -718,11 +824,11 @@ void HW02App::BuildRootSignature()
 	}
 }
 
-void HW02App::BuildDescriptorHeaps()
+void HW05App::BuildDescriptorHeaps()
 {
 }
 
-void HW02App::BuildShadersAndInputLayout()
+void HW05App::BuildShadersAndInputLayout()
 {
 	Ubpa::DXRenderer::Instance().RegisterShaderByteCode("standardVS",
 		L"..\\data\\shaders\\Default.hlsl", nullptr, "VS", "vs_5_0");
@@ -749,13 +855,15 @@ void HW02App::BuildShadersAndInputLayout()
     };
 }
 
-void HW02App::BuildShapeGeometry()
+void HW05App::BuildShapeGeometry()
 {
 	std::vector<Vertex> orig_vertices;
 	std::vector<Vertex> param_vertices;
 	std::vector<std::uint32_t> indices;
 
-	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Bunny_head.obj");
+	// auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Balls.obj");
+	//auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/Bunny_head.obj");
+	auto bunny = std::make_unique<Ubpa::TriMesh>("../data/meshes/David1588.obj");
 
 	bunny->CombineSamePositionVertex();
 	bunny->ScaleToUnit();
@@ -776,17 +884,17 @@ void HW02App::BuildShapeGeometry()
 		indices[3 * i + 2] = bunny->indices[i][2];
 	}
 
-	Ubpa::HEMesh<Ubpa::HEMeshTriats_EmptyEP<V>> hemesh(std::vector<size_t>{indices.begin(), indices.end()}, 3);
+	Ubpa::HEMesh<Ubpa::HEMeshTriats_EmptyE<V, F, H>> hemesh(std::vector<size_t>{indices.begin(), indices.end()}, 3);
 	assert(hemesh.IsValid() && hemesh.IsTriMesh() && hemesh.NumBoundaries() == 1);
 
 	for (size_t i = 0; i < orig_vertices.size(); i++)
-		hemesh.Vertices().at(i)->pos = reinterpret_cast<Ubpa::pointf3&>(orig_vertices[i].Pos);
+		hemesh.Vertices().at(i)->p = reinterpret_cast<Ubpa::pointf3&>(orig_vertices[i].Pos);
 
 	auto boundary = hemesh.Boundaries().front();
 	float boundaryLength = 0.f;
 	for (auto he : boundary) {
-		auto p0 = he->Origin()->pos;
-		auto p1 = he->End()->pos;
+		auto p0 = he->Origin()->p;
+		auto p1 = he->End()->p;
 		boundaryLength += p0.distance(p1);
 	}
 
@@ -798,58 +906,188 @@ void HW02App::BuildShapeGeometry()
 		float s = t * 4 - static_cast<int>(t * 4);
 
 		if (t < 0.25f)
-			he->Origin()->uv = { s, 0 };
+			he->Origin()->u = { s, 0 };
 		else if (t < 0.50f)
-			he->Origin()->uv = { 1, s };
+			he->Origin()->u = { 1, s };
 		else if (t < 0.75f)
-			he->Origin()->uv = { 1 - s, 1 };
+			he->Origin()->u = { 1 - s, 1 };
 		else /* if (t < 1.00f)*/
-			he->Origin()->uv = { 0, 1 - s };
+			he->Origin()->u = { 0, 1 - s };
 
-		auto p0 = he->Origin()->pos;
-		auto p1 = he->End()->pos;
+		auto p0 = he->Origin()->p;
+		auto p1 = he->End()->p;
 		accumulateLength += p0.distance(p1);
 	}
 
 	size_t N = orig_vertices.size();
-	Eigen::SparseMatrix<float> A(N, N);
-	Eigen::MatrixXf b(N, 2);
-	std::vector<Eigen::Triplet<float>> triplets;
+	Eigen::SparseMatrix<float> init_A(N, N);
+	Eigen::MatrixXf init_B(N, 2);
+	std::vector<Eigen::Triplet<float>> init_triplets;
 	for (auto v : hemesh.Vertices()) {
-		auto vIdx = hemesh.Index(v);
+		auto vIdx = static_cast<int>(hemesh.Index(v));
 		if (v->IsBoundary()) {
-			b(vIdx, 0) = v->uv[0];
-			b(vIdx, 1) = v->uv[1];
-			triplets.emplace_back(vIdx, vIdx, 1.f);
+			init_B(vIdx, 0) = v->u[0];
+			init_B(vIdx, 1) = v->u[1];
+			init_triplets.emplace_back(vIdx, vIdx, 1.f);
 		}
 		else {
 			for (auto u : v->AdjVertices()) {
-				b(vIdx, 0) = 0.f;
-				b(vIdx, 1) = 0.f;
-				triplets.emplace_back(vIdx, hemesh.Index(u), 1.f);
+				init_B(vIdx, 0) = 0.f;
+				init_B(vIdx, 1) = 0.f;
+				init_triplets.emplace_back(vIdx, static_cast<int>(hemesh.Index(u)), 1.f);
 			}
-			triplets.emplace_back(vIdx, vIdx, -static_cast<int>(v->Degree()));
+			init_triplets.emplace_back(vIdx, vIdx, -static_cast<float>(v->Degree()));
 		}
 	}
-	A.setFromTriplets(triplets.begin(), triplets.end());
-	Eigen::BiCGSTAB<Eigen::SparseMatrix<float>> solver(A);
-	Eigen::MatrixXf X = solver.solve(b);
-	for (size_t i = 0; i < N; i++)
-		OutputDebugString(((std::to_wstring(X(i, 0)) + L", " + std::to_wstring(X(i, 1)) + L"\n").c_str()));
+	init_A.setFromTriplets(init_triplets.begin(), init_triplets.end());
+	Eigen::BiCGSTAB<Eigen::SparseMatrix<float>> init_solver(init_A);
+	Eigen::MatrixXf init_X = init_solver.solve(init_B);
 	for (auto v : hemesh.Vertices()) {
 		auto idx = hemesh.Index(v);
-		v->uv[0] = X(idx, 0);
-		v->uv[1] = X(idx, 1);
+		v->u[0] = init_X(idx, 0);
+		v->u[1] = init_X(idx, 1);
 	}
+
+	// ==============================
+
+	// compute normal
+	for (auto tri : hemesh.Polygons()) {
+		auto p0 = tri->HalfEdge()->Origin()->p;
+		auto p1 = tri->HalfEdge()->End()->p;
+		auto p2 = tri->HalfEdge()->Next()->End()->p;
+		tri->n = (p1 - p0).cross(p2 - p0).normalize().as<Ubpa::normalf>();
+	}
+
+	// compute area, q, cot_theta
+	for (auto tri : hemesh.Polygons()) {
+		auto rot = Ubpa::quatf{ tri->n.as<Ubpa::vecf3>(), Ubpa::vecf3{0,1,0} };
+
+		auto he01 = tri->HalfEdge();
+		auto he12 = he01->Next();
+		auto he20 = he12->Next();
+
+		auto v0 = he01->Origin();
+		auto v1 = he12->Origin();
+		auto v2 = he20->Origin();
+
+		auto p0_p1 = v1->p - v0->p;
+		auto p0_p2 = v2->p - v0->p;
+		auto p1_p2 = v2->p - v1->p;
+		auto p1_p0 = -p0_p1;
+		auto p2_p0 = -p0_p2;
+		auto p2_p1 = -p1_p2;
+
+		tri->area = p0_p1.cross(p0_p2).norm();
+
+		auto q0_q1 = rot * p0_p1;
+		auto q0_q2 = rot * p0_p2;
+
+		assert(std::abs(q0_q1[1]) < Ubpa::EPSILON<float>
+			&& std::abs(q0_q2[1]) < Ubpa::EPSILON<float>);
+
+		he01->q = {        0,        0 };
+		he12->q = { q0_q1[0], q0_q1[2] };
+		he20->q = { q0_q2[0], q0_q2[2] };
+
+		he01->cot_theta = p2_p0.cot_theta(p2_p1);
+		he12->cot_theta = p0_p1.cot_theta(p0_p2);
+		he20->cot_theta = p1_p2.cot_theta(p1_p0);
+	}
+
+	// fix 2 vertex
+	auto fix_v0 = boundary.front()->Origin();
+	//auto fix_v1 = boundary[boundary.size() / 2]->Origin();
+	auto fix_idx0 = static_cast<int>(hemesh.Index(fix_v0));
+	//auto fix_idx1 = static_cast<int>(hemesh.Index(fix_v1));
+
+	// pre-compute A
+	Eigen::SparseMatrix<float> global_A(N, N);
+	std::vector<float> global_diag_acc(N, 0.f);
+	std::vector<Eigen::Triplet<float>> global_triplets;
+	global_triplets.emplace_back(fix_idx0, fix_idx0, 1.f);
+	for (auto vi : hemesh.Vertices()) {
+		auto i = static_cast<int>(hemesh.Index(vi));
+		if (vi == fix_v0)
+			continue;
+		float diag = 0.f;
+		for (auto he_ij : vi->OutHalfEdges()) {
+			auto he_ji = he_ij->Pair();
+			auto vj = he_ji->Origin();
+			auto j = static_cast<int>(hemesh.Index(vj));
+			float cot_theta_ij = he_ij->cot_theta; // if he_ij is boundary, cot_theta_ij == 0
+			float cot_theta_ji = he_ji->cot_theta; // if he_ji is boundary, cot_theta_ji == 0
+			global_triplets.emplace_back(i, j, -(cot_theta_ij + cot_theta_ji));
+
+			diag += cot_theta_ij + cot_theta_ji;
+		}
+		global_triplets.emplace_back(i, i, diag);
+	}
+	global_A.setFromTriplets(global_triplets.begin(), global_triplets.end());
+	Eigen::SparseLU<Eigen::SparseMatrix<float>, Eigen::COLAMDOrdering<int>> global_solver;
+	global_solver.analyzePattern(global_A);
+	global_solver.factorize(global_A);
+
+	// iteration
+	float last_energy = ComputeEnergy(hemesh);
+	OutputDebugString((L"init energy: " + std::to_wstring(last_energy) + L"\n").c_str());
+	const float epsilon = 0.0001f;
+	while (true) {
+		// local
+		for (auto tri : hemesh.Polygons())
+			tri->UpdateL();
+		float local_energy = ComputeEnergy(hemesh);
+		OutputDebugString((L"local energy: " + std::to_wstring(local_energy) + L"\n").c_str());
+		// global
+		Eigen::MatrixXf global_B(N, 2);
+		global_B.setZero();
+		global_B(fix_idx0, 0) = fix_v0->u[0];
+		global_B(fix_idx0, 1) = fix_v0->u[1];
+		//global_B(fix_idx1, 0) = fix_v1->u[0];
+		//global_B(fix_idx1, 1) = fix_v1->u[1];
+		for (auto vi : hemesh.Vertices()) {
+			if(vi == fix_v0)
+				continue;
+
+			auto i = static_cast<int>(hemesh.Index(vi));
+			for (auto he_ij : vi->OutHalfEdges()) {
+				auto he_ji = he_ij->Pair();
+
+				if (he_ij->Polygon() != nullptr) {
+					auto w_dq_ij = he_ij->cot_theta * he_ij->Polygon()->L * (he_ij->q - he_ij->Next()->q);
+					global_B(i, 0) += w_dq_ij[0];
+					global_B(i, 1) += w_dq_ij[1];
+				}
+
+				if (he_ji->Polygon() != nullptr) {
+					auto w_dq_ji = he_ji->cot_theta * he_ji->Polygon()->L * (he_ji->q - he_ji->Next()->q);
+					global_B(i, 0) -= w_dq_ji[0];
+					global_B(i, 1) -= w_dq_ji[1];
+				}
+			}
+		}
+		Eigen::MatrixXf X = global_solver.solve(global_B);
+		for (auto v : hemesh.Vertices()) {
+			auto idx = hemesh.Index(v);
+			v->u[0] = X(idx, 0);
+			v->u[1] = X(idx, 1);
+		}
+		float global_energy = ComputeEnergy(hemesh);
+		OutputDebugString((L"global energy: " + std::to_wstring(global_energy) + L"\n").c_str());
+		if (global_energy / last_energy > (1 - epsilon))
+			break;
+		last_energy = global_energy;
+	}
+
+	// ==============================
 	
 	for (size_t i = 0; i < bunny->VertexNumber(); i++) {
-		param_vertices[i].Pos.x = hemesh.Vertices().at(i)->uv[0];
+		param_vertices[i].Pos.x = hemesh.Vertices().at(i)->u[0];
 		param_vertices[i].Pos.y = 0.f;
-		param_vertices[i].Pos.z = hemesh.Vertices().at(i)->uv[1];
+		param_vertices[i].Pos.z = hemesh.Vertices().at(i)->u[1];
 
 		param_vertices[i].Normal = { 0.f,1.f,0.f };
 
-		param_vertices[i].TexC = hemesh.Vertices().at(i)->uv.as<XMFLOAT2>();
+		param_vertices[i].TexC = hemesh.Vertices().at(i)->u.as<XMFLOAT2>();
 	}
 
 	Ubpa::DX12::SubmeshGeometry bunnySubmesh;
@@ -872,7 +1110,7 @@ void HW02App::BuildShapeGeometry()
 	trimeshes.emplace("bunny", std::move(bunny));
 }
 
-void HW02App::BuildPSOs()
+void HW05App::BuildPSOs()
 {
 	auto screenPsoDesc = Ubpa::DX12::Desc::PSO::Basic(
 		Ubpa::DXRenderer::Instance().GetRootSignature("screen"),
@@ -907,7 +1145,7 @@ void HW02App::BuildPSOs()
 	Ubpa::DXRenderer::Instance().RegisterPSO("defer lighting", &deferLightingPsoDesc);
 }
 
-void HW02App::BuildFrameResources()
+void HW05App::BuildFrameResources()
 {
     for(int i = 0; i < gNumFrameResources; ++i)
     {
@@ -939,7 +1177,7 @@ void HW02App::BuildFrameResources()
     }
 }
 
-void HW02App::BuildMaterials()
+void HW05App::BuildMaterials()
 {
 	auto iron = std::make_unique<Material>();
 	iron->Name = "iron";
@@ -952,7 +1190,7 @@ void HW02App::BuildMaterials()
 	mMaterials["iron"] = std::move(iron);
 }
 
-void HW02App::BuildRenderItems()
+void HW05App::BuildRenderItems()
 {
 	auto orig_bunnyRitem = std::make_unique<RenderItem>();
 	orig_bunnyRitem->World = Ubpa::transformf(Ubpa::pointf3{ 1,0,0 }).as<XMFLOAT4X4>();
@@ -981,7 +1219,7 @@ void HW02App::BuildRenderItems()
 		mOpaqueRitems.push_back(e.get());
 }
 
-void HW02App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
+void HW05App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
 {
     UINT objCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(ObjectConstants));
     UINT matCBByteSize = Ubpa::DX12::Util::CalcConstantBufferByteSize(sizeof(MaterialConstants));
@@ -1013,7 +1251,7 @@ void HW02App::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vec
     }
 }
 
-std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW02App::GetStaticSamplers()
+std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> HW05App::GetStaticSamplers()
 {
 	// Applications usually only need a handful of samplers.  So just define them all up front
 	// and keep them available as part of the root signature.  

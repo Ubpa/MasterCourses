@@ -9,7 +9,7 @@ Ubpa_InitUCMake()
 Ubpa_InitProject()
 
 Ubpa_AddDep(UDXRenderer 0.0.1)
-Ubpa_AddDep(UGM 0.6.4)
-Ubpa_AddDep(UHEMesh 0.3.0)
+Ubpa_AddDep(UGM 0.6.5)
+Ubpa_AddDep(UHEMesh 0.4.1)
 
 Ubpa_AddSubDirsRec(src)
