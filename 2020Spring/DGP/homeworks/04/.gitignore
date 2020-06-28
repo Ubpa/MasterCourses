@@ -21,3 +21,7 @@ bin/
 lib/
 build/
 _deps/
+
+# mesh
+*.obj
+
