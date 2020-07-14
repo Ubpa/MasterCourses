@@ -4,8 +4,6 @@
 
 ## 3.1 二次规划
 
-### 问题
-
 在变量的线性等式或不等式限制下求二次函数的极小点问题
 $$
 \begin{array}{ll}
@@ -18,14 +16,14 @@ $$
 
 > $G$ 是对称的不失一般性，$\mathbf{a}_i$ 如果线性相关，要么是多余，要么是不相容导致无解
 
-### 解
+解
 
 - 约束可能不相容，也可能没有有限最小值，无解
-- $G$ 半正定，凸二次规划问题，任意局部解释整体解
+- $G$ 半正定，凸二次规划问题，任意局部解释是整体解
 - $G$ 正定，正定二次规划问题，只要存在解即是唯一的
 - $G$ 不定，一般二次规划问题，有可能出现非整体解的局部解
 
-### 等式约束
+### 3.1.1 等式约束
 
 $$
 \begin{array}{ll}
@@ -38,7 +36,7 @@ $$
 
 > 等式约束可以去掉，然后给 $\mathbf{x}$ 进行变量代换，从而变成无约束优化问题
 
-#### 分块消去法
+#### 3.1.1.1 分块消去法
 
 $$
 \mathbf{x}=\left(\begin{array}{l}
@@ -72,8 +70,8 @@ $$
 其中
 $$
 \begin{array}{c}
-\hat{G}_{N}=G_{N N}-G_{N B} A_{B}^{-1} A_{N}-A_{N}^{\top} A_{B}^{-T} G_{B N}+A_{N}^{\top} A_{B}^{-T} G_{B B} A_{B}^{-1} A_{N} \\
-\hat{\mathbf{c}}_{N}=\mathbf{c}_{N}-A_{N}^{\top} A_{B}^{-T} \mathbf{c}_{B}+G_{N B} A_{B}^{-1} \mathbf{b}-A_{N}^{\top} A_{B}^{-T} G_{B B} A_{B}^{-1} \mathbf{b}
+\hat{G}_{N}=G_{N N}-G_{N B} A_{B}^{-1} A_{N}-A_{N}^{\top} A_{B}^{-\top} G_{B N}+A_{N}^{\top} A_{B}^{-\top} G_{B B} A_{B}^{-1} A_{N} \\
+\hat{\mathbf{c}}_{N}=\mathbf{c}_{N}-A_{N}^{\top} A_{B}^{-\top} \mathbf{c}_{B}+G_{N B} A_{B}^{-1} \mathbf{b}-A_{N}^{\top} A_{B}^{-\top} G_{B B} A_{B}^{-1} \mathbf{b}
 \end{array}
 $$
 以及对应的分块形式为
@@ -105,7 +103,7 @@ A_{B}^{-1} A_{N} \\
 $$
 Lagrange 乘子为
 $$
-G \mathbf{x}^{*}+\mathbf{c}=A^{\top} \lambda^{*} \Longrightarrow \lambda^{*}=A_{B}^{-T}\left(G_{B B} \mathbf{x}_{B}^{*}+G_{B N} \mathbf{x}_{N}^{*}+\mathbf{c}_{B}\right)
+G \mathbf{x}^{*}+\mathbf{c}=A^{\top} \lambda^{*} \Longrightarrow \lambda^{*}=A_{B}^{-\top}\left(G_{B B} \mathbf{x}_{B}^{*}+G_{B N} \mathbf{x}_{N}^{*}+\mathbf{c}_{B}\right)
 $$
 
 > 在后边的二次规划算法中，需要用到 $\lambda$ 
@@ -131,15 +129,15 @@ $$
 >
 > ---
 >
-> 当 $\hat{G}_N$ 半正定时，$\hat{G}_N$ 有 $0$ 特征值，将 $0$ 特征值对应的特征向量代入，若 $\hat{\mathbf{c}}_{N}^{\top} \mathbf{x}_{N}$ 不为 $0$，则问题可负无穷，无解。
+> 当 $\hat{G}_N$ 半正定时，$\hat{G}_N$ 有 $0$ 特征值，将 $0$ 特征值对应的特征向量 $\mathbf{x}_N$ 代入，$\frac{1}{2} \mathbf{x}_{N}^{\top} \hat{G}_{N} \mathbf{x}_{N}=0$，若 $\hat{\mathbf{c}}_{N}^{\top} \mathbf{x}_{N}$ 不为 $0$，则问题可负无穷，无解。
 >
-> 而 $0$ 特征值对应的特征向量有形式 $\left(I-\hat{G}_{N}^{+} \hat{G}_{N}\right) \tilde{\mathbf{y}}$，故要求 $(I-\hat{G}_N \hat{G}_N^+)\hat{\mathbf{c}}_N=\mathbf{0}$ 
+> 而 $0$ 特征值对应的特征向量有形式 $\mathbf{z}=\left(I-\hat{G}_{N}^{+} \hat{G}_{N}\right) \tilde{\mathbf{y}}$，故要求 $(I-\hat{G}_N \hat{G}_N^+)\hat{\mathbf{c}}_N=\mathbf{0}$ 
 
 如果 $\hat{G}_N$ 不定（存在负的特征根），显然问题无下界，故原问题不存在有限最优解
 
 缺点：当 $A_B$ 接近奇异时，数值不稳定
 
-#### 广义消去法
+#### 3.1.1.2 广义消去法
 
 设 $Z=\{\mathbf{z}_{m+1},\dots,\mathbf{z}_n\}$ 为解空间 $\mathop{Ker}(A)$ 的一组基，$Y=\{\mathbf{y}_1,\dots,\mathbf{y}_m\}$ 是商空间 $\mathbb{R}^n/\mathop{Ker}(A)$ 的一组基，则 $\forall \mathbf{x}\in\mathbb{R}^n$ 可作如下分解表达
 $$
@@ -148,12 +146,14 @@ $$
 
 > 维度
 >
-> - $Y$: $m\times m$ 
-> - $Z$: $m\times (n-m)$ 
+> - $Y$: $n\times m$ 
+> - $Z$: $n\times (n-m)$ 
 > - $\mathbf{x}_Y$: $m\times 1$ 
 > - $\mathbf{x}_Z$: $(n-m)\times 1$ 
 >
 > $\mathop{Ker}(A)=\{\mathbf{x}|A\mathbf{x}=0\}$ 为 $A$ 的齐次方程的解集
+>
+> $AY$ 可逆
 >
 > $Y \oplus Z=\mathbb{R}^n$ 
 >
@@ -167,11 +167,13 @@ $$
 $$
 \mathbf{x}=Y(A Y)^{-1} \mathbf{b}+Z \mathbf{x}_{Z}
 $$
-其中 $\mathbf{z}_Z\in \mathbb{R}^{n-m}$ 是自由变量
+其中 $\mathbf{z}_Z\in \mathbb{R}^{n-m}$ 是**自由变量** 
+
+> 解是解空间的一个元素 $Z\mathbf{x}_Z$ 与特解 $Y(A Y)^{-1} \mathbf{b}$ 的和
 
 代入目标函数，有
 $$
-\min _{\mathbf{x}_{\mathbf{Z}} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{Z}^{\top}\left(Z^{\top} G Z\right) \mathbf{x}_{Z}+\left[Z^{\top} G Y(A Y)^{-1} \mathbf{b}+Z^{\top} \mathbf{c}\right]^{\top} \mathbf{x}_{Z}
+\min _{\mathbf{x}_{\mathbf{Z}} \in \mathbb{R}^{n-m}} \frac{1}{2} \mathbf{x}_{Z}^{\top}\left(Z^{\top} G Z\right) \mathbf{x}_{Z}+\left[ G Y(A Y)^{-1} \mathbf{b}+ \mathbf{c}\right]^{\top}Z \mathbf{x}_{Z}
 $$
 假设 $Z^{\top}GZ$ 正定，有
 $$
@@ -179,22 +181,32 @@ $$
 $$
 从而
 $$
-\mathbf{x}^{*}=Y(A Y)^{-1}-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
+\mathbf{x}^{*}=Y(A Y)^{-1}\mathbf{b}-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y(A Y)^{-1} \mathbf{b}+\mathbf{c}\right]
 $$
 相应 Lagrange 乘子为
 $$
-\lambda^{*}=(A Y)^{-T} Y^{\top}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
+\lambda^{*}=(A Y)^{-\top} Y^{\top}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
 $$
 
-> $Y$ 是任意取的，如果取得 $AY = I$，则问题将变得简单许多
+> $$
+> \begin{aligned}
+> \nabla L(\mathbf{x}^*,\lambda^*)=G\mathbf{x}^*+\mathbf{c}-A^\top\lambda^*&=0\\
+> G\mathbf{x}^*+c&=A^\top\lambda^*\\
+> Y^\top(G\mathbf{x}^*+c)&=(AY)^\top\lambda^*\\
+> (AY)^{-\top}Y^\top(G\mathbf{x}^*+c)&=\lambda^*\\
+> \end{aligned}
+> $$
+>
+> $Y$ 有一定的任意性，如果取得 $AY = I$，则 问题将变得简单许多
 > $$
 > \begin{align}
-> \mathbf{x}^{*}&=Y-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y \mathbf{b}+\mathbf{c}\right]\\
+> \mathbf{x}^{*}&=Y\mathbf{b}-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y \mathbf{b}+\mathbf{c}\right]\\
 > \lambda^{*}&=Y^{\top}\left(G \mathbf{x}^{*}+\mathbf{c}\right)
 > \end{align}
 > $$
+> 在 [3.1.1.3 Lagrange 法](#3.1.1.3 Lagrange 法) 有提到，使用 QR 分解即可
 
-#### Lagrange 法
+#### 3.1.1.3 Lagrange 法
 
 (K-T) 点为如下方程组的解
 $$
@@ -244,6 +256,8 @@ V=-\left(A G^{-1} A^{\top}\right)^{-1} \\
 W=-\left(A G^{-1} A^{\top}\right)^{-1} A G^{-1}
 \end{array}\right.
 $$
+> [分块矩阵求逆公式](https://wenku.baidu.com/view/8bf505100b4e767f5acfcebb.html) 
+
 求解公式
 $$
 \left\{\begin{array}{l}
@@ -287,12 +301,23 @@ Q_{1}^{\top} \\
 Q_{2}^{\top}
 \end{array}\right)
 $$
-于是令 $Y=Q_1R^{-T}$，$Z=Q_2$，有
+于是令 $Y=Q_1R^{-\top}$，$Z=Q_2$，有
 $$
-A Y=R^{\top} Q_{1}^{\top} Q_{1} R^{-T}=I_{m \times m}, \quad A Z=R^{\top} Q_{1}^{\top} Q_{2}=0_{m \times(n-m)}
+A Y=R^{\top} Q_{1}^{\top} Q_{1} R^{-\top}=I_{m \times m}, \quad A Z=R^{\top} Q_{1}^{\top} Q_{2}=0_{m \times(n-m)}
 $$
 
-### 积极集基本定理
+### 3.1.2 一般
+
+问题
+$$
+\begin{array}{ll}
+\min & Q(\mathbf{x})=\frac{1}{2} \mathbf{x}^{\top} G \mathbf{x}+\mathbf{c}^{\top} \mathbf{x} \\
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{x}=b_{i}, i \in \mathcal{E}=\left\{1, \cdots, m_{e}\right\} \\
+& \mathbf{a}_{i}^{\top} \mathbf{x} \geq b_{i}, i \in \mathcal{I}=\left\{m_{e}+1, \cdots, m\right\}
+\end{array}
+$$
+
+#### 3.1.2.1 积极集基本定理
 
 设 $\mathbf{x}^*$ 是原问题的局部极小点，则 $\mathbf{x}^*$ 也必是等式约束问题
 $$
@@ -305,7 +330,7 @@ $$
 
 反之，如果 $\mathbf{x}^*$ 是 (EQ) 的 K-T 点（同时是原问题的可行点），且相应 Lagrange 乘子 $\lambda^*$ 满足 $\lambda_i^*\ge 0,i\in \mathcal{I}_e(\mathbf{x}^*)$，则 $\mathbf{x}^*$ 是原问题的 K-T 点
 
-### 迭代
+#### 3.1.2.2 迭代
 
 设 $\mathbf{x}^{(k)}$ 为当前迭代点（且是原问题的可行点）
 
@@ -313,7 +338,7 @@ $$
 $$
 (\mathrm{EQ1})\left\{\begin{array}{ll}
 \min & \frac{1}{2} \mathbf{s}^{\top} G \mathbf{s}+(G\mathbf{x}^{(k)}+\mathbf{c})^{\top} \mathbf{s} \\
-\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{s}=b_{i}, i \in \mathcal{E}_k
+\text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{s}=0, i \in \mathcal{E}_k
 \end{array}\right.
 $$
 
@@ -323,12 +348,11 @@ $$
 
 > 当 $\mathbf{s}^{(k)}=\mathbf{0}$ 时，(EQ1) 目标函数值为 $0$，故 $Q(\mathbf{x}^{(k)}+\mathbf{s}^{(k)})-Q(\mathbf{x}^{(k)})\le 0$，下降
 >
-> Lagrange 乘子满足
-> $$
-> G\mathbf{s}^{(k)}+G\mathbf{x}^{(k)}+\mathbf{c}={A^{\top}}^{(k)}\lambda
-> $$
+> ---
+>
+> 用分块法，广义消去法，Lagrange 法求解
 
-（a) 若 $\mathbf{s}^{(k)}\neq \mathbf{0}$，$\mathbf{x}^{(k)}$ 不可能是原问题的 K-T 点
+(a) 若 $\mathbf{s}^{(k)}\neq \mathbf{0}$，$\mathbf{x}^{(k)}$ 不可能是原问题的 K-T 点
 
 > $\mathbf{s}^{(k)}\neq \mathbf{0}$ 表示目标函数可下降，且一定程度的下降满足约束
 
@@ -339,7 +363,7 @@ $$
 \text { s.t. } & \mathbf{a}_{i}^{\top} \mathbf{x}=b_{i}, i \in \mathcal{E}_{k}
 \end{array}\right.
 $$
-的 K-T 点，如果 $\lambda_i^{(k)}\ge 0,i\in I(\mathbf{x}^{(k)})$，则 $\mathbf{x}^{(k)}$ 也是原问题的 K-T 点
+的 K-T 点，如果 $\lambda_i^{(k)}\ge 0,i\in I_e(\mathbf{x}^{(k)})$，则 $\mathbf{x}^{(k)}$ 也是原问题的 K-T 点
 
 (c) 否则，由 $\lambda_{i_q}^{(k)}=\min_{i\in I(\mathbf{x}^{(k)})}\lambda_i^{(k)}<0$ 确定 $i_q$，那么
 $$
@@ -350,7 +374,7 @@ $$
 $$
 的解 $\hat{\mathbf{s}}$ 是原问题在 $\mathbf{x}^{(k)}$ 的可行方向，即 $\mathbf{a}_{i_q}^{\top}\hat{\mathbf{s}}\ge 0$ 
 
-### 积极集方法
+#### 3.1.2.3 积极集方法
 
 ![image-20200517173908246](assets/03_Constraint/image-20200517173908246.png)
 
@@ -418,7 +442,7 @@ $$
 
 ![image-20200620184647957](assets/03_Constraint/image-20200620184647957.png)
 
-Lagrange-Newton 法的一大重要贡献是，在其基础上发展出了==逐步二次规范方法== Sequential Quadratic Programming Methods
+Lagrange-Newton 法的一大重要贡献是，在其基础上发展出了==逐步二次规划方法== Sequential Quadratic Programming Methods
 
 Newton-Raphson 迭代可写成
 $$
@@ -603,7 +627,7 @@ $$
 $$
 P(\mathbf{x}, \lambda, \sigma)=f(\mathbf{x})-\lambda^{\top} \mathbf{c}(\mathbf{x})+\frac{\sigma}{2}\|\mathbf{c}(\mathbf{x})\|_{2}^{2}
 $$
-一般策略是，先给定充分大 的 $\sigma$ 和乘子向量的初始估计 $\lambda$，然后再迭代过程中修正 $\lambda$ 力图使之趋向最优乘子  $\lambda^*$ 
+一般策略是，先给定充分大的 $\sigma$ 和乘子向量的初始估计 $\lambda$，然后再迭代过程中修正 $\lambda$ 力图使之趋向最优乘子  $\lambda^*$ 
 
 ![image-20200620204622797](assets/03_Constraint/image-20200620204622797.png)
 
@@ -705,5 +729,3 @@ $$
 \end{array}
 $$
 其中 $\tau\in (0,1)$（经典值为 ），上述条件称为 the fraction to the boundary rule，用于防止 $\mathbf{s}$ 和 $\mathbf{z}$ 太快达到它们的下界 $\mathbf{0}$ 
-
- 
