@@ -303,11 +303,11 @@ $$
 > - $f$ 和 $g_i(i\in\mathcal{I}_e(\mathbf{\bar{x}}))$ 在 $\mathbf{\bar{x}}$ 可微
 > - $g_i(i\in\mathcal{I}\backslash \mathcal{I}_e(\mathbf{\bar{x}}))$ 在点 $\bar{\mathbf{x}}$ 连续
 > - $h_j$ 在 $\mathbf{\bar{x}}$ 连续可微
-> - $\{\nabla g_i(\mathbf{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{h_j(\mathbf{\bar{x}})\}^l_{j=1}$ 线性无关
+> - $\{\nabla g_i(\mathbf{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{\nabla h_j(\mathbf{\bar{x}})\}^l_{j=1}$ 线性无关
 >
 > ---
 >
-> 由 **Fritz-John 条件** 可知，当 $\lambda_0=0$ 时，等式成立则意味着 $\{\nabla g_i(\mathbf{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{h_j(\mathbf{\bar{x}})\}^l_{j=1}$ 线性相关，矛盾，故 $\lambda_0\neq 0$，等式除以 $\lambda_0$ 即为 KT 条件
+> 由 **Fritz-John 条件** 可知，当 $\lambda_0=0$ 时，等式成立则意味着 $\{\nabla g_i(\mathbf{\bar{x}})\ |\ i\in\mathcal{I}_e\}\cup \{\nabla  h_j(\mathbf{\bar{x}})\}^l_{j=1}$ 线性相关，矛盾，故 $\lambda_0\neq 0$，等式除以 $\lambda_0$ 即为 KT 条件
 >
 > ---
 >
@@ -365,10 +365,6 @@ $$
 
 则称 $\psi$ 是关于解集合 $\Omega$ 和算法 $\mathcal{A}$ 的下降函数
 
-> 解集之外，$\psi$ 可引导向算法**走入解集** 
->
-> 解集之内，$\psi$ 保证算法**不离开解集** 
-
 **算法收敛性** 
 
 > 存在下降函数的算法是有效的
@@ -377,7 +373,11 @@ $$
 
 ![image-20200305152622024](assets/01_Intro/image-20200305152622024.png)
 
-> 证明略（过于复杂）
+> 证明
+>
+> ![image-20200715020842957](assets/01_Intro/image-20200715020842957.png)
+>
+> ![image-20200715020853321](assets/01_Intro/image-20200715020853321.png)
 
 **实用收敛准则** 
 
@@ -410,4 +410,4 @@ $$
 
 ![image-20200305153325394](assets/01_Intro/image-20200305153325394.png)
 
- 
+  
