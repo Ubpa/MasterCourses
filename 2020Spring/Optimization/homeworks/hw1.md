@@ -71,6 +71,41 @@ B=&(a_1\varphi^\prime - \alpha\varphi_1^\prime)/(a_1 - \alpha)\\
 C=&\varphi - (\varphi^\prime(- \alpha^2 + 2a_1\alpha))/(2(a_1 - \alpha)) + (\alpha^2\varphi_1^\prime)/(2(a_1 - \alpha))\\ \end{align}
 $$
 
+> **订正** 
+>
+> 由
+> $$
+> \left\{\begin{array}{l}
+> p^{(1)}\left(a_{1}\right)=\varphi_{1} \\
+> p^{(1) \prime}\left(a_{1}\right)=\varphi_{1}^{\prime} \\
+> p^{(1)}(\alpha)=\varphi
+> \end{array}\right.
+> $$
+> 可设（关键）
+> $$
+> p^{(1)}(t)=\varphi_{1}+\varphi_{1}^{\prime}\left(t-a_{1}\right)+A\left(t-a_{1}\right)^{2}
+> $$
+> 代入 $p^{(1)}(\alpha)=\varphi$ 得
+> $$
+> \varphi_{1}+\varphi_{1}^{\prime}\left(\alpha-a_{1}\right)+A\left(\alpha-a_{1}\right)^{2}=\varphi \Rightarrow A=\frac{\varphi-\varphi_{1}+\varphi_{1}^{\prime}\left(a_{1}-\alpha\right)}{\left(\alpha-a_{1}\right)^{2}}
+> $$
+> 由
+> $$
+> \left\{\begin{array}{l}
+> p^{(2) \prime}\left(a_{1}\right)=\varphi_{1}^{\prime} \\
+> p^{(2)}(\alpha)=\varphi \\
+> p^{(2) \prime}(\alpha)=\varphi^{\prime}
+> \end{array}\right.
+> $$
+> 设
+> $$
+> p^{(2)}(t)=\varphi+\varphi^{\prime}(t-\alpha)+C(t-\alpha)^{2}
+> $$
+> 则
+> $$
+> p^{(2) \prime}\left(a_{1}\right)=\varphi^{\prime}+2 C\left(a_{1}-\alpha\right)=\varphi_{1}^{\prime} \Rightarrow C=\frac{\varphi_{1}^{\prime}-\varphi^{\prime}}{2\left(a_{1}-\alpha\right)}
+> $$
+
 ## exercise 2
 
 ![image-20200510211757396](assets/hw1/image-20200510211757396.png)
@@ -118,6 +153,33 @@ $$
 \|g^{(k)}\| \to 0
 $$
 
+> **订正** 
+>
+> 设 $\forall k,\mathbf{g}^{(k)}\neq \mathbf{0}$ 
+>
+> $f(\mathbf{x}^{(k)})$ 有下界且单调下降，则 $f(\mathbf{x}^{(k)})-f(\mathbf{x}^{(k+1)})\to 0$，由 $\varphi(\alpha)\le\varphi(0)+\rho\alpha\varphi^\prime(0)$ 得 $-{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}\to 0$ 
+>
+> （反证）假设 $\mathbf{g}^{(k)}\to \mathbf{0}$ 不成立，则 $\exist \epsilon>0$ 和子列 $\{\mathbf{x}^{(k)}\}_{k\in K}$ 使得 $\|\mathbf{g}^{(k)}\|\ge \epsilon$，由
+> $$
+> -{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}=
+> \|\mathbf{g}^{(k)}\|\|\mathbf{s}^{(k)}\|\cos\theta_k\ge \epsilon\|\mathbf{s}^{(k)}\|\sin\mu
+> $$
+> 则 $\|\mathbf{s}^{(k)}\|\to 0$ 
+>
+> 又
+> $$
+> f(\mathbf{x}^{(k)}+\mathbf{s}^{(k)})=f(\mathbf{x}^{(k)})+{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}+o(\|\mathbf{s}^{(k)}\|)
+> $$
+> 则
+> $$
+> \frac{f(\mathbf{x}^{(k)})-f(\mathbf{x}^{(k+1)})}{-{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}}\to 1
+> $$
+> 与
+> $$
+> \frac{f(\mathbf{x}^{(k)})-f(\mathbf{x}^{(k+1)})}{-{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}}\le 1-p<1
+> $$
+> 矛盾，故 $\mathbf{g}^{(k)}\to \mathbf{0}$ 
+
 ## exercise 3
 
 ![image-20200510224102668](assets/hw1/image-20200510224102668.png)
@@ -130,6 +192,18 @@ $$
 $$
 x^{(k+1)}=x^{(k)}-\frac{f^\prime(x^{(k)})}{f^{\prime\prime}(x^{(k)})}
 $$
+
+> **订正** 
+>
+> 对 $F(x)=0$ 的牛顿迭代为
+> $$
+> x^{(k+1)}=x^{(k)}-(J_F (x^{(k)}))^{-1}F(x^{(k)})
+> $$
+> 最优化问题可以转成求解 $\nabla f(x)=0$ 的求根问题，则相应迭代格式为
+> $$
+> x^{(k+1)}=x^{(k)}-(\nabla^2 f(x^{(k)}))^{-1}\nabla f(x^{(k)})
+> $$
+>
 
 ## exercise 4
 
@@ -172,6 +246,14 @@ $$
 H_n G = I
 $$
 即 $H_n=G^{-1}$ 
+
+> **订正** 
+>
+> 漏证终止（$\mathbf{x}^{(n+1)}=-G^{-1}\mathbf{c}$） 
+> $$
+> \mathbf{x}^{(n+1)}=\mathbf{x}^{(n)}-H_n\mathbf{g}^{(n)}=\mathbf{x}^{(n)}-G^{-1}(G\mathbf{x}^{(n)}+\mathbf{c})=-G^{-1}\mathbf{c}
+> $$
+> 为最优解
 
 ## exercise 5
 

@@ -12,6 +12,8 @@ $$
 
 ## 2.1 梯度类求解算法
 
+### 2.1.1 框架
+
 梯度方向 $\nabla f(\mathbf{x})$ 是函数 $f$ 在点 $\mathbf{x}$ 处增加最快的方向
 
 梯度类方法
@@ -29,7 +31,7 @@ $$
 > \alpha_k=\min\{\alpha|\nabla f(\mathbf{x}^{(k)}+\alpha\mathbf{d}^{(k)})^\top\mathbf{d}^{(k)}=0,\alpha>0\}
 > $$
 
-### 2.1.1 构造搜索方向
+#### 2.1.1.1 构造搜索方向
 
 **负梯度方向** 
 
@@ -57,19 +59,19 @@ $$
 
 > 将函数视为二次函数，最小值位于 $-\frac{b}{2a}$ 
 
-### 2.1.2 确定步长因子
+#### 2.1.1.2 确定步长因子
 
 在迭代格式中，通过解一维最优化问题
 $$
 \min_\limits{\alpha\ge 0}\varphi(\alpha)=f(\mathbf{x}^{(k)}+\alpha\mathbf{d}^{(k)})
 $$
-确定步长因子的方法称为**一维搜索** line search
+确定步长因子的方法称为==一维搜索== line search
 
-以最优解 $\mathop{\arg\min}_\limits{\alpha\ge 0}f(\mathbf{x}^{(k)}+\alpha \mathbf{d}^{(k)})$ 为步长称为**精确一维搜索** exact line search
+以最优解 $\mathop{\arg\min}_\limits{\alpha\ge 0}f(\mathbf{x}^{(k)}+\alpha \mathbf{d}^{(k)})$ 为步长称为==精确一维搜索== exact line search
 
 常用方法：黄金分割法、插值迭代法
 
-实际往往不是用精确解，而是满足适当调节的近似解作为步长，称为**非精确一维搜索** inexact line search
+实际往往不是用精确解，而是满足适当条件的近似解作为步长，称为==非精确一维搜索== inexact line search
 
 设 $\overline{\alpha}_k$ 是使得
 $$
@@ -88,6 +90,21 @@ $$
 
 ![image-20200309131258864](assets/02_NonConstraint/image-20200309131258864.png)
 
+> 有
+> $$
+> \begin{aligned}
+> \varphi(\alpha)&=f(\mathbf{x}^{(k)}+\alpha\mathbf{d}^{(k)})=f(\mathbf{x}^{(k+1)})\\
+> \varphi^\prime(\alpha)&={\mathbf{g}^{(k+1)}}^\top\mathbf{d}^{(k)}\\
+> \varphi(0)&=f(\mathbf{x}^{(k)})\\
+> \varphi^\prime(0)&={\mathbf{g}^{(k)}}^\top\mathbf{d}^{(k)}
+> \end{aligned}
+> $$
+> 则 Goldstein 条件可表示为
+> $$
+> f(\mathbf{x}^{(k+1)})\le f(\mathbf{x}^{(k)})+\rho\mathbf{g}^{(k)}\mathbf{d}^{(k)}\\
+> f(\mathbf{x}^{(k+1)})\ge f(\mathbf{x}^{(k)})+(1-\rho){\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}
+> $$
+
 **Wolfe-Powell 条件** 
 $$
 \varphi(\alpha)\le \varphi(0)+\rho\alpha\varphi^\prime(0)\\
@@ -101,6 +118,23 @@ $$
 > $$
 > |\varphi^\prime(\alpha)|\le -\sigma\varphi^\prime(0)
 > $$
+>
+> ---
+>
+> 有
+> $$
+> \begin{aligned}
+> \varphi(\alpha)&=f(\mathbf{x}^{(k)}+\alpha\mathbf{d}^{(k)})=f(\mathbf{x}^{(k+1)})\\
+> \varphi^\prime(\alpha)&={\mathbf{g}^{(k+1)}}^\top\mathbf{d}^{(k)}\\
+> \varphi(0)&=f(\mathbf{x}^{(k)})\\
+> \varphi^\prime(0)&={\mathbf{g}^{(k)}}^\top\mathbf{d}^{(k)}
+> \end{aligned}
+> $$
+> 则 Wolfe-Powell 条件可表示为
+> $$
+> f(\mathbf{x}^{(k+1)})\le f(\mathbf{x}^{(k)})+\rho\mathbf{g}^{(k)}\mathbf{d}^{(k)}\\
+> {\mathbf{g}^{(k+1)}}^\top\mathbf{s}^{(k)}\ge \sigma{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}
+> $$
 
 ![image-20200309132857916](assets/02_NonConstraint/image-20200309132857916.png)
 
@@ -112,7 +146,7 @@ $$
    $$
    \hat{\alpha}=a_1+\frac{1}{2}\frac{(a_1-\alpha)^2\varphi_1^\prime}{(\varphi_1-\varphi)-(a_1-\alpha)\varphi_1^\prime}
    $$
-   于是置 $a_2=\alpha,\alpha=\hat{\alpha}$，重复第 2 步。
+   于是置 $a_2=\alpha,\alpha=\hat{\alpha}$，重复第 2 步。 
 
 3. 计算 $\varphi^\prime=\varphi^\prime(\alpha)=\nabla f(\mathbf{x}^{(k)}+\alpha\mathbf{d}^{(k)})^\top\mathbf{d}^{(k)}$。若 $\varphi^\prime(\alpha)\ge \sigma\varphi^\prime(0)$，则输出 $\alpha_k=\alpha$，并停止搜索。否则，由 $\varphi,\varphi^\prime,\varphi_1$ 构造两点二次插值多项式 $p^{(2)}(t)$，并得其极小点
    $$
@@ -135,7 +169,7 @@ $$
 > - 如果低于下限，取左导+**中值+中导**做二次估计，更新区间下限
 > - 结束
 
-### *2.1.3 全局收敛
+#### *2.1.1.3 全局收敛
 
 从任意初始点出发，如果某迭代算法产生的点列的极限（聚点），在适当假定下可保证恒为问题的最优解（或者稳定点），则称该迭代法具有**全局收敛性** global convergence
 
@@ -170,13 +204,17 @@ $$
 >
 > ---
 >
+> 证明（精确一维搜索）
+>
+> optimization theory and method P78
+>
 > 证明（Wolfe-Powell）
+>
+> > 需证 $\nabla f(\mathbf{x}^{(k)})\to \mathbf{0}$ 
 >
 > 假设 $\mathbf{g}^{(k)}\neq \mathbf{0}$，$f(\mathbf{x}^{(k)})$ 有下界
 >
-> > 从而需证 $\nabla f(\mathbf{x}^{(k)})\to \mathbf{0}$ 
->
-> 故 $f(\mathbf{x}^{(k)})-f(\mathbf{x}^{(k+1)})\to 0$，由 $\varphi(\alpha)\le\varphi(0)+\rho\alpha\varphi^\prime(0)$ 得 $-\mathbf{g}^{(k)}\mathbf{s}^{(k)}\to 0$ 
+> 故 $f(\mathbf{x}^{(k)})-f(\mathbf{x}^{(k+1)})\to 0$，由 $\varphi(\alpha)\le\varphi(0)+\rho\alpha\varphi^\prime(0)$ 得 $-{\mathbf{g}^{(k)}}^\top\mathbf{s}^{(k)}\to 0$ 
 >
 > > $\varphi(\alpha) = f(\mathbf{x}^{(k+1)})$，$\varphi(0) = f(\mathbf{x}^{(k)})$，$\varphi^\prime(0)=\mathbf{g}^{(k)}\mathbf{d}^{(k)}$，$\mathbf{s}^{(k)}=\alpha \mathbf{d}^{(k)}$（上文有推导）
 >
@@ -188,7 +226,7 @@ $$
 >
 > > $\mathbf{g}^{(k+1)}=\mathbf{g}^{(k)}+o(\mathbf{1})$ 
 >
-> 而这与 $\varphi^\prime(\alpha)\ge \sigma\varphi^\prime(0)$ 矛盾，即与下式茅盾
+> 而这与 $\varphi^\prime(\alpha)\ge \sigma\varphi^\prime(0)$ 矛盾，即与下式矛盾
 >
 > ![image-20200510031130622](assets/02_NonConstraint/image-20200510031130622.png)
 >
@@ -196,7 +234,9 @@ $$
 >
 > 故  $\mathbf{g}^{(k)}\to \mathbf{0}$ 
 
-### 2.1.4 最速下降法
+### 2.1.2 算法
+
+#### 2.1.2.1 最速下降法
 
 $\mathbf{d}^{(k)}=-\nabla f(\mathbf{x}^{(k)})$ 
 
@@ -210,7 +250,7 @@ $\mathbf{d}^{(k)}=-\nabla f(\mathbf{x}^{(k)})$
 
 > $\varphi^\prime(\alpha^{(k)})=\nabla f(\mathbf{x}^{(k+1)})^\top\mathbf{d}^{(k)}$ 
 
-### 2.1.5 牛顿法
+#### 2.1.2.2 牛顿法
 
 $$
 f(\mathbf{x}^{(k)}+\mathbf{s})\approx q^{(k)}(\mathbf{s}) = f(\mathbf{x}^{(k)})+{\mathbf{g}^{(k)}}^\top \mathbf{s}+\frac{1}{2}\mathbf{s}^\top G_k \mathbf{s}
@@ -222,7 +262,7 @@ $$
 $$
 \mathbf{s}=-G_k^{-1}\mathbf{g}^{(k)}
 $$
-称搜索方向 $-G_k^{-1}\mathbf{g}^{(k)}$ 为**牛顿方向**（Newtin Direction）
+称搜索方向 $-G_k^{-1}\mathbf{g}^{(k)}$ 为**牛顿方向**（Newton Direction）
 
 >  $f(\mathbf{x})$ 二次可微实函数
 >
@@ -240,7 +280,11 @@ $$
 
 ![image-20200310214012003](assets/02_NonConstraint/image-20200310214012003.png)
 
-> 证明：[^TODO] 
+> 证明
+>
+> ![image-20200715133600651](assets/02_NonConstraint/image-20200715133600651.png)
+>
+> ![image-20200715133608908](assets/02_NonConstraint/image-20200715133608908.png)
 >
 > ---
 >
@@ -283,7 +327,7 @@ $$
 >
 > 对应**负梯度**，**负曲率** 
 
-### 2.1.6 拟牛顿法
+#### 2.1.2.3 拟牛顿法
 
 > 用一个矩阵 $H_k$ 近似 $G_k^{-1}$ 
 
@@ -389,8 +433,10 @@ $$
 ![image-20200510142950627](assets/02_NonConstraint/image-20200510142950627.png)
 
 > 奇异矩阵是不可逆矩阵（非满秩）
+>
+> 参考：http://cis.poly.edu/~mleung/CS3734/s03/ch02/ShermanMorrison4-out.pdf
 
-### 2.1.7 共轭方向
+#### 2.1.2.4 共轭方向
 
 ![image-20200510150059246](assets/02_NonConstraint/image-20200510150059246.png)
 
