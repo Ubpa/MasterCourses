@@ -4,6 +4,8 @@
 
 ## 3.1 二次规划
 
+> quadratic programming
+
 在变量的线性等式或不等式限制下求二次函数的极小点问题
 $$
 \begin{array}{ll}
@@ -197,7 +199,7 @@ $$
 > \end{aligned}
 > $$
 >
-> $Y$ 有一定的任意性，如果取得 $AY = I$，则 问题将变得简单许多
+> $Y$ 有一定的任意性，如果取得 $AY = I$，则问题将变得简单许多
 > $$
 > \begin{align}
 > \mathbf{x}^{*}&=Y\mathbf{b}-Z\left(Z^{\top} G Z\right)^{-1} Z^{\top}\left[G Y \mathbf{b}+\mathbf{c}\right]\\
@@ -330,6 +332,10 @@ $$
 
 反之，如果 $\mathbf{x}^*$ 是 (EQ) 的 K-T 点（同时是原问题的可行点），且相应 Lagrange 乘子 $\lambda^*$ 满足 $\lambda_i^*\ge 0,i\in \mathcal{I}_e(\mathbf{x}^*)$，则 $\mathbf{x}^*$ 是原问题的 K-T 点
 
+> 前者，主要是原问题局部极小点 $\mathbf{x}^*$ 附近，不等式严格成立部分可以略去，从而变为 (EQ) 局部问题的解，即为 (EQ) 的局部极小点
+>
+> 后者，Lagrange 乘子 $\lambda^*$ 由原问题的等式和部分不等式组成（$\lambda^*$ 对应原文的部分 $\lambda$ 和全部 $\mu$），通过补 0 可转成原问题 KKT 条件
+
 #### 3.1.2.2 迭代
 
 设 $\mathbf{x}^{(k)}$ 为当前迭代点（且是原问题的可行点）
@@ -460,6 +466,12 @@ $$
 $$
 的 K-T 点
 
+> 类似于原问题 Lagrange 函数的二阶逼近
+>
+> 但不完全相等，当无不等式约束或 $\lambda^{(k)}$ 中不等式约束的 Lagrange 乘子为 0 时，两者相等
+>
+> 参考：https://www.math.uh.edu/~rohop/fall_06/Chapter4.pdf
+
 Lagrange-Newton 法可理解为逐步求解上述等式约束二次规划的方法
 
 设 $\mathbf{d}^{(k)}$ 是二次规划问题的最优解，那么可迭代更新
@@ -499,6 +511,8 @@ W_{k} \mathbf{d}^{(k)}+\mathbf{g}^{(k)}=A\left(\mathbf{x}^{(k)}\right)^{\top} \b
 \mathbf{c}\left(\mathbf{x}^{(k)}\right)+A\left(\mathbf{x}^{(k)}\right) \mathbf{d}^{(k)}=0
 \end{array}\right.
 $$
+其中 $W_k$ 是原问题 Lagrange 函数的 Hesse 阵或其近似
+
 Hann 逐步二次规划方法
 
 ![image-20200620195730598](assets/03_Constraint/image-20200620195730598.png)
