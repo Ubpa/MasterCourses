@@ -2,6 +2,8 @@
 
 > convex optimization
 
+[toc]
+
 在凸集上最小化凸函数
 
 ## 04.1 凸集和凸函数
@@ -188,11 +190,10 @@ $$
 > - 伪凸 quasi-convex：水平集 $S_\alpha=\{x\in\operatorname{dom} f | f(x)\le \alpha\}$ 内 $f$ 是凸的，则称 $f$ 是伪凸函数
 > - 对数凹 log-concave 函数：$f(x)>0$ 且 $\log f$ 是凹函数，则称 $f$ 是对数凹函数
 
-## 04.2 凸优化算法
+## 04.2 凸优化和算法
 
-### 04.2.1 理论
+### 04.2.1 基本术语
 
-**基本术语** 
 $$
 \begin{array}{ll}
 \min & f_{0}(x) \\
@@ -221,7 +222,8 @@ $$
 $$
 f_0(x)=\inf\{f_0(z)|f_i(z)\le 0,i=1,\dots,m,h_j(z)=0,j=1,\dots,p,\|z-x\|_2\le \delta \}
 $$
-**凸优化问题** 
+### 04.2.2 凸优化问题
+
 $$
 \begin{array}{ll}
 \min & f_{0}(x) \\
@@ -235,11 +237,13 @@ $$
 
 任意局部最优解是全局最优解
 
+### 04.2.3 最优性条件
+
 假设 $f_0$ 是可微的，则 $x$ 是最优解 $\Leftrightarrow$ $x\in X$ 且 ${\nabla f_0(x)}^\top(y-x)\ge 0, \forall y \in X$ 
 
 对于无约束问题，则条件简化为 $\nabla f_0(x)=0$ 
 
-**仅等式约束** 
+仅等式约束时
 $$
 \begin{array}{ll}
 \min & f_{0}(x) \\
@@ -251,6 +255,8 @@ $$
 {\nabla f_0(x)}^\top u \ge 0 \quad \forall u \in \mathcal{N}(A)
 $$
 即 $\nabla f_0(x)\perp \mathcal{N}(A)$，其中 $\mathcal{N}(A) = \{u|Au = 0\}$ 为 $A$ 的零空间
+
+### 04.2.4 问题分类
 
 **线性规划问题** 
 
@@ -265,6 +271,8 @@ $$
 $$
 
 一般 $r$ 可忽略
+
+> $f_0$ 和 $f_i$ 都是关于 $\mathbf{x}$ 的线性函数
 
 **二次规划问题** 
 
@@ -281,6 +289,8 @@ $$
 其中 $P\in S^n_+$，$G\in \mathbb{R}^{m\times n}$ 且 $A\in \mathbb{R}^{p\times n}$ 
 
 线性规划是特殊的二次规划（取 $P=0$）
+
+> 模板函数二次，线性约束
 
 **二次约束二次规划问题** 
 
@@ -344,7 +354,7 @@ QCQP 是特殊的 SOCP
 > \|\tilde{L} x+\tilde{g}\|_{2} \leqslant-\left(q^{\top} x+r-\frac{1}{2}\right)
 > $$
 
-**拉格朗日** 
+### 04.2.5 拉格朗日对偶
 
 考虑标准形式的优化问题
 $$
@@ -444,6 +454,10 @@ f_{0}\left(x^{*}\right) &=g\left(\lambda^{*}, \nu^{*}\right) \\
 $$
 故
 $$
+\sum_{i=1}^{m} \lambda_{i}^{*} f_{i}\left(x^{*}\right)+\sum_{j=1}^{p} \nu_{j}^{*} h_{j}\left(x^{*}\right)=0
+$$
+又 $\lambda_i^*\ge 0$，$h_j(\mathbf{x}^*)=0$，则
+$$
 \lambda_i^*f_i(x^*)=0\quad i=1,\dots,m
 $$
 该条件称为==互补松弛性== complementary slackness
@@ -472,7 +486,7 @@ $$
 
 若原问题是凸的，那么 KKT 条件是原问题和对偶问题最优的充分条件
 
-### 04.2.2 算法
+### 04.2.6 算法
 
 凸优化问题没有解析解
 
